@@ -1,2 +1,2 @@
-# ohiosveryown
-The next iteration of ohiosveryown.
+### ohiosveryown
+v3.0 built on vue 👾🤖🌈.
