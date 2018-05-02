@@ -1,18 +1,22 @@
+<!-- layout -->
 <template>
   <div class="home">
-    <img src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <h1>This is home...</h1>
   </div>
 </template>
 
-<script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
 
-export default {
-  name: 'home',
-  components: {
-    HelloWorld
+<!-- style -->
+<style scoped lang="scss">
+  @import '../assets/style/mq';
+  @import '../assets/style/type';
+  h1 { @include breakpoint(mdl) { color: pink; } }
+</style>
+
+
+<!-- logic -->
+<script>
+  export default {
+    name: 'home',
   }
-}
 </script>
