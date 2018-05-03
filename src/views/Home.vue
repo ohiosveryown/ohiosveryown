@@ -8,8 +8,23 @@
     <section class="right">
       <!-- intro -->
       <header class="uc">
-        <h1 class="mb-1 f-xl f-travelsdemi">Hi, I'm Matt—a product designer living in Atlanta.</h1>
-        <h2 class="mb-4 meas-8 f-lg f-mabry">I'm currently researching design systems &amp; machine learning.</h2>
+        <h1 class="mb-1 f-xl f-travelsdemi">Hi, I'm Matt—a product designer living in
+          <div class="wrapper">
+            <span class="keyword">Atlanta.</span>
+            <figure class="atlanta"></figure>
+          </div>
+        </h1>
+        <h2 class="mb-4 meas-8 f-lg f-mabry">I'm currently researching
+          <div class="wrapper">
+            <span class="keyword">design systems</span>
+            <figure class="design-systems"></figure>
+          </div>
+         &amp;
+         <div class="wrapper">
+           <span class="keyword">machine learning.</span>
+           <figure class="machine-learning"></figure>
+         </div>
+       </h2>
       </header>
 
       <h5 class="op-5 mb-2 uc f-sm f-basismono">Case Studies</h5>
@@ -178,6 +193,68 @@
 
   header { @include breakpoint(lg) { width: grid-width(11); } }
 
+  .wrapper {
+    display: inline-block;
+    position: relative;
+  }
+
+  span.keyword {
+    display: inline;
+    position: relative;
+    overflow: hidden;
+    // transition: var(--ease);
+    will-change: transform;
+  }
+
+  span.keyword:hover {
+    @include breakpoint(mdl) {
+      color: transparent;
+      text-stroke: .75px var(--gravity);
+      -webkit-text-stroke: .75px var(--gravity);
+    }
+  }
+
+  span.keyword:hover ~ figure {
+    @include breakpoint(mdl) {
+      opacity: 1;
+      transform: translate(-50%,-50%) scale(1);
+      transition: all 600ms cubic-bezier(0.2, -2, 0, 4);
+    }
+  }
+
+  figure {
+    position: absolute;
+    top: 50%; left: 50%;
+    z-index: var(--zmin);
+    display: inline;
+    transform: translate(-50%,-50%) scale(0.94);
+
+    opacity: 0;
+    transition: all 150ms ease;
+    will-change: transform;
+  }
+
+  figure.atlanta {
+    width: 200px; height: 145px;
+    background: mediumslateblue url('../assets/gif/atlanta.gif') no-repeat center center;
+    background-blend-mode: soft-light;
+    background-size: cover;
+  }
+
+  figure.design-systems {
+    width: 200px; height: 190px;
+    background: mediumslateblue url('../assets/img/scaffold-01.jpg') no-repeat center center;
+    background-blend-mode: soft-light;
+    background-size: cover;
+  }
+
+  figure.machine-learning {
+    width: 220px; height: 145px;
+    background: mediumslateblue url('../assets/gif/ml.gif') no-repeat center center;
+    background-blend-mode: soft-light;
+    background-size: cover;
+  }
+
   .entry {
     display: flex;
     flex-direction: column;
@@ -197,7 +274,8 @@
   }
 
   .entry__title { @include breakpoint(mdl) { width: grid-width(5.5); } }
-  .entry__title > h3 { text-decoration: underline; @include breakpoint(mdl) { text-decoration: none;} }
+  .entry__title > h3 { text-decoration: underline; @include breakpoint(mdl) { text-decoration: none; } }
+  .entry__title:hover > h3 { @include breakpoint(mdl) { text-decoration: underline; } }
 
   .entry__description {
     @include breakpoint(mdl) {
@@ -207,7 +285,7 @@
 
   .entry__sp-galleries-bg {
     background: cornflowerblue;
-    background: url('../assets/gif/atlanta.gif') no-repeat center center;
+    background: url('../assets/gif/spg-01.gif') no-repeat center center;
     background-size: cover;
   }
 
