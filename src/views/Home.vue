@@ -42,14 +42,14 @@
             </div>
             <!-- entry description -->
             <div class="entry__description">
-              <h4 class="meas-9 f-mabry">A self-initiated project about &amp; spaces.</h4>
+              <h4 class="meas-9 f-mabry">A self-initiated project about buildings &amp; spaces.</h4>
             </div>
           </li>
         </router-link>
 
         <!-- entry -->
         <router-link to="/about">
-          <li class="mb-1 entry entry__qas">
+          <li class="entry entry__qas">
             <!-- entry title -->
             <div class="entry__title">
               <h3 class="mb-0 f-md f-mabry">Questions About Space</h3>
@@ -57,14 +57,14 @@
             </div>
             <!-- entry description -->
             <div class="entry__description">
-              <h4 class="meas-9 f-mabry">A side project about space. Space is cool. And Vast. But also cold.</h4>
+              <h4 class="meas-9 f-mabry">A side project about space. Space is cool. And Vast. <span class="show-lg">But mostly cold.</span></h4>
             </div>
           </li>
         </router-link>
 
         <!-- entry -->
         <router-link to="/about">
-          <li class="mb-1 entry entry__vibes">
+          <li class="entry entry__vibes">
             <!-- entry title -->
             <div class="entry__title">
               <h3 class="mb-0 f-md f-mabry">Vibes</h3>
@@ -79,7 +79,7 @@
 
         <!-- entry -->
         <router-link to="/about">
-          <li class="mb-2 entry entry__sp-uploader">
+          <li class="entry entry__sp-uploader">
             <!-- entry title -->
             <div class="entry__title">
               <h3 class="mb-0 f-md f-mabry">ShootProof Uploader</h3>
@@ -114,15 +114,17 @@
   @import '../assets/style/type';
 
   .f-xl {
-    font-size: 2.6rem;
+    font-size: 1.8rem;
     line-height: 1.2;
-    @include breakpoint(mdl) { font-size: 2.6rem; }
+    @include breakpoint(sm) { font-size: 2rem; }
+    @include breakpoint(md) { font-size: 2.6rem; }
   }
 
   .f-lg {
-    font-size: 2rem;
+    font-size: 1.6rem;
     line-height: 1.2;
-    @include breakpoint(mdl) { font-size: 2rem; }
+    @include breakpoint(sm) { font-size: 1.8rem; }
+    @include breakpoint(md) { font-size: 2rem; }
   }
 
   .f-md {
@@ -150,7 +152,7 @@
   .right {
     display: flex;
     flex-direction: column;
-    margin-top: 10rem;
+    margin-top: 9.2rem;
     width: grid-width(12);
 
     @include breakpoint(md) {
@@ -174,17 +176,17 @@
     }
   }
 
-  header {
-    @include breakpoint(lg) { width: grid-width(11); }
-  }
+  header { @include breakpoint(lg) { width: grid-width(11); } }
 
   .entry {
     display: flex;
     flex-direction: column;
+    margin-bottom: 2.4rem;
     width: grid-width(12);
 
     @include breakpoint(md) {
       flex-direction: column;
+      margin-bottom: 1.6rem;
       margin-left: grid-width(1);
     }
 
@@ -194,11 +196,8 @@
     }
   }
 
-  .entry__title {
-    @include breakpoint(mdl) {
-      width: grid-width(5.5);
-    }
-  }
+  .entry__title { @include breakpoint(mdl) { width: grid-width(5.5); } }
+  .entry__title > h3 { text-decoration: underline; @include breakpoint(mdl) { text-decoration: none;} }
 
   .entry__description {
     @include breakpoint(mdl) {
@@ -236,29 +235,26 @@
     background-size: cover;
   }
 
-  footer {
-    @include breakpoint(md) {
-      display: inherit;
-      position: relative;
-      ul { display: flex; }
-    }
+  .show-lg { display: none; @include breakpoint(lg) { display: inline; } }
 
-    @include breakpoint(mdl) {
+  footer {
+    padding: 4rem 0;
+    @include breakpoint(md) {
       position: fixed;
       bottom: 2.4rem;
+      padding: 0;
+      ul { display: flex; }
     }
   }
 
   .footer__title {
-    @include breakpoint(mdl) {
-      width: grid-width(6);
-    }
+    display: none;
+    @include breakpoint(mdl) { display: inherit; width: grid-width(6); }
   }
 
   .footer__currently {
-    @include breakpoint(mdl) {
-
-    }
+    width: grid-width(6);
+    @include breakpoint(mdl) { width: grid-width(4); }
 
     @include breakpoint(lg) {
       width: grid-width(2);
@@ -267,10 +263,9 @@
   }
 
   .footer__date {
-    @include breakpoint(mdl) {
-      width: grid-width(4);
-      text-align: right;
-    }
+    width: grid-width(6);
+    text-align: right;
+    @include breakpoint(mdl) { width: grid-width(4); }
   }
 </style>
 
