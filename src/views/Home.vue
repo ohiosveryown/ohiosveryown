@@ -291,13 +291,13 @@
 
   .entry__supersymmetry-bg {
     background: tomato;
-    // background: url('../assets/gif/atlanta.gif') no-repeat center center;
+    // background: url('../assets/gif/ss-01.gif') no-repeat center center;
     background-size: cover;
   }
 
   .entry__qas-bg {
     background: black;
-    // background: url('../assets/gif/atlanta.gif') no-repeat center center;
+    background: url('../assets/gif/qas-02.gif') no-repeat center center;
     background-size: cover;
   }
 
