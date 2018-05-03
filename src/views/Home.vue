@@ -168,7 +168,7 @@
 
     @include breakpoint(lg) {
       margin-left: grid-width(6);
-      padding-top: 4rem;
+      // padding-top: 4rem;
       padding-left: 4rem;
       width: grid-width(6.4);
     }
@@ -299,7 +299,7 @@
       ssTrigger.addEventListener('mouseleave', () => { bg.classList.remove('entry__supersymmetry-bg'), footerTitle.innerText = 'Featured Work' })
 
       qasTrigger.addEventListener('mouseenter', () => { bg.classList.add('entry__qas-bg'), footerTitle.innerText = 'Questions About Space—2017', footerTitle.style.color = 'White' })
-      qasTrigger.addEventListener('mouseleave', () => { bg.classList.remove('entry__qas-bg'), footerTitle.innerText = 'Featured Work' })
+      qasTrigger.addEventListener('mouseleave', () => { bg.classList.remove('entry__qas-bg'), footerTitle.innerText = 'Featured Work', footerTitle.style.color = 'inherit' })
 
       vibesTrigger.addEventListener('mouseenter', () => { bg.classList.add('entry__vibes-bg'), footerTitle.innerText = 'Vibes–2016' })
       vibesTrigger.addEventListener('mouseleave', () => { bg.classList.remove('entry__vibes-bg'), footerTitle.innerText = 'Featured Work' })
