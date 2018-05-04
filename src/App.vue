@@ -1,14 +1,24 @@
+<!-- layout -->
 <template>
   <div id="ovo">
-    <div id="nav">
-      <!-- <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link> -->
-    </div>
+    <Navigation/>
     <router-view/>
   </div>
 </template>
 
+
+<!-- style -->
 <style lang="scss">
   @import './assets/style/mq';
 
 </style>
+
+
+<!-- logic -->
+<script>
+  import Navigation from '@/components/Navigation.vue'
+
+  export default {
+    components: { Navigation },
+  }
+</script>

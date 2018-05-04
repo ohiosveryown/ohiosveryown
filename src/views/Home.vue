@@ -132,14 +132,13 @@
     font-size: 1.8rem;
     line-height: 1.2;
     @include breakpoint(sm) { font-size: 2rem; }
-    @include breakpoint(md) { font-size: 2.6rem; }
+    @include breakpoint(md) { font-size: 2.4rem; }
   }
 
   .f-lg {
     font-size: 1.6rem;
     line-height: 1.2;
     @include breakpoint(sm) { font-size: 1.8rem; }
-    @include breakpoint(md) { font-size: 2rem; }
   }
 
   .f-md {
@@ -236,21 +235,21 @@
 
   figure.atlanta {
     width: 200px; height: 145px;
-    background: mediumslateblue url('../assets/gif/atlanta.gif') no-repeat center center;
+    background: url('../assets/gif/atlanta.gif') no-repeat center center;
     background-blend-mode: soft-light;
     background-size: cover;
   }
 
   figure.design-systems {
     width: 200px; height: 190px;
-    background: mediumslateblue url('../assets/img/scaffold-01.jpg') no-repeat center center;
+    background: url('../assets/img/scaffold-01.jpg') no-repeat center center;
     background-blend-mode: soft-light;
     background-size: cover;
   }
 
   figure.machine-learning {
     width: 220px; height: 145px;
-    background: mediumslateblue url('../assets/gif/ml.gif') no-repeat center center;
+    background: url('../assets/gif/ml.gif') no-repeat center center;
     background-blend-mode: soft-light;
     background-size: cover;
   }
@@ -291,7 +290,7 @@
 
   .entry__supersymmetry-bg {
     background: tomato;
-    // background: url('../assets/gif/ss-01.gif') no-repeat center center;
+    background: url('../assets/gif/ss-01.gif') no-repeat center center;
     background-size: cover;
   }
 
