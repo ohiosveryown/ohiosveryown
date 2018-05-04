@@ -84,6 +84,12 @@
     @include breakpoint(lg) { width: 50vw; }
   }
 
+  .ugly-img {
+    background: url('../assets/img/me5.jpg') no-repeat center center;
+    background-blend-mode: soft-light;
+    background-size: cover;
+  }
+
   .right {
     display: flex;
     flex-direction: column;
@@ -209,7 +215,7 @@
       let me03 = "mediumslateblue"
       let me04 = "dodgerblue"
       let photos = [ me01, me02, me03, me04 ]
-      let reset = bg.style.background = "#f3f3f3"
+      // let reset = bg.style.background = "#f3f3f3"
 
       let g01 = 'Hey There'
       let g02 = 'What Up'
@@ -226,13 +232,14 @@
       meTrigger.addEventListener('mouseenter', () => {
         let cycle = photos[(Math.random() * (photos.length) | 0) % (photos.length)];
         let greetingsCycle = greetings[(Math.random() * (greetings.length) | 0) % (greetings.length)];
-        bg.style.background = cycle,
         profile.innerText = greetingsCycle
+
+        bg.classList.add('ugly-img')
       })
 
       meTrigger.addEventListener('mouseleave', () => {
-        bg.style.background = "#f3f3f3",
         profile.innerText = 'Profile'
+        bg.classList.remove('ugly-img')
       })
 
     }
