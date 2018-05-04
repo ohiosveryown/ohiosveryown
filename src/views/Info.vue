@@ -53,7 +53,7 @@
     font-size: 1.8rem;
     line-height: 1.2;
     @include breakpoint(sm) { font-size: 2rem; }
-    @include breakpoint(md) { font-size: 2.4rem; }
+    @include breakpoint(md) { font-size: 2.3rem; }
   }
 
   .f-lg {

@@ -8,7 +8,7 @@
     <section class="right">
       <!-- intro -->
       <header class="uc">
-        <h1 class="mb-1 f-xl f-travelsdemi">Hi, I'm Matt—a product designer living in
+        <h1 class="mb-2 f-xl f-travelsdemi">Hi, I'm Matt—a product designer living in
           <div class="wrapper">
             <span class="keyword">Atlanta.</span>
             <figure class="atlanta"></figure>
@@ -132,7 +132,7 @@
     font-size: 1.8rem;
     line-height: 1.2;
     @include breakpoint(sm) { font-size: 2rem; }
-    @include breakpoint(md) { font-size: 2.4rem; }
+    @include breakpoint(md) { font-size: 2.3rem; }
   }
 
   .f-lg {
