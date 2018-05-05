@@ -26,7 +26,7 @@
 
       <!-- work list -->
       <article class="bio">
-        <p class="meas-8 f-md f-mabry">Hi again—I’m presently a design manager @ <a class="btn__tertiary" href="http://shootproof.com" target="_blank">ShootProof</a>. I spend half my time drawing boxes &amp; the other half explaining them – the other half I’m trying to confuse myself with code; Math is hard. Enjoy the adventure…</p>
+        <p class="meas-8 f-md f-mabry">Hi again—I’m presently a design manager @ <a class="btn__tertiary" href="http://shootproof.com" target="_blank">ShootProof</a>. I spend half my time drawing boxes &amp; the other half explaining them—the other half I’m trying to confuse myself with code; Math is hard. Enjoy the adventure…</p>
       </article>
     </section>
 
@@ -85,7 +85,7 @@
   }
 
   .ugly-img {
-    background: url('../assets/img/me5-2.jpg') no-repeat center center;
+    background: url('../assets/img/me.jpg') no-repeat center center;
     background-blend-mode: soft-light;
     background-size: cover;
   }
@@ -211,28 +211,11 @@
       const bg = document.querySelector('.left')
       const profile = document.querySelector('.footer__title')
       const meTrigger = document.querySelector('.me-trigger')
-
-      let me01 = "tomato"
-      let me02 = "papayawhip"
-      let me03 = "mediumslateblue"
-      let me04 = "dodgerblue"
-      let photos = [ me01, me02, me03, me04 ]
-      // let reset = bg.style.background = "#f3f3f3"
-
-      let g01 = 'Hey There'
-      let g02 = 'What Up'
-      let g03 = 'Yooooo'
-      let g04 = 'Whats Good'
-      let g05 = 'Yurrrrrr'
-      let g06 = 'Keep Going'
-      let g07 = 'What it Do'
-
-      let greetings = [ g01, g02, g03, g04, g05, g06, g07 ]
+      let greetings = [ 'Hey There', 'What Up', 'Yoooo', 'What Is Good', 'Yuuuurrrrr', 'Keep Going', 'What It Do' ]
 
       profile.innerText = 'Profile'
 
       meTrigger.addEventListener('mouseenter', () => {
-        let cycle = photos[(Math.random() * (photos.length) | 0) % (photos.length)];
         let greetingsCycle = greetings[(Math.random() * (greetings.length) | 0) % (greetings.length)];
         profile.innerText = greetingsCycle
         profile.classList.add('cloud')
