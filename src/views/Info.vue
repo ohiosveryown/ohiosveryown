@@ -85,7 +85,7 @@
   }
 
   .ugly-img {
-    background: url('../assets/img/me5.jpg') no-repeat center center;
+    background: url('../assets/img/me5-2.jpg') no-repeat center center;
     background-blend-mode: soft-light;
     background-size: cover;
   }
@@ -197,6 +197,8 @@
     text-align: right;
     @include breakpoint(mdl) { width: grid-width(4); }
   }
+
+  .cloud { color: #fff; }
 </style>
 
 
@@ -233,12 +235,13 @@
         let cycle = photos[(Math.random() * (photos.length) | 0) % (photos.length)];
         let greetingsCycle = greetings[(Math.random() * (greetings.length) | 0) % (greetings.length)];
         profile.innerText = greetingsCycle
-
+        profile.classList.add('cloud')
         bg.classList.add('ugly-img')
       })
 
       meTrigger.addEventListener('mouseleave', () => {
         profile.innerText = 'Profile'
+        profile.classList.remove('cloud')
         bg.classList.remove('ugly-img')
       })
 
