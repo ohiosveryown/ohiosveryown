@@ -26,7 +26,32 @@
 
       <!-- work list -->
       <article class="bio">
-        <p class="meas-8 f-md f-mabry">Hi again—I’m presently a design manager @ <a class="btn__tertiary" href="http://shootproof.com" target="_blank">ShootProof</a>. I spend half my time drawing boxes &amp; the other half explaining them—the other half I’m trying to confuse myself with code; Math is hard. Enjoy the adventure…</p>
+        <h4 class="meas-8 f-md f-mabry">Hi again—I’m presently a design
+          <div class="wrapper">
+            <span class="keyword">manager</span>
+            <figure class="manager"></figure>
+          </div>
+          @ <a class="btn__tertiary" target="_blank" href="http://shootproof.com">ShootProof</a>. I spend half my time
+          <div class="wrapper">
+            <span class="keyword">drawing boxes</span>
+            <figure class="drawing"></figure>
+          </div>
+          &amp; the other half explaining them—the other half I’m trying to
+          <div class="wrapper">
+            <span class="keyword">confuse myself</span>
+            <figure class="confuse"></figure>
+          </div>
+          with code;
+          <div class="wrapper">
+            <span class="keyword">Math is hard.</span>
+            <figure class="ts"></figure>
+          </div>
+          Enjoy the&nbsp;
+          <div class="wrapper">
+            <span class="keyword">adventure...</span>
+            <figure class="adventure"></figure>
+          </div>
+        </h4>
       </article>
     </section>
 
@@ -152,9 +177,44 @@
     will-change: transform;
   }
 
-  figure.atlanta {
-    width: 200px; height: 145px;
-    background: url('../assets/gif/atlanta.gif') no-repeat center center;
+  figure.information {
+    width: 210px; height: 145px;
+    background: mediumslateblue url('../assets/gif/info.gif') no-repeat center center;
+    background-blend-mode: soft-light;
+    background-size: cover;
+  }
+
+  figure.manager {
+    width: 224px; height: 126px;
+    background: url('../assets/gif/tito.gif') no-repeat center center;
+    background-blend-mode: soft-light;
+    background-size: cover;
+  }
+
+  figure.drawing {
+    width: 224px; height: 126px;
+    background: url('../assets/gif/drawing.gif') no-repeat center center;
+    background-blend-mode: soft-light;
+    background-size: cover;
+  }
+
+  figure.confuse {
+    width: 210px; height: 164px;
+    background: url('../assets/gif/confuse.gif') no-repeat center center;
+    background-blend-mode: soft-light;
+    background-size: cover;
+  }
+
+  figure.ts {
+    width: 224px; height: 126px;
+    background: url('../assets/img/ts.jpg') no-repeat center center;
+    background-blend-mode: soft-light;
+    background-size: cover;
+  }
+
+  figure.adventure {
+    width: 224px; height: 126px;
+    background: url('../assets/gif/adventure.gif') no-repeat center center;
     background-blend-mode: soft-light;
     background-size: cover;
   }
