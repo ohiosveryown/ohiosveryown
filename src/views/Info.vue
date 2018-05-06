@@ -132,14 +132,6 @@
     will-change: transform;
   }
 
-  span.keyword:hover {
-    @include breakpoint(mdl) {
-      // color: transparent;
-      // text-stroke: .75px var(--gravity);
-      // -webkit-text-stroke: .75px var(--gravity);
-    }
-  }
-
   span.keyword:hover ~ figure {
     @include breakpoint(mdl) {
       opacity: 1;
