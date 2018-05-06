@@ -6,7 +6,7 @@
     <header class="uc">
       <h6 class="mb-0 f-sm f-basismono">ux/ui/dev</h6>
       <h1 class="mb-2 f-xl f-travelsdemi">Supersymmetry</h1>
-      <h2 class="f-lg f-mabry">In the fall of 2016 I began a self-initiated project to design &amp; develop a photo-blog in Vue JS focusing on architecture, interior design &amp; structural engineering.</h2>
+      <h2 class="abstract f-lg f-mabry">In the fall of 2016 I began a self-initiated project to design &amp; develop a photo-blog in Vue JS focusing on architecture, interior design &amp; structural engineering.</h2>
     </header>
 
     <section class="hero">
@@ -61,10 +61,7 @@
   }
 
   header, .hero {
-    @include breakpoint(mdl) {
-      margin-top: 16vw;
-      width: grid-width(7);
-    }
+    @include breakpoint(mdl) { margin-top: 16vw; width: grid-width(7); }
   }
 
   header {
@@ -73,8 +70,8 @@
     top: 11.2rem;
     margin-top: 0;
     padding-bottom: 16.4rem;
-    @include breakpoint(md)  { top: 24rem; padding-bottom: 32rem; }
-    @include breakpoint(mdl) { padding-bottom: 12rem; }
+    @include breakpoint(md)  { top: 20rem; padding-bottom: 32rem; }
+    @include breakpoint(mdl) { padding-bottom: 8rem; }
   }
 
   .scroll {
@@ -86,10 +83,37 @@
     display: flex;
     flex-direction: column;
   }
+
+  header { transition: var(--ease); }
+
+  .hide { opacity: 0; }
+  .fade { opacity: 0.1; }
 </style>
 
 
 <!-- logic -->
 <script>
-  export default { name: 'supersymmetry' }
+  export default {
+    name: 'supersymmetry',
+
+    mounted() {
+      let scrollpos = window.scrollY
+      let abstract = document.querySelector('.abstract')
+      let header = document.querySelector('header')
+
+
+      function add_hide() { abstract.classList.add('hide') }
+      function remove_hide() { abstract.classList.remove('hide') }
+
+      function add_fade() { header.classList.add('fade') }
+      function remove_fade() { header.classList.remove('fade') }
+
+
+      window.addEventListener('scroll', function(){
+        scrollpos = window.scrollY
+        if(scrollpos > 40){add_hide(), add_fade() }
+        else { remove_hide(), remove_fade() }
+      })
+    }
+  }
 </script>
