@@ -48,7 +48,7 @@
         </router-link>
 
         <!-- entry -->
-        <router-link to="/about">
+        <router-link to="/supersymmetry">
           <li class="mb-1 entry entry__supersymmetry">
             <!-- entry title -->
             <div class="entry__title">
