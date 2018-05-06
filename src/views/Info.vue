@@ -24,9 +24,9 @@
 
       <h5 class="op-5 mb-2 uc f-sm f-basismono">Hello</h5>
 
-      <!-- work list -->
-      <article class="bio">
-        <h4 class="meas-8 f-md f-mabry">Hi again—I’m presently a design
+      <!-- salutations -->
+      <article class="bio mb-4">
+        <h4 class="meas-9 f-md f-mabry">Hi again—I’m presently a design
           <div class="wrapper">
             <span class="keyword">manager</span>
             <figure class="manager"></figure>
@@ -51,8 +51,22 @@
             <span class="keyword">adventure...</span>
             <figure class="adventure"></figure>
           </div>
+          &amp;
+          <span class="easter">easter eggs.</span>
         </h4>
       </article>
+
+      <article class="facts__wrapper mb-9 f-sm f-basismono uc">
+        <h3 class="reload btn__tertiary meas-8">PS—<span class="pointer facts__query"></span></h3>
+      </article>
+
+      <div class="social mt-0 mb-9">
+        <ul class="uc f-basismono">
+          <li class="btn__tertiary mr-6"><a href="http://twitter.com/cmykw_" target="_blank">Twitter</a></li>
+          <li class="btn__tertiary mr-6"><a href="http://github.com/ohiosveryown" target="_blank">Github</a></li>
+          <li class="btn__tertiary"><a href="http://dribbble.com/cmykw" target="_blank">Dribbble</a></li>
+        </ul>
+      </div>
     </section>
 
     <!-- footer 👣 -->
@@ -115,6 +129,12 @@
     background-size: cover;
   }
 
+  .easter-img {
+    background: url('../assets/gif/easter-egg.gif') no-repeat center center;
+    background-blend-mode: soft-light;
+    background-size: cover;
+  }
+
   .right {
     display: flex;
     flex-direction: column;
@@ -127,11 +147,10 @@
     }
 
     @include breakpoint(mdl) {
-      margin-top: 0;
       margin-left: grid-width(5);
       padding-left: 1.2rem;
-      width: grid-width(7); height: 100vh;
-      justify-content: center;
+      width: grid-width(7);
+      // justify-content: center;
     }
 
     @include breakpoint(lg) {
@@ -140,6 +159,12 @@
       padding-left: 4rem;
       width: grid-width(6.4);
     }
+  }
+
+  .bio {
+    width: grid-width(12);
+    @include breakpoint(md)  { margin-left: grid-width(1); width: grid-width(10); }
+    @include breakpoint(mdl) { margin-left: grid-width(0); width: grid-width(12); }
   }
 
   header { @include breakpoint(lg) { width: grid-width(11); } }
@@ -219,6 +244,15 @@
     background-size: cover;
   }
 
+  .facts__wrapper {
+    width: grid-width(12);
+    @include breakpoint(md)  { margin-left: grid-width(1); width: grid-width(7); }
+    @include breakpoint(mdl) { margin-left: grid-width(0); width: grid-width(12); }
+  }
+
+  .cloud { color: #fff; }
+  .social { font-size: 1.4rem; }
+
   footer {
     padding: 4rem 0;
     @include breakpoint(md) {
@@ -250,7 +284,6 @@
     @include breakpoint(mdl) { width: grid-width(4); }
   }
 
-  .cloud { color: #fff; }
 </style>
 
 
@@ -263,6 +296,7 @@
       const bg = document.querySelector('.left')
       const profile = document.querySelector('.footer__title')
       const meTrigger = document.querySelector('.me-trigger')
+      const easter = document.querySelector('.easter')
       let greetings = [ 'Hey There', 'What Up', 'Yoooo', 'What Is Good', 'Yuuuurrrrr', 'Keep Going', 'What It Do' ]
 
       profile.innerText = 'Profile'
@@ -278,6 +312,43 @@
         profile.innerText = 'Profile'
         profile.classList.remove('cloud')
         bg.classList.remove('ugly-img')
+      })
+
+
+      easter.addEventListener('mouseenter', () => {
+        bg.classList.add('easter-img')
+      })
+
+      easter.addEventListener('mouseleave', () => {
+        bg.classList.remove('easter-img')
+      })
+
+
+      const queries = [
+        "I am left-handed 👈🏼",
+        "I prefer water over La Croix 🤢",
+        "🔥 &amp; 🤔 are my most used emoji",
+        "I'm fascinated with machine learning & wonder if it'll put me out of a job one day 🙃",
+        "Good UI is like a metronome; It should keep you on track but it shouldn't distract",
+        "I've never eaten a Tide Pod 😵",
+        "Design is the process of taking available data &amp; coming up with its visual representation",
+        "I've been in the digital design game for 8 years 👴🏼",
+        "I'm originally from Ohio 🌰",
+        "I listen to a lot of Taylor Swift 🎤",
+        "I listen to a lot of Isaiah Rashad 🎤",
+        "I listen to a lot of Toro y Moi 🎤",
+        "I listen to a lot of Alvvways 🎤",
+        "In most cases I'm a proponent of system fonts 🤖",
+      ]
+
+      const factsQuery = document.querySelector('.facts__query')
+
+      const queriesCycle = queries[(Math.random() * (queries.length) | 0) % (queries.length)];
+      factsQuery.innerHTML = queriesCycle;
+
+      document.querySelector('.reload').addEventListener('click', () => {
+        const queriesCycle = queries[(Math.random() * (queries.length) | 0) % (queries.length)];
+        factsQuery.innerHTML = queriesCycle;
       })
 
     }
