@@ -23,7 +23,15 @@
       </ul>
     </section>
     <!-- scroll -->
-    <h3 class="scroll uc f-md f-mabry">scroll down</h3>
+    <!-- <h3 class="scroll uc f-md f-mabry">scroll down</h3> -->
+    <section class="situation">
+      <article class="situation__copy">
+        <h6 class="mb-2 uc f-sm f-basismono">situation</h6>
+        <p class="mb-1 meas-9">In the fall of 2016 I began a self-initiated project to design &amp; develop a photo-blog in Vue JS focusing on architecture, interior design &amp; structural engineering.</p>
+        <p class="tin meas-9">The main challenge was to create a brief repository for information of particular spaces. I wanted Supersymmetry to have brevity but highlight what makes these spaces special &amp; unique.</p>
+      </article>
+      <figure class="situation__img"><img src="../assets/img/supersymmetry/001@2x.png" alt="Supersymmetry Homepage Mobile"></figure>
+    </section>
 
   </main>
 </template>
@@ -44,7 +52,7 @@
 
   .f-lg {
     font-size: 1.6rem;
-    line-height: 1.3;
+    line-height: 1.4;
     @include breakpoint(sm) { font-size: 2rem; }
   }
 
@@ -60,13 +68,16 @@
     @include breakpoint(sm) { font-size: 1.4rem; }
   }
 
+  p { font-size: 1.8rem; line-height: 1.75; }
+
   header, .hero {
     @include breakpoint(mdl) { margin-top: 16vw; width: grid-width(7); }
   }
 
   header {
     position: -webkit-sticky;
-  	position: sticky;
+    position: sticky;
+    z-index: var(--zmin);
     top: 11.2rem;
     margin-top: 0;
     padding-bottom: 16.4rem;
@@ -88,6 +99,26 @@
 
   .hide { opacity: 0; }
   .fade { opacity: 0.1; }
+
+  .situation {
+    display: flex;
+    flex-direction: column;
+
+    @include breakpoint(mdl) {
+      flex-direction: row;
+      align-items: center;
+    }
+  }
+
+  .situation__copy {
+
+    @include breakpoint(mdl) { width: grid-width(6); }
+  }
+
+  .situation__img {
+
+    @include breakpoint(mdl) { width: grid-width(4); }
+  }
 </style>
 
 
