@@ -4,8 +4,8 @@
 
     <!-- header -->
     <header class="uc">
-      <h6 class="mb-0 f-sm f-basismono">ux/ui/dev</h6>
-      <h1 class="mb-2 f-xl f-travelsdemi">Supersymmetry</h1>
+      <h6 class="roles mb-0 f-sm f-basismono">ux/ui/dev</h6>
+      <h1 class="case-title mb-2 f-xl f-travelsdemi">Supersymmetry</h1>
       <h2 class="abstract f-lg f-mabry">In the fall of 2016 I began a self-initiated project to design &amp; develop a photo-blog in Vue JS focusing on architecture, interior design &amp; structural engineering.</h2>
     </header>
 
@@ -25,10 +25,10 @@
     <!-- scroll -->
     <!-- <h3 class="scroll uc f-md f-mabry">scroll down</h3> -->
     <section class="situation">
-      <article class="situation__copy">
+      <article class="situation__copy mb-7">
         <h6 class="mb-2 uc f-sm f-basismono">situation</h6>
-        <p class="mb-1 meas-9">In the fall of 2016 I began a self-initiated project to design &amp; develop a photo-blog in Vue JS focusing on architecture, interior design &amp; structural engineering.</p>
-        <p class="tin meas-9">The main challenge was to create a brief repository for information of particular spaces. I wanted Supersymmetry to have brevity but highlight what makes these spaces special &amp; unique.</p>
+        <p class="mb-1 meas-8">In the fall of 2016 I began a self-initiated project to design &amp; develop a photo-blog in Vue JS focusing on architecture, interior design &amp; structural engineering.</p>
+        <p class="tin meas-8">The main challenge was to create a brief repository for information of particular spaces. I wanted Supersymmetry to have brevity but highlight what makes these spaces special &amp; unique.</p>
       </article>
       <figure class="situation__img"><img src="../assets/img/supersymmetry/001@2x.png" alt="Supersymmetry Homepage Mobile"></figure>
     </section>
@@ -68,7 +68,11 @@
     @include breakpoint(sm) { font-size: 1.4rem; }
   }
 
-  p { font-size: 1.8rem; line-height: 1.75; }
+  p {
+    font-size: 1.5rem;
+    line-height: 1.75;
+    @include breakpoint(md) { font-size: 1.8rem; }
+  }
 
   header, .hero {
     @include breakpoint(mdl) { margin-top: 16vw; width: grid-width(7); }
@@ -95,18 +99,25 @@
     flex-direction: column;
   }
 
-  header { transition: var(--ease); }
+  header, .abstract { transition: var(--ease); }
 
   .hide { opacity: 0; }
-  .fade { opacity: 0.1; }
+  .fade {
+    opacity: 0.1;
+    text-stroke: 1px var(--gravity);
+    -webkit-text-stroke: 1px var(--gravity);
+    color: transparent;
+   }
 
   .situation {
     display: flex;
     flex-direction: column;
+    margin-top: 9.6rem;
 
     @include breakpoint(mdl) {
       flex-direction: row;
       align-items: center;
+      margin-top: 12.4rem;
     }
   }
 
@@ -130,14 +141,21 @@
     mounted() {
       let scrollpos = window.scrollY
       let abstract = document.querySelector('.abstract')
-      let header = document.querySelector('header')
+      let roles = document.querySelector('.roles')
+      let caseTitle = document.querySelector('.case-title')
 
 
-      function add_hide() { abstract.classList.add('hide') }
-      function remove_hide() { abstract.classList.remove('hide') }
+      function add_hide() {
+        roles.classList.add('hide'),
+        abstract.classList.add('hide'),
+        caseTitle.classList.add('fade')
+      }
 
-      function add_fade() { header.classList.add('fade') }
-      function remove_fade() { header.classList.remove('fade') }
+      function remove_hide() {
+        roles.classList.remove('hide')
+        abstract.classList.remove('hide'),
+        caseTitle.classList.remove('fade')
+      }
 
 
       window.addEventListener('scroll', function(){
@@ -145,6 +163,7 @@
         if(scrollpos > 40){add_hide(), add_fade() }
         else { remove_hide(), remove_fade() }
       })
+
     }
   }
 </script>
