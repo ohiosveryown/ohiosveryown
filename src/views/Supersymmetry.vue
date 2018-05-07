@@ -22,15 +22,28 @@
         </li>
       </ul>
     </section>
-    <!-- scroll -->
-    <!-- <h3 class="scroll uc f-md f-mabry">scroll down</h3> -->
-    <section class="situation">
-      <article class="situation__copy mb-7">
+
+    <section class="layout__copy-img">
+      <article class="mb-7 copy">
         <h6 class="mb-2 uc f-sm f-basismono">situation</h6>
         <p class="mb-1 meas-8">In the fall of 2016 I began a self-initiated project to design &amp; develop a photo-blog in Vue JS focusing on architecture, interior design &amp; structural engineering.</p>
         <p class="tin meas-8">The main challenge was to create a brief repository for information of particular spaces. I wanted Supersymmetry to have brevity but highlight what makes these spaces special &amp; unique.</p>
       </article>
-      <figure class="situation__img"><img src="../assets/img/supersymmetry/001@2x.png" alt="Supersymmetry Homepage Mobile"></figure>
+      <figure class="img gradient__01"><img src="../assets/img/supersymmetry/001@2x.png" alt="Supersymmetry Homepage Mobile"></figure>
+    </section>
+
+    <section class="layout__img">
+      <figure><img src="../assets/img/supersymmetry/002@2x.png" alt="Early Explorations"></figure>
+      <figcaption class="f-mabry op-6 tar">Some of the early explorations</figcaption>
+    </section>
+
+    <section class="layout__copy-img">
+      <article class="mb-7 copy">
+        <h6 class="mb-2 uc f-sm f-basismono">task</h6>
+        <p class="mb-1 meas-8">The majority of the time when I begin a side-project, I start by defining requirements &amp; scope. Here, the first couple of things I outlined were purpose &amp; style.</p>
+        <p class="tin meas-8">	Style outlines creative &amp; developmental scaffolding. The creative principles focus on things like type, color &amp; copywriting style, while development focuses on accessibility, optimization &amp; code writing style.</p>
+      </article>
+      <figure class="img gradient__02"><img src="../assets/img/supersymmetry/003@2x.png" alt="Requirements and Outline"></figure>
     </section>
 
   </main>
@@ -109,27 +122,52 @@
     color: transparent;
    }
 
-  .situation {
+  .gradient__01:after {
+    content: '';
+    position: absolute;
+    z-index: var(--zmin);
+    top: -12px; left: 0;
+    width: 100%; height: calc(100% + 8px);
+    background: linear-gradient(45deg, rgba(252,3,250,1) 0%, rgba(25,2,234,1) 100%);
+
+    @include breakpoint(mdl) {
+      top: -40px; left: -32px;
+      width: calc(100% + 32px); height: calc(100% + 36px);
+    }
+  }
+
+  .gradient__02:after {
+    content: '';
+    position: absolute;
+    z-index: var(--zmin);
+    top: -12px; left: 0;
+    width: 100%; height: calc(100% + 8px);
+    background: linear-gradient(45deg, rgba(252,3,250,1) 0%, rgba(25,2,234,1) 100%);
+
+    @include breakpoint(mdl) {
+      top: 16px; left: -14px;
+      width: calc(100% + 0px); height: calc(100% - 4px);
+    }
+  }
+
+  .layout__copy-img {
     display: flex;
     flex-direction: column;
     margin-top: 9.6rem;
+    margin-bottom: 3.2rem;
 
     @include breakpoint(mdl) {
       flex-direction: row;
       align-items: center;
       margin-top: 12.4rem;
+      margin-bottom: 8rem;
     }
+
+    .copy { @include breakpoint(mdl) { width: grid-width(6); } }
+    .img  { position: relative; @include breakpoint(mdl) { width: grid-width(4); } }
   }
 
-  .situation__copy {
-
-    @include breakpoint(mdl) { width: grid-width(6); }
-  }
-
-  .situation__img {
-
-    @include breakpoint(mdl) { width: grid-width(4); }
-  }
+  .layout__img { @include breakpoint(mdl) { width: grid-width(10); } }
 </style>
 
 
@@ -139,6 +177,7 @@
     name: 'supersymmetry',
 
     mounted() {
+
       let scrollpos = window.scrollY
       let abstract = document.querySelector('.abstract')
       let roles = document.querySelector('.roles')
