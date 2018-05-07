@@ -33,7 +33,7 @@
       <ul>
 
         <!-- entry -->
-        <router-link to="/about">
+        <router-link to="/supersymmetry">
           <li class="mb-1 entry entry__sp-galleries">
             <!-- entry title -->
             <div class="entry__title">
@@ -63,7 +63,7 @@
         </router-link>
 
         <!-- entry -->
-        <router-link to="/about">
+        <router-link to="/supersymmetry">
           <li class="entry entry__qas">
             <!-- entry title -->
             <div class="entry__title">
@@ -78,7 +78,7 @@
         </router-link>
 
         <!-- entry -->
-        <router-link to="/about">
+        <router-link to="/supersymmetry">
           <li class="entry entry__vibes">
             <!-- entry title -->
             <div class="entry__title">
@@ -93,7 +93,7 @@
         </router-link>
 
         <!-- entry -->
-        <router-link to="/about">
+        <router-link to="/supersymmetry">
           <li class="entry entry__sp-uploader">
             <!-- entry title -->
             <div class="entry__title">
