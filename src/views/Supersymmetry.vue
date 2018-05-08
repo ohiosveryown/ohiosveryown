@@ -159,7 +159,7 @@
     flex-direction: column;
   }
 
-  header, .abstract { transition: var(--ease); }
+  header, .case-title, .abstract { transition: all 800ms ease; }
   figure { position: relative; }
   .move-up { @include breakpoint(mdl) { transform: translateY(-16.4rem); } }
   .move-up-2 { @include breakpoint(mdl) { transform: translateY(-36rem); } }
@@ -310,7 +310,7 @@
 
       window.addEventListener('scroll', function(){
         scrollpos = window.scrollY
-        if(scrollpos > 32){add_hide(), add_fade() }
+        if(scrollpos > 24){add_hide(), add_fade() }
         else { remove_hide(), remove_fade() }
       })
 
