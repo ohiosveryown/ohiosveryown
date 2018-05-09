@@ -123,7 +123,8 @@
 
   // backgrounds
   .sp__galleries-active {
-    background: #ebeff8 url('../assets/img/sp__galleries-01@2x.png') no-repeat center bottom;
+    background: #ebeff8 url('../assets/gif/spg.gif') no-repeat center bottom;
+    // background: #ebeff8 url('../assets/img/sp__galleries-01@2x.png') no-repeat center bottom;
     background-size: contain;
   }
 
@@ -139,18 +140,8 @@
       const bg = document.querySelector('.right')
       const sp__galleries = document.querySelector('.sp__galleries')
 
-      let video = document.createElement('video')
-      video.src = 'http://veryown.co/assets/video.mp4'
-      video.autoplay = true
-
-      sp__galleries.addEventListener('mouseenter', () => {
-        bg.appendChild(video).play(),
-        video.loop = true
-      })
-
-      sp__galleries.addEventListener('mouseleave', () => {
-        bg.removeChild(video)
-      })
+      sp__galleries.addEventListener('mouseenter', () => { bg.classList.add('sp__galleries-active') })
+      sp__galleries.addEventListener('mouseleave', () => { bg.classList.remove('sp__galleries-active') })
     }
   }
 </script>
