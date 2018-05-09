@@ -11,7 +11,7 @@
 
       <h6 class="mb-6 uc f-sm f-basismono">
         <span class="mr-3">case studies</span>
-        <span>2016–2017</span>
+        <span>2016–2018</span>
       </h6>
 
       <ul>
