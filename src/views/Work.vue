@@ -139,8 +139,18 @@
       const bg = document.querySelector('.right')
       const sp__galleries = document.querySelector('.sp__galleries')
 
-      sp__galleries.addEventListener('mouseenter', () => { bg.classList.add('sp__galleries-active') })
-      sp__galleries.addEventListener('mouseleave', () => { bg.classList.remove('sp__galleries-active') })
+      let video = document.createElement('video')
+      video.src = 'http://veryown.co/assets/video.mp4'
+      video.autoplay = true
+
+      sp__galleries.addEventListener('mouseenter', () => {
+        bg.appendChild(video).play(),
+        video.loop = true
+      })
+
+      sp__galleries.addEventListener('mouseleave', () => {
+        bg.removeChild(video)
+      })
     }
   }
 </script>
