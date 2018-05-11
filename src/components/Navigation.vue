@@ -31,7 +31,7 @@
     max-width: var(--max_width);
     width: 88vw;
     font-size: 1.4rem;
-    @include breakpoint(md) { top: 2.4rem; }
+    @include breakpoint(md) { top: 5.2rem; }
   }
 
   .nav__left { flex-grow: 1; }
