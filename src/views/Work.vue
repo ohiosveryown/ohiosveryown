@@ -137,11 +137,20 @@
   }
 
   .rainbow {
+    display: inherit;
+    position: fixed;
+    z-index: var(--zmin);
+    top: -2.4rem; right: 0; left: 0;
+    transform-origin: top;
+    width: 100vh; height: 100vw;
+    transform: rotate(-90deg) translateY(-50vh);
+
     @include breakpoint(mdl) {
       position: fixed;
       z-index: var(--zmin);
-      top: 0; right: 0;
+      top: 0; right: 0; left: inherit;
       width: 50vw; height: 100vh;
+      transform: none;
     }
   }
 
