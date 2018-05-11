@@ -6,8 +6,23 @@
     <section class="left">
       <!-- sweet, sweet welcome text -->
       <header>
-        <h1 class="mb-2 uc f-xl f-mabry-med">Hello, I’m Matt—a product designer living in Atlanta, Ga.</h1>
-        <h2 class="meas-8 f-lg f-travels-med">I’m currently researching design systems &amp; machine learning.</h2>
+        <h1 class="mb-2 uc f-xl f-mabry-med">Hello, I’m Matt—a product designer living in
+          <div class="wrapper">
+            <span class="keyword">Atlanta,</span>
+            <figure class="atlanta"></figure>
+          </div>
+          Ga.</h1>
+        <h2 class="meas-8 f-lg f-travels-med">I’m currently researching design
+          <div class="wrapper">
+            <span class="keyword">systems</span>
+            <figure class="design-systems"></figure>
+          </div>
+          &amp;
+          <div class="wrapper">
+            <span class="keyword">machine learning.</span>
+            <figure class="machine-learning"></figure>
+          </div>
+        </h2>
       </header>
       <!-- how old are these case studies again? -->
       <h6 class="case__date uc f-sm f-basismono">
@@ -172,29 +187,89 @@
     }
   }
 
+  // keyword easter eggs ...shhh
+  .wrapper { display: inline; position: relative; }
+
+  span.keyword {
+    display: inline;
+    position: relative;
+    overflow: hidden;
+    will-change: transform;
+  }
+
+  span.keyword:hover {
+    @include breakpoint(mdl) {
+      color: transparent;
+      text-stroke: .75px var(--gravity);
+      -webkit-text-stroke: .75px var(--gravity);
+    }
+  }
+
+  span.keyword:hover ~ figure {
+    @include breakpoint(mdl) {
+      opacity: 1;
+      transform: translate(-50%,-50%) scale(1);
+      transition: all 600ms cubic-bezier(0.2,-2,0,4);
+    }
+  }
+
+  figure {
+    position: absolute;
+    top: 50%; left: 50%;
+    z-index: var(--zmin);
+    display: inline;
+    opacity: 0;
+    transform: translate(-50%,-50%) scale(0.94);
+    transition: all 150ms ease;
+    will-change: transform;
+  }
+
+  figure.atlanta {
+    width: 200px; height: 145px;
+    background: url('../assets/__work/gif/atlanta.gif') no-repeat center center;
+    background-blend-mode: soft-light;
+    background-size: cover;
+  }
+
+  figure.design-systems {
+    width: 200px; height: 190px;
+    background: url('../assets/__work/img/scaffold.jpeg') no-repeat center center;
+    background-blend-mode: soft-light;
+    background-size: cover;
+  }
+
+  figure.machine-learning {
+    width: 220px; height: 145px;
+    background: url('../assets/__work/gif/machine-learning.gif') no-repeat center center;
+    background-blend-mode: soft-light;
+    background-size: cover;
+  }
+
   // case study backgrounds
   .case__galleries-active {
-    background: #ebeff8 url('../assets/gif/spg.gif') no-repeat center bottom;
+    background: #ebeff8 url('../assets/__work/gif/galleries.gif') no-repeat center bottom;
     background-size: contain;
   }
 
   .case__supersymmetry-active {
-    background: tomato url('../assets/gif/spg.gif') no-repeat center bottom;
-    background-size: contain;
+    background: #f8f5eb url('../assets/__work/gif/supersymmetry.gif') no-repeat left center;
+    background-size: cover;
   }
 
   .case__qas-active {
-    background: black url('../assets/gif/spg.gif') no-repeat center bottom;
+    background: black url('../assets/__work/gif/qas.gif') no-repeat center bottom;
     background-size: contain;
   }
 
   .case__vibes-active {
-    background: mediumslateblue url('../assets/gif/spg.gif') no-repeat center bottom;
+    // background: mediumslateblue url('../assets/__work/gif/galleries.gif') no-repeat center bottom;
+    background: mediumslateblue;
     background-size: contain;
   }
 
   .case__uploader-active {
-    background: cornflowerblue url('../assets/gif/spg.gif') no-repeat center bottom;
+    // background: cornflowerblue url('../assets/__work/gif/galleries.gif') no-repeat center bottom;
+    background: cornflowerblue;
     background-size: contain;
   }
 
@@ -213,7 +288,7 @@
   .case__subtitle:before { content: 'Featured Work'; }
   .case__subtitle-galleries:before { content: 'SP Galleries 2016'; }
   .case__subtitle-supersymmetry:before { content: 'Supersymmetry 2016'; }
-  .case__subtitle-qas:before { content: 'QAS 2018'; }
+  .case__subtitle-qas:before { content: 'QAS 2018'; color: #fff; }
   .case__subtitle-vibes:before { content: 'Vibes 2017'; }
   .case__subtitle-uploader:before { content: 'Uploader 2016'; }
 
