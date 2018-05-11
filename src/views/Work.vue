@@ -122,6 +122,8 @@
     line-height: 1.2;
   }
 
+  .left { @include breakpoint(mdl) { width: grid-width(6); } }
+
   .right {
     display: none;
     @include breakpoint(mdl) {
@@ -134,10 +136,6 @@
     }
   }
 
-  .left {
-    @include breakpoint(mdl) { width: grid-width(6); }
-  }
-
   .rainbow {
     @include breakpoint(mdl) {
       position: fixed;
@@ -148,22 +146,27 @@
   }
 
   header {
-    @include breakpoint(mdl) { margin: 20rem 0 7.2rem; }
-    @include breakpoint(lg) { width: grid-width(10.5); }
+    margin: 12rem 0 5.6rem;
+    @include breakpoint(md)  { margin-top: 20rem; width: grid-width(8); }
+    @include breakpoint(mdl) { margin: 20rem 0 7.2rem; width: grid-width(12); }
+    @include breakpoint(lg)  { width: grid-width(10.5); }
   }
 
   .case__date {
-    @include breakpoint(mdl) {
-      margin: 0 0 4.8rem;
-    }
+    margin-bottom: 4rem;
+    @include breakpoint(mdl) { margin-bottom: 4.8rem; }
   }
 
   ul > li {
     position: relative;
-    @include breakpoint(mdl) { margin-bottom: 5.2rem; width: grid-width(8.5); }
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 4rem;
+    @include breakpoint(md)  { margin-bottom: 5.2rem; margin-left: grid-width(1); width: grid-width(7); }
+    @include breakpoint(mdl) { margin-bottom: 5.2rem; margin-left: 0; width: grid-width(8.5); }
   }
 
-  ul > li:last-child { margin-bottom: 11.2rem; }
+  ul > li:last-child { margin-bottom: 9.6rem; }
   li:hover h2 { @include breakpoint(mdl) { text-decoration: underline; } }
 
   li h2::before {

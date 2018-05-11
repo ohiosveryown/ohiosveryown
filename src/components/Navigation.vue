@@ -25,7 +25,7 @@
   nav {
     display: flex;
     position: absolute;
-    top: 2rem; right: 0; left: 0;
+    top: 3.2rem; right: 0; left: 0;
     z-index: var(--z4);
     margin: auto;
     max-width: var(--max_width);
