@@ -6,7 +6,11 @@
     <section class="left">
       <!-- sweet, sweet welcome text -->
       <header>
-        <h1 class="mb-2 uc f-xl f-mabry-med">Hello, I’m Matt—a product designer living in
+        <h1 class="mb-1 uc f-xl f-mabry-med">Hello, I’m
+          <div class="wrapper">
+            <span class="keyword">Matt—</span>
+            <figure class="matt"></figure>
+          </div>a product designer living in
           <div class="wrapper">
             <span class="keyword">Atlanta,</span>
             <figure class="atlanta"></figure>
@@ -76,7 +80,7 @@
     </section>
 
     <!-- 🤚🏼 -->
-    <section class="right"></section>
+    <section class="right"/>
 
     <!-- 👟 -->
     <footer class="op-5 uc f-sm f-basismono">
@@ -234,6 +238,13 @@
     transform: translate(-50%,-50%) scale(0.94);
     transition: all 150ms ease;
     will-change: transform;
+  }
+
+  figure.matt {
+    width: 172px; height: 164px;
+    background: url('../assets/__work/img/matt@2x.jpg') no-repeat center center;
+    background-blend-mode: soft-light;
+    background-size: cover;
   }
 
   figure.atlanta {

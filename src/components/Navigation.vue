@@ -8,8 +8,8 @@
 
     <div class="nav__right">
       <ul>
-        <li class="mt-0 uc"><router-link to="/">work</router-link></li>
-        <li class="mt-0 ml-6 uc"><router-link to="/info">info</router-link></li>
+        <li class="mt-0 mr-6 uc"><router-link to="/">work</router-link></li>
+        <li class="mt-0 uc"><router-link to="/info">info</router-link></li>
       </ul>
     </div>
 

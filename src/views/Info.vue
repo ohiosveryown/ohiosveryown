@@ -3,30 +3,25 @@
   <main class="mw__lg">
 
     <!-- ✋🏼 -->
-    <section class="left"/>
-    <!-- 🤚🏼 -->
-    <section class="right">
-      <!-- intro -->
-      <header class="uc">
-        <h1 class="mb-1 f-xl f-travelsdemi">
+    <section class="left">
+      <!-- sweet, sweet welcome text -->
+      <header>
+        <h1 class="mb-1 uc f-xl f-mabry-med">
           <div class="wrapper">
             <span class="keyword">Information</span>
             <figure class="information"></figure>
           </div>
         </h1>
-        <h2 class="mb-4 meas-8 f-lg f-mabry">Emails can be sent to:
-          <a class="me-trigger" href="mailto:matt@ohiosveryown.co?Subject=Hi, this is not Clark from invision" target="_top">
-            <span class="keyword btn__tertiary">matt@ohiosveryown.co.</span>
-            <figure class="me"></figure>
+        <h2 class="meas-8 f-lg f-travels-med">Emails can be sent to
+          <a class="info__img" href="mailto:matt@ohiosveryown.co?Subject=Hi, this is not Clark from invision" target="_top">
+            <span class="btn__tertiary">matt@ohiosveryown.co.</span>
           </a>
         </h2>
       </header>
-
-      <h5 class="op-5 mb-2 uc f-sm f-basismono">Hello</h5>
-
-      <!-- salutations -->
-      <article class="bio mb-4">
-        <h4 class="meas-9 f-md f-mabry">Hi again—I’m presently a design
+      <!-- oh look, it's more text 😒 -->
+      <article>
+        <h3 class="info__text f-md">
+          Hi again—I’m presently a design
           <div class="wrapper">
             <span class="keyword">manager</span>
             <figure class="manager"></figure>
@@ -38,45 +33,45 @@
           </div>
           &amp; the other half explaining them—the other half I’m trying to
           <div class="wrapper">
-            <span class="keyword">confuse myself</span>
+            <span class="keyword">confuse</span>
             <figure class="confuse"></figure>
           </div>
-          with code;
+          myself with code;
           <div class="wrapper">
             <span class="keyword">Math is hard.</span>
-            <figure class="ts"></figure>
+            <figure class="math"></figure>
           </div>
-          Enjoy the&nbsp;
+          Enjoy the
           <div class="wrapper">
             <span class="keyword">adventure...</span>
             <figure class="adventure"></figure>
-          </div>
-          &amp;
-          <span class="easter">easter eggs.</span>
-        </h4>
+          </div>&amp;
+          <span class="info__img-easter">easter eggs.</span>
+        </h3>
       </article>
 
-      <article class="facts__wrapper mb-9 f-sm f-basismono uc">
-        <h3 class="reload btn__tertiary meas-8">PS—<span class="pointer facts__query"></span></h3>
+      <article class="facts__wrapper f-sm f-basismono uc">
+        <h3 class="reload btn__tertiary">PS—<span class="facts__query pointer"></span></h3>
       </article>
-
-      <div class="social mt-0 mb-9">
-        <ul class="uc f-basismono">
-          <li class="btn__tertiary mr-6"><a href="http://twitter.com/cmykw_" target="_blank">Twitter</a></li>
-          <li class="btn__tertiary mr-6"><a href="http://github.com/ohiosveryown" target="_blank">Github</a></li>
-          <li class="btn__tertiary"><a href="http://dribbble.com/cmykw" target="_blank">Dribbble</a></li>
-        </ul>
-      </div>
     </section>
 
-    <!-- footer 👣 -->
-    <footer class="mw__lg">
-      <ul class="uc f-sm f-basismono">
-        <li class="footer__title"></li>
-        <li class="footer__currently">beep. beep. boop.</li>
-        <li class="footer__date">0512</li>
+    <!-- 🤚🏼 -->
+    <section class="right"/>
+
+    <!-- social 🦋 -->
+    <aside class="info__social">
+      <ul class="f-sm f-basismono uc">
+        <li class="btn__tertiary link mr-7"><a href="http://twitter.com/cmykw_" target="_blank">Twitter</a></li>
+        <li class="btn__tertiary link mr-7"><a href="http://github.com/ohiosveryown" target="_blank">Github</a></li>
+        <li><a class="btn__tertiary link" href="http://dribbble.com/cmykw" target="_blank">Dribbble</a></li>
       </ul>
-    </footer>
+    </aside>
+
+    <!-- 👟 -->
+    <footer class=""></footer>
+
+    <!-- -->
+    <div class="rainbow"/>
 
   </main>
 </template>
@@ -89,21 +84,26 @@
   @import '../assets/style/btn';
 
   .f-xl {
-    font-size: 1.8rem;
+    font-size: 1.9rem;
     line-height: 1.2;
     @include breakpoint(sm) { font-size: 2rem; }
-    @include breakpoint(md) { font-size: 2.3rem; }
+    @include breakpoint(md) { font-size: 2.4rem; }
+    @include breakpoint(lg) { font-size: 2.6rem; }
   }
 
   .f-lg {
-    font-size: 1.6rem;
-    line-height: 1.2;
-    @include breakpoint(sm) { font-size: 1.8rem; }
+    font-size: 1.8rem;
+    line-height: 1.24;
+    @include breakpoint(sm) { font-size: 2rem; }
+    @include breakpoint(md) { font-size: 2rem; }
+    @include breakpoint(lg) { font-size: 2.2rem; }
   }
 
   .f-md {
-    font-size: 1.8rem;
+    font-weight: normal;
+    font-size: 1.7rem;
     line-height: 1.5;
+    letter-spacing: -.5px;
   }
 
   .f-sm {
@@ -111,82 +111,74 @@
     line-height: 1.2;
   }
 
-  .left {
-    display: none;
-    position: fixed;
-    top: 0; left: 0;
-    z-index: var(--zmin);
-    width: 40vw; height: 100vh;
-    background: #f3f3f3;
-
-    @include breakpoint(mdl) { display: inherit; }
-    @include breakpoint(lg) { width: 50vw; }
-  }
-
-  .ugly-img {
-    background: url('../assets/img/me.jpg') no-repeat center center;
-    background-blend-mode: soft-light;
-    background-size: cover;
-  }
-
-  .easter-img {
-    background: url('../assets/gif/easter-egg.gif') no-repeat center center;
-    background-blend-mode: soft-light;
-    background-size: cover;
-  }
+  .left { @include breakpoint(mdl) { width: grid-width(6); } }
 
   .right {
-    display: flex;
-    flex-direction: column;
-    margin-top: 9.2rem;
-    width: grid-width(12);
-
-    @include breakpoint(md) {
-      margin-top: 16rem;
-      width: grid-width(10);
+    display: none;
+    @include breakpoint(mdl) {
+      display: inherit;
+      position: fixed;
+      z-index: var(--z0);
+      top: 0; right: 0;
+      width: 50vw; height: 100vh;
+      // background: linear-gradient(90deg, rgb(255,255,255)0%, rgb(164,157,255)100%);
     }
+  }
+
+  .rainbow {
+    display: inherit;
+    position: fixed;
+    z-index: var(--zmin);
+    top: -16rem; right: 0; left: 0;
+    transform-origin: top;
+    width: 100vh; height: 100vw;
+    transform: rotate(-90deg) translateY(-50vh);
 
     @include breakpoint(mdl) {
-      margin-left: grid-width(5);
-      padding-left: 1.2rem;
-      width: grid-width(7);
-      // justify-content: center;
-    }
-
-    @include breakpoint(lg) {
-      margin-left: grid-width(6);
-      // padding-top: 4rem;
-      padding-left: 4rem;
-      width: grid-width(6.4);
+      position: fixed;
+      z-index: var(--zmin);
+      top: 0; right: 0; left: inherit;
+      width: 50vw; height: 100vh;
+      transform: none;
     }
   }
 
-  .bio {
-    width: grid-width(12);
-    @include breakpoint(md)  { margin-left: grid-width(1); width: grid-width(10); }
-    @include breakpoint(mdl) { margin-left: grid-width(0); width: grid-width(12); }
+  header {
+    margin: 12rem 0 3.2rem;
+    @include breakpoint(md)  { margin-top: 20rem; width: grid-width(8); }
+    @include breakpoint(mdl) { width: grid-width(12); }
+    @include breakpoint(lg)  { width: grid-width(10.5); }
   }
 
-  header { @include breakpoint(lg) { width: grid-width(11); } }
-
-  .wrapper {
-    display: inline-block;
-    position: relative;
+  .info__text {
+    margin-bottom: 4rem;
+    @include breakpoint(md)  { margin-left: grid-width(1); width: grid-width(7); }
+    @include breakpoint(mdl) { margin-left: 0; width: grid-width(8.4); }
   }
+
+  // keyword easter eggs ...shhh
+  .wrapper { display: inline; position: relative; }
 
   span.keyword {
     display: inline;
     position: relative;
     overflow: hidden;
-    // transition: var(--ease);
     will-change: transform;
+  }
+
+  span.keyword:hover {
+    @include breakpoint(mdl) {
+      color: transparent;
+      text-stroke: .75px var(--gravity);
+      -webkit-text-stroke: .75px var(--gravity);
+    }
   }
 
   span.keyword:hover ~ figure {
     @include breakpoint(mdl) {
       opacity: 1;
       transform: translate(-50%,-50%) scale(1);
-      transition: all 600ms cubic-bezier(0.2, -2, 0, 4);
+      transition: all 600ms cubic-bezier(0.2,-2,0,4);
     }
   }
 
@@ -195,93 +187,86 @@
     top: 50%; left: 50%;
     z-index: var(--zmin);
     display: inline;
-    transform: translate(-50%,-50%) scale(0.94);
-
     opacity: 0;
+    transform: translate(-50%,-50%) scale(0.94);
     transition: all 150ms ease;
     will-change: transform;
   }
 
   figure.information {
-    width: 210px; height: 145px;
-    background: mediumslateblue url('../assets/gif/info.gif') no-repeat center center;
-    background-blend-mode: soft-light;
+    width: 140px; height: 140px;
+    background: white url('../assets/__info/gif/information.gif') no-repeat center center;
+    background-blend-mode: difference;
     background-size: cover;
   }
 
   figure.manager {
-    width: 224px; height: 126px;
-    background: url('../assets/gif/tito.gif') no-repeat center center;
-    background-blend-mode: soft-light;
+    width: 140px; height: 112px;
+    background: url('../assets/__info/gif/manager.gif') no-repeat center center;
     background-size: cover;
   }
 
   figure.drawing {
-    width: 224px; height: 126px;
-    background: url('../assets/gif/drawing.gif') no-repeat center center;
-    background-blend-mode: soft-light;
+    width: 140px; height: 112px;
+    background: url('../assets/__info/gif/drawing.gif') no-repeat center center;
     background-size: cover;
   }
 
   figure.confuse {
-    width: 210px; height: 164px;
-    background: url('../assets/gif/confuse.gif') no-repeat center center;
-    background-blend-mode: soft-light;
+    width: 140px; height: 112px;
+    background: url('../assets/__info/gif/confuse.gif') no-repeat center center;
     background-size: cover;
   }
 
-  figure.ts {
-    width: 224px; height: 126px;
-    background: url('../assets/img/ts.jpg') no-repeat center center;
-    background-blend-mode: soft-light;
+  figure.math {
+    width: 164px; height: 112px;
+    background: url('../assets/__info/img/math.jpg') no-repeat center center;
     background-size: cover;
   }
 
   figure.adventure {
-    width: 224px; height: 126px;
-    background: url('../assets/gif/adventure.gif') no-repeat center center;
-    background-blend-mode: soft-light;
+    width: 164px; height: 112px;
+    background: url('../assets/__info/gif/adventure.gif') no-repeat center center;
+    background-size: cover;
+  }
+
+  // info backgrounds
+  .info__img-active {
+    background: url('../assets/__info/img/me.jpg') no-repeat center center;
+    background-size: cover;
+  }
+
+  .info__easter-img-active {
+    background: #ebeff8 url('../assets/__info/gif/easter.gif') no-repeat center center;
     background-size: cover;
   }
 
   .facts__wrapper {
     width: grid-width(12);
     @include breakpoint(md)  { margin-left: grid-width(1); width: grid-width(7); }
-    @include breakpoint(mdl) { margin-left: grid-width(0); width: grid-width(12); }
+    @include breakpoint(mdl) { margin-left: grid-width(0); width: grid-width(8); }
   }
 
-  .cloud { color: #fff; }
-  .social { font-size: 1.4rem; }
+  // social
+  .info__social {
+    position: absolute;
+    top: 40rem;
+    margin: 0 auto 4rem;
+    max-width: var(--max_width);
+    width: 88vw;
+    @include breakpoint(md)  { top: 48rem; }
+    @include breakpoint(mdl) { top: 0rem; bottom: inherit; right: 0rem; text-align: right; }
+  }
 
   footer {
-    padding: 4rem 0;
-    @include breakpoint(md) {
-      position: fixed;
-      bottom: 2.4rem;
-      padding: 0;
-      ul { display: flex; }
-    }
-  }
-
-  .footer__title {
     display: none;
-    @include breakpoint(mdl) { display: inherit; width: grid-width(6); }
-  }
-
-  .footer__currently {
-    width: grid-width(6);
-    @include breakpoint(mdl) { width: grid-width(4); }
-
-    @include breakpoint(lg) {
-      width: grid-width(2);
-      padding-left: 4rem;
+    @include breakpoint(mdl) {
+      display: flex;
+      justify-content: flex-end;
+      position: sticky;
+      position: -webkit-sticky;
+      bottom: 5.2rem;
     }
-  }
-
-  .footer__date {
-    width: grid-width(6);
-    text-align: right;
-    @include breakpoint(mdl) { width: grid-width(4); }
   }
 
 </style>
@@ -293,38 +278,29 @@
     name: 'info',
 
     mounted() {
-      const bg = document.querySelector('.left')
-      const profile = document.querySelector('.footer__title')
-      const meTrigger = document.querySelector('.me-trigger')
-      const easter = document.querySelector('.easter')
-      let greetings = [ 'Hey There', 'What Up', 'Yoooo', 'What Is Good', 'Yuuuurrrrr', 'Keep Going', 'What It Do' ]
+      // constance
+      const bg = document.querySelector('.right')
+      const rainbow = document.querySelector('.rainbow')
+      const info__social = document.querySelector('.info__social')
+      const info__img = document.querySelector('.info__img')
+      const info__easter__img = document.querySelector('.info__img-easter')
+      const facts__query = document.querySelector('.facts__query')
 
-      profile.innerText = 'Profile'
+      // rainbow colors
+      let blue = 'linear-gradient(90deg, rgb(255,255,255) 0%, rgb(164,157,255) 100%)'
+      let chartreuse = 'linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(148,249,3,1) 100%)'
+      let green = 'linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(3,249,171,1) 100%)'
+      let orange = 'linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(249,69,3,1) 100%)'
+      let pink = 'linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(244,3,249,1) 100%)'
+      let yellow = 'linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(223,249,3,1) 100%)'
 
-      meTrigger.addEventListener('mouseenter', () => {
-        let greetingsCycle = greetings[(Math.random() * (greetings.length) | 0) % (greetings.length)];
-        profile.innerText = greetingsCycle
-        profile.classList.add('cloud')
-        bg.classList.add('ugly-img')
-      })
+      // rainbow logic
+      let bgs = [ blue, chartreuse, green, orange, pink, yellow ]
+      let rando = bgs[(Math.random() * (bgs.length) | 0) % (bgs.length)]
+      rainbow.style.background = rando
 
-      meTrigger.addEventListener('mouseleave', () => {
-        profile.innerText = 'Profile'
-        profile.classList.remove('cloud')
-        bg.classList.remove('ugly-img')
-      })
-
-
-      easter.addEventListener('mouseenter', () => {
-        bg.classList.add('easter-img')
-      })
-
-      easter.addEventListener('mouseleave', () => {
-        bg.classList.remove('easter-img')
-      })
-
-
-      const queries = [
+      // queries
+      let queries = [
         "I am left-handed 👈🏼",
         "I prefer water over La Croix 🤢",
         "🔥 &amp; 🤔 are my most used emoji",
@@ -341,14 +317,33 @@
         "In most cases I'm a proponent of system fonts 🤖",
       ]
 
-      const factsQuery = document.querySelector('.facts__query')
-
-      const queriesCycle = queries[(Math.random() * (queries.length) | 0) % (queries.length)];
-      factsQuery.innerHTML = queriesCycle;
+      const queries__cycle = queries[(Math.random() * (queries.length) | 0) % (queries.length)];
+      facts__query.innerHTML = queries__cycle;
 
       document.querySelector('.reload').addEventListener('click', () => {
-        const queriesCycle = queries[(Math.random() * (queries.length) | 0) % (queries.length)];
-        factsQuery.innerHTML = queriesCycle;
+        const queries__cycle = queries[(Math.random() * (queries.length) | 0) % (queries.length)];
+        facts__query.innerHTML = queries__cycle;
+      })
+
+      // info logic
+      info__img.addEventListener('mouseenter', () => {
+        bg.classList.add('info__img-active')
+        info__social.style.opacity = '0'
+      })
+
+      info__img.addEventListener('mouseleave', () => {
+        bg.classList.remove('info__img-active')
+        info__social.style.opacity = '1'
+      })
+
+      info__easter__img.addEventListener('mouseenter', () => {
+        bg.classList.add('info__easter-img-active')
+        info__social.style.opacity = '0'
+      })
+
+      info__easter__img.addEventListener('mouseleave', () => {
+        bg.classList.remove('info__easter-img-active')
+        info__social.style.opacity = '1'
       })
 
     }
