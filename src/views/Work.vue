@@ -96,7 +96,7 @@
   @import '../assets/style/type';
 
   .f-xl {
-    font-size: 1.8rem;
+    font-size: 1.9rem;
     line-height: 1.2;
     @include breakpoint(sm) { font-size: 2rem; }
     @include breakpoint(md) { font-size: 2.4rem; }
@@ -104,7 +104,7 @@
   }
 
   .f-lg {
-    font-size: 1.6rem;
+    font-size: 1.8rem;
     line-height: 1.24;
     @include breakpoint(sm) { font-size: 2rem; }
     @include breakpoint(md) { font-size: 2rem; }
@@ -140,7 +140,7 @@
     display: inherit;
     position: fixed;
     z-index: var(--zmin);
-    top: -2.4rem; right: 0; left: 0;
+    top: -16rem; right: 0; left: 0;
     transform-origin: top;
     width: 100vh; height: 100vw;
     transform: rotate(-90deg) translateY(-50vh);
