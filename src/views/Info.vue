@@ -68,7 +68,13 @@
     </aside>
 
     <!-- 👟 -->
-    <footer class=""></footer>
+    <footer>
+      <ul class="uc f-sm f-basismono">
+        <li class="footer__date">0512</li>
+        <li class="footer__currently">beep. beep. boop.</li>
+        <li class="footer__title"></li>
+      </ul>
+    </footer>
 
     <!-- -->
     <div class="rainbow"/>
@@ -153,7 +159,7 @@
   .info__text {
     margin-bottom: 4rem;
     @include breakpoint(md)  { margin-left: grid-width(1); width: grid-width(7); }
-    @include breakpoint(mdl) { margin-left: 0; width: grid-width(8.4); }
+    @include breakpoint(mdl) { margin-left: 0; width: grid-width(9.6); }
   }
 
   // keyword easter eggs ...shhh
@@ -252,8 +258,6 @@
     position: absolute;
     top: 40rem;
     margin: 0 auto 4rem;
-    max-width: var(--max_width);
-    width: 88vw;
     @include breakpoint(md)  { top: 48rem; }
     @include breakpoint(mdl) { top: 0rem; bottom: inherit; right: 0rem; text-align: right; }
   }
@@ -261,13 +265,20 @@
   footer {
     display: none;
     @include breakpoint(mdl) {
+      position: fixed;
+      bottom: 0rem;
       display: flex;
-      justify-content: flex-end;
-      position: sticky;
-      position: -webkit-sticky;
-      bottom: 5.2rem;
+      margin: 0 auto 3.2rem;
+      max-width: var(--max_width);
+      width: 88vw;
     }
   }
+
+  footer > ul { width: 100%; }
+  .footer__title { text-align: right; @include breakpoint(mdl) { width: grid-width(4); } }
+  .footer__currently { opacity: 0; @include breakpoint(mdl) { width: grid-width(2); } }
+  .footer__date { @include breakpoint(mdl) { width: grid-width(6); } }
+  .cloud { color: #fff; }
 
 </style>
 
@@ -285,6 +296,7 @@
       const info__img = document.querySelector('.info__img')
       const info__easter__img = document.querySelector('.info__img-easter')
       const facts__query = document.querySelector('.facts__query')
+      const footer__title = document.querySelector('.footer__title')
 
       // rainbow colors
       let blue = 'linear-gradient(90deg, rgb(255,255,255) 0%, rgb(164,157,255) 100%)'
@@ -315,6 +327,7 @@
         "I listen to a lot of Toro y Moi 🎤",
         "I listen to a lot of Alvvways 🎤",
         "In most cases I'm a proponent of system fonts 🤖",
+        "I hoop 🏀—put $20 on it, 1:1",
       ]
 
       const queries__cycle = queries[(Math.random() * (queries.length) | 0) % (queries.length)];
@@ -326,13 +339,31 @@
       })
 
       // info logic
+      let greetings = [
+        'Hey There',
+        'What Up',
+        'Yooo00o0o0o',
+        'What Is Good',
+        'Yuuuurrrrr',
+        'Keep Going',
+        'What It Do',
+        'Buongiorno',
+        'Allora',
+        'Again Dude?'
+      ]
+
+      footer__title.innerText = 'Profile'
+
       info__img.addEventListener('mouseenter', () => {
         bg.classList.add('info__img-active')
+        let greetings__cycle = greetings[(Math.random() * (greetings.length) | 0) % (greetings.length)];
+        footer__title.innerText = greetings__cycle, footer__title.classList.add('cloud')
         info__social.style.opacity = '0'
       })
 
       info__img.addEventListener('mouseleave', () => {
         bg.classList.remove('info__img-active')
+        footer__title.innerText = 'Profile', footer__title.classList.remove('cloud')
         info__social.style.opacity = '1'
       })
 
