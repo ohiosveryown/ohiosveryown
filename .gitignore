@@ -21,4 +21,5 @@ yarn-error.log*
 *.sln
 *.sw*
 /src/views/HomeOld.vue
+/src/views/InfoOld.vue
 /src/assets
