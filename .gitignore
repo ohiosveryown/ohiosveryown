@@ -22,4 +22,5 @@ yarn-error.log*
 *.sw*
 /src/views/HomeOld.vue
 /src/views/InfoOld.vue
+/src/views/SupersymmetryOld.vue
 /src/assets
