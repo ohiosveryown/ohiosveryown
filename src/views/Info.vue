@@ -250,7 +250,7 @@
   .facts__wrapper {
     width: grid-width(12);
     @include breakpoint(md)  { margin-left: grid-width(1); width: grid-width(7); }
-    @include breakpoint(mdl) { margin-left: grid-width(0); width: grid-width(8); }
+    @include breakpoint(mdl) { margin-left: grid-width(0); width: grid-width(9); }
   }
 
   // social
