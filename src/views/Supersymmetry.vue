@@ -15,7 +15,14 @@
     </div> -->
 
     <div class="choice-card">
-      Hello There...
+      <h4 class="mb-0 op-5 f-sm uc f-basismono">You're reading about:</h4>
+      <h2 class="mb-2 f-lg uc f-mabry-med">Supersymmetry</h2>
+      <h4 class="mb-0 op-5 f-sm uc f-basismono">Do you want to go:</h4>
+      <ul>
+        <li class="mr-3"><h3 class="link btn__tertiary mb-4 f-md f-travels-med">Home</h3></li>
+        <li class="mr-3"><h3 class="link btn__tertiary mb-4 f-md f-travels-med">To Another Project</h3></li>
+        <li><h3 class="link btn__tertiary mb-4 f-md f-travels-med">On Vacation</h3></li>
+      </ul>
     </div>
 
     <!-- hero 👰🏻 -->
@@ -253,10 +260,11 @@
   // }
 
   .choice-card {
-    --height: 164px;
+    --height: 148px;
     position: fixed;
     top: 3.2rem; right: 3.2rem;
-    width: 300px; height: var(--height);
+    padding: 1.6rem 2rem;
+    width: 424px; height: var(--height);
     // border: 1px solid gray;
     border-radius: 4px;
     background: #fff;
@@ -266,10 +274,12 @@
     transition: var(--ease);
     will-change: transform, opacity;
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    // display: flex;
+    // justify-content: center;
+    // align-items: center;
     z-index: var(--zmin);
+
+    .f-lg { font-size: 2.8rem; }
   }
 
   // hero section
