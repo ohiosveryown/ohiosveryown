@@ -2,7 +2,7 @@
 <template>
   <main class="mw__lg">
 
-    <div class="navbar">
+    <!-- <div class="navbar">
       <div class="mw__lg">
         <div class="navbar__left uc">
           <h4 class="mb-0 f-sm f-basismono">you're reading about:</h4>
@@ -12,6 +12,10 @@
           <router-link to="/">Home</router-link>
         </div>
       </div>
+    </div> -->
+
+    <div class="choice-card">
+      Hello There...
     </div>
 
     <!-- hero 👰🏻 -->
@@ -239,13 +243,33 @@
   .hide-sm  { display: none; @include breakpoint(mdl) { display: block; } }
   .show-mdl { display: block; @include breakpoint(mdl) { display: none; } }
 
-  .navbar {
+  // .navbar {
+  //   position: fixed;
+  //   top: 0; right: 0; left: 0;
+  //   z-index: var(--z4);
+  //   margin: 0 auto;
+  //   width: 100vw; height: 56px;
+  //   background: pink;
+  // }
+
+  .choice-card {
+    --height: 164px;
     position: fixed;
-    top: 0; right: 0; left: 0;
-    z-index: var(--z4);
-    margin: 0 auto;
-    width: 100vw; height: 56px;
-    background: pink;
+    top: 3.2rem; right: 3.2rem;
+    width: 300px; height: var(--height);
+    // border: 1px solid gray;
+    border-radius: 4px;
+    background: #fff;
+    box-shadow: 0 0 40px 0 rgba(0,0,0,.2);
+    opacity: 0;
+    transform: translateY(calc(-80px + var(--height) * -1));
+    transition: var(--ease);
+    will-change: transform, opacity;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: var(--zmin);
   }
 
   // hero section
@@ -296,6 +320,8 @@
   .fig-key { margin-bottom: 4rem; }
   .fig-key > ul { display: flex; flex-direction: column; }
 
+  .show-card { opacity: 1; z-index: var(--z4); }
+  .change-card { transform: translateY(0); }
 
 </style>
 
@@ -306,7 +332,24 @@
     name: 'supersymmetry',
 
     mounted() {
+      let scrollpos = window.scrollY
+      const card = document.querySelector(".choice-card")
+      let hidden = () => card.classList.add("hidden").classList.remove('show-card')
+      let show = () => card.classList.add("show-card").classList.remove('hidden')
 
+       window.addEventListener('scroll', function() {
+          scrollpos = window.scrollY;
+          if (scrollpos <= 800) {
+            card.classList.add("hide")
+          }
+          else {
+            card.classList.remove("hide")
+            card.classList.add("show-card")
+          }
+          if (this.oldScroll > this.scrollY) { card.classList.add('change-card') }
+          else { card.classList.remove('change-card') }
+          this.oldScroll = this.scrollY;
+        })
     }
   }
 </script>
