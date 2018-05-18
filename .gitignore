@@ -20,6 +20,7 @@ yarn-error.log*
 *.njsproj
 *.sln
 *.sw*
+*.mp4
 /src/views/HomeOld.vue
 /src/views/InfoOld.vue
 /src/views/SupersymmetryOld.vue
