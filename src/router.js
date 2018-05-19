@@ -5,6 +5,7 @@ import Info from './views/Info.vue'
 
 import Supersymmetry from './views/Supersymmetry.vue'
 import QAS from './views/QAS.vue'
+import Vibes from './views/Vibes.vue'
 
 Vue.use(Router)
 
@@ -29,6 +30,11 @@ export default new Router({
       path: '/qas',
       name: 'qas',
       component: QAS
+    },
+    {
+      path: '/vibes',
+      name: 'vibes',
+      component: Vibes
     },
   ],
 

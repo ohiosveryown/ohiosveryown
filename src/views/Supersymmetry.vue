@@ -202,7 +202,7 @@
     <!-- footer 👣 -->
     <footer class="next-case">
       <h4 class="mb-0 f-sm uc f-basismono">Next Case Study:</h4>
-      <h1 style="display: inline;" class="btn__tertiary f-xl uc f-mabry-med"><router-link to="/">Questions About Space</router-link></h1>
+      <h1 style="display: inline;" class="btn__tertiary f-xl uc f-mabry-med"><router-link to="/qas">Questions About Space</router-link></h1>
     </footer>
 
   </main>

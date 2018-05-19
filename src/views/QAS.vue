@@ -134,15 +134,76 @@
       <figcaption class="mt-0 tar">fig. 08</figcaption>
     </section>
 
+    <!-- stand-alone article 📝 -->
+    <article class="copy__full">
+      <p>The main challenge was to create a brief repository for information of particular spaces. I wanted Supersymmetry to have brevity but highlight what makes these spaces special &amp; unique.</p>
+    </article>
+
     <!-- img + img half and half 🍋🍹 -->
-    <section class="img-img">
+    <!-- <section class="img-img">
       <figure class="img__half-left">
         <img class="img-shadow__heavy" src="../assets/__qas/img/09@2x.jpg" alt="Large List View">
       </figure>
       <figure class="img__half-right">
         <img class="img-shadow" src="../assets/__qas/img/10@2x.jpg" alt="Large List View">
       </figure>
+      <figcaption class="figcaption-unique mt-0 tar">fig. 09, fig. 10</figcaption>
+    </section> -->
+
+    <!-- full-width image 🖼 -->
+    <section class="img__full">
+      <figure>
+        <img src="../assets/__qas/img/11@2x.jpg" alt="Detail View and Detail View on Scroll">
+      </figure>
+      <figcaption class="mt-0 tar">fig. 09, fig. 10</figcaption>
     </section>
+
+    <!-- stand-alone article 📝 -->
+    <!-- <article class="copy__full">
+      <p>The main challenge was to create a brief repository for information of particular spaces. I wanted Supersymmetry to have brevity but highlight what makes these spaces special &amp; unique.</p>
+    </article> -->
+
+    <!-- figure key 🔑 -->
+    <section class="fig-key">
+      <ul class="tac">
+        <li>
+          <span class="fig-key__label mr-1 uc f-bold">fig 03:</span>
+          <span>Small Detail View</span>
+        </li>
+        <li>
+          <span class="fig-key__label mr-1 uc f-bold">fig 04:</span>
+          <span>Small Home View</span>
+        </li>
+        <li>
+          <span class="fig-key__label mr-1 uc f-bold">fig 05:</span>
+          <span>Another Small Home View</span>
+        </li>
+        <li>
+          <span class="fig-key__label mr-1 uc f-bold">fig 06:</span>
+          <span>Another Early Home Page Iteration</span>
+        </li>
+      </ul>
+    </section>
+
+    <!-- stand-alone article 📝 -->
+    <article class="copy__full">
+      <header><h4 class="mb-1 f-sm uc f-basismono">Next Steps</h4></header>
+      <p>The main challenge was to create a brief repository for information of particular spaces. I wanted Supersymmetry to have brevity but highlight what makes these spaces special &amp; unique.</p>
+      <p>I wanted to structure Supersymmetry this way for the sake of brevity and maintenance, while highlighting what makes these specific spaces special (...that alliteration though 👀👏🏼).</p>
+    </article>
+
+    <!-- finish line 🏁 -->
+    <section class="fin tac">
+      <h2 class="mb-3 f-lg uc f-travels-med">Fin</h2>
+    </section>
+
+    <hr class="mb-8 op-2">
+
+    <!-- footer 👣 -->
+    <footer class="next-case">
+      <h4 class="mb-0 f-sm uc f-basismono">Next Case Study:</h4>
+      <h1 style="display: inline;" class="btn__tertiary f-xl uc f-mabry-med"><router-link to="/vibes">Vibes</router-link></h1>
+    </footer>
 
   </main>
 </template>
@@ -232,19 +293,27 @@
   .next-case { margin-bottom: 8rem; }
 
   .img__half-left {
+    margin-bottom: 7.2rem;
     width: grid-width(10);
     z-index: var(--z1);
+    @include breakpoint(md) { margin-bottom: 8.8rem; }
   }
 
   .img__half-right {
     position: absolute;
     right: 0;
-    margin-top: 4rem;
+    margin-top: 7.2rem;
     width: grid-width(10);
     @include breakpoint(md) { margin-top: 8.8rem; }
   }
 
   .img__half-left:hover, .img__half-right:hover { z-index: var(--z2); }
+
+  .figcaption-unique {
+    position: absolute;
+    bottom: 13.2rem; right: 0;
+    @include breakpoint(md) { bottom: 8.8rem; right: 0; }
+  }
 
   // figure keyframes
   .fig-key { margin-bottom: 4rem; }
