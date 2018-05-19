@@ -4,6 +4,7 @@ import Work from './views/Work.vue'
 import Info from './views/Info.vue'
 
 import Supersymmetry from './views/Supersymmetry.vue'
+import QAS from './views/QAS.vue'
 
 Vue.use(Router)
 
@@ -23,6 +24,11 @@ export default new Router({
       path: '/supersymmetry',
       name: 'supersymmetry',
       component: Supersymmetry
+    },
+    {
+      path: '/qas',
+      name: 'qas',
+      component: QAS
     },
   ],
 

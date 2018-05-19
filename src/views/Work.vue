@@ -53,7 +53,7 @@
         </li>
 
         <li class="case__qas">
-          <router-link to="/supersymmetry">
+          <router-link to="/qas">
             <h6 class="mb-2 op-5 uc f-sm f-basismono">ux/dev</h6>
             <h2 class="mb-0 uc f-lg f-mabry-med">Questions ABout Space</h2>
             <h3 class="f-md f-system">Another side project, this time about space. Space is cool. And Vast. But mostly cold.</h3>

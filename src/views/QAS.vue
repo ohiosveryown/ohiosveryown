@@ -17,7 +17,7 @@
       <!-- date & stuff 📆 -->
       <aside class="hero__meta">
         <h4 class="mb-1 f-sm uc f-basismono">Timeline</h4>
-        <h3 class="mb-4 f-md f-travels-med">Fall 2016 – Spring 2017</h3>
+        <h3 class="mb-4 f-md f-travels-med">Spring 2017</h3>
         <h4 class="mb-1 f-sm uc f-basismono">Link</h4>
         <h3 class="f-md f-travels-med">
           <a class="link btn__tertiary" href="http://questionsabout.space" target="_blank">questionsabout.space</a>
@@ -25,6 +25,68 @@
       </aside>
     </section>
 
+    <!-- full-width image 🖼 -->
+    <section class="img__full mt-7">
+      <figure>
+        <img src="../assets/__qas/img/01@2x.jpg" alt="Questions About Space Initial Home Page">
+      </figure>
+      <figcaption class="mt-0 tar">fig. 01</figcaption>
+    </section>
+
+    <!-- stand-alone article 📝 -->
+    <article class="copy__full">
+      <!-- <header><h4 class="mb-1 f-sm uc f-basismono">Task</h4></header> -->
+      <p>The main challenge was to create a brief repository for information of particular spaces. I wanted Supersymmetry to have brevity but highlight what makes these spaces special &amp; unique.</p>
+      <p>I wanted to structure Supersymmetry this way for the sake of brevity and maintenance, while highlighting what makes these specific spaces special (...that alliteration though 👀👏🏼).</p>
+    </article>
+
+    <!-- figure key 🔑 -->
+    <section class="fig-key">
+      <ul class="tac">
+        <li>
+          <span class="fig-key__label mr-1 uc f-bold">fig 01:</span>
+          <span>Home View</span>
+        </li>
+        <li>
+          <span class="fig-key__label mr-1 uc f-bold">fig 02:</span>
+          <span>CSS Grid for an Early Home Page Iteration</span>
+        </li>
+      </ul>
+    </section>
+
+    <!-- full-width image 🖼 -->
+    <section class="img__full">
+      <figure>
+        <img class="img-shadow" src="../assets/__qas/img/02@2x.jpg" alt="CSS Grid for an Early Home Page Iteration">
+      </figure>
+      <figcaption class="mt-0 tar">fig. 02</figcaption>
+    </section>
+
+    <!-- copy + img half and half 🍋🍹 -->
+    <section class="copy-img copy-img-unique">
+      <article class="copy__half copy__half-unique">
+        <header><h4 class="mb-3 f-sm uc f-basismono">Planning</h4></header>
+        <p>The majority of the time when I begin a side- project, I start by defining requirements &amp; scope. Here, the first couple of things I outlined were purpose &amp; style.</p>
+        <p class="mb-3">Style outlines creative &amp; developmental scaffolding. The creative principles focus on things like type, color &amp; copywriting style, while development focuses on accessibility, optimization &amp; code writing style.</p>
+      </article>
+
+      <figure class="img__half">
+        <div class="img__thirds">
+          <div class="one_third hide-sm"><img class="img-shadow__heavy" src="../assets/__qas/img/03-01@2x.jpg" alt="Planning Word Document"></div>
+          <div class="one_third hide-sm"><img class="img-shadow" src="../assets/__qas/img/03-02@2x.jpg" alt="Planning Word Document"></div>
+          <div class="one_third"><img class="img-shadow__heavy" src="../assets/__qas/img/03-03@2x.jpg" alt="Planning Word Document"></div>
+        </div>
+        <!-- <figcaption class="mt-1 tar">fig. 03</figcaption> -->
+      </figure>
+    </section>
+
+    <!-- image with bg 🖼 -->
+    <section class="img__w-bg">
+      <figure style="background-color: #f3f3f3;">
+        <video class="img-shadow__heavy" autoplay loop src="../assets/__qas/mov/06.mp4"></video>
+      </figure>
+      <figcaption class="mt-1 tar">fig. 06</figcaption>
+    </section>
 
   </main>
 </template>
@@ -119,8 +181,21 @@
   .fig-key { margin-bottom: 4rem; }
   .fig-key > ul { display: flex; flex-direction: column; }
 
-  .show-card { opacity: 1; z-index: var(--z4); }
-  .change-card { transform: translateY(0); }
+  // .copy-img-unique { @include breakpoint(mdl) { transform: translateY(-12rem); } }
+  // .copy__half-unique { @include breakpoint(mdl) { transform: translateY(22vw); } }
+
+  .img__thirds {
+    @include breakpoint(mdl) {
+      position: relative;
+      .one_third:nth-of-type(1) { position: absolute; width: grid-width(8); z-index: var(--z1); }
+      .one_third:nth-of-type(2) { position: absolute; width: grid-width(8); transform: translate(8rem, 8rem); z-index: var(--z1); }
+      .one_third:nth-of-type(3) { position: absolute; width: grid-width(8); transform: translate(16rem, 16rem); z-index: var(--z1); }
+
+      .one_third:nth-of-type(1):hover { z-index: var(--z2); }
+      .one_third:nth-of-type(2):hover { z-index: var(--z2); }
+      .one_third:nth-of-type(3):hover { z-index: var(--z2); }
+    }
+  }
 
 </style>
 
