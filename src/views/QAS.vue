@@ -71,21 +71,77 @@
       </article>
 
       <figure class="img__half">
-        <div class="img__thirds">
-          <div class="one_third hide-sm"><img class="img-shadow__heavy" src="../assets/__qas/img/03-01@2x.jpg" alt="Planning Word Document"></div>
-          <div class="one_third hide-sm"><img class="img-shadow" src="../assets/__qas/img/03-02@2x.jpg" alt="Planning Word Document"></div>
-          <div class="one_third"><img class="img-shadow__heavy" src="../assets/__qas/img/03-03@2x.jpg" alt="Planning Word Document"></div>
-        </div>
-        <!-- <figcaption class="mt-1 tar">fig. 03</figcaption> -->
+        <img src="../assets/__qas/img/03@2x.jpg" alt="Small Detail View, Small Home View, Small Home View Again">
+        <figcaption class="mt-0 tar">fig. 03, fig. 04, fig. 05</figcaption>
       </figure>
     </section>
 
     <!-- image with bg 🖼 -->
     <section class="img__w-bg">
-      <figure style="background-color: #f3f3f3;">
-        <video class="img-shadow__heavy" autoplay loop src="../assets/__qas/mov/06.mp4"></video>
+      <figure style="background-color: #111213;">
+        <video class="pt-9 pb-9 img-shadow__heavy" autoplay loop src="../assets/__qas/mov/06.mp4"></video>
       </figure>
-      <figcaption class="mt-1 tar">fig. 06</figcaption>
+      <figcaption class="mt-0 tar">fig. 06</figcaption>
+    </section>
+
+    <!-- figure key 🔑 -->
+    <section class="fig-key">
+      <ul class="tac">
+        <li>
+          <span class="fig-key__label mr-1 uc f-bold">fig 03:</span>
+          <span>Small Detail View</span>
+        </li>
+        <li>
+          <span class="fig-key__label mr-1 uc f-bold">fig 04:</span>
+          <span>Small Home View</span>
+        </li>
+        <li>
+          <span class="fig-key__label mr-1 uc f-bold">fig 05:</span>
+          <span>Another Small Home View</span>
+        </li>
+        <li>
+          <span class="fig-key__label mr-1 uc f-bold">fig 06:</span>
+          <span>Another Early Home Page Iteration</span>
+        </li>
+      </ul>
+    </section>
+
+    <!-- stand-alone article 📝 -->
+    <article class="copy__full">
+      <header><h4 class="mb-1 f-sm uc f-basismono">Execution</h4></header>
+      <p>The main challenge was to create a brief repository for information of particular spaces. I wanted Supersymmetry to have brevity but highlight what makes these spaces special &amp; unique.</p>
+      <p>I wanted to structure Supersymmetry this way for the sake of brevity and maintenance, while highlighting what makes these specific spaces special (...that alliteration though 👀👏🏼).</p>
+    </article>
+
+    <!-- full-width image 🖼 -->
+    <section class="img__full">
+      <figure>
+        <video autoplay loop src="../assets/__qas/mov/07.mp4"></video>
+      </figure>
+      <figcaption class="mt-0 tar">fig. 07</figcaption>
+    </section>
+
+    <!-- stand-alone article 📝 -->
+    <article class="copy__full">
+      <p>The main challenge was to create a brief repository for information of particular spaces. I wanted Supersymmetry to have brevity but highlight what makes these spaces special &amp; unique.</p>
+    </article>
+
+    <!-- full-width image 🖼 -->
+    <section class="img__full">
+      <figure>
+        <video autoplay loop src="../assets/__qas/mov/08.mp4"></video>
+      </figure>
+      <figcaption class="mt-0 tar">fig. 08</figcaption>
+    </section>
+
+    <!-- img + img half and half 🍋🍹 -->
+    <section class="img-img">
+      <figure class="img__half-left">
+        <img class="img-shadow__heavy" src="../assets/__qas/img/09@2x.jpg" alt="Large List View">
+      </figure>
+      <figure class="img__half-right">
+        <img class="img-shadow" src="../assets/__qas/img/10@2x.jpg" alt="Large List View">
+      </figure>
     </section>
 
   </main>
@@ -154,11 +210,9 @@
   .img__full, .img__w-bg { margin-bottom: 3.2rem; }
 
   .img__w-bg > figure > img, .img__w-bg > figure > video {
-    @include breakpoint(mdl) {
-      margin-left: grid-width(3);
-      width: grid-width(6);
-      transform: translateY(0.5rem);
-    }
+    margin-left: grid-width(2);
+    width: grid-width(8);
+    @include breakpoint(mdl) { transform: translateY(0.5rem); }
   }
 
   .copy__full { margin-bottom: 4rem; }
@@ -177,25 +231,25 @@
   .fin { margin: 6.4rem 0 8rem; @include breakpoint(md) { margin: 16rem 0 16rem; } }
   .next-case { margin-bottom: 8rem; }
 
+  .img__half-left {
+    width: grid-width(10);
+    z-index: var(--z1);
+  }
+
+  .img__half-right {
+    position: absolute;
+    right: 0;
+    margin-top: 4rem;
+    width: grid-width(10);
+    @include breakpoint(md) { margin-top: 8.8rem; }
+  }
+
+  .img__half-left:hover, .img__half-right:hover { z-index: var(--z2); }
+
   // figure keyframes
   .fig-key { margin-bottom: 4rem; }
   .fig-key > ul { display: flex; flex-direction: column; }
 
-  // .copy-img-unique { @include breakpoint(mdl) { transform: translateY(-12rem); } }
-  // .copy__half-unique { @include breakpoint(mdl) { transform: translateY(22vw); } }
-
-  .img__thirds {
-    @include breakpoint(mdl) {
-      position: relative;
-      .one_third:nth-of-type(1) { position: absolute; width: grid-width(8); z-index: var(--z1); }
-      .one_third:nth-of-type(2) { position: absolute; width: grid-width(8); transform: translate(8rem, 8rem); z-index: var(--z1); }
-      .one_third:nth-of-type(3) { position: absolute; width: grid-width(8); transform: translate(16rem, 16rem); z-index: var(--z1); }
-
-      .one_third:nth-of-type(1):hover { z-index: var(--z2); }
-      .one_third:nth-of-type(2):hover { z-index: var(--z2); }
-      .one_third:nth-of-type(3):hover { z-index: var(--z2); }
-    }
-  }
 
 </style>
 
