@@ -37,7 +37,7 @@
       <ul>
 
         <li class="case__galleries">
-          <router-link to="/supersymmetry">
+          <router-link to="/galleries">
             <h6 class="mb-2 op-5 uc f-sm f-basismono">ux</h6>
             <h2 class="mb-0 uc f-lg f-mabry-med">ShootProof Galleries</h2>
             <h3 class="f-md f-system">The biggest feature from my 9-5, used by a bunch of folks; Got to pay them billz.</h3>
@@ -61,20 +61,20 @@
         </li>
 
         <li class="case__vibes">
-          <router-link to="/supersymmetry">
+          <router-link to="/vibes">
             <h6 class="mb-2 op-5 uc f-sm f-basismono">ux/dev</h6>
             <h2 class="mb-0 uc f-lg f-mabry-med">Vibes</h2>
             <h3 class="f-md f-system">I know what you're thinking, "I want to see some mobile app stuff." Got you covered B.</h3>
           </router-link>
         </li>
 
-        <li class="case__uploader">
+        <!-- <li class="case__uploader">
           <router-link to="/supersymmetry">
             <h6 class="mb-2 op-5 uc f-sm f-basismono">ux</h6>
             <h2 class="mb-0 uc f-lg f-mabry-med">ShootProof Uploader</h2>
             <h3 class="f-md f-system">Some more product work here; uploading photos is far from a cake walk.</h3>
           </router-link>
-        </li>
+        </li> -->
 
       </ul>
     </section>

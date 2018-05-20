@@ -74,7 +74,7 @@
       </article>
 
       <figure class="img__half">
-        <video class="img-shadow" autoplay loop src="../assets/__vibes/mov/03.mp4"></video>
+        <video class="img-shadow" autoplay playsinline loop src="../assets/__vibes/mov/03.mp4"></video>
         <figcaption class="mt-0 tar">fig. 03</figcaption>
       </figure>
     </section>
@@ -133,14 +133,21 @@
     <!-- img + img half and half 🍋🍹 -->
     <section class="img-img">
       <figure class="hide-sm img__one-two">
-        <img class="" src="../assets/__vibes/img/07@2x.jpg" alt="Tools">
+        <img class="img-shadow" src="../assets/__vibes/img/07@2x.jpg" alt="Tools">
       </figure>
       <figure class="img__two-two">
-        <video autoplay loop src="../assets/__vibes/mov/08.mp4"></video>
+        <video class="img-shadow" autoplay playsinline loop src="../assets/__vibes/mov/08.mp4"></video>
         <figcaption class="hide-sm mt-0 tar">fig. 07, fig. 08</figcaption>
         <figcaption class="hide-md mt-0 tar">fig. 07</figcaption>
       </figure>
     </section>
+
+    <!-- stand-alone article 📝 -->
+    <article class="copy__full">
+      <header><h4 class="mb-2 f-sm uc f-basismono">Next Steps</h4></header>
+      <p>As I continue to update the entries throughout the year, I'm still developing the next steps for Supersymmetry. My initial thought was to update the layout annually and perhaps expand the scope as my familiarity with Vue grows. That may still be in play as I really enjoyed working on both the subject matter &amp; the design for this project. </p>
+      <p>One thing I'd like to improve upon is the detail pages. Currently, they're rather bland and I'd like to possibly highlight more imagery. In whatever route I decide to go in, I'm proud of basically having zero experience with Vue to now using it primarily as I build simple web applications.</p>
+    </article>
 
     <!-- finish line 🏁 -->
     <section class="fin tac">
@@ -152,7 +159,7 @@
     <!-- footer 👣 -->
     <footer class="next-case">
       <h4 class="mb-0 f-sm uc f-basismono">Next Case Study:</h4>
-      <h1 style="display: inline;" class="btn__tertiary f-xl uc f-mabry-med"><router-link to="/gallery">ShootProof Galleries</router-link></h1>
+      <h1 style="display: inline;" class="btn__tertiary f-xl uc f-mabry-med"><router-link to="/galleries">ShootProof Galleries</router-link></h1>
     </footer>
 
   </main>

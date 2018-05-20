@@ -6,6 +6,7 @@ import Info from './views/Info.vue'
 import Supersymmetry from './views/Supersymmetry.vue'
 import QAS from './views/QAS.vue'
 import Vibes from './views/Vibes.vue'
+import Galleries from './views/Galleries.vue'
 
 Vue.use(Router)
 
@@ -36,13 +37,18 @@ export default new Router({
       name: 'vibes',
       component: Vibes
     },
+    {
+      path: '/galleries',
+      name: 'galleries',
+      component: Galleries
+    },
   ],
 
   scrollBehavior (to, from, savedPosition) {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         resolve({ x: 0, y: 0 })
-      }, 500)
+      }, 600)
     })
   }
 })

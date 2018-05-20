@@ -13,7 +13,7 @@
 <style lang="scss">
   @import './assets/style/mq';
 
-  .fade-enter-active, .fade-leave-active { transition: var(--ease); }
+  .fade-enter-active, .fade-leave-active { transition: all 500ms ease; }
   .fade-enter, .fade-leave-active { opacity: 0; }
 
   .router-link-exact-active { text-decoration: line-through;}

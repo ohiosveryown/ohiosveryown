@@ -74,6 +74,10 @@
           <span class="fig-key__label mr-1 uc f-bold">fig 02:</span>
           <span>Early Design Explorations</span>
         </li>
+        <li>
+          <span class="fig-key__label mr-1 uc f-bold">fig 03:</span>
+          <span>Planning</span>
+        </li>
       </ul>
     </section>
 
@@ -82,7 +86,7 @@
       <figure style="background-color: #f3f3f3;">
         <img src="../assets/__supersymmetry/img/02@2x.jpg" alt="Early Design Explorations">
       </figure>
-      <figcaption class="mt-1 tar">fig. 02</figcaption>
+      <figcaption class="mt-0 tar">fig. 02</figcaption>
     </section>
 
     <!-- copy + img half and half 🍋🍹 -->
@@ -95,7 +99,7 @@
 
       <figure class="img__half">
         <img src="../assets/__supersymmetry/img/03@2x.jpg" alt="Planning Word Document">
-        <figcaption class="mt-1 tar">fig. 03</figcaption>
+        <figcaption class="mt-0 tar">fig. 03</figcaption>
       </figure>
     </section>
 
@@ -104,7 +108,7 @@
       <figure>
         <img class="img-shadow" src="../assets/__supersymmetry/img/04@2x.jpg" alt="Large List View">
       </figure>
-      <figcaption class="mt-1 tar">fig. 04</figcaption>
+      <figcaption class="mt-0 tar">fig. 04</figcaption>
     </section>
 
     <!-- figure key 🔑 -->
@@ -129,11 +133,11 @@
     <section class="img-img">
       <figure class="img__three-four">
         <img class="img-shadow" src="../assets/__supersymmetry/img/05@2x.jpg" alt="Large List View">
-        <figcaption class="show-mdl mt-1 tar">fig. 05</figcaption>
+        <figcaption class="show-mdl mt-0 tar">fig. 05</figcaption>
       </figure>
       <figure class="img__one-four hide-sm">
         <img class="img-shadow" src="../assets/__supersymmetry/img/06@2x.jpg" alt="Large List View">
-        <figcaption class="mt-1 tar">fig. 05, fig. 06</figcaption>
+        <figcaption class="mt-0 tar">fig. 05, fig. 06</figcaption>
       </figure>
     </section>
 
@@ -146,10 +150,10 @@
 
     <!-- full-width image 🖼 -->
     <section class="img__w-bg">
-      <figure>
-        <video class="img-shadow__heavy" autoplay loop src="../assets/__supersymmetry/img/08.mp4"></video>
+      <figure class="pt-9 pb-9 " style="background-color: #f7f7f7;">
+        <video class="img-shadow__heavy" autoplay playsinline loop src="../assets/__supersymmetry/img/08.mp4"></video>
       </figure>
-      <!-- <figcaption class="mt-1 tar">fig. 07</figcaption> -->
+      <figcaption class="mt-0 tar">fig. 07</figcaption>
     </section>
 
     <!-- stand-alone article 📝 -->
@@ -164,7 +168,7 @@
       <figure>
         <img src="../assets/__supersymmetry/img/07@2x.jpg" alt="Large List View">
       </figure>
-      <figcaption class="mt-1 tar">fig. 07, fig. 08</figcaption>
+      <figcaption class="mt-0 tar">fig. 08, fig. 09</figcaption>
     </section>
 
     <!-- figure key 🔑 -->
@@ -172,10 +176,14 @@
       <ul class="tac">
         <li>
           <span class="fig-key__label mr-1 uc f-bold">fig 07:</span>
-          <span>Detail View One</span>
+          <span>Colophon Transition</span>
         </li>
         <li>
           <span class="fig-key__label mr-1 uc f-bold">fig 08:</span>
+          <span>Detail View One</span>
+        </li>
+        <li>
+          <span class="fig-key__label mr-1 uc f-bold">fig 09:</span>
           <span>Detail View Two</span>
         </li>
       </ul>
@@ -303,9 +311,11 @@
   .img__full, .img__w-bg { margin-bottom: 3.2rem; }
 
   .img__w-bg > figure > img, .img__w-bg > figure > video {
+    margin-left: grid-width(1);
+    width: grid-width(10);
     @include breakpoint(mdl) {
-      margin-left: grid-width(3);
-      width: grid-width(6);
+      margin-left: grid-width(2);
+      width: grid-width(8);
       transform: translateY(0.5rem);
     }
   }

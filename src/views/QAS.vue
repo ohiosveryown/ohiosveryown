@@ -79,7 +79,7 @@
     <!-- image with bg 🖼 -->
     <section class="img__w-bg">
       <figure style="background-color: #111213;">
-        <video class="pt-9 pb-9 img-shadow__heavy" autoplay loop src="../assets/__qas/mov/06.mp4"></video>
+        <video class="pt-9 pb-9 img-shadow__heavy" autoplay playsinline loop src="../assets/__qas/mov/06.mp4"></video>
       </figure>
       <figcaption class="mt-0 tar">fig. 06</figcaption>
     </section>
@@ -116,7 +116,7 @@
     <!-- full-width image 🖼 -->
     <section class="img__full">
       <figure>
-        <video autoplay loop src="../assets/__qas/mov/07.mp4"></video>
+        <video autoplay playsinline loop src="../assets/__qas/mov/07.mp4"></video>
       </figure>
       <figcaption class="mt-0 tar">fig. 07</figcaption>
     </section>
@@ -129,7 +129,7 @@
     <!-- full-width image 🖼 -->
     <section class="img__full">
       <figure>
-        <video autoplay loop src="../assets/__qas/mov/08.mp4"></video>
+        <video autoplay playsinline loop src="../assets/__qas/mov/08.mp4"></video>
       </figure>
       <figcaption class="mt-0 tar">fig. 08</figcaption>
     </section>
@@ -167,20 +167,20 @@
     <section class="fig-key">
       <ul class="tac">
         <li>
-          <span class="fig-key__label mr-1 uc f-bold">fig 03:</span>
-          <span>Small Detail View</span>
+          <span class="fig-key__label mr-1 uc f-bold">fig 07:</span>
+          <span>Three.js Exploration</span>
         </li>
         <li>
-          <span class="fig-key__label mr-1 uc f-bold">fig 04:</span>
-          <span>Small Home View</span>
+          <span class="fig-key__label mr-1 uc f-bold">fig 08:</span>
+          <span>Home View with Three.js</span>
         </li>
         <li>
-          <span class="fig-key__label mr-1 uc f-bold">fig 05:</span>
-          <span>Another Small Home View</span>
+          <span class="fig-key__label mr-1 uc f-bold">fig 09:</span>
+          <span>Detail View on Scroll</span>
         </li>
         <li>
-          <span class="fig-key__label mr-1 uc f-bold">fig 06:</span>
-          <span>Another Early Home Page Iteration</span>
+          <span class="fig-key__label mr-1 uc f-bold">fig 10:</span>
+          <span>Detail View</span>
         </li>
       </ul>
     </section>
