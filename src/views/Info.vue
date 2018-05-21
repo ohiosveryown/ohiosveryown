@@ -294,6 +294,7 @@
   .info__social {
     position: absolute;
     top: 40rem;
+    z-index: var(--z4);
     margin: 0 auto 4rem;
     @include breakpoint(md)  { top: 48rem; }
     @include breakpoint(mdl) { top: 0rem; bottom: inherit; right: 0rem; text-align: right; }
