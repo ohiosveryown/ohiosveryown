@@ -76,6 +76,11 @@
       </ul>
     </footer>
 
+    <!-- 📼 -->
+    <div class="video__wrapper">
+      <video class="video video__egg" autoplay playsinline loop src="../assets/__info/mov/egg.mp4"></video>
+    </div>
+
     <!-- 🦄🌈 -->
     <div class="rainbow"/>
 
@@ -88,6 +93,43 @@
   @import '../assets/style/mq';
   @import '../assets/style/type';
   @import '../assets/style/btn';
+
+  .video__wrapper {
+    display: none;
+    @include breakpoint(mdl) {
+      display: inherit;
+      position: fixed;
+      top: 0; right: 0; bottom: 0;
+      width: 40vw; height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    @include breakpoint(lg) { width: 50vw; }
+  }
+
+  .video {
+    position: relative;
+    max-width: none; width: auto; min-height: 100vh;
+    z-index: var(--zmax);
+  }
+
+  .video__egg {
+    position: absolute;
+    visibility: hidden;
+  }
+
+  .video__bg {
+    content: '';
+    position: absolute;
+    z-index: var(--z1);
+    top: 0; right: 0;
+    width: 50vw; height: 100vh;
+    background: #fff;
+    opacity: 0;
+  }
+
+  .video__active { visibility: visible; }
 
   .f-xl {
     font-size: 1.9rem;
@@ -298,6 +340,9 @@
       const facts__query = document.querySelector('.facts__query')
       const footer__title = document.querySelector('.footer__title')
 
+      const video__egg = document.querySelector('.video__egg')
+      const video__bg = document.querySelector('.video__bg')
+
       // rainbow colors
       let blue = 'linear-gradient(90deg, rgb(255,255,255) 0%, rgb(164,157,255) 100%)'
       let chartreuse = 'linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(148,249,3,1) 100%)'
@@ -368,12 +413,14 @@
       })
 
       info__easter__img.addEventListener('mouseenter', () => {
-        bg.classList.add('info__easter-img-active')
+        // bg.classList.add('info__easter-img-active')
+        video__egg.classList.add('video__active')
         info__social.style.opacity = '0'
       })
 
       info__easter__img.addEventListener('mouseleave', () => {
-        bg.classList.remove('info__easter-img-active')
+        // bg.classList.remove('info__easter-img-active')
+        video__egg.classList.remove('video__active')
         info__social.style.opacity = '1'
       })
 

@@ -79,7 +79,7 @@
       </ul>
     </section>
 
-    <!-- -->
+    <!-- 📼 -->
     <div class="video__wrapper">
       <video class="video video__spg" autoplay playsinline loop src="../assets/__galleries/mov/05.mp4"></video>
       <video class="video video__ss" autoplay playsinline loop src="../assets/__work/mov/03.mp4"></video>
@@ -110,12 +110,17 @@
   @import '../assets/style/type';
 
   .video__wrapper {
-    position: fixed;
-    top: 0; right: 0; bottom: 0;
-    width: 50vw; height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: none;
+
+    @include breakpoint(mdl) {
+      display: inherit;
+      position: fixed;
+      top: 0; right: 0; bottom: 0;
+      width: 50vw; height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
   }
 
   .video {
@@ -127,7 +132,7 @@
 
   .video__spg, .video__ss, .video__qas, .video__vibes, .video__spu {
     position: absolute;
-    opacity: 0;
+    visibility: hidden;
   }
 
   .video__bg {
@@ -145,7 +150,7 @@
   .video__bg-qas   { background: black; opacity: 1; }
   .video__bg-vibes { background: mediumslateblue; opacity: 1; }
   .video__bg-spu   { background: cornflowerblue; opacity: 1; }
-  .video__active   { opacity: 1; }
+  .video__active   { visibility: visible; }
 
 
   .f-xl {
