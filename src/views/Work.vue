@@ -38,46 +38,56 @@
 
         <li class="case__galleries">
           <router-link to="/galleries">
-            <h6 class="mb-2 op-5 uc f-sm f-basismono">ux</h6>
-            <h2 class="mb-0 uc f-lg f-mabry-med">ShootProof Galleries</h2>
+            <h6 class="mb-0 op-5 uc f-sm f-basismono">ux</h6>
+            <h2 class="mb-1 uc f-lg f-mabry-med">ShootProof Galleries</h2>
             <h3 class="f-md f-system">The biggest feature from my 9-5, used by a bunch of folks; Got to pay them billz.</h3>
           </router-link>
         </li>
 
         <li class="case__supersymmetry">
           <router-link to="/supersymmetry">
-            <h6 class="mb-2 op-5 uc f-sm f-basismono">ux/dev</h6>
-            <h2 class="mb-0 uc f-lg f-mabry-med">Supersymmetry</h2>
+            <h6 class="mb-0 op-5 uc f-sm f-basismono">ux/dev</h6>
+            <h2 class="mb-1 uc f-lg f-mabry-med">Supersymmetry</h2>
             <h3 class="f-md f-system">A self-initiated project showcasing architecture, interior design &amp; structural engineering—basically spaces.</h3>
           </router-link>
         </li>
 
         <li class="case__qas">
           <router-link to="/qas">
-            <h6 class="mb-2 op-5 uc f-sm f-basismono">ux/dev</h6>
-            <h2 class="mb-0 uc f-lg f-mabry-med">Questions ABout Space</h2>
+            <h6 class="mb-0 op-5 uc f-sm f-basismono">ux/dev</h6>
+            <h2 class="mb-1 uc f-lg f-mabry-med">Questions ABout Space</h2>
             <h3 class="f-md f-system">Another side project, this time about space. Space is cool. And Vast. But mostly cold.</h3>
           </router-link>
         </li>
 
         <li class="case__vibes">
           <router-link to="/vibes">
-            <h6 class="mb-2 op-5 uc f-sm f-basismono">ux/dev</h6>
-            <h2 class="mb-0 uc f-lg f-mabry-med">Vibes</h2>
+            <h6 class="mb-0 op-5 uc f-sm f-basismono">ux/dev</h6>
+            <h2 class="mb-1 uc f-lg f-mabry-med">Vibes</h2>
             <h3 class="f-md f-system">I know what you're thinking, "I want to see some mobile app stuff." Got you covered B.</h3>
           </router-link>
         </li>
 
-        <!-- <li class="case__uploader">
-          <router-link to="/supersymmetry">
-            <h6 class="mb-2 op-5 uc f-sm f-basismono">ux</h6>
-            <h2 class="mb-0 uc f-lg f-mabry-med">ShootProof Uploader</h2>
+        <li class="disabled case__uploader">
+          <!-- <router-link to="/supersymmetry"> -->
+            <h6 class="mb-0 op-5 uc f-sm f-basismono">Coming Soon</h6>
+            <h2 class="mb-1 uc f-lg f-mabry-med">ShootProof Uploader</h2>
             <h3 class="f-md f-system">Some more product work here; uploading photos is far from a cake walk.</h3>
-          </router-link>
-        </li> -->
+          <!-- </router-link> -->
+        </li>
 
       </ul>
     </section>
+
+    <!-- -->
+    <div class="video__wrapper">
+      <video class="video video__spg" autoplay playsinline loop src="../assets/__galleries/mov/05.mp4"></video>
+      <video class="video video__ss" autoplay playsinline loop src="../assets/__work/mov/03.mp4"></video>
+      <video class="video video__qas" autoplay playsinline loop src="../assets/__work/mov/04.mp4"></video>
+      <video class="video video__vibes" autoplay playsinline loop src="../assets/__vibes/mov/08.mp4"></video>
+      <video class="video video__spu" autoplay playsinline loop src="../assets/__work/mov/soon.mp4"></video>
+      <div class="video__bg"/>
+    </div>
 
     <!-- 🤚🏼 -->
     <section class="right"/>
@@ -87,7 +97,7 @@
       <span class="case__subtitle tar"></span>
     </footer>
 
-    <!-- -->
+    <!-- 🦄 -->
     <div class="rainbow"/>
 
   </main>
@@ -98,6 +108,45 @@
 <style lang="scss" scoped>
   @import '../assets/style/mq';
   @import '../assets/style/type';
+
+  .video__wrapper {
+    position: fixed;
+    top: 0; right: 0; bottom: 0;
+    width: 50vw; height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .video {
+    position: relative;
+    max-width: 88%; max-height: 72%;
+    box-shadow: 0 10px 40px 0 rgba(0,0,0,.4);
+    z-index: var(--zmax);
+  }
+
+  .video__spg, .video__ss, .video__qas, .video__vibes, .video__spu {
+    position: absolute;
+    opacity: 0;
+  }
+
+  .video__bg {
+    content: '';
+    position: absolute;
+    z-index: var(--z1);
+    top: 0; right: 0;
+    width: 50vw; height: 100vh;
+    background: #fff;
+    opacity: 0;
+  }
+
+  .video__bg-spg   { background: #f4f5fa; opacity: 1; }
+  .video__bg-ss    { background: #f8f5eb; opacity: 1; }
+  .video__bg-qas   { background: black; opacity: 1; }
+  .video__bg-vibes { background: mediumslateblue; opacity: 1; }
+  .video__bg-spu   { background: cornflowerblue; opacity: 1; }
+  .video__active   { opacity: 1; }
+
 
   .f-xl {
     font-size: 1.9rem;
@@ -158,6 +207,8 @@
     }
   }
 
+  .disabled { cursor: not-allowed; opacity: 0.5; }
+
   header {
     margin: 12rem 0 5.6rem;
     @include breakpoint(md)  { margin-top: 20rem; width: grid-width(8); }
@@ -186,7 +237,7 @@
     @include breakpoint(mdl) {
       content: '↝';
       position: absolute;
-      top: 2rem; left: -4.8rem;
+      top: .8rem; left: -4.8rem;
       opacity: 0;
       font-size: 4rem;
       line-height: 1;
@@ -270,24 +321,23 @@
 
   // case study backgrounds
   .case__galleries-active {
-    background: #ebeff8 url('../assets/__work/gif/galleries.gif') no-repeat center bottom;
+    background: #F4F5FA url('../assets/__work/mov/00.mp4') no-repeat center bottom;
     background-size: contain;
   }
 
   .case__supersymmetry-active {
-    background: #f8f5eb url('../assets/__work/gif/supersymmetry.gif') no-repeat left center;
+    background: #f8f5eb url('../assets/__work/mov/01.mp4') no-repeat left center;
     background-size: cover;
   }
 
   .case__qas-active {
-    background: black url('../assets/__work/gif/qas.gif') no-repeat center bottom;
-    background-size: contain;
+    background: black url('../assets/__work/mov/02.mp4') no-repeat center center;
+    background-size: cover;
   }
 
   .case__vibes-active {
-    // background: mediumslateblue url('../assets/__work/gif/galleries.gif') no-repeat center bottom;
-    background: mediumslateblue;
-    background-size: contain;
+    background: mediumslateblue url('../assets/__vibes/mov/08.mp4') no-repeat center center;
+    background-size: 40%;
   }
 
   .case__uploader-active {
@@ -309,7 +359,7 @@
 
   // case subtitles
   .case__subtitle:before { content: 'Featured Work'; }
-  .case__subtitle-galleries:before { content: 'SP Galleries 2016'; }
+  .case__subtitle-galleries:before { content: 'SP Galleries 2017'; }
   .case__subtitle-supersymmetry:before { content: 'Supersymmetry 2016'; }
   .case__subtitle-qas:before { content: 'QAS 2018'; color: #fff; }
   .case__subtitle-vibes:before { content: 'Vibes 2017'; }
@@ -334,6 +384,13 @@
       const case__sub = document.querySelector('.case__subtitle')
       const rainbow = document.querySelector('.rainbow')
 
+      const video__spg = document.querySelector('.video__spg')
+      const video__ss = document.querySelector('.video__ss')
+      const video__qas = document.querySelector('.video__qas')
+      const video__vibes = document.querySelector('.video__vibes')
+      const video__spu = document.querySelector('.video__spu')
+      const video__bg = document.querySelector('.video__bg')
+
       // rainbow colors
       let blue = 'linear-gradient(90deg, rgb(255,255,255) 0%, rgb(164,157,255) 100%)'
       let chartreuse = 'linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(148,249,3,1) 100%)'
@@ -349,52 +406,73 @@
 
       // case studies logic
       case__galleries.addEventListener('mouseenter', () => {
-        bg.classList.add('case__galleries-active')
+        // bg.classList.add('case__galleries-active')
+        video__spg.classList.add('video__active')
+        video__bg.classList.add('video__bg-spg')
         case__sub.classList.add('case__subtitle-galleries')
       })
 
       case__galleries.addEventListener('mouseleave', () => {
-        bg.classList.remove('case__galleries-active')
+        // bg.classList.remove('case__galleries-active')
+        video__spg.classList.remove('video__active')
+        video__bg.classList.remove('video__bg-spg')
         case__sub.classList.remove('case__subtitle-galleries')
       })
 
       case__supersymmetry.addEventListener('mouseenter', () => {
-        bg.classList.add('case__supersymmetry-active')
+        // bg.classList.add('case__supersymmetry-active')
+        video__ss.classList.add('video__active')
+        video__bg.classList.add('video__bg-ss')
         case__sub.classList.add('case__subtitle-supersymmetry')
       })
 
       case__supersymmetry.addEventListener('mouseleave', () => {
-        bg.classList.remove('case__supersymmetry-active')
+        // bg.classList.remove('case__supersymmetry-active')
+        video__ss.classList.remove('video__active')
+        video__bg.classList.remove('video__bg-ss')
         case__sub.classList.remove('case__subtitle-supersymmetry')
       })
 
       case__qas.addEventListener('mouseenter', () => {
-        bg.classList.add('case__qas-active')
+        // bg.classList.add('case__qas-active')
+        video__qas.classList.add('video__active')
+        video__bg.classList.add('video__bg-qas')
         case__sub.classList.add('case__subtitle-qas')
+        // video__bg.classList.add('video__active')
       })
 
       case__qas.addEventListener('mouseleave', () => {
-        bg.classList.remove('case__qas-active')
+        // bg.classList.remove('case__qas-active')
+        video__qas.classList.remove('video__active')
+        video__bg.classList.remove('video__bg-qas')
         case__sub.classList.remove('case__subtitle-qas')
       })
 
       case__vibes.addEventListener('mouseenter', () => {
-        bg.classList.add('case__vibes-active')
+        // bg.classList.add('case__vibes-active')
+        video__vibes.classList.add('video__active')
+        video__bg.classList.add('video__bg-vibes')
         case__sub.classList.add('case__subtitle-vibes')
       })
 
       case__vibes.addEventListener('mouseleave', () => {
-        bg.classList.remove('case__vibes-active')
+        // bg.classList.remove('case__vibes-active')
+        video__vibes.classList.remove('video__active')
+        video__bg.classList.remove('video__bg-vibes')
         case__sub.classList.remove('case__subtitle-vibes')
       })
 
       case__uploader.addEventListener('mouseenter', () => {
-        bg.classList.add('case__uploader-active')
+        // bg.classList.add('case__uploader-active')
+        video__spu.classList.add('video__active')
+        video__bg.classList.add('video__bg-spu')
         case__sub.classList.add('case__subtitle-uploader')
       })
 
       case__uploader.addEventListener('mouseleave', () => {
-        bg.classList.remove('case__uploader-active')
+        // bg.classList.remove('case__uploader-active')
+        video__spu.classList.remove('video__active')
+        video__bg.classList.remove('video__bg-spu')
         case__sub.classList.remove('case__subtitle-uploader')
       })
 

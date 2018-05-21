@@ -76,7 +76,7 @@
       </ul>
     </footer>
 
-    <!-- -->
+    <!-- 🦄🌈 -->
     <div class="rainbow"/>
 
   </main>
@@ -243,7 +243,7 @@
   }
 
   .info__easter-img-active {
-    background: #ebeff8 url('../assets/__info/gif/easter.gif') no-repeat center center;
+    background: #ebeff8 url('../assets/__info/gif/easter-2.gif') no-repeat center center;
     background-size: cover;
   }
 
