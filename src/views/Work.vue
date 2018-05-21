@@ -76,6 +76,17 @@
           <!-- </router-link> -->
         </li>
 
+        <hr class="mb-7 op-2">
+
+        <li class="case__archive">
+          <!-- <a href="http://gd.ohiosveryown.co" target="_blank"> -->
+          <a href="http://archives.veryown.co" target="_blank">
+            <h6 class="mb-0 op-5 uc f-sm f-basismono">Various</h6>
+            <h2 class="mb-1 uc f-lg f-mabry-med">Archived Projects</h2>
+            <h3 class="f-md f-system">Projects from graveyard past 👻 – not so spooky, but old. Things may be broken so enter at your own peril.</h3>
+          </a>
+        </li>
+
       </ul>
     </section>
 
@@ -108,50 +119,6 @@
 <style lang="scss" scoped>
   @import '../assets/style/mq';
   @import '../assets/style/type';
-
-  .video__wrapper {
-    display: none;
-
-    @include breakpoint(mdl) {
-      display: inherit;
-      position: fixed;
-      top: 0; right: 0; bottom: 0;
-      width: 50vw; height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-  }
-
-  .video {
-    position: relative;
-    max-width: 88%; max-height: 72%;
-    box-shadow: 0 10px 40px 0 rgba(0,0,0,.4);
-    z-index: var(--zmax);
-  }
-
-  .video__spg, .video__ss, .video__qas, .video__vibes, .video__spu {
-    position: absolute;
-    visibility: hidden;
-  }
-
-  .video__bg {
-    content: '';
-    position: absolute;
-    z-index: var(--z1);
-    top: 0; right: 0;
-    width: 50vw; height: 100vh;
-    background: #fff;
-    opacity: 0;
-  }
-
-  .video__bg-spg   { background: #f4f5fa; opacity: 1; }
-  .video__bg-ss    { background: #f8f5eb; opacity: 1; }
-  .video__bg-qas   { background: black; opacity: 1; }
-  .video__bg-vibes { background: mediumslateblue; opacity: 1; }
-  .video__bg-spu   { background: cornflowerblue; opacity: 1; }
-  .video__active   { visibility: visible; }
-
 
   .f-xl {
     font-size: 1.9rem;
@@ -190,7 +157,6 @@
       z-index: var(--z0);
       top: 0; right: 0;
       width: 50vw; height: 100vh;
-      // background: linear-gradient(90deg, rgb(255,255,255)0%, rgb(164,157,255)100%);
     }
   }
 
@@ -259,6 +225,8 @@
     }
   }
 
+  hr { @include breakpoint(mdl) { margin-left: 0; width: grid-width(7); } }
+
   // keyword easter eggs ...shhh
   .wrapper { display: inline; position: relative; }
 
@@ -324,32 +292,50 @@
     background-size: cover;
   }
 
-  // case study backgrounds
-  .case__galleries-active {
-    background: #F4F5FA url('../assets/__work/mov/00.mp4') no-repeat center bottom;
-    background-size: contain;
+  // case studies + bgs
+
+  .video__wrapper {
+    display: none;
+
+    @include breakpoint(mdl) {
+      display: inherit;
+      position: fixed;
+      top: 0; right: 0; bottom: 0;
+      width: 50vw; height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
   }
 
-  .case__supersymmetry-active {
-    background: #f8f5eb url('../assets/__work/mov/01.mp4') no-repeat left center;
-    background-size: cover;
+  .video {
+    position: relative;
+    max-width: 88%; max-height: 72%;
+    box-shadow: 0 10px 40px 0 rgba(0,0,0,.4);
+    z-index: var(--zmax);
   }
 
-  .case__qas-active {
-    background: black url('../assets/__work/mov/02.mp4') no-repeat center center;
-    background-size: cover;
+  .video__spg, .video__ss, .video__qas, .video__vibes, .video__spu {
+    position: absolute;
+    visibility: hidden;
   }
 
-  .case__vibes-active {
-    background: mediumslateblue url('../assets/__vibes/mov/08.mp4') no-repeat center center;
-    background-size: 40%;
+  .video__bg {
+    content: '';
+    position: absolute;
+    z-index: var(--z1);
+    top: 0; right: 0;
+    width: 50vw; height: 100vh;
+    background: #fff;
+    opacity: 0;
   }
 
-  .case__uploader-active {
-    // background: cornflowerblue url('../assets/__work/gif/galleries.gif') no-repeat center bottom;
-    background: cornflowerblue;
-    background-size: contain;
-  }
+  .video__bg-spg   { background: #f4f5fa; opacity: 1; }
+  .video__bg-ss    { background: #f8f5eb; opacity: 1; }
+  .video__bg-qas   { background: black; opacity: 1; }
+  .video__bg-vibes { background: mediumslateblue; opacity: 1; }
+  .video__bg-spu   { background: cornflowerblue; opacity: 1; }
+  .video__active   { visibility: visible; }
 
   footer {
     display: none;
