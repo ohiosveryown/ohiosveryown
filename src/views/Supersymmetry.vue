@@ -2,25 +2,13 @@
 <template>
   <main class="mw__lg">
 
-    <!-- <div class="navbar">
-      <div class="mw__lg">
-        <div class="navbar__left uc">
-          <h4 class="mb-0 f-sm f-basismono">you're reading about:</h4>
-          <h3 class="mb-3 f-lg uc f-mabry-med">Supersymmetry</h3>
-        </div>
-        <div class="navbar__right">
-          <router-link to="/">Home</router-link>
-        </div>
-      </div>
-    </div> -->
-
     <div class="choice-card">
       <h4 class="mb-0 op-5 f-sm uc f-basismono">You're reading about:</h4>
       <h2 class="mb-2 f-lg uc f-mabry-med">Supersymmetry</h2>
       <h4 class="mb-0 op-5 f-sm uc f-basismono">Do you want to go:</h4>
       <ul>
         <li class="mr-3"><h3 class="link btn__tertiary mb-4 f-md f-travels-med">Home</h3></li>
-        <li class="mr-3"><h3 class="link btn__tertiary mb-4 f-md f-travels-med">To Another Project</h3></li>
+        <li class="mr-3"><h3 class="link btn__tertiary mb-4 f-md f-travels-med">To the Top</h3></li>
         <li><h3 class="link btn__tertiary mb-4 f-md f-travels-med">On Vacation</h3></li>
       </ul>
     </div>
@@ -201,7 +189,7 @@
       <h2 class="mb-3 f-lg uc f-travels-med">Fin</h2>
       <h4 class="mb-0 f-sm uc f-basismono">Read the longform case study:</h4>
       <h3 class="f-md f-travels-med">
-        <a class="link btn__tertiary" href="" target="_blank">http://medium.com/a-long-link-style</a>
+        <a class="link btn__tertiary" href="https://medium.com/@cmykw_/supersymmetry-18ba16492b03" target="_blank">Longform on Medium</a>
       </h3>
     </section>
 
@@ -357,19 +345,19 @@
       let hidden = () => card.classList.add("hidden").classList.remove('show-card')
       let show = () => card.classList.add("show-card").classList.remove('hidden')
 
-       window.addEventListener('scroll', function() {
-          scrollpos = window.scrollY;
-          if (scrollpos <= 800) {
-            card.classList.add("hide")
-          }
-          else {
-            card.classList.remove("hide")
-            card.classList.add("show-card")
-          }
-          if (this.oldScroll > this.scrollY) { card.classList.add('change-card') }
-          else { card.classList.remove('change-card') }
-          this.oldScroll = this.scrollY;
-        })
+      window.addEventListener('scroll', function() {
+        scrollpos = window.scrollY;
+        if (scrollpos <= 800) {
+          card.classList.add("hide")
+        }
+        else {
+          card.classList.remove("hide")
+          card.classList.add("show-card")
+        }
+        if (this.oldScroll > this.scrollY) { card.classList.add('change-card') }
+        else { card.classList.remove('change-card') }
+        this.oldScroll = this.scrollY;
+      })
     }
   }
 </script>

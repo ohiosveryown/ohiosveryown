@@ -308,6 +308,9 @@
     }
   }
 
+  // disable hover on touch
+  @media (hover: none) { .video__wrapper { display: none; } }
+
   .video {
     position: relative;
     max-width: 88%; max-height: 72%;

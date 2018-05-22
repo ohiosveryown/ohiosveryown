@@ -2,6 +2,9 @@
 <template>
   <main class="mw__lg">
 
+    <!-- card -->
+    <div class="card"></div>
+
     <!-- hero 👰🏻 -->
     <section class="hero">
       <!-- header 💆 -->
@@ -314,8 +317,19 @@
   .fig-key { margin-bottom: 4rem; }
   .fig-key > ul { display: flex; flex-direction: column; }
 
-  .show-card { opacity: 1; z-index: var(--z4); }
-  .change-card { transform: translateY(0); }
+  .card {
+    position: fixed;
+    top: 0; right: 0;
+    width: 200px; height: 80px;
+    background: pink;
+    opacity: 1;
+    transform: translateY(-180px);
+    transition: all 300ms ease;
+  }
+
+  .show   { display: flex; opacity: 1; z-index: 999; }
+  .hide   { opacity: 0; }
+  .move { transform: translateY(0px); }
 
 </style>
 
@@ -326,7 +340,32 @@
     name: 'galleries',
 
     mounted() {
+      let scrollpos = window.scrollY
+      let lastScrollTop = 0
+      const card = document.querySelector('.card')
 
+      let hidden = () => card.classList.add("hide").classList.remove('show')
+      let show = () => card.classList.add("show").classList.remove('hide')
+
+      window.addEventListener("scroll", function() {
+        let st = window.pageYOffset || document.documentElement.scrollTop;
+
+         if (st > lastScrollTop){
+             card.classList.remove('move')
+         } else {
+            card.classList.add('move')
+         }
+         lastScrollTop = st;
+
+        scrollpos = window.scrollY;
+        if (scrollpos <= 300) {
+          card.classList.add("hide")
+        }
+        else {
+          card.classList.remove("hide")
+          card.classList.add("show")
+        }
+      }, false);
     }
   }
 </script>
