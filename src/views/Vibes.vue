@@ -136,7 +136,7 @@
         <img class="img-shadow" src="../assets/__vibes/img/07@2x.jpg" alt="Tools">
       </figure>
       <figure class="img__two-two">
-        <video class="img-shadow" autoplay playsinline loop src="../assets/__vibes/mov/08.mp4"></video>
+        <video class="img-shadow" autoplay playsinline loop src="../assets/__vibes/mov/01.mp4"></video>
         <figcaption class="hide-sm mt-0 tar">fig. 07, fig. 08</figcaption>
         <figcaption class="hide-md mt-0 tar">fig. 07</figcaption>
       </figure>

@@ -95,7 +95,7 @@
       <video class="video video__spg" autoplay playsinline loop src="../assets/__galleries/mov/05.mp4"></video>
       <video class="video video__ss" autoplay playsinline loop src="../assets/__work/mov/03.mp4"></video>
       <video class="video video__qas" autoplay playsinline loop src="../assets/__work/mov/04.mp4"></video>
-      <video class="video video__vibes" autoplay playsinline loop src="../assets/__vibes/mov/08.mp4"></video>
+      <video class="video video__vibes" autoplay playsinline loop src="../assets/__vibes/mov/01.mp4"></video>
       <video class="video video__spu" autoplay playsinline loop src="../assets/__work/mov/soon.mp4"></video>
       <div class="video__bg"/>
     </div>

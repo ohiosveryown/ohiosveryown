@@ -124,7 +124,7 @@
 
     <!-- stand-alone article 📝 -->
     <article class="copy__full">
-      <p>The initial homepage went through some changed as well. The first iteration featured a logotype "Questions About Space" on a white palette. I didn't want to overthink this one, so I chose to instead work with the most common color in space, black, as the primary color for the background.</p>
+      <p>The initial homepage went through some change as well. The first iteration featured a logotype "Questions About Space" on a white palette. I didn't want to overthink this one, so I chose to instead work with the most common color in space, black, as the primary color for the background.</p>
       <p>Above you can see the three.js "star field" without any of the  homepage copy; below is everything put together.</p>
     </article>
 
@@ -140,7 +140,7 @@
     <article class="copy__full">
       <p>There is some beautiful imagery shot by various NASA satellites that I wanted to use to give more visual appeal to an otherwise text heavy interface. They're all open-sourced and mostly black and white so they fit the overall theme perfectly.</p>
       <p>One cool feature I incorporated is every time the homepage is loaded, a new set of images are generated so you sort of get a different feel and experience.</p>
-      <p>The detail view come equipped with a header that comes into view after a user scrolls down, so as to give reference to what question they're on (and a link to the next question) without having to scroll all the way back to the top (space is complex, some of these answers are loooong).</p>
+      <p>The detail view comes equipped with a header that comes into view after a user scrolls down, so as to give reference to what question they're on (and a link to the next question) without having to scroll all the way back to the top (space is complex, some of these answers are loooong).</p>
     </article>
 
     <!-- img + img half and half 🍋🍹 -->

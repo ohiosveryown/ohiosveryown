@@ -11,7 +11,7 @@
       <header class="hero__header uc">
         <h4 class="mb-0 f-sm f-basismono">ux</h4>
         <h1 class="mb-2 f-xl f-mabry-med">ShootProof Galleries</h1>
-         <h2 class="f-lg f-travels-med">In the fall of 2016 I began a self-initiated project to design &amp; develop a photo-blog in Vue JS focusing on architecture, interior design &amp; structural engineering.</h2>
+         <h2 class="f-lg f-travels-med">Before the digital age, managing photos was much more straight-forward. Now, things are much more difficult and there are a bevy of options. At ShootProof, the goal is to takeaway the nuance and allow photographers to Focus on What Matters Most.</h2>
       </header>
       <!-- instructions 💬 -->
       <nav class="hero__scroll">
@@ -39,8 +39,8 @@
     <!-- stand-alone article 📝 -->
     <article class="copy__full">
       <!-- <header><h4 class="mb-1 f-sm uc f-basismono">Task</h4></header> -->
-      <p>The main challenge was to create a brief repository for information of particular spaces. I wanted Supersymmetry to have brevity but highlight what makes these spaces special &amp; unique.</p>
-      <p>I wanted to structure Supersymmetry this way for the sake of brevity and maintenance, while highlighting what makes these specific spaces special (...that alliteration though 👀👏🏼).</p>
+      <p>The version two of ShootProof Galleries had been around for over five years and was quickly becoming outdated. Our users are becoming more adept in running businesses and they need software that is feature rich while being simple, straight-forward and modern.</p>
+      <p>My biggest challenge was to create an interface and experience that allowed photographers at any level to do things as simple as replacing an image, to managing tens-of-thousands of photos across hundreds of albums.</p>
     </article>
 
     <!-- figure key 🔑 -->
@@ -68,9 +68,9 @@
     <!-- stand-alone article 📝 -->
     <article class="copy__full">
       <!-- <header><h4 class="mb-1 f-sm uc f-basismono">Task</h4></header> -->
-      <p>The main challenge was to create a brief repository for information of particular spaces. I wanted Supersymmetry to have brevity but highlight what makes these spaces special &amp; unique.</p>
-      <p>I wanted to structure Supersymmetry this way for the sake of brevity and maintenance, while highlighting what makes these specific spaces special (...that alliteration though 👀👏🏼).</p>
-      <p>The main challenge was to create a brief repository for information of particular spaces. I wanted Supersymmetry to have brevity but highlight what makes these spaces special &amp; unique.</p>
+      <p>At the very beginning of the redesign I was instrumental to scoping the project as well as being a product owner into what features we'd be incorporating as well.</p>
+      <p>Throughout the lifecycle of the project redesign, I played a large role in determining not only the visual design language, but also what features would be added and depreciated.</p>
+      <p>Scoping the project was instrumental in informing my design direction and cultivating a seamless user experience.</p>
     </article>
 
     <!-- figure key 🔑 -->
@@ -98,8 +98,9 @@
     <!-- stand-alone article 📝 -->
     <article class="copy__full">
       <!-- <header><h4 class="mb-1 f-sm uc f-basismono">Task</h4></header> -->
-      <p>The main challenge was to create a brief repository for information of particular spaces. I wanted Supersymmetry to have brevity but highlight what makes these spaces special &amp; unique.</p>
-      <p>I wanted to structure Supersymmetry this way for the sake of brevity and maintenance, while highlighting what makes these specific spaces special (...that alliteration though 👀👏🏼).</p>
+      <p>Working apart of a larger requirements and research team, I was the sole user interface designer. Given that fact, it was still extremely vital to create a homogeneous and consistent system of components.</p>
+      <p>Because this is ShootProof's largest feature, I knew going forward the visual language would inform any work we did moving forward for other features.</p>
+      <p>I wanted to created a design language that could be repurposed and functional throughout ShootProof's application. I specifically chose to strip away veneer and superfluous UI elements to allow the user to focus on the results they're trying to achieve, rather than the tool they're using.</p>
     </article>
 
     <!-- image with bg 🖼 -->
@@ -143,7 +144,7 @@
     <!-- stand-alone article 📝 -->
     <article class="copy__full">
       <!-- <header><h4 class="mb-1 f-sm uc f-basismono">Task</h4></header> -->
-      <p>The main challenge was to create a brief repository for information of particular spaces. I wanted Supersymmetry to have brevity but highlight what makes these spaces special &amp; unique.</p>
+      <p>One of the biggest improvements made for the Manage Galleries feature-set was creating a seamless experience across various devices. The v2 experience was completely fragmented and unresponsive. In our user research, we found more and more photographers are wanting to manage their galleries on the fly with their mobile devices.</p>
     </article>
 
     <!-- full-width image 🖼 -->
@@ -157,8 +158,8 @@
     <!-- stand-alone article 📝 -->
     <article class="copy__full">
       <!-- <header><h4 class="mb-1 f-sm uc f-basismono">Task</h4></header> -->
-      <p>The main challenge was to create a brief repository for information of particular spaces. I wanted Supersymmetry to have brevity but highlight what makes these spaces special &amp; unique.</p>
-      <p>I wanted to structure Supersymmetry this way for the sake of brevity and maintenance, while highlighting what makes these specific spaces special (...that alliteration though 👀👏🏼).</p>
+      <p>A big interaction shift from v2 to v3 was allowing a user to view all of their galleries, albums and photos all at once. Speaking with a number of photographers, I found that even after a gallery structure was setup, they'd often want to move photos to different albums, and even to different galleries.</p>
+      <p>This helped drive the user interface to a three panel layout with galleries, albums and photos being sequentially in view at all times. This allowed a user to simply drag a photo or even an album to different locations. The feedback received on this new interaction was very positive.</p>
     </article>
 
     <!-- figure key 🔑 -->
@@ -190,8 +191,8 @@
     <!-- stand-alone article 📝 -->
     <article class="copy__full">
       <!-- <header><h4 class="mb-1 f-sm uc f-basismono">Task</h4></header> -->
-      <p>The main challenge was to create a brief repository for information of particular spaces. I wanted Supersymmetry to have brevity but highlight what makes these spaces special &amp; unique.</p>
-      <p>I wanted to structure Supersymmetry this way for the sake of brevity and maintenance, while highlighting what makes these specific spaces special (...that alliteration though 👀👏🏼).</p>
+      <p>A consistent interface is the easiest to use and because of that, I wanted all the sorting and tools to be located in the same general areas across galleries, albums and photos. Each toolset is located conveniently under the display titles in each panel.</p>
+      <p>The single actions are also executed in the same way. Actions are found directly in the same general area as the module they're being applied to. This seems like an obvious solution, however throughout a large application, this isn't always feasible.</p>
     </article>
 
     <!-- image with bg 🖼 -->
@@ -205,8 +206,9 @@
     <!-- stand-alone article 📝 -->
     <article class="copy__full">
       <header><h4 class="mb-1 f-sm uc f-basismono">Next Steps</h4></header>
-      <p>The main challenge was to create a brief repository for information of particular spaces. I wanted Supersymmetry to have brevity but highlight what makes these spaces special &amp; unique.</p>
-      <p>I wanted to structure Supersymmetry this way for the sake of brevity and maintenance, while highlighting what makes these specific spaces special (...that alliteration though 👀👏🏼).</p>
+      <p>The redesign of this Galleries feature-set was a complete overhaul focusing on new functionality, interaction and visual design. It was a large effort that took a lot of teamwork and communication, especially across design and development.</p>
+      <p>When the redesign was finally released, we quickly heard back from our user base. One of the best things when working at a company where peoples' livelihoods depend on the tools your building is that the feedback is very vocal. Of course we didn't do everything right and there are things we're building on, but the general consensus was very positive.</p>
+      <p>I'll never forget the next day after the redesign started to rollout our support team forwarded an email they received. It was a user recording himself and his screen while using the interface for the first time. That type of feedback is truly invaluable and not something you often get anywhere else.</p>
     </article>
 
     <!-- finish line 🏁 -->
