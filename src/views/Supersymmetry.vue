@@ -139,7 +139,7 @@
     <!-- full-width image 🖼 -->
     <section class="img__w-bg">
       <figure class="pt-9 pb-9 " style="background-color: #f7f7f7;">
-        <video class="img-shadow__heavy" autoplay playsinline loop src="../assets/__supersymmetry/img/08.mp4"></video>
+        <video class="img-shadow__heavy" autoplay playsinline loop src="../assets/__supersymmetry/mov/01.mp4"></video>
       </figure>
       <figcaption class="mt-0 tar">fig. 07</figcaption>
     </section>
@@ -163,15 +163,15 @@
     <section class="fig-key">
       <ul class="tac">
         <li>
-          <span class="fig-key__label mr-1 uc f-bold">fig 07:</span>
+          <span class="fig-key__label mr-1 uc f-bold">fig. 07:</span>
           <span>Colophon Transition</span>
         </li>
         <li>
-          <span class="fig-key__label mr-1 uc f-bold">fig 08:</span>
+          <span class="fig-key__label mr-1 uc f-bold">fig. 08:</span>
           <span>Detail View One</span>
         </li>
         <li>
-          <span class="fig-key__label mr-1 uc f-bold">fig 09:</span>
+          <span class="fig-key__label mr-1 uc f-bold">fig. 09:</span>
           <span>Detail View Two</span>
         </li>
       </ul>
