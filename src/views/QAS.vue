@@ -8,7 +8,7 @@
       <header class="hero__header uc">
         <h4 class="mb-0 f-sm f-basismono">ux/dev</h4>
         <h1 class="mb-2 f-xl f-mabry-med">Questions About Space</h1>
-         <h2 class="f-lg f-travels-med">In the fall of 2016 I began a self-initiated project to design &amp; develop a photo-blog in Vue JS focusing on architecture, interior design &amp; structural engineering.</h2>
+         <h2 class="f-lg f-travels-med">We keep moving forward, opening new doors, and doing new things, because we're curious &amp; curiosity keeps leading us down new paths.</h2>
       </header>
       <!-- instructions 💬 -->
       <nav class="hero__scroll">
@@ -36,8 +36,8 @@
     <!-- stand-alone article 📝 -->
     <article class="copy__full">
       <!-- <header><h4 class="mb-1 f-sm uc f-basismono">Task</h4></header> -->
-      <p>The main challenge was to create a brief repository for information of particular spaces. I wanted Supersymmetry to have brevity but highlight what makes these spaces special &amp; unique.</p>
-      <p>I wanted to structure Supersymmetry this way for the sake of brevity and maintenance, while highlighting what makes these specific spaces special (...that alliteration though 👀👏🏼).</p>
+      <p>People who know me best know I've been fascinated with space ever since I was little. I'm the person going around spewing random facts about space to anyone who'll listen. That's normal, right?</p>
+      <p>I wanted to marry my curiosity of space and design, and Questions About Space (QAS) is where I landed. It's essentially a repository of queries regarding space, astronomy and astrophysics.</p>
     </article>
 
     <!-- figure key 🔑 -->
@@ -66,8 +66,9 @@
     <section class="copy-img copy-img-unique">
       <article class="copy__half copy__half-unique">
         <header><h4 class="mb-3 f-sm uc f-basismono">Planning</h4></header>
-        <p>The majority of the time when I begin a side- project, I start by defining requirements &amp; scope. Here, the first couple of things I outlined were purpose &amp; style.</p>
-        <p class="mb-3">Style outlines creative &amp; developmental scaffolding. The creative principles focus on things like type, color &amp; copywriting style, while development focuses on accessibility, optimization &amp; code writing style.</p>
+        <p>The biggest challenges working on this project I assumed would be technical. I knew going in I wanted to store the questions, answers and sources of a list of queries in a json file and pull randomly from this list. This was completely new to me and actually was quite easy.</p>
+        <p>The biggest challenge in reality was fighting a recurring theme for me of over-designing and shipping something as a work in progress vs. a final, polished thing.</p>
+        <p class="mb-3">I knew I wanted the web-app to be simple in structure and just consist of basically two "views" – a home view and a detail view.</p>
       </article>
 
       <figure class="img__half">
@@ -109,8 +110,8 @@
     <!-- stand-alone article 📝 -->
     <article class="copy__full">
       <header><h4 class="mb-1 f-sm uc f-basismono">Execution</h4></header>
-      <p>The main challenge was to create a brief repository for information of particular spaces. I wanted Supersymmetry to have brevity but highlight what makes these spaces special &amp; unique.</p>
-      <p>I wanted to structure Supersymmetry this way for the sake of brevity and maintenance, while highlighting what makes these specific spaces special (...that alliteration though 👀👏🏼).</p>
+      <p>I started designing the aesthetic for QAS in the browser, something I've grown more accustomed to lately with the main requirement that I wanted to incorporate CSS Grid and three.js. Outside of that, I wanted the palette to be very simple black and white with strong typography and layout being the main visual attractors.</p>
+      <p>I began working with the typeface Sectra from Grilli Type as the main display, but it didn't give the "science-y" feel I was going for so I transitioned to Akkurat by Lineto. Eventually too Akkurat was replaced, this time with America by Grilli Type. I chose America because of the numerous weights and styles it offered, which were necessary for the different subtexts and headings of a text-based layout.</p>
     </article>
 
     <!-- full-width image 🖼 -->
@@ -123,7 +124,8 @@
 
     <!-- stand-alone article 📝 -->
     <article class="copy__full">
-      <p>The main challenge was to create a brief repository for information of particular spaces. I wanted Supersymmetry to have brevity but highlight what makes these spaces special &amp; unique.</p>
+      <p>The initial homepage went through some changed as well. The first iteration featured a logotype "Questions About Space" on a white palette. I didn't want to overthink this one, so I chose to instead work with the most common color in space, black, as the primary color for the background.</p>
+      <p>Above you can see the three.js "star field" without any of the  homepage copy; below is everything put together.</p>
     </article>
 
     <!-- full-width image 🖼 -->
@@ -136,7 +138,9 @@
 
     <!-- stand-alone article 📝 -->
     <article class="copy__full">
-      <p>The main challenge was to create a brief repository for information of particular spaces. I wanted Supersymmetry to have brevity but highlight what makes these spaces special &amp; unique.</p>
+      <p>There is some beautiful imagery shot by various NASA satellites that I wanted to use to give more visual appeal to an otherwise text heavy interface. They're all open-sourced and mostly black and white so they fit the overall theme perfectly.</p>
+      <p>One cool feature I incorporated is every time the homepage is loaded, a new set of images are generated so you sort of get a different feel and experience.</p>
+      <p>The detail view come equipped with a header that comes into view after a user scrolls down, so as to give reference to what question they're on (and a link to the next question) without having to scroll all the way back to the top (space is complex, some of these answers are loooong).</p>
     </article>
 
     <!-- img + img half and half 🍋🍹 -->
@@ -188,8 +192,9 @@
     <!-- stand-alone article 📝 -->
     <article class="copy__full">
       <header><h4 class="mb-1 f-sm uc f-basismono">Next Steps</h4></header>
-      <p>The main challenge was to create a brief repository for information of particular spaces. I wanted Supersymmetry to have brevity but highlight what makes these spaces special &amp; unique.</p>
-      <p>I wanted to structure Supersymmetry this way for the sake of brevity and maintenance, while highlighting what makes these specific spaces special (...that alliteration though 👀👏🏼).</p>
+      <p>Right now the current json file I'm pulling from consists of about 20 or 30 queries (questions / answers / sources) and going forward I'd like to get the number much higher. Because the next question that gets loaded is completely random, there's a chance that you could land on a query you just visited. The higher the number of queries, the less likely this outcome would be possible.</p>
+      <p>I also want to incorporate more of the awesome imagery that's available, specifically on the detail views. I'm pondering the idea of adding embedded videos to the various questions to sort of expand the interactivity and disrupt the same experience on every query.</p>
+      <p>There's certainly plenty to do to expand this project and I'm sure as my technical chops grow, I'll use that as a tool to continue to iterate and make Questions About Space a unique and informative experience.</p>
     </article>
 
     <!-- finish line 🏁 -->
