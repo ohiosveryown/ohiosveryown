@@ -325,11 +325,12 @@
     opacity: 1;
     transform: translateY(-180px);
     transition: all 300ms ease;
+    will-change: transform, opacity;
   }
 
-  .show   { display: flex; opacity: 1; z-index: 999; }
-  .hide   { opacity: 0; }
-  .move { transform: translateY(0px); }
+  .show { display: flex; opacity: 1; z-index: 999; }
+  .hide { opacity: 0; }
+  .move { transform: translateY(0); }
 
 </style>
 
@@ -358,7 +359,7 @@
          lastScrollTop = st;
 
         scrollpos = window.scrollY;
-        if (scrollpos <= 300) {
+        if (scrollpos <= 800) {
           card.classList.add("hide")
         }
         else {
