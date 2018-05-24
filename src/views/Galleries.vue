@@ -68,8 +68,8 @@
     <!-- stand-alone article 📝 -->
     <article class="copy__full">
       <!-- <header><h4 class="mb-1 f-sm uc f-basismono">Task</h4></header> -->
-      <p>At the very beginning of the redesign I was instrumental to scoping the project as well as being a product owner into what features we'd be incorporating as well.</p>
-      <p>Throughout the lifecycle of the project redesign, I played a large role in determining not only the visual design language, but also what features would be added and depreciated.</p>
+      <p>At the beginning of the redesign I was instrumental to scoping the project as well as being a product owner into what features we'd be incorporating as well.</p>
+      <p>Throughout the life cycle of the project redesign, I played a large role in determining not only the visual design language, but also what features would be added and depreciated.</p>
       <p>Scoping the project was instrumental in informing my design direction and cultivating a seamless user experience.</p>
     </article>
 
@@ -191,7 +191,7 @@
     <!-- stand-alone article 📝 -->
     <article class="copy__full">
       <!-- <header><h4 class="mb-1 f-sm uc f-basismono">Task</h4></header> -->
-      <p>A consistent interface is the easiest to use and because of that, I wanted all the sorting and tools to be located in the same general areas across galleries, albums and photos. Each toolset is located conveniently under the display titles in each panel.</p>
+      <p>A consistent interface is the easiest to use and because of that, I wanted all the sorting and tools to be located in the same general areas across galleries, albums and photos. Each tool set is located conveniently under the display titles in each panel.</p>
       <p>The single actions are also executed in the same way. Actions are found directly in the same general area as the module they're being applied to. This seems like an obvious solution, however throughout a large application, this isn't always feasible.</p>
     </article>
 
@@ -207,7 +207,7 @@
     <article class="copy__full">
       <header><h4 class="mb-1 f-sm uc f-basismono">Next Steps</h4></header>
       <p>The redesign of this Galleries feature-set was a complete overhaul focusing on new functionality, interaction and visual design. It was a large effort that took a lot of teamwork and communication, especially across design and development.</p>
-      <p>When the redesign was finally released, we quickly heard back from our user base. One of the best things when working at a company where peoples' livelihoods depend on the tools your building is that the feedback is very vocal. Of course we didn't do everything right and there are things we're building on, but the general consensus was very positive.</p>
+      <p>When the redesign was finally released, we quickly heard back from our user base. One of the best things when working at a company where people's livelihoods depend on the tools your building is that the feedback is very vocal. Of course we didn't do everything right and there are things we're building on, but the general consensus was very positive.</p>
       <p>I'll never forget the next day after the redesign started to rollout our support team forwarded an email they received. It was a user recording himself and his screen while using the interface for the first time. That type of feedback is truly invaluable and not something you often get anywhere else.</p>
     </article>
 

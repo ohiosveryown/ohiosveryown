@@ -8,7 +8,7 @@
       <header class="hero__header uc">
         <h4 class="mb-0 f-sm f-basismono">ux</h4>
         <h1 class="mb-2 f-xl f-mabry-med">Vibes</h1>
-         <h2 class="f-lg f-travels-med">In the fall of 2016 I began a self-initiated project to design &amp; develop a photo-blog in Vue JS focusing on architecture, interior design &amp; structural engineering.</h2>
+         <h2 class="f-lg f-travels-med">What do web designers, architects, interior designers, fashion designers and film-set designers have in common? They all utilize mood boards to help develop initial structure and aesthetics for their designs.</h2>
       </header>
       <!-- instructions 💬 -->
       <nav class="hero__scroll">
@@ -34,8 +34,9 @@
     <!-- stand-alone article 📝 -->
     <article class="copy__full">
       <!-- <header><h4 class="mb-1 f-sm uc f-basismono">Task</h4></header> -->
-      <p>The main challenge was to create a brief repository for information of particular spaces. I wanted Supersymmetry to have brevity but highlight what makes these spaces special &amp; unique.</p>
-      <p>I wanted to structure Supersymmetry this way for the sake of brevity and maintenance, while highlighting what makes these specific spaces special (...that alliteration though 👀👏🏼).</p>
+      <p>Vibes is a collaborative application focusing on composing and editing mood boards. A large challenge with tools out there today for creating mood boards is they often are siloed or isolated to very few people.</p>
+      <p>The first thing I did when starting this project was to conduct research studies with various designers who use mood boards to find out what they're needs are. I found most users wanted a simple but highly collaborative experience.</p>
+      <p>Once I had some research to inform my decision making, I began sketching out user journeys to account for the various flows and screens that would be required. The biggest factor I accounted for was stripping away the unnecessary features that often times go unused for a mood board application.</p>
     </article>
 
     <!-- figure key 🔑 -->
@@ -67,10 +68,10 @@
     <!-- copy + img half and half 🍋🍹 -->
     <section class="copy-img">
       <article class="copy__half">
-        <header><h4 class="mb-3 f-sm uc f-basismono">Planning</h4></header>
-        <p>The majority of the time when I begin a side- project, I start by defining requirements &amp; scope. Here, the first couple of things I outlined were purpose &amp; style.</p>
-        <p class="mb-3">Style outlines creative &amp; developmental scaffolding. The creative principles focus on things like type, color &amp; copywriting style, while development focuses on accessibility, optimization &amp; code writing style.</p>
-        <p>The majority of the time when I begin a side- project, I start by defining requirements &amp; scope. Here, the first couple of things I outlined were purpose &amp; style.</p>
+        <header><h4 class="mb-3 f-sm uc f-basismono">Research</h4></header>
+        <p>Competitive analysis and user research also helped guide the importance of including a tagging system in the application. The majority of people I spoke with would often times be frustrated and abandon similar applications when a tagging feature wasn't included.</p>
+        <p>Obviously it's extremely vital to be able to quickly search and find different images or patterns by tags, especially when collaborating with a large number of people.</p>
+        <p>Tagging in Vibes is very easy to do. You simple tap a photo to initialize the detail view. If there are any tags already marked, they'll appear right above the image. If not, you simply click the blue tag button and begin typing to label the&nbsp;image.</p>
       </article>
 
       <figure class="img__half">
@@ -108,8 +109,9 @@
     <!-- stand-alone article 📝 -->
     <article class="copy__full">
       <!-- <header><h4 class="mb-1 f-sm uc f-basismono">Task</h4></header> -->
-      <p>The main challenge was to create a brief repository for information of particular spaces. I wanted Supersymmetry to have brevity but highlight what makes these spaces special &amp; unique.</p>
-      <p>I wanted to structure Supersymmetry this way for the sake of brevity and maintenance, while highlighting what makes these specific spaces special (...that alliteration though 👀👏🏼).</p>
+      <p>Vibes is intended to be a cross-platform application and to cut down on the rewriting of code, I decided to use various UI paradigms rather than native, OS styled components.</p>
+      <p>From our user testing, we found that although we shifted away from typically iOS and Android UI design patterns, the visual interface was simple and clear to users as to not prohibit them from having a pleasant and successful user experience.</p>
+      <p>One piece of feedback we receive was in regards to the main tools button found on various screens. Initially, I had just designed a floating action button with a plus in the center. Most people assumed this would create an additional mood board or potentially allow them to add a collaborator. In actuality, it allows a user to achieve all those functions and more. A simple solution was to add a label, "tools", to the button. The feedback we received after this change was users now had much more clarity on the actions they could execute.</p>
     </article>
 
     <!-- figure key 🔑 -->
@@ -145,8 +147,8 @@
     <!-- stand-alone article 📝 -->
     <article class="copy__full">
       <header><h4 class="mb-2 f-sm uc f-basismono">Next Steps</h4></header>
-      <p>As I continue to update the entries throughout the year, I'm still developing the next steps for Supersymmetry. My initial thought was to update the layout annually and perhaps expand the scope as my familiarity with Vue grows. That may still be in play as I really enjoyed working on both the subject matter &amp; the design for this project. </p>
-      <p>One thing I'd like to improve upon is the detail pages. Currently, they're rather bland and I'd like to possibly highlight more imagery. In whatever route I decide to go in, I'm proud of basically having zero experience with Vue to now using it primarily as I build simple web applications.</p>
+      <p>Vibes is still early in it's development lifecycle and as such, I'm still testing on things such as usability and functionality. It's been invaluable talking to various designers to get feedback on the application as it's being developed. This allows the developer and I to iterate on a much quicker cadence and create a better overall product.</p>
+      <p>The plan is to release feature sets in stages and iterate and build on top, rather than trying to design and build the perfect application all at once. I'm excited to see how far and robust we can make the application without sacrificing ease of use—a challenge for sure.</p>
     </article>
 
     <!-- finish line 🏁 -->

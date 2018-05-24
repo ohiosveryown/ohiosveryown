@@ -110,8 +110,8 @@
     <!-- stand-alone article 📝 -->
     <article class="copy__full">
       <header><h4 class="mb-1 f-sm uc f-basismono">Execution</h4></header>
-      <p>I started designing the aesthetic for QAS in the browser, something I've grown more accustomed to lately with the main requirement that I wanted to incorporate CSS Grid and three.js. Outside of that, I wanted the palette to be very simple black and white with strong typography and layout being the main visual attractors.</p>
-      <p>I began working with the typeface Sectra from Grilli Type as the main display, but it didn't give the "science-y" feel I was going for so I transitioned to Akkurat by Lineto. Eventually too Akkurat was replaced, this time with America by Grilli Type. I chose America because of the numerous weights and styles it offered, which were necessary for the different subtexts and headings of a text-based layout.</p>
+      <p>I started designing the aesthetic for QAS in the browser, something I've grown more accustomed to lately with the main requirement that I wanted to incorporate CSS Grid and three.js. Outside of that, I wanted the palette to be very simple black and white with strong typography and layout being the main visual attractor.</p>
+      <p>I began working with the typeface Sectra from Grilli Type as the main display, but it didn't give the "science-y" feel I was going for so I transitioned to Akkurat by Lineto. Eventually too Akkurat was replaced, this time with America by Grilli Type. I chose America because of the numerous weights and styles it offered, which were necessary for the different subtext and headings of a text-based layout.</p>
     </article>
 
     <!-- full-width image 🖼 -->
@@ -124,7 +124,7 @@
 
     <!-- stand-alone article 📝 -->
     <article class="copy__full">
-      <p>The initial homepage went through some change as well. The first iteration featured a logotype "Questions About Space" on a white palette. I didn't want to overthink this one, so I chose to instead work with the most common color in space, black, as the primary color for the background.</p>
+      <p>The initial homepage went through some change as well. The first iteration featured a logotype "Questions About Space" on a white palette. I didn't want to over think this one, so I chose to instead work with the most common color in space, black, as the primary color for the background.</p>
       <p>Above you can see the three.js "star field" without any of the  homepage copy; below is everything put together.</p>
     </article>
 

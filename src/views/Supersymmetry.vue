@@ -81,8 +81,8 @@
     <section class="copy-img">
       <article class="copy__half">
         <header><h4 class="mb-3 f-sm uc f-basismono">Planning</h4></header>
-        <p>The majority of the time when I begin a side- project, I start by defining requirements &amp; scope. Here, the first couple of things I outlined were purpose &amp; style.</p>
-        <p class="mb-3">Style outlines creative &amp; developmental scaffolding. The creative principles focus on things like type, color &amp; copywriting style, while development focuses on accessibility, optimization &amp; code writing style.</p>
+        <p>The majority of the time when I begin a side project, I start by defining requirements &amp; scope. Here, the first couple of things I outlined were purpose &amp; style.</p>
+        <p class="mb-3">Style outlines creative &amp; developmental scaffolding. The creative principles focus on things like type, color &amp; copyediting style, while development focuses on accessibility, optimization &amp; code writing style.</p>
       </article>
 
       <figure class="img__half">
