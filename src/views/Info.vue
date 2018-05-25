@@ -63,7 +63,8 @@
       <ul class="f-sm f-basismono uc">
         <li class="btn__tertiary link mr-7"><a href="http://twitter.com/cmykw_" target="_blank">Twitter</a></li>
         <li class="btn__tertiary link mr-7"><a href="http://github.com/ohiosveryown" target="_blank">Github</a></li>
-        <li><a class="btn__tertiary link" href="http://dribbble.com/cmykw" target="_blank">Dribbble</a></li>
+        <li><a class="btn__tertiary link mr-7" href="http://dribbble.com/cmykw" target="_blank">Dribbble</a></li>
+        <li><a class="hide-sm btn__tertiary link" href="https://github.com/ohiosveryown/ohiosveryown" target="_blank">Source</a></li>
       </ul>
     </aside>
 
@@ -121,6 +122,8 @@
     font-size: 1.2rem;
     line-height: 1.2;
   }
+
+  .hide-sm { display: none; @include breakpoint(md) { display: inherit; } }
 
   .left { @include breakpoint(mdl) { width: grid-width(6); } }
 
