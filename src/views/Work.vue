@@ -62,7 +62,7 @@
 
         <li class="case__vibes">
           <router-link to="/vibes">
-            <h6 class="mb-0 op-5 uc f-sm f-basismono">ux/dev</h6>
+            <h6 class="mb-0 op-5 uc f-sm f-basismono">ux</h6>
             <h2 class="mb-1 uc f-lg f-mabry-med">Vibes</h2>
             <h3 class="f-md f-system">I know what you're thinking, "I want to see some mobile app stuff." Got you covered B.</h3>
           </router-link>
