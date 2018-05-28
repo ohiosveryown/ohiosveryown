@@ -7,6 +7,7 @@ import Supersymmetry from './views/Supersymmetry.vue'
 import QAS from './views/QAS.vue'
 import Vibes from './views/Vibes.vue'
 import Galleries from './views/Galleries.vue'
+import Misc from './views/Misc.vue'
 
 Vue.use(Router)
 
@@ -41,6 +42,11 @@ export default new Router({
       path: '/galleries',
       name: 'galleries',
       component: Galleries
+    },
+    {
+      path: '/misc',
+      name: 'misc',
+      component: Misc
     },
   ],
 

@@ -279,6 +279,7 @@
   .card {
     position: fixed;
     top: 1.6rem; right: 0; left: 0;
+    visibility: hidden;
     display: flex;
     flex-direction: column;
     margin: 0 auto;
@@ -306,8 +307,8 @@
     }
   }
 
-  .show { display: flex; opacity: 1; z-index: 999; }
-  .hide { opacity: 0; }
+  .show { visibility: visible; display: flex; opacity: 1; z-index: var(--zmax); }
+  .hide { opacity: 0; z-index: var(--zmin); }
   .move { transform: translateY(0); }
 
   // vacation

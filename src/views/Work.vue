@@ -77,7 +77,7 @@
         </li>
 
         <li class="case__misc">
-          <router-link to="/vibes">
+          <router-link to="/misc">
             <h6 class="mb-0 op-5 uc f-sm f-basismono">mixed medium</h6>
             <h2 class="mb-1 uc f-lg f-mabry-med">Miscellaneous</h2>
             <h3 class="f-md f-system">Just in case you're not bored yet and want to see even more work!</h3>
