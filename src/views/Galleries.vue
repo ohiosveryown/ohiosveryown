@@ -2,14 +2,14 @@
 <template>
   <main class="mw__lg">
 
-    <!-- card -->
+    <!-- card 🗂 -->
     <div class="card">
-      <h4 class="op-5 mb-0 f-sm uc f-basismono">You’re Currently Reading About:</h4>
+      <h4 class="op-5 mb-1 f-sm uc f-basismono">You’re Currently Reading About:</h4>
       <h2 class="mb-2 f-lg uc f-mabry-med">SP Galleries</h2>
-      <h4 class="op-5 mb-0 f-sm uc f-basismono">But Do You Want to Go:</h4>
+      <h4 class="op-5 mb-1 f-sm uc f-basismono">But Do You Want to Go:</h4>
       <ul class="f-md f-travels-med">
-        <router-link to="/"><li class="mr-5 btn__tertiary link">Home</li></router-link>
-        <a @click="scrollMeTo('hh')"><li class="mr-5 btn__tertiary link">To the Top</li></a>
+        <router-link to="/"><li class="btn__tertiary link">Home</li></router-link>
+        <a @click="scrollMeTo('scroll-top-reference')"><li class="btn__tertiary link">To the Top</li></a>
         <li class="vacation__trigger btn__tertiary link">On Vacation</li>
       </ul>
     </div>
@@ -25,7 +25,7 @@
     <!-- hero 👰🏻 -->
     <section class="hero">
       <!-- header 💆 -->
-      <header ref="hh" class="hero__header uc">
+      <header ref="scroll-top-reference" class="hero__header uc">
         <h4 class="mb-0 f-sm f-basismono">ux</h4>
         <h1 class="mb-2 f-xl f-mabry-med">ShootProof Galleries</h1>
          <h2 class="f-lg f-travels-med">Before the digital age, managing photos was much more straight-forward. Now, things are much more complicated. At ShootProof, the goal is to take away the nuance and allow photographers to Focus on What Matters Most.</h2>
@@ -251,63 +251,6 @@
   @import '../assets/style/type';
   @import '../assets/style/btn';
 
-  .card {
-    position: fixed;
-    top: 0; right: 0;
-    display: flex;
-    flex-direction: column;
-    padding: 1.6rem 5.6rem 1.6rem 2.4rem;
-    min-width: 11.2rem; min-height: 8rem;
-    border-radius: 4px;
-    border: 1px solid #dcdcdc;
-    box-shadow: 0 8px 40px 0 rgba(0,0,0,0.2);
-    background: #fff;
-    opacity: 1;
-    transform: translateY(-180px);
-    transition: all 300ms ease;
-    will-change: transform, opacity;
-
-    @include breakpoint(md) { top: 2.4rem; right: 2.4rem; }
-  }
-
-  .show { display: flex; opacity: 1; z-index: 999; }
-  .hide { opacity: 0; }
-  .move { transform: translateY(0); }
-
-  .vacation {
-    position: fixed;
-    z-index: var(--zmin);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 94vw; height: 100vh;
-    opacity: 0;
-
-    .content {
-      cursor: pointer;
-      position: relative;
-      z-index: var(--zmax);
-      transform: scale(.88);
-      opacity: 0;
-      transition: all 300ms ease 100ms;
-    }
-
-    .overlay {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100vw; height: 100vh;
-      background: rgba(0,0,0,.8);
-      opacity: 0;
-      transition: all 400ms ease;
-    }
-  }
-
-  .vacation__show {
-    z-index: var(--zmax);
-    opacity: 1;
-    .content, .overlay { opacity: 1; }
-  }
-
   .f-xl {
     font-size: 2.4rem;
     line-height: 1.2;
@@ -342,6 +285,78 @@
   .fig-key__label, figcaption { font-size: 1.4rem; }
   .hide-sm  { display: none; @include breakpoint(mdl) { display: block; } }
   .show-mdl { display: block; @include breakpoint(mdl) { display: none; } }
+
+  // card
+  .card {
+    position: fixed;
+    top: 1.6rem; right: 0; left: 0;
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    padding: 1.6rem 2.4rem;
+    max-width: 90vw; min-height: 8rem;
+    border-radius: 4px;
+    border: 1px solid #dcdcdc;
+    box-shadow: 0 8px 40px 0 rgba(0,0,0,0.2);
+    background: #fff;
+    opacity: 1;
+    transform: translateY(-180px);
+    transition: all 300ms ease;
+    will-change: transform, opacity;
+
+    li { margin-right: 1.4rem; }
+
+    @include breakpoint(xs) { li { margin-right: 2.4rem; } }
+
+    @include breakpoint(md) {
+      top: 2.4rem; right: 2.4rem; left: auto;
+      margin: auto;
+      max-width: 42.4rem;
+      padding: 1.6rem 5.6rem 1.6rem 2.4rem;
+      li { margin-right: 3.2rem; }
+    }
+  }
+
+  .show { display: flex; opacity: 1; z-index: 999; }
+  .hide { opacity: 0; }
+  .move { transform: translateY(0); }
+
+  // vacation
+  .vacation {
+    position: fixed;
+    z-index: var(--zmin);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 94vw; height: 100vh;
+    opacity: 0;
+
+    .content {
+      cursor: pointer;
+      position: relative;
+      z-index: var(--zmax);
+      transform: translateY(-4rem) scale(.48);
+      opacity: 0;
+      transition: all 300ms ease 100ms;
+
+      @include breakpoint(md) { transform: translateY(0) scale(.88); }
+    }
+
+    .overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background: rgba(0,0,0,.8);
+      opacity: 0;
+      transition: all 400ms ease;
+    }
+  }
+
+  .vacation__show {
+    z-index: var(--zmax);
+    opacity: 1;
+    .content, .overlay { opacity: 1; }
+  }
 
   // hero section
   .hero__header {
