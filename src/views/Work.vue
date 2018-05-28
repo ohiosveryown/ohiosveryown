@@ -76,6 +76,14 @@
           <!-- </router-link> -->
         </li>
 
+        <li class="case__misc">
+          <router-link to="/vibes">
+            <h6 class="mb-0 op-5 uc f-sm f-basismono">mixed medium</h6>
+            <h2 class="mb-1 uc f-lg f-mabry-med">Miscellaneous</h2>
+            <h3 class="f-md f-system">Just in case you're not bored yet and want to see even more work!</h3>
+          </router-link>
+        </li>
+
         <hr class="mb-7 op-2">
 
         <li class="case__archive">
@@ -97,6 +105,7 @@
       <video class="video video__qas" autoplay playsinline loop src="../assets/__work/mov/04.mp4"></video>
       <video class="video video__vibes" autoplay playsinline loop src="../assets/__vibes/mov/01.mp4"></video>
       <video class="video video__spu" autoplay playsinline loop src="../assets/__work/mov/soon.mp4"></video>
+      <video class="video video__misc" autoplay playsinline loop src="../assets/__misc/mov/01.mp4"></video>
       <div class="video__bg"/>
     </div>
 
@@ -314,14 +323,17 @@
   .video {
     position: relative;
     max-width: 88%; max-height: 72%;
-    box-shadow: 0 10px 40px 0 rgba(0,0,0,.4);
+    // box-shadow: 0 10px 40px 0 rgba(0,0,0,.4);
     z-index: var(--zmax);
   }
 
-  .video__spg, .video__ss, .video__qas, .video__vibes, .video__spu {
+  .video__spg, .video__ss, .video__qas, .video__vibes, .video__spu, .video__misc {
     position: absolute;
     visibility: hidden;
+    box-shadow: 0 10px 40px 0 rgba(0,0,0,.4);
   }
+
+  .video__misc { box-shadow: none; }
 
   .video__bg {
     content: '';
@@ -338,6 +350,7 @@
   .video__bg-qas   { background: black; opacity: 1; }
   .video__bg-vibes { background: mediumslateblue; opacity: 1; }
   .video__bg-spu   { background: cornflowerblue; opacity: 1; }
+  .video__bg-misc  { background: #f2ebff; opacity: 1; }
   .video__active   { visibility: visible; }
 
   footer {
@@ -358,6 +371,7 @@
   .case__subtitle-qas:before { content: 'QAS 2018'; color: #fff; }
   .case__subtitle-vibes:before { content: 'Vibes 2017'; }
   .case__subtitle-uploader:before { content: 'Uploader 2016'; }
+  .case__subtitle-misc:before { content: 'Miscellaneous 2016-2018'; }
 
 </style>
 
@@ -375,6 +389,7 @@
       const case__qas = document.querySelector('.case__qas')
       const case__vibes = document.querySelector('.case__vibes')
       const case__uploader = document.querySelector('.case__uploader')
+      const case__misc = document.querySelector('.case__misc')
       const case__sub = document.querySelector('.case__subtitle')
       const rainbow = document.querySelector('.rainbow')
 
@@ -383,6 +398,7 @@
       const video__qas = document.querySelector('.video__qas')
       const video__vibes = document.querySelector('.video__vibes')
       const video__spu = document.querySelector('.video__spu')
+      const video__misc = document.querySelector('.video__misc')
       const video__bg = document.querySelector('.video__bg')
 
       // rainbow colors
@@ -468,6 +484,20 @@
         video__spu.classList.remove('video__active')
         video__bg.classList.remove('video__bg-spu')
         case__sub.classList.remove('case__subtitle-uploader')
+      })
+
+      case__misc.addEventListener('mouseenter', () => {
+        // bg.classList.remove('case__uploader-active')
+        video__misc.classList.add('video__active')
+        video__bg.classList.add('video__bg-misc')
+        case__sub.classList.add('case__subtitle-misc')
+      })
+
+      case__misc.addEventListener('mouseleave', () => {
+        // bg.classList.remove('case__uploader-active')
+        video__misc.classList.remove('video__active')
+        video__bg.classList.remove('video__bg-misc')
+        case__sub.classList.remove('case__subtitle-misc')
       })
 
     }
