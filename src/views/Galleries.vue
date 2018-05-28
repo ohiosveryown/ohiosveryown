@@ -3,15 +3,24 @@
   <main class="mw__lg">
 
     <!-- card -->
-    <div class="card"></div>
+    <div class="card">
+      <h4 class="op-5 mb-0 f-sm uc f-basismono">You’re Currently Reading About:</h4>
+      <h2 class="mb-2 f-lg uc f-mabry-med">SP Galleries</h2>
+      <h4 class="op-5 mb-0 f-sm uc f-basismono">But Do You Want to Go:</h4>
+      <ul class="f-md f-travels-med">
+        <router-link to="/"><li class="mr-5 btn__tertiary link">Home</li></router-link>
+        <a @click="scrollMeTo('hh')"><li class="mr-5 btn__tertiary link">To the Top</li></a>
+        <li class="btn__tertiary link">On Vacation</li>
+      </ul>
+    </div>
 
     <!-- hero 👰🏻 -->
     <section class="hero">
       <!-- header 💆 -->
-      <header class="hero__header uc">
+      <header ref="hh" class="hero__header uc">
         <h4 class="mb-0 f-sm f-basismono">ux</h4>
         <h1 class="mb-2 f-xl f-mabry-med">ShootProof Galleries</h1>
-         <h2 class="f-lg f-travels-med">Before the digital age, managing photos was much more straight-forward. Now, things are much more difficult and there are a bevy of options. At ShootProof, the goal is to takeaway the nuance and allow photographers to Focus on What Matters Most.</h2>
+         <h2 class="f-lg f-travels-med">Before the digital age, managing photos was much more straight-forward. Now, things are much more complicated. At ShootProof, the goal is to take away the nuance and allow photographers to Focus on What Matters Most.</h2>
       </header>
       <!-- instructions 💬 -->
       <nav class="hero__scroll">
@@ -20,7 +29,7 @@
       <!-- date & stuff 📆 -->
       <aside class="hero__meta">
         <h4 class="mb-1 f-sm uc f-basismono">Timeline</h4>
-        <h3 class="mb-4 f-md f-travels-med">Summer 2016 – Winter 2017</h3>
+        <h3 class="mb-4 f-md f-travels-med">Summer 2016 – Fall 2017</h3>
         <h4 class="mb-1 f-sm uc f-basismono">Link</h4>
         <h3 class="f-md f-travels-med">
           <a class="link btn__tertiary" href="http://shootproof.com" target="_blank">shootproof.com</a>
@@ -234,6 +243,29 @@
   @import '../assets/style/type';
   @import '../assets/style/btn';
 
+  .card {
+    position: fixed;
+    top: 0; right: 0;
+    display: flex;
+    flex-direction: column;
+    padding: 1.6rem 5.6rem 1.6rem 2.4rem;
+    min-width: 11.2rem; min-height: 8rem;
+    border-radius: 4px;
+    border: 1px solid #dcdcdc;
+    box-shadow: 0 8px 40px 0 rgba(0,0,0,0.2);
+    background: #fff;
+    opacity: 1;
+    transform: translateY(-180px);
+    transition: all 300ms ease;
+    will-change: transform, opacity;
+
+    @include breakpoint(md) { top: 2.4rem; right: 2.4rem; }
+  }
+
+  .show { display: flex; opacity: 1; z-index: 999; }
+  .hide { opacity: 0; }
+  .move { transform: translateY(0); }
+
   .f-xl {
     font-size: 2.4rem;
     line-height: 1.2;
@@ -319,21 +351,6 @@
   .fig-key { margin-bottom: 4rem; }
   .fig-key > ul { display: flex; flex-direction: column; }
 
-  .card {
-    position: fixed;
-    top: 0; right: 0;
-    width: 200px; height: 80px;
-    background: pink;
-    opacity: 1;
-    transform: translateY(-180px);
-    transition: all 300ms ease;
-    will-change: transform, opacity;
-  }
-
-  .show { display: flex; opacity: 1; z-index: 999; }
-  .hide { opacity: 0; }
-  .move { transform: translateY(0); }
-
 </style>
 
 
@@ -341,6 +358,15 @@
 <script>
   export default {
     name: 'galleries',
+
+    methods: {
+      scrollMeTo(refName) {
+        var element = this.$refs[refName];
+        var top = element.offsetTop;
+
+        window.scrollTo(0, top);
+      }
+    },
 
     mounted() {
       let scrollpos = window.scrollY
