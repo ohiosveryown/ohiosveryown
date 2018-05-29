@@ -134,10 +134,10 @@
       <p>I began working with the typeface Sectra from Grilli Type as the main display, but it didn't give the "science-y" feel I was going for so I transitioned to Akkurat by Lineto. Eventually too Akkurat was replaced, this time with America by Grilli Type. I chose America because of the numerous weights and styles it offered, which were necessary for the different subtext and headings of a text-based layout.</p>
     </article>
 
-    <!-- full-width image 🖼 -->
-    <section class="img__full">
-      <figure>
-        <video autoplay playsinline loop src="../assets/__qas/mov/07.mp4"></video>
+    <!-- image with bg 🖼 -->
+    <section class="img__w-bg">
+      <figure style="background-color: #111213;">
+        <video class="mt-9 mb-9 img-shadow__heavy" autoplay playsinline loop src="../assets/__qas/mov/07.mp4"></video>
       </figure>
       <figcaption class="mt-0 tar">fig. 07</figcaption>
     </section>

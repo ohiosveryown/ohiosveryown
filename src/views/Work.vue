@@ -368,7 +368,7 @@
   .case__subtitle:before { content: 'Featured Work'; }
   .case__subtitle-galleries:before { content: 'SP Galleries 2017'; }
   .case__subtitle-supersymmetry:before { content: 'Supersymmetry 2016'; }
-  .case__subtitle-qas:before { content: 'QAS 2018'; color: #fff; }
+  .case__subtitle-qas:before { content: 'QAS 2017'; color: #fff; }
   .case__subtitle-vibes:before { content: 'Vibes 2017'; }
   .case__subtitle-uploader:before { content: 'Uploader 2016'; }
   .case__subtitle-misc:before { content: 'Miscellaneous 2016-2018'; }
