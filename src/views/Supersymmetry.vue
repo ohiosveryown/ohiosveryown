@@ -56,7 +56,7 @@
     <!-- stand-alone article 📝 -->
     <article class="copy__full">
       <!-- <header><h4 class="mb-1 f-sm uc f-basismono">Task</h4></header> -->
-      <p>The main challenge was to create a brief repository for information of particular spaces. I wanted Supersymmetry to have brevity but highlight what makes these spaces special &amp; unique.</p>
+      <p>My main challenge for Supersymmetry was to create a brief repository for information of particular spaces. I wanted Supersymmetry to have brevity but highlight what makes these spaces special &amp; unique.</p>
       <p>I wanted to structure Supersymmetry this way for the sake of brevity and maintenance, while highlighting what makes these specific spaces special (...that alliteration though 👀👏🏼).</p>
     </article>
 
@@ -91,7 +91,7 @@
       <article class="copy__half">
         <header><h4 class="mb-3 f-sm uc f-basismono">Planning</h4></header>
         <p>The majority of the time when I begin a side project, I start by defining requirements &amp; scope. Here, the first couple of things I outlined were purpose &amp; style.</p>
-        <p class="mb-3">Style outlines creative &amp; developmental scaffolding. The creative principles focus on things like type, color &amp; copyediting style, while development focuses on accessibility, optimization &amp; code writing style.</p>
+        <p class="mb-3">The style outlines creative &amp; developmental scaffolding. The creative principles focus on things like type, color &amp; copyediting style, while development focuses on accessibility, optimization &amp; code writing style.</p>
       </article>
 
       <figure class="img__half">
@@ -189,8 +189,8 @@
     <!-- stand-alone article 📝 -->
     <article class="copy__full">
       <header><h4 class="mb-2 f-sm uc f-basismono">Next Steps</h4></header>
-      <p>As I continue to update the entries throughout the year, I'm still developing the next steps for Supersymmetry. My initial thought was to update the layout annually and perhaps expand the scope as my familiarity with Vue grows. That may still be in play as I really enjoyed working on both the subject matter &amp; the design for this project. </p>
-      <p>One thing I'd like to improve upon is the detail pages. Currently, they're rather bland and I'd like to possibly highlight more imagery. In whatever route I decide to go in, I'm proud of basically having zero experience with Vue to now using it primarily as I build simple web applications.</p>
+      <p>As I continue to update the entries throughout the year, I'm still developing the next steps for Supersymmetry. My initial thought was to update the layout annually and perhaps expand the scope as my familiarity with Vue grows. That may still be in play as I really enjoyed working on both the subject matter &amp; the design for this project.</p>
+      <p>One thing I'd like to improve upon is the detail pages. Currently, they're rather bland and I'd like to possibly highlight more imagery. In whatever route I decide to go with, I'm proud of basically having zero experience with Vue to now using it primarily as I build simple web applications.</p>
     </article>
 
     <!-- finish line 🏁 -->

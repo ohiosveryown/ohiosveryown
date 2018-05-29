@@ -85,7 +85,7 @@
     <!-- stand-alone article 📝 -->
     <article class="copy__full">
       <!-- <header><h4 class="mb-1 f-sm uc f-basismono">Task</h4></header> -->
-      <p>At the beginning of the redesign I was instrumental to scoping the project as well as being a product owner into what features we'd be incorporating as well.</p>
+      <p>As we started the redesign, I helped scope the project as well as be a product owner to help define what all we'd be incorporating.</p>
       <p>Throughout the life cycle of the project redesign, I played a large role in determining not only the visual design language, but also what features would be added and depreciated.</p>
       <p>Scoping the project was instrumental in informing my design direction and cultivating a seamless user experience.</p>
     </article>
@@ -116,7 +116,7 @@
     <article class="copy__full">
       <!-- <header><h4 class="mb-1 f-sm uc f-basismono">Task</h4></header> -->
       <p>Working apart of a larger requirements and research team, I was the sole user interface designer. Given that fact, it was still extremely vital to create a homogeneous and consistent system of components.</p>
-      <p>Because this is ShootProof's largest feature, I knew going forward the visual language would inform any work we did moving forward for other features.</p>
+      <p>Because this is ShootProof's largest feature, I knew going forward the visual language here would help inform any future work we did for other features.</p>
       <p>I wanted to created a design language that could be repurposed and functional throughout ShootProof's application. I specifically chose to strip away veneer and superfluous UI elements to allow the user to focus on the results they're trying to achieve, rather than the tool they're using.</p>
     </article>
 
@@ -161,7 +161,7 @@
     <!-- stand-alone article 📝 -->
     <article class="copy__full">
       <!-- <header><h4 class="mb-1 f-sm uc f-basismono">Task</h4></header> -->
-      <p>One of the biggest improvements made for the Manage Galleries feature-set was creating a seamless experience across various devices. The v2 experience was completely fragmented and unresponsive. In our user research, we found more and more photographers are wanting to manage their galleries on the fly with their mobile devices.</p>
+      <p>One of the biggest improvements made for the Manage Galleries feature set was creating a seamless experience across various devices. The v2 experience was completely fragmented and unresponsive. In our user research, we found more and more photographers are wanting to manage their galleries on the fly with their mobile devices.</p>
     </article>
 
     <!-- full-width image 🖼 -->
@@ -223,8 +223,8 @@
     <!-- stand-alone article 📝 -->
     <article class="copy__full">
       <header><h4 class="mb-1 f-sm uc f-basismono">Next Steps</h4></header>
-      <p>The redesign of this Galleries feature-set was a complete overhaul focusing on new functionality, interaction and visual design. It was a large effort that took a lot of teamwork and communication, especially across design and development.</p>
-      <p>When the redesign was finally released, we quickly heard back from our user base. One of the best things when working at a company where people's livelihoods depend on the tools your building is that the feedback is very vocal. Of course we didn't do everything right and there are things we're building on, but the general consensus was very positive.</p>
+      <p>The redesign of this Galleries feature set was a complete overhaul focusing on new functionality, interaction and visual design. It was a large effort that took a lot of teamwork and communication, especially across design and development.</p>
+      <p>When the redesign was finally released in beta, we quickly heard back from our user base. One of the best things when working at a company where people's livelihoods depend on the tools your building is that the feedback is very vocal. Of course we didn't do everything right, and there are things we're building on, but the general consensus was very positive.</p>
       <p>I'll never forget the next day after the redesign started to rollout our support team forwarded an email they received. It was a user recording himself and his screen while using the interface for the first time. That type of feedback is truly invaluable and not something you often get anywhere else.</p>
     </article>
 
