@@ -16,10 +16,10 @@
     <!-- hero 👰🏻 -->
     <section class="hero">
       <!-- header 💆 -->
-      <header ref="scroll-top-reference" class="hero__header uc">
-        <h4 class="mb-0 f-sm f-basismono">Mixed Medium</h4>
-        <h1 class="mb-2 f-xl f-mabry-med">Miscellaneous</h1>
-         <h2 class="meas-9 f-lg f-travels-med">Sometimes you just need a few different projects to keep your attention rather than long reads—amirite?</h2>
+      <header ref="scroll-top-reference" class="hero__header">
+        <h4 class="mb-0 uc f-sm f-basismono">Mixed Medium</h4>
+        <h1 class="mb-2 uc f-xl f-mabry-med">Miscellaneous</h1>
+        <h2 class="meas-9 f-lg f-travels-med">Sometimes you just need a few different projects to keep your attention rather than long reads—amirite?</h2>
       </header>
       <!-- instructions 💬 -->
       <nav class="hero__scroll">

@@ -25,10 +25,10 @@
     <!-- hero 👰🏻 -->
     <section class="hero">
       <!-- header 💆 -->
-      <header ref="scroll-top-reference" class="hero__header uc">
-        <h4 class="mb-0 f-sm f-basismono">ux</h4>
-        <h1 class="mb-2 f-xl f-mabry-med">ShootProof Galleries</h1>
-         <h2 class="f-lg f-travels-med">Before the digital age, managing photos was much more straight-forward. Now, things are much more complicated. At ShootProof, the goal is to take away the nuance and allow photographers to Focus on What Matters Most.</h2>
+      <header ref="scroll-top-reference" class="hero__header">
+        <h4 class="mb-0 uc f-sm f-basismono">ux</h4>
+        <h1 class="mb-2 uc f-xl f-mabry-med">ShootProof Galleries</h1>
+        <h2 class="f-lg f-travels-med">Before the digital age, managing photos was much more straight-forward. Now, things are much more complicated. At ShootProof, the goal is to take away the nuance and allow photographers to Focus on What Matters Most.</h2>
       </header>
       <!-- instructions 💬 -->
       <nav class="hero__scroll">

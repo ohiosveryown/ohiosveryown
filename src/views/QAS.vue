@@ -25,10 +25,10 @@
     <!-- hero 👰🏻 -->
     <section class="hero">
       <!-- header 💆 -->
-      <header ref="scroll-top-reference" class="hero__header uc">
-        <h4 class="mb-0 f-sm f-basismono">ux/dev</h4>
-        <h1 class="mb-2 f-xl f-mabry-med">Questions About Space</h1>
-         <h2 class="f-lg f-travels-med">We keep moving forward, opening new doors, and doing new things, because we're curious &amp; curiosity keeps leading us down new paths.</h2>
+      <header ref="scroll-top-reference" class="hero__header">
+        <h4 class="mb-0 uc f-sm f-basismono">ux/dev</h4>
+        <h1 class="mb-2 uc f-xl f-mabry-med">Questions About Space</h1>
+        <h2 class="f-lg f-travels-med">We keep moving forward, opening new doors, and doing new things, because we're curious &amp; curiosity keeps leading us down new paths.</h2>
       </header>
       <!-- instructions 💬 -->
       <nav class="hero__scroll">

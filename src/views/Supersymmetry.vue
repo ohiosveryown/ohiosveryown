@@ -25,10 +25,10 @@
     <!-- hero 👰🏻 -->
     <section class="hero">
       <!-- header 💆 -->
-      <header ref="scroll-top-reference" class="hero__header uc">
-        <h4 class="mb-0 f-sm f-basismono">ux/dev</h4>
-        <h1 class="mb-2 f-xl f-mabry-med">Supersymmetry</h1>
-         <h2 class="f-lg f-travels-med">In the fall of 2016 I began a self-initiated project to design &amp; develop a photo-blog in Vue JS focusing on architecture, interior design &amp; structural engineering.</h2>
+      <header ref="scroll-top-reference" class="hero__header">
+        <h4 class="mb-0 uc f-sm f-basismono">ux/dev</h4>
+        <h1 class="mb-2 uc f-xl f-mabry-med">Supersymmetry</h1>
+        <h2 class="f-lg f-travels-med">In the fall of 2016 I began a self-initiated project to design &amp; develop a photo-blog in Vue JS focusing on architecture, interior design &amp; structural engineering.</h2>
       </header>
       <!-- instructions 💬 -->
       <nav class="hero__scroll">
