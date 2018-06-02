@@ -44,7 +44,7 @@
 
     <!-- stand-alone article 📝 -->
     <article class="copy__full">
-      <p>The above was a series of posters for an internal event hosted by ShootProof's design and quality assurance teams. Typically at ShootProof I work primary on the product so this was a fun exercise to create something weird and different.</p>
+      <p>The above was a series of posters for an internal event hosted by ShootProof's design and quality assurance teams. At ShootProof I work primary on the product, so this was a fun exercise to create something weird and different with no real brand constraints.</p>
     </article>
 
     <!-- figure key 🔑 -->
