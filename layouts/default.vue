@@ -11,7 +11,6 @@
       damping: 0.05,
       renderByPixels: true,
       continuousScrolling: true,
-      // syncCallbacks: true,
     })
   }
 </script>
