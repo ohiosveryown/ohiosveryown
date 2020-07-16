@@ -20,7 +20,9 @@
 
 
 <style lang='scss' scoped>
-  div { margin-top: 4rem; margin-left: 4rem; width: 40%; }
+  div { margin-top: 4rem; margin-left: 4rem; width: 40%;
+    height: 500vh;
+  }
 
   h5 {
     position: absolute;
