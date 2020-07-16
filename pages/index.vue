@@ -13,7 +13,9 @@
       </header>
     </section>
 
-    <Item v-for="tweet in tweets" :tweet="tweet" :key="tweet.id" />
+    <ul>
+      <Item v-for="work in works" :work="work" :key="work.id" />
+    </ul>
 
   </main>
 </template>
@@ -28,17 +30,17 @@
 
 <script>
   import Item from '../components/Item'
-  import {tweets} from '../static/tweets'
+  import works from '../static/works'
 
   export default {
 
     components: { Item },
     // data: {
-    //   tweets
+    //   works
     // }
     data: function() {
       return {
-        tweets
+        works
       }
     }
   }
