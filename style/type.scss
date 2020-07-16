@@ -1,0 +1,23 @@
+@import '~/style/grid.scss';
+
+@font-face {
+  font-family: "Grenette";
+  src: url("../static/fonts/grenette.woff2") format("woff2");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Founders";
+  src: url("../static/fonts/founders-grotesk.woff2") format("woff2");
+  font-display: swap;
+}
+
+//
+
+.f--g { font-family: 'Grenette', var(--system-ui); }
+.f--f { font-family: 'Founders', var(--system-ui); }
+
+
+.uc { text-transform: uppercase; }
+.tac { text-align: center; }
+.tar { text-align: right; }
