@@ -7,7 +7,7 @@
             <img :src="tweet.img" alt="Image">
           </figure>
         </div>
-        <div class="media-content">
+        <div class="debug media-content">
           <div class="content">
             <p>
               <strong>{{tweet.name}}</strong> <small>{{tweet.handle}}</small>
@@ -30,6 +30,21 @@
 
 <style lang='scss' scoped>
   @import '../style/grid.scss';
+
+  img {
+    position: fixed;
+    top: 0; right: 0; bottom: 0;
+    width: 40vw; height: 100vh;
+    object-fit: cover;
+    transition: all 400ms ease;
+    opacity: 0;
+  }
+
+  .tweet:hover {
+    img { opacity: 1; }
+  }
+
+  .media-content { width: max-content; }
 
 </style>
 
