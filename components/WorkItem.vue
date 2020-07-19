@@ -26,8 +26,7 @@
   article {
     display: flex;
     flex-direction: column;
-
-    @include breakpoint(md) { margin-bottom: 5.6rem; }
+    margin-bottom: 5.6rem;
   }
 
   h4 {
