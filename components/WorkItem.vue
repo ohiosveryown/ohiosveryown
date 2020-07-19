@@ -30,6 +30,30 @@
     @include breakpoint(md) { margin-bottom: 5.6rem; }
   }
 
+  h4 {
+    position: relative;
+  }
+
+  h4:before {
+    content: "\219D";
+    position: absolute;
+    top: -.4rem;
+    left: -4.8rem;
+    opacity: 0;
+    font-size: 4rem;
+    line-height: 1;
+    transform: translateX(-1rem);
+    transition: var(--ease);
+    will-change:transform
+  }
+
+  @media (pointer: fine) {
+    article:hover h4:before {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
   figure {
     display: flex;
     align-items: center;
