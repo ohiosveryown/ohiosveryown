@@ -1,9 +1,9 @@
 <template>
-  <main>
+  <main class="width">
 
     <header class="intro">
       <h1 class="mb-2 fs--lg f--c">My name is Matt.</h1>
-      <h2 class="fs--md f--g">I’m a product designer living in Atlanta, Ga. Presently I’m researching design systems & machine learning.</h2>
+      <h2 class="fs--md f--g">I’m a product designer in Atlanta, Ga. Presently I’m researching design systems & machine learning.</h2>
     </header>
 
     <section>
@@ -26,14 +26,21 @@
 
   .intro {
     @include breakpoint(md) {
-      margin: 8rem 0;
-      width: grid-width(5.6);
+      margin: 16rem 0 8rem;
+      width: grid-width(10);
     }
+
+    @include breakpoint(mdl) { width: grid-width(6); }
   }
 
   section {
     @include breakpoint(md) {
-      margin-bottom: 7.2rem;
+      margin-left: grid-width(1);
+      width: grid-width(8);
+    }
+
+    @include breakpoint(mdl) {
+      margin: 0 0 7.2rem 0;
       width: grid-width(4);
     }
 

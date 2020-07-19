@@ -7,10 +7,14 @@
         <h4 class="mb-2 fs--md f--g">{{ work.name }}</h4>
         <p class="f--f">{{ work.excerpt }}</p>
       </article>
-      <figure :class = "{ active:hover }" :style = "{ background: work.background }">
-        <img :class = "{ active:hover }" :src="work.img" alt="Image">
-      </figure>
     </router-link>
+
+    <figure
+      :class = "{ active:hover }"
+      :style = "{ background: work.background }"
+    >
+      <img :src="work.img" alt="Image">
+    </figure>
   </li>
 
 </template>
@@ -32,22 +36,18 @@
     justify-content: center;
     position: fixed;
     top: 0; right: 0; bottom: 0;
-    width: 50vw; height: 100vh;
+    width: 46vw; height: 100vh;
     object-fit: cover;
     opacity: 0;
   }
 
   img {
     width: 80%; height: auto;
-    opacity: 0.05;
+    box-shadow: 0px 4px 64px rgba(0,0,0,.2);
   }
 
   .active {
     opacity: 1;
-  }
-
-  .bg {
-    background: yellow;
   }
 
 

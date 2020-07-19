@@ -4,9 +4,9 @@ const works = [
     discipline: 'ux',
     name: 'Mailchimp First-time Send',
     excerpt: "Creating an all new editing experience with maximum flexibility to make designing easier.",
-    img: 'https://semantic-ui.com/images/avatar2/large/matthew.png',
+    img: 'https://ovo.pink/media/05.4db9bdff.mp4',
     link: 'test',
-    background: 'yellow'
+    background: 'var(--mailchimp)'
   },
   {
     id: 2,
