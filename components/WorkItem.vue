@@ -7,7 +7,7 @@
         <h4 class="mb-2 fs--md f--g">{{ work.name }}</h4>
         <p class="f--f">{{ work.excerpt }}</p>
       </article>
-      <figure class="debug">
+      <figure :class = "{ active:hover }" :style = "{ background: work.background }">
         <img :class = "{ active:hover }" :src="work.img" alt="Image">
       </figure>
     </router-link>
@@ -34,7 +34,7 @@
     top: 0; right: 0; bottom: 0;
     width: 50vw; height: 100vh;
     object-fit: cover;
-    transition: opacity 400ms ease;
+    opacity: 0;
   }
 
   img {
@@ -45,6 +45,11 @@
   .active {
     opacity: 1;
   }
+
+  .bg {
+    background: yellow;
+  }
+
 
 </style>
 

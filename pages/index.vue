@@ -60,6 +60,5 @@
     data: () => ({
       works
     }),
-
   }
 </script>
