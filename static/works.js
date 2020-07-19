@@ -10,7 +10,7 @@ const works = [
   {
     id: 2,
     discipline: 'ux/dev',
-    name: 'menu.black',
+    name: 'Menu.black',
     excerpt: "Bringing awareness and celebrating the diversity of Atlanta and it's food.",
     img: 'https://semantic-ui.com/images/avatar2/large/molly.png',
     link: '',
