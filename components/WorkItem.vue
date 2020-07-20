@@ -13,7 +13,13 @@
       :class = "{ active:hover }"
       :style = "{ background: work.background }"
     >
-      <img :src="work.img" alt="Image">
+      <!-- <img :src="work.img" alt="Image"> -->
+      <video
+        autoplay = "autoplay"
+        playsinline = ""
+        loop = "loop"
+        :src="work.img"
+      />
     </figure>
   </li>
 
@@ -64,8 +70,9 @@
     opacity: 0;
   }
 
-  img {
-    width: 80%; height: auto;
+  video, img {
+    max-width: 80%;
+    max-height: 80%; height: auto;
     box-shadow: 0px 4px 64px rgba(0,0,0,.2);
   }
 

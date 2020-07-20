@@ -3,6 +3,7 @@
 
     <header class="intro">
       <h1 class="mb-2 fs--lg f--c">My name is Matt.</h1>
+      <ButtonAdventure label = 'Adventure Time' />
       <h2 class="fs--md f--g">I’m a product designer in Atlanta, Ga. Presently I’m researching design systems & machine learning.</h2>
     </header>
 
@@ -35,6 +36,7 @@
     margin: 16rem 0 8rem;
     @include breakpoint(md) { width: grid-width(10); }
     @include breakpoint(mdl) { width: grid-width(6); }
+    h1 { display: inline-flex; }
   }
 
   section {
@@ -68,7 +70,6 @@
     border-radius: 50%;
     width: 80%; height: 75%;
     background: #f8e1df;
-    transform: scale(.9);
   }
 
   .o {
@@ -99,11 +100,12 @@
 
 
 <script>
+  import ButtonAdventure from '../components/ButtonAdventure'
   import WorkItem from '../components/WorkItem'
   import works from '../static/works'
 
   export default {
-    components: { WorkItem },
+    components: { ButtonAdventure, WorkItem },
 
     data: () => ({
       works
@@ -115,35 +117,23 @@
       if (mq.matches) {
         const tl = gsap.timeline()
         tl.set('.r', {
-          scale: 1,
           x: 'random(0, 400vw)',
           y: 'random(-400vh,400vh)',
-          ease: Power2.easeInOut,
-          duration: 0,
         })
 
         tl.set('.o', {
-          scale: 1,
           x: 'random(0, 400vw)',
           y: 'random(-400vh,400vh)',
-          ease: Power2.easeInOut,
-          duration: 0,
         })
 
         tl.set('.y', {
-          scale: 1,
           x: 'random(0, 400vw)',
           y: 'random(-400vh,400vh)',
-          ease: Power2.easeInOut,
-          duration: 0,
         })
 
         tl.set('.g', {
-          scale: 1,
           x: 'random(0, 400vw)',
           y: 'random(-400vh,400vh)',
-          ease: Power2.easeInOut,
-          duration: 0,
         })
       }
     }
