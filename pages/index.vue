@@ -22,11 +22,6 @@
       <div class="o"></div>
       <div class="y"></div>
       <div class="g"></div>
-
-
-      <!-- <div class="g"></div>
-      <div class="b"></div>
-      <div class="i"></div> -->
     </div>
 
   </main>
@@ -74,7 +69,6 @@
     width: 80%; height: 75%;
     background: #f8e1df;
     transform: scale(.9);
-    // opacity: .8;
   }
 
   .o {
@@ -83,7 +77,6 @@
     border-radius: 50%;
     width: 60%; height: 60%;
     background: #ffbbfa;
-    // opacity: .6;
   }
 
   .y {
@@ -92,7 +85,6 @@
     border-radius: 50%;
     width: 60%; height: 60%;
     background: #ffbbfa;
-    // opacity: .6;
   }
 
   .g {
@@ -101,62 +93,7 @@
     border-radius: 50%;
     width: 60%; height: 30%;
     background: #dfedf1;
-    // opacity: .9;
   }
-
-
-
-  // .r {
-  //   border-radius: 50%;
-  //   width: 60%; height: 75%;
-  //   background: #FFEDEB;
-  //   opacity: .8;
-  // }
-
-  // .o {
-  //   position: absolute;
-  //   top: -4rem; right: 0rem;
-  //   border-radius: 50%;
-  //   width: 60%; height: 100%;
-  //   background: #FFD6FC;
-  //   opacity: .8;
-  // }
-
-  // .y {
-  //   position: absolute;
-  //   top: 3rem; right: -20%;
-  //   border-radius: 50%;
-  //   width: 60%; height: calc(100% - 14rem);
-  //   background: #FFD6FC;
-  //   opacity: .8;
-  // }
-
-  // .g {
-  //   position: absolute;
-  //   top: 16%; left: 20%;
-  //   border-radius: 40%;
-  //   width: 60%; height: 70%;
-  //   background: #FFEDEB;
-  //   opacity: .8;
-  // }
-
-  // .b {
-  //   position: absolute;
-  //   top: 40%; left: 0%;
-  //   border-radius: 50%;
-  //   width: 60%; height: 70%;
-  //   background: #FFEDEB;
-  //   opacity: .8;
-  // }
-
-  // .i {
-  //   position: absolute;
-  //   top: 80%; left: 30%;
-  //   border-radius: 50%;
-  //   width: 60%; height: 30%;
-  //   background: #EBF2F4;
-  //   opacity: .8;
-  // }
 
 </style>
 
@@ -173,38 +110,42 @@
     }),
 
     mounted() {
-      const tl = gsap.timeline()
-      tl.set('.r', {
-        scale: 1,
-        x: 'random(0, 400vw)',
-        y: 'random(-400vh,400vh)',
-        ease: Power2.easeInOut,
-        duration: 0,
-      })
+      const mq = matchMedia( '(min-width: 700px)' )
+      // on lg, etc
+      if (mq.matches) {
+        const tl = gsap.timeline()
+        tl.set('.r', {
+          scale: 1,
+          x: 'random(0, 400vw)',
+          y: 'random(-400vh,400vh)',
+          ease: Power2.easeInOut,
+          duration: 0,
+        })
 
-      tl.set('.o', {
-        scale: 1,
-        x: 'random(0, 400vw)',
-        y: 'random(-400vh,400vh)',
-        ease: Power2.easeInOut,
-        duration: 0,
-      })
+        tl.set('.o', {
+          scale: 1,
+          x: 'random(0, 400vw)',
+          y: 'random(-400vh,400vh)',
+          ease: Power2.easeInOut,
+          duration: 0,
+        })
 
-      tl.set('.y', {
-        scale: 1,
-        x: 'random(0, 400vw)',
-        y: 'random(-400vh,400vh)',
-        ease: Power2.easeInOut,
-        duration: 0,
-      })
+        tl.set('.y', {
+          scale: 1,
+          x: 'random(0, 400vw)',
+          y: 'random(-400vh,400vh)',
+          ease: Power2.easeInOut,
+          duration: 0,
+        })
 
-      tl.set('.g', {
-        scale: 1,
-        x: 'random(0, 400vw)',
-        y: 'random(-400vh,400vh)',
-        ease: Power2.easeInOut,
-        duration: 0,
-      })
+        tl.set('.g', {
+          scale: 1,
+          x: 'random(0, 400vw)',
+          y: 'random(-400vh,400vh)',
+          ease: Power2.easeInOut,
+          duration: 0,
+        })
+      }
     }
   }
 </script>
