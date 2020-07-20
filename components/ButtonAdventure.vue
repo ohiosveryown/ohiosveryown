@@ -1,15 +1,54 @@
 <template>
-  <button
-    @mouseenter = 'Enter()'
-    @mouseleave = 'Leave()'
-    class="fs--sm f--f uc"
-  >
-    <span>{{ label }}</span>
-  </button>
+  <div class="adventure">
+    <section
+      class="fs--sm f--f"
+      :class = "{ active:hover }"
+    >
+      Let the algorithims decide your fate — j/k, clicking on the button will take you to a random case study
+    </section>
+    <button
+      @mouseenter = 'Mouseenter(), hover = true'
+      @mouseleave = 'Mouseleave(), hover = false'
+      class="fs--sm f--f uc"
+    >
+      <span>{{ label }}</span>
+    </button>
+  </div>
 </template>
 
 
 <style lang='scss' scoped>
+  @import '../style/grid.scss';
+
+  .adventure {
+    display: inline-flex;
+    position: relative;
+    will-change: opacity, transform;
+  }
+
+  // don't display on touch devices
+  @media (pointer: coarse) { .adventure { display: none; }}
+
+  section {
+    position: absolute;
+    top: -8rem; left: 14rem;
+    width: 40rem;
+    line-height: 1.2;
+    transform: rotate(3deg) translateY(1rem);
+    opacity: 0;
+    transition: all 400ms ease;
+  }
+
+  section:before {
+    display: inline-block;
+    content: '';
+    position: absolute;
+    left: -6rem;
+    width: 4rem; height: 6rem;
+    background: url('../static/img/arrow.svg') no-repeat;
+    background-size: cover;
+  }
+
   button {
     display: inline-flex;
     margin-left: 1.6rem;
@@ -27,6 +66,12 @@
       -webkit-text-fill-color: transparent;
     }
   }
+
+  .active {
+    opacity: 1;
+    transform: rotate(3deg) translateY(0);
+    transition: opacity 400ms ease 100ms, transform 800ms ease;
+  }
 </style>
 
 
@@ -34,27 +79,48 @@
   export default {
     props: [ 'label' ],
 
+    data: () => ({
+      hover: false
+    }),
+
     methods: {
+      // on page load / mount
       Enter() {
+        gsap.from('.adventure', {
+          opacity: 0,
+          scale: .8,
+          rotate: '-10deg',
+          duration: 1.8,
+          delay: 2,
+          ease: 'elastic.out(1,.3)',
+        })
+      },
+
+      Mouseenter() {
         const tl = gsap.timeline()
         tl.to('button', {
           scale: 1.15,
-          boxShadow: '0 4px 32px rgba(0,0,0,0.32)',
+          boxShadow: '0 8px 32px rgba(0,0,0,0.32)',
           rotate: '-6deg',
           ease: 'elastic.out(1,.3)',
           duration: 1.2,
         })
       },
 
-      Leave() {
+      Mouseleave() {
         const tl = gsap.timeline()
         tl.to('button', {
           scale: 1,
           rotate: '-3deg',
+          boxShadow: '0 4px 24px rgba(0,0,0,0.2)',
           ease: 'back.out(6)',
           duration: .6,
         })
       }
-    }
+    },
+
+    mounted() {
+      this.Enter()
+    },
   }
 </script>

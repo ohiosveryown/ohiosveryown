@@ -27,7 +27,7 @@ const works = [
     // img: 'https://ovo.pink/media/04.efbaaa56.mp4',
     img: 'http://ohiosveryown.co/img/principles.mp4',
     link: '',
-    background: 'blue'
+    background: 'var(--shootproof)'
   }
 ]
 

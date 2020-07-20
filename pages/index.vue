@@ -18,12 +18,7 @@
       </ul>
     </section>
 
-    <div class="rainbow">
-      <div class="r"></div>
-      <div class="o"></div>
-      <div class="y"></div>
-      <div class="g"></div>
-    </div>
+    <Rainbow/>
 
   </main>
 </template>
@@ -51,61 +46,17 @@
     }
   }
 
-  .rainbow {
-    position: fixed;
-    z-index: var(--zmin);
-    top: 0; right: 0; bottom: 0;
-    width: 100vw; height: 100vh;
-    filter: blur(80px);
-
-    @include breakpoint(mdl) {
-      width: 46vw; height: 100vh;
-    }
-  }
-
-
-  .r {
-    position: absolute;
-    left: 2%;
-    border-radius: 50%;
-    width: 80%; height: 75%;
-    background: #f8e1df;
-  }
-
-  .o {
-    position: absolute;
-    top: 8%; right: 0%;
-    border-radius: 50%;
-    width: 60%; height: 60%;
-    background: #ffbbfa;
-  }
-
-  .y {
-    position: absolute;
-    top: 2%; right: -12%;
-    border-radius: 50%;
-    width: 60%; height: 60%;
-    background: #ffbbfa;
-  }
-
-  .g {
-    position: absolute;
-    top: 60%; right: 0%;
-    border-radius: 50%;
-    width: 60%; height: 30%;
-    background: #dfedf1;
-  }
-
 </style>
 
 
 <script>
   import ButtonAdventure from '../components/ButtonAdventure'
+  import Rainbow from '../components/Rainbow'
   import WorkItem from '../components/WorkItem'
   import works from '../static/works'
 
   export default {
-    components: { ButtonAdventure, WorkItem },
+    components: { ButtonAdventure, Rainbow, WorkItem },
 
     data: () => ({
       works
