@@ -19,10 +19,14 @@
 
     <div class="rainbow">
       <div class="r"></div>
-      <div class="p"></div>
       <div class="o"></div>
+      <div class="y"></div>
+      <div class="g"></div>
+
+
+      <!-- <div class="g"></div>
       <div class="b"></div>
-      <div class="i"></div>
+      <div class="i"></div> -->
     </div>
 
   </main>
@@ -55,72 +59,104 @@
     z-index: var(--zmin);
     top: 0; right: 0; bottom: 0;
     width: 100vw; height: 100vh;
+    filter: blur(80px);
 
     @include breakpoint(mdl) {
       width: 46vw; height: 100vh;
     }
   }
 
+
   .r {
     position: absolute;
-    left: 16%;
-    right: 32%;
-    top: 2%;
-    bottom: 28%;
+    left: 2%;
     border-radius: 50%;
-
-    background: #FFEDEB;
-    opacity: 1;
-    filter: blur(4rem);
-  }
-
-  .p {
-    position: absolute;
-    left: 40%;
-    right: 4%;
-    top: -6%;
-    bottom: 8%;
-
-    background: #FFD6FC;
-    opacity: 1;
-    filter: blur(10rem);
+    width: 80%; height: 75%;
+    background: #f8e1df;
+    transform: scale(.9);
+    // opacity: .8;
   }
 
   .o {
-    left: 12%;
-    right: 32%;
-    top: 36%;
-    bottom: -12%;
-
-    background: #FFEDEB;
-    opacity: 1;
-    filter: blur(10rem);
-  }
-
-  .b {
     position: absolute;
-    width: 163px;
-    height: 436px;
-    right: 0;
-    top: 50%;
-
-    background: #b4cdd4;
-    opacity: 1;
-    filter: blur(6.4rem);
-    transform: rotate(90deg);
+    top: 8%; right: 0%;
+    border-radius: 50%;
+    width: 60%; height: 60%;
+    background: #ffbbfa;
+    // opacity: .6;
   }
 
-  .i {
+  .y {
     position: absolute;
-    left: 65.14%;
-    right: -19.86%;
-    top: 3.75%;
-    bottom: 21.12%;
-
-    background: #FFD6FC;
-    opacity: 1;
-    filter: blur(10rem);
+    top: 2%; right: -12%;
+    border-radius: 50%;
+    width: 60%; height: 60%;
+    background: #ffbbfa;
+    // opacity: .6;
   }
+
+  .g {
+    position: absolute;
+    top: 60%; right: 0%;
+    border-radius: 50%;
+    width: 60%; height: 30%;
+    background: #dfedf1;
+    // opacity: .9;
+  }
+
+
+
+  // .r {
+  //   border-radius: 50%;
+  //   width: 60%; height: 75%;
+  //   background: #FFEDEB;
+  //   opacity: .8;
+  // }
+
+  // .o {
+  //   position: absolute;
+  //   top: -4rem; right: 0rem;
+  //   border-radius: 50%;
+  //   width: 60%; height: 100%;
+  //   background: #FFD6FC;
+  //   opacity: .8;
+  // }
+
+  // .y {
+  //   position: absolute;
+  //   top: 3rem; right: -20%;
+  //   border-radius: 50%;
+  //   width: 60%; height: calc(100% - 14rem);
+  //   background: #FFD6FC;
+  //   opacity: .8;
+  // }
+
+  // .g {
+  //   position: absolute;
+  //   top: 16%; left: 20%;
+  //   border-radius: 40%;
+  //   width: 60%; height: 70%;
+  //   background: #FFEDEB;
+  //   opacity: .8;
+  // }
+
+  // .b {
+  //   position: absolute;
+  //   top: 40%; left: 0%;
+  //   border-radius: 50%;
+  //   width: 60%; height: 70%;
+  //   background: #FFEDEB;
+  //   opacity: .8;
+  // }
+
+  // .i {
+  //   position: absolute;
+  //   top: 80%; left: 30%;
+  //   border-radius: 50%;
+  //   width: 60%; height: 30%;
+  //   background: #EBF2F4;
+  //   opacity: .8;
+  // }
 
 </style>
 
@@ -135,5 +171,40 @@
     data: () => ({
       works
     }),
+
+    mounted() {
+      const tl = gsap.timeline()
+      tl.set('.r', {
+        scale: 1,
+        x: 'random(0, 400vw)',
+        y: 'random(-400vh,400vh)',
+        ease: Power2.easeInOut,
+        duration: 0,
+      })
+
+      tl.set('.o', {
+        scale: 1,
+        x: 'random(0, 400vw)',
+        y: 'random(-400vh,400vh)',
+        ease: Power2.easeInOut,
+        duration: 0,
+      })
+
+      tl.set('.y', {
+        scale: 1,
+        x: 'random(0, 400vw)',
+        y: 'random(-400vh,400vh)',
+        ease: Power2.easeInOut,
+        duration: 0,
+      })
+
+      tl.set('.g', {
+        scale: 1,
+        x: 'random(0, 400vw)',
+        y: 'random(-400vh,400vh)',
+        ease: Power2.easeInOut,
+        duration: 0,
+      })
+    }
   }
 </script>
