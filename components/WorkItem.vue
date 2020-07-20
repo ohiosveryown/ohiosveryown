@@ -1,16 +1,16 @@
 <template>
 
   <li>
-    <router-link :to = "'/' + work.link">
+    <nuxt-link :to = "'/' + work.link">
       <article @mouseenter = 'hover = true' @mouseleave = 'hover = false'>
         <h5 class="op-5 mb-00 fs--sm f--f uc">{{ work.discipline }}</h5>
         <h4 class="mb-2 fs--md f--g">{{ work.name }}</h4>
         <p class="f--f">{{ work.excerpt }}</p>
       </article>
-    </router-link>
+    </nuxt-link>
 
     <figure
-      :class = "{ active:hover }"
+      :class = "{ active : hover }"
       :style = "{ background: work.background }"
     >
       <!-- <img :src="work.img" alt="Image"> -->

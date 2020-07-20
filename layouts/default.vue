@@ -1,8 +1,17 @@
 <template>
-  <nuxt/>
+  <div>
+    <Navigation/>
+    <nuxt/>
+  </div>
 </template>
 
+
 <script>
+  import Navigation from '../components/Navigation'
+
+  export default {
+    components: { Navigation }
+  }
   // smooth scroll
   // document.querySelector('body').style = 'height: 100vh;'
   // if (('ontouchstart' in window) || (navigator.MaxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0)) {

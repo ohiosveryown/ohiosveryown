@@ -58,6 +58,10 @@
   export default {
     components: { ButtonAdventure, Rainbow, WorkItem },
 
+    head: () => ({
+      title: 'ovo – home'
+    }),
+
     data: () => ({
       works
     }),

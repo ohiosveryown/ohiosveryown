@@ -1,12 +1,17 @@
 <template>
   <div>
-    <div class="box"></div>
+    <div
+      class="area"
+      :class = "{ active : easter }"
+      @click = 'easter = true'
+      @mouseleave = 'easter = false'
+    />
 
     <aside class="rainbow">
-      <div class="r"></div>
-      <div class="o"></div>
-      <div class="y"></div>
-      <div class="g"></div>
+      <div class="r"/>
+      <div class="o"/>
+      <div class="y"/>
+      <div class="g"/>
     </aside>
   </div>
 </template>
@@ -14,6 +19,8 @@
 
 <style lang='scss' scoped>
   @import '../style/grid.scss';
+
+  .active { cursor: url('../static/img/rainbow.svg'), auto; }
 
   .rainbow {
     position: fixed;
@@ -24,11 +31,10 @@
     @include breakpoint(mdl) { width: 46vw; height: 100vh; }
   }
 
-  .box {
+  .area {
     position: fixed;
     top: 0; right: 0; bottom: 0;
     width: 46vw; height: 100vh;
-    // &:hover { cursor: url('../static/img/arrow.svg'), auto; }
   }
 
   .rainbow > div {
@@ -64,6 +70,8 @@
 
 <script>
   export default {
-
+    data: () => ({
+      easter: false
+    }),
   }
 </script>

@@ -2,7 +2,7 @@
   <div class="adventure">
     <section
       class="fs--sm f--f"
-      :class = "{ active:hover }"
+      :class = "{ active : hover }"
     >
       Let the algorithims decide your fate — j/k, clicking on this button will take you to a random case study
     </section>
@@ -38,9 +38,15 @@
     top: -8rem; left: 14rem;
     width: 40rem;
     line-height: 1.2;
-    transform: rotate(3deg) translateY(1rem);
+    transform: rotate(3deg) translateY(.2rem);
     opacity: 0;
     transition: all 400ms ease;
+  }
+
+  .active {
+    opacity: 1;
+    transform: rotate(3deg) translateY(0);
+    transition: opacity 400ms ease 100ms, transform 800ms ease;
   }
 
   section:before {
@@ -69,12 +75,6 @@
       background-clip: text;
       -webkit-text-fill-color: transparent;
     }
-  }
-
-  .active {
-    opacity: 1;
-    transform: rotate(3deg) translateY(0);
-    transition: opacity 400ms ease 100ms, transform 800ms ease;
   }
 </style>
 
