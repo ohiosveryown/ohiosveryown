@@ -1,10 +1,14 @@
 <template>
-  <aside class="rainbow">
-    <div class="r"></div>
-    <div class="o"></div>
-    <div class="y"></div>
-    <div class="g"></div>
-  </aside>
+  <div>
+    <div class="box"></div>
+
+    <aside class="rainbow">
+      <div class="r"></div>
+      <div class="o"></div>
+      <div class="y"></div>
+      <div class="g"></div>
+    </aside>
+  </div>
 </template>
 
 
@@ -18,7 +22,12 @@
     width: 100vw; height: 100vh;
     filter: blur(80px) saturate(1.5);
     @include breakpoint(mdl) { width: 46vw; height: 100vh; }
+  }
 
+  .box {
+    position: fixed;
+    top: 0; right: 0; bottom: 0;
+    width: 46vw; height: 100vh;
     // &:hover { cursor: url('../static/img/arrow.svg'), auto; }
   }
 

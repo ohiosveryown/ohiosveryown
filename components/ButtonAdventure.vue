@@ -4,15 +4,18 @@
       class="fs--sm f--f"
       :class = "{ active:hover }"
     >
-      Let the algorithims decide your fate — j/k, clicking on the button will take you to a random case study
+      Let the algorithims decide your fate — j/k, clicking on this button will take you to a random case study
     </section>
-    <button
-      @mouseenter = 'Mouseenter(), hover = true'
-      @mouseleave = 'Mouseleave(), hover = false'
-      class="fs--sm f--f uc"
-    >
-      <span>{{ label }}</span>
-    </button>
+    <!-- <nuxt-link to = '/test'> -->
+    <nuxt-link :to=" '/' + selectedRoute">
+      <button
+        @mouseenter = 'Mouseenter(), hover = true'
+        @mouseleave = 'Mouseleave(), hover = false'
+        class="fs--sm f--f uc"
+      >
+        <span>{{ label }}</span>
+      </button>
+    </nuxt-link>
   </div>
 </template>
 
@@ -21,9 +24,10 @@
   @import '../style/grid.scss';
 
   .adventure {
-    display: inline-flex;
+    display: none;
     position: relative;
     will-change: opacity, transform;
+    @include breakpoint(md) { display: inline-flex; }
   }
 
   // don't display on touch devices
@@ -79,9 +83,16 @@
   export default {
     props: [ 'label' ],
 
-    data: () => ({
-      hover: false
-    }),
+    data() {
+      return {
+        hover: false,
+        routes: [
+          'one',
+          'two'
+        ],
+        selectedRoute: ''
+      }
+    },
 
     methods: {
       // on page load / mount
@@ -121,6 +132,11 @@
 
     mounted() {
       this.Enter()
+    },
+
+    created() {
+      const route = Math.floor(Math.random() * this.routes.length)
+      this.selectedRoute = this.routes[route]
     },
   }
 </script>
