@@ -13,7 +13,6 @@
       :class = "{ active : hover }"
       :style = "{ background: work.background }"
     >
-      <!-- <img :src="work.img" alt="Image"> -->
       <video
         autoplay = "autoplay"
         playsinline = ""
@@ -37,13 +36,13 @@
 
   h4 {
     position: relative;
+    &:hover { text-decoration: underline; }
   }
 
   h4:before {
     content: "\219D";
     position: absolute;
-    top: -.4rem;
-    left: -4.8rem;
+    top: -.4rem; left: -4.8rem;
     opacity: 0;
     font-size: 4rem;
     line-height: 1;
@@ -90,7 +89,7 @@
     },
 
     data: () => ({
-      hover: false
+      hover: false,
     }),
   }
 </script>
