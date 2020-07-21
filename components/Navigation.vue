@@ -18,7 +18,7 @@
 
         <footer :class = "[ isOpen ? 'footer-opened' : 'footer-closed' ]">
           <ButtonAdventureSm label = 'Adventure Time' />
-          <h6 class="f--c">Let the algorithims decide your fate — j/k, clicking on this button will take you to a random case study</h6>
+          <h6 class="f--c">Let the algorithims decide your fate — j/k, clicking this button will take you to a random case study</h6>
         </footer>
       </div>
   </nav>
@@ -46,6 +46,7 @@
     margin: 0 auto;
     width: 94vw;
     max-height: 44rem;
+    max-height: 72vh;
     overflow-y: scroll;
     border-radius: 6px;
     background: #fff;
@@ -54,7 +55,7 @@
     opacity: 0;
     transform: translateY(-1rem);
 
-    @include breakpoint(sm) { max-height: 53.6rem; }
+    // @include breakpoint(sm) { max-height: 53.6rem; }
 
     @include breakpoint(md) {
       top: 3.2rem; right: -1.6rem; left: auto;
@@ -94,11 +95,11 @@
     bottom: 0;
     padding: 2.4rem 1.8rem 1.8rem;
     backdrop-filter: blur(10px);
-    h6 { font-size: 1.3rem; }
+    h6 { font-size: 1.2rem; }
     @include breakpoint(md) { display: none; }
   }
 
-  .footer-opened { opacity: 1; transition: opacity 300ms ease 320ms; }
+  .footer-opened { opacity: 1; transition: opacity 500ms ease 640ms; }
   .footer-closed { opacity: 0; transition: opacity 100ms ease; }
 
 </style>
