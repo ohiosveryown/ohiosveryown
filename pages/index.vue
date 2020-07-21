@@ -54,7 +54,6 @@
   import Rainbow from '../components/Rainbow'
   import WorkItem from '../components/WorkItem'
   import works from '../static/works'
-
   export default {
     components: { ButtonAdventure, Rainbow, WorkItem },
 

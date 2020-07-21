@@ -17,7 +17,7 @@
         autoplay = "autoplay"
         playsinline = ""
         loop = "loop"
-        :src="work.img"
+        :src="work.video"
       />
     </figure>
   </li>
