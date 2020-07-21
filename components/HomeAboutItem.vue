@@ -1,15 +1,15 @@
 <template>
 
   <li>
-    <nuxt-link :to = "'/' + work.link">
+    <nuxt-link :to = "'/' + link">
       <article>
-        <h4 class="f--f">{{ work.name }}</h4>
-        <p class="f--c">{{ work.excerptSmall }}</p>
+        <h4 class="f--f">{{ name }}</h4>
+        <p class="f--c">{{ excerpt }}</p>
       </article>
     </nuxt-link>
 
-    <figure :style = "{ background: work.background }">
-      <img :src="work.img" alt="">
+    <figure :style = "{ background: background }">
+      <img :src="img" alt="">
     </figure>
   </li>
 
@@ -61,13 +61,17 @@
   img {
     width: 80%; height: 60%;
     object-fit: cover;
-    box-shadow: 0px 4px 20px rgba(0,0,0,.16);
+    box-shadow: 0px 4px 20px rgba(0,0,0,.1);
     transition: transform 200ms ease;
   }
 
   .active {
     transform: scale(1.1);
+  }
 
+  .cover {
+    figure { overflow: hidden; }
+    img { width: 100%; height: 100%; }
   }
 
 </style>
@@ -75,8 +79,6 @@
 
 <script>
   export default {
-    props: {
-      work: Object
-    },
+    props: [ 'name', 'excerpt', 'img', 'background', 'link' ],
   }
 </script>

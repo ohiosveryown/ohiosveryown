@@ -11,14 +11,33 @@
         :class = "[ isOpen ? 'menu-opened' : 'menu-closed' ]"
       >
         <section :class = "[ isOpen ? 'menu-items-opened' : 'menu-items-closed' ]">
-          <ul>
+          <ul @click = 'isOpen = !isOpen'>
+
+            <HomeAboutItem
+              name = 'Home'
+              excerpt = 'ovo is the web presence for me, Matthew Pence'
+              link = 'test'
+              background = '#FFD6FC'
+              img = './img/navigation/home.jpg'
+            />
+
+            <HomeAboutItem
+              name = 'About'
+              excerpt = 'I say hello here and share some of social links'
+              link = 'test'
+              background = '#82FFD2'
+              img = './img/navigation/matt.jpg'
+              class = "cover"
+            />
+
             <NavigationItem v-for="work in works" :work="work" :key="work.id"/>
           </ul>
         </section>
 
+        <!-- sm / touch only -->
         <footer :class = "[ isOpen ? 'footer-opened' : 'footer-closed' ]">
           <ButtonAdventureSm label = 'Adventure Time' />
-          <h6 class="f--c">Let the algorithims decide your fate — j/k, clicking this button will take you to a random case study</h6>
+          <h6 class="f--c">Let the algorithms decide your fate — j/k, clicking this button will take you to a random case study</h6>
         </footer>
       </div>
   </nav>
@@ -88,18 +107,18 @@
 
   svg { margin-top: .3rem; transition: transform 300ms ease; }
   .arrow-opened { transform: rotate(-180deg); }
-  .arrow-closed { transform: rotate(0deg); }
+  .arrow-closed { transform: roate(0deg); }
 
   footer {
     position: sticky;
     bottom: 0;
     padding: 2.4rem 1.8rem 1.8rem;
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(18px);
     h6 { font-size: 1.2rem; }
     @include breakpoint(md) { display: none; }
   }
 
-  .footer-opened { opacity: 1; transition: opacity 500ms ease 640ms; }
+  .footer-opened { opacity: 1; transition: opacity 500ms ease 320ms; }
   .footer-closed { opacity: 0; transition: opacity 100ms ease; }
 
 </style>
@@ -108,9 +127,10 @@
 <script>
   import works from '../static/works'
   import NavigationItem from './NavigationItem'
+  import HomeAboutItem from './HomeAboutItem'
   import ButtonAdventureSm from './ButtonAdventureSm'
   export default {
-    components: { NavigationItem, ButtonAdventureSm },
+    components: { NavigationItem, HomeAboutItem, ButtonAdventureSm },
     data() {
       return {
         works,

@@ -4,7 +4,7 @@
       class="fs--sm f--f"
       :class = "{ active : hover }"
     >
-      Let the algorithims decide your fate — j/k, clicking on this button will take you to a random case study
+      Let the algorithms decide your fate — j/k, clicking on this button will take you to a random case study
     </article>
     <!-- <nuxt-link to = '/test'> -->
     <nuxt-link :to=" '/' + selectedRoute">
