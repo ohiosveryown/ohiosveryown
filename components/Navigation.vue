@@ -3,7 +3,7 @@
     <span class="mt-0 op-4 fs--sm f--f uc">ovo / 3.5</span>
     <header @click = 'isOpen = !isOpen'>
       <span class="mt-0 fs--sm f--f uc">Navigation</span>
-      <svg :class = "[ isOpen ? 'arrow-opened' : 'arrow-closed' ]" class="mt-00 ml-0" width="12" height="12" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M5.444 0h1.112v7.848c.159-.243.331-.478.515-.702C8.043 5.97 9.435 5 11 5v1.111c-1.102 0-2.21.698-3.071 1.743-.862 1.044-1.373 2.311-1.373 3.257H5.444c0-.946-.511-2.213-1.373-3.257C3.21 6.809 2.101 6.11 1 6.11V5c1.565 0 2.957.969 3.929 2.146.184.224.356.459.515.702V0z" fill="#000"/></svg>
+      <svg :class = "[ isOpen ? 'arrow-opened' : 'arrow-closed' ]" class="ml-0" width="12" height="12" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M5.444 0h1.112v7.848c.159-.243.331-.478.515-.702C8.043 5.97 9.435 5 11 5v1.111c-1.102 0-2.21.698-3.071 1.743-.862 1.044-1.373 2.311-1.373 3.257H5.444c0-.946-.511-2.213-1.373-3.257C3.21 6.809 2.101 6.11 1 6.11V5c1.565 0 2.957.969 3.929 2.146.184.224.356.459.515.702V0z" fill="#000"/></svg>
     </header>
 
       <div
@@ -71,7 +71,7 @@
     transform: translateY(-1rem);
   }
 
-  svg { transition: transform 300ms ease; }
+  svg { margin-top: .3rem; transition: transform 300ms ease; }
   .arrow-opened { transform: rotate(-180deg); }
   .arrow-closed { transform: rotate(0deg); }
 
@@ -86,7 +86,7 @@
     data() {
       return {
         works,
-        isOpen: false,
+        isOpen: true,
       }
     },
 

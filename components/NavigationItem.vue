@@ -4,7 +4,7 @@
     <nuxt-link :to = "'/' + work.link">
       <article>
         <h4 class="f--c">{{ work.name }}</h4>
-        <p class="f--c">{{ work.excerpt }}</p>
+        <p class="f--c">{{ work.excerptSmall }}</p>
       </article>
     </nuxt-link>
 
