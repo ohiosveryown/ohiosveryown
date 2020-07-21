@@ -3,7 +3,7 @@
   <li>
     <nuxt-link :to = "'/' + work.link">
       <article>
-        <h4 class="f--c">{{ work.name }}</h4>
+        <h4 class="f--f">{{ work.name }}</h4>
         <p class="f--c">{{ work.excerptSmall }}</p>
       </article>
     </nuxt-link>
@@ -33,9 +33,9 @@
 
   h4 {
     margin-bottom: 1rem;
-    font-size: 1.4rem;
+    font-size: 1.7rem;
     text-decoration: underline;
-    @include breakpoint(md) { font-size: 1.8rem; }
+    @include breakpoint(md) { font-size: 2.1rem; }
   }
 
   p {
