@@ -52,7 +52,7 @@
     @include breakpoint(md) {
       top: 3.2rem; right: -1.6rem; left: auto;
       width: 48rem;
-      height: 80vh; max-height: 48rem;
+      height: 80vh; max-height: 44rem;
       box-shadow: 0px 4px 64px rgba(0,0,0,.12);
     }
 

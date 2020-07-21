@@ -23,8 +23,9 @@
     position: relative;
     display: flex;
     align-items: center;
-    padding: 2.8rem 2rem;
+    padding: 2rem 2rem 1.2rem;
     &:hover { img { transform: scale(1.1); }}
+    @include breakpoint(md) { padding: 2.4rem 2rem 1.2rem; }
   }
 
   article {
