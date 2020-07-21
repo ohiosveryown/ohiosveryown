@@ -2,10 +2,8 @@
   <nav class="width">
     <span class="mt-0 op-4 fs--sm f--f uc">ovo / 3.5</span>
     <div class="menu-wrapper">
-        <!-- @click = 'isOpen = !isOpen' -->
-      <header>
-        <span @click = 'Open' v-show='!ChangeLabel' class="mt-0 fs--sm f--f uc">Open Navigation</span>
-        <span @click = 'Close' v-show='ChangeLabel' class="mt-0 fs--sm f--f uc">Close Navigation</span>
+      <header @click = 'isOpen = !isOpen'>
+        <span class="mt-0 fs--sm f--f uc">{{ label }}</span>
         <svg :class = "[ isOpen ? 'arrow-opened' : 'arrow-closed' ]" class="mt-00 ml-0" width="12" height="12" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M11.657 6l-4.849 4.849-.808.808L.343 6l.808-.808 4.311 4.31V.933h1.024v8.623l4.363-4.363.808.808z" fill="#000"/></svg>
       </header>
 
@@ -75,19 +73,13 @@
   export default {
     data() {
       return {
+        label: 'Navy',
+        open: 'Close Navy',
         isOpen: false,
-        ChangeLabel: false,
       }
     },
 
     methods: {
-
-        Open() {
-          this.ChangeLabel = true
-        },
-        Close() {
-          this.ChangeLabel = false
-        }
 
     },
   }
