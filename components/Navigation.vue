@@ -84,7 +84,7 @@
     data() {
       return {
         works,
-        isOpen: true,
+        isOpen: false,
       }
     },
 
