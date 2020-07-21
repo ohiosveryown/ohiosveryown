@@ -10,11 +10,16 @@
         class="menu"
         :class = "[ isOpen ? 'menu-opened' : 'menu-closed' ]"
       >
-        <div :class = "[ isOpen ? 'menu-items-opened' : 'menu-items-closed' ]">
-        <ul>
-          <NavigationItem v-for="work in works" :work="work" :key="work.id"/>
-        </ul>
-        </div>
+        <section :class = "[ isOpen ? 'menu-items-opened' : 'menu-items-closed' ]">
+          <ul>
+            <NavigationItem v-for="work in works" :work="work" :key="work.id"/>
+          </ul>
+        </section>
+
+        <footer :class = "[ isOpen ? 'footer-opened' : 'footer-closed' ]">
+          <ButtonAdventureSm label = 'Adventure Time' />
+          <h6 class="f--c">Let the algorithims decide your fate — j/k, clicking on this button will take you to a random case study</h6>
+        </footer>
       </div>
   </nav>
 </template>
@@ -37,10 +42,10 @@
 
   .menu {
     position: absolute;
-    top: 4rem; left: -.8rem; right: 0;
+    top: 4.4rem; left: -.8rem; right: 0;
     margin: 0 auto;
     width: 94vw;
-    max-height: 53.6rem;
+    max-height: 44rem;
     overflow-y: scroll;
     border-radius: 6px;
     background: #fff;
@@ -49,6 +54,8 @@
     opacity: 0;
     transform: translateY(-1rem);
 
+    @include breakpoint(sm) { max-height: 53.6rem; }
+
     @include breakpoint(md) {
       top: 3.2rem; right: -1.6rem; left: auto;
       width: 48rem;
@@ -56,9 +63,7 @@
       box-shadow: 0px 4px 64px rgba(0,0,0,.12);
     }
 
-    @include breakpoint(mdl) {
-      right: -2.8rem;
-    }
+    @include breakpoint(mdl) { right: -2.8rem; }
   }
 
   li:last-of-type { padding-bottom: 4rem; }
@@ -84,14 +89,27 @@
   .arrow-opened { transform: rotate(-180deg); }
   .arrow-closed { transform: rotate(0deg); }
 
+  footer {
+    position: sticky;
+    bottom: 0;
+    padding: 2.4rem 1.8rem 1.8rem;
+    backdrop-filter: blur(10px);
+    h6 { font-size: 1.3rem; }
+    @include breakpoint(md) { display: none; }
+  }
+
+  .footer-opened { opacity: 1; transition: opacity 300ms ease 320ms; }
+  .footer-closed { opacity: 0; transition: opacity 100ms ease; }
+
 </style>
 
 
 <script>
   import works from '../static/works'
   import NavigationItem from './NavigationItem'
+  import ButtonAdventureSm from './ButtonAdventureSm'
   export default {
-    components: { NavigationItem },
+    components: { NavigationItem, ButtonAdventureSm },
     data() {
       return {
         works,

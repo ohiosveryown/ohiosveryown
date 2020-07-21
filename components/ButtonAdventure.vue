@@ -1,11 +1,11 @@
 <template>
   <div class="adventure">
-    <section
+    <article
       class="fs--sm f--f"
       :class = "{ active : hover }"
     >
       Let the algorithims decide your fate — j/k, clicking on this button will take you to a random case study
-    </section>
+    </article>
     <!-- <nuxt-link to = '/test'> -->
     <nuxt-link :to=" '/' + selectedRoute">
       <button
@@ -33,14 +33,15 @@
   // don't display on touch devices
   @media (pointer: coarse) { .adventure { display: none; }}
 
-  section {
+  article {
     position: absolute;
-    top: -8rem; left: 14rem;
-    width: 40rem;
+    top: -8rem; left: 11.2rem;
+    width: 32rem;
     line-height: 1.2;
     transform: rotate(3deg) translateY(.2rem);
     opacity: 0;
     transition: all 400ms ease;
+    @include breakpoint(mdl) { left: 14rem; width: 40rem; }
   }
 
   .active {
@@ -49,7 +50,7 @@
     transition: opacity 400ms ease 100ms, transform 800ms ease;
   }
 
-  section:before {
+  article:before {
     display: inline-block;
     content: '';
     position: absolute;
