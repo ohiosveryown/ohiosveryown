@@ -23,20 +23,24 @@
     position: relative;
     display: flex;
     align-items: center;
-    padding: 2.8rem .8rem;
     padding: 2.8rem 2rem;
+    &:hover { img { transform: scale(1.1); }}
   }
 
   article {
     margin-right: 2.8rem;
+
   }
 
   h4 {
-    margin-bottom: 1rem;
+    margin-bottom: .2rem;
     font-size: 1.7rem;
     text-decoration: underline;
     @include breakpoint(md) { font-size: 2.1rem; }
   }
+
+  // hover styles for non-touch
+  @media (pointer: fine) { h4 { &:hover { text-decoration: none; }}}
 
   p {
     font-size: 1.3rem;
@@ -55,6 +59,12 @@
   img {
     width: 80%; height: 60%;
     object-fit: cover;
+    transition: transform 200ms ease;
+  }
+
+  .active {
+    transform: scale(1.1);
+
   }
 
 </style>
@@ -65,9 +75,5 @@
     props: {
       work: Object
     },
-
-    data: () => ({
-      // hover: false,
-    }),
   }
 </script>

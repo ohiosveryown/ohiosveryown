@@ -10,9 +10,11 @@
         class="menu"
         :class = "[ isOpen ? 'menu-opened' : 'menu-closed' ]"
       >
+        <div :class = "[ isOpen ? 'menu-items-opened' : 'menu-items-closed' ]">
         <ul>
-          <NavigationItem v-for="work in works" :work="work" :key="work.id" />
+          <NavigationItem v-for="work in works" :work="work" :key="work.id"/>
         </ul>
+        </div>
       </div>
   </nav>
 </template>
@@ -50,7 +52,7 @@
     @include breakpoint(md) {
       top: 3.2rem; right: -1.6rem; left: auto;
       width: 48rem;
-      height: 80vh; max-height: 40.8rem;
+      height: 80vh; max-height: 48rem;
       box-shadow: 0px 4px 64px rgba(0,0,0,.12);
     }
 
@@ -59,17 +61,24 @@
     }
   }
 
+  li:last-of-type { padding-bottom: 4rem; }
+
   .menu-opened {
     pointer-events: inherit;
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) scaleY(1);
+    transform-origin: top;
   }
 
   .menu-closed {
     pointer-events: none;
     opacity: 0;
-    transform: translateY(-1rem);
+    transform: translateY(-1rem) scaleY(.8);
+    transform-origin: top;
   }
+
+  .menu-items-opened { opacity: 1; transition: opacity 400ms ease 50ms }
+  .menu-items-closed { opacity: 0; transition: opacity 100ms ease 50ms }
 
   svg { margin-top: .3rem; transition: transform 300ms ease; }
   .arrow-opened { transform: rotate(-180deg); }
@@ -86,12 +95,8 @@
     data() {
       return {
         works,
-        isOpen: true,
+        isOpen: false,
       }
-    },
-
-    methods: {
-
     },
   }
 </script>
