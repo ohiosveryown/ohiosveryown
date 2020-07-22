@@ -2,14 +2,14 @@
   <main class="width">
 
     <header class="intro">
-      <h1 class="mb-2 fs--lg f--c">My name is&nbsp;
+      <h1 class="anim--in mb-2 fs--lg f--c">My name is&nbsp;
         <span class="matt-trigger">Matt.</span>
         <figure ref='matt' class="matt">
           <img src="~/static/img/matt.jpg" alt="matt">
         </figure>
       </h1>
       <ButtonAdventure label = 'Adventure Time'/>
-      <h2 class="fs--md f--g">I’m a product designer in Atlanta, Ga. Presently I’m researching
+      <h2 class="anim--in fs--md f--g">I’m a product designer in Atlanta, Ga. Presently I’m researching
         <span class="system-trigger">design systems</span>
         <figure ref='system' class="system">
           <!-- <img src="~/static/img/system.gif" alt=""> -->
@@ -24,12 +24,12 @@
     </header>
 
     <section>
-      <header class="work fs--sm f--f uc">
+      <header class="anim--in work fs--sm f--f uc">
         <h3>case studies</h3>
         <h3>2016 – 2020</h3>
       </header>
 
-      <ul>
+      <ul class="anim--in">
         <WorkItem v-for="work in works" :work="work" :key="work.id" />
       </ul>
     </section>
@@ -106,11 +106,29 @@
       title: 'ovo – home'
     }),
 
-    data: () => ({
-      works
-    }),
+    data() {
+      return {
+        works
+      }
+    },
+
+    methods: {
+      Entrance() {
+        gsap.from('.anim--in', {
+          opacity: 0,
+          // y: 200,
+          // skewY: 10,
+          stagger: .075,
+          duration: 1,
+          ease: Power2.easeInOut
+        })
+      }
+    },
 
     mounted() {
+      // entrance
+      this.Entrance()
+
       const matt = document.querySelector('.matt')
       const system = document.querySelector('.system')
       const learning = document.querySelector('.learning')
@@ -129,20 +147,6 @@
           `transform: translate(${e.pageX - 100}px, ${e.pageY - 88}px) scale(.88);`
         )
       })
-
-      // document.addEventListener('mousemove', (e) => {
-      //   system.setAttribute(
-      //     'style',
-      //     `transform: translate(${e.pageX - 100}px, ${e.pageY - 88}px) scale(.88);`
-      //   )
-      // })
-
-      // document.addEventListener('mousemove', (e) => {
-      //   learning.setAttribute(
-      //     'style',
-      //     `transform: translate(${e.pageX - 100}px, ${e.pageY - 88}px) scale(.88);`
-      //   )
-      // })
     }
   }
 </script>

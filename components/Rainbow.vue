@@ -70,11 +70,41 @@
 
 <script>
   export default {
-    data: () => ({
-      easter: false
-    }),
+    data() {
+      return {
+        easter: false
+      }
+    },
+
+    methods: {
+      Entrance() {
+        gsap.from('.rainbow', {
+          opacity: 0,
+          y: 200,
+          skewY: 10,
+          stagger: .075,
+          duration: 1,
+          ease: Power2.easeInOut
+        })
+      },
+
+      EntranceFF() {
+        gsap.from('.rainbow', {
+          opacity: 0,
+          duration: 1,
+          ease: Power2.easeInOut
+        })
+      }
+    },
 
     mounted() {
+      // entrance
+      if (navigator.userAgent.indexOf("Firefox") > 0) {
+        // this.EntranceFF()
+      } else {
+        this.Entrance()
+      }
+
       const mq = matchMedia( '(min-width: 700px)' )
       // for > md
       if (mq.matches) {
