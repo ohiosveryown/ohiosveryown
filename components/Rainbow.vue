@@ -98,14 +98,16 @@
     },
 
     mounted() {
+      const mq = matchMedia( '(min-width: 700px)' )
       // entrance
       if (navigator.userAgent.indexOf("Firefox") > 0) {
         // this.EntranceFF()
-      } else {
+      } else if (mq.matches) {
         this.Entrance()
+      } else {
+
       }
 
-      const mq = matchMedia( '(min-width: 700px)' )
       // for > md
       if (mq.matches) {
         const tl = gsap.timeline()
