@@ -3,11 +3,23 @@
 
     <header class="intro">
       <h1 class="mb-2 fs--lg f--c">My name is&nbsp;
-        <span class="matt-trigger">Matt</span>.
-        <img ref='matt' class="easter matt" src="~/static/img/matt.jpg" alt="">
+        <span class="matt-trigger">Matt.</span>
+        <figure ref='matt' class="matt">
+          <img src="~/static/img/matt.jpg" alt="">
+        </figure>
       </h1>
-      <ButtonAdventure label = 'Adventure Time' />
-      <h2 class="fs--md f--g">I’m a product designer in Atlanta, Ga. Presently I’m researching design systems & machine learning.
+      <ButtonAdventure label = 'Adventure Time'/>
+      <h2 class="fs--md f--g">I’m a product designer in Atlanta, Ga. Presently I’m researching
+        <span class="system-trigger">design systems</span>
+        <figure ref='system' class="system">
+          <!-- <img src="~/static/img/system.gif" alt=""> -->
+          <img src="~/static/img/learning.gif" alt="">
+        </figure>
+        &
+        <span class="learning-trigger">machine learning</span>
+        <figure ref='learning' class="learning">
+          <img src="~/static/img/learning.gif" alt="">
+        </figure>
       </h2>
     </header>
 
@@ -50,7 +62,8 @@
     }
   }
 
-  .easter {
+  figure {
+    width: 200px; height: 176px;
     position: fixed;
     z-index: var(--zmin);
     top: 0; left: 0;
@@ -60,8 +73,20 @@
     will-change: transform;
   }
 
-  .matt { width: 200px; height: 175px; }
-  @media(pointer: fine) { .matt-trigger:hover ~ img { opacity: 1; }}
+  figure:before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0; left: 0; bottom: 0;
+    z-index: 1;
+    background: rgba(255, 214, 252, 1);
+    mix-blend-mode: hard-light;
+  }
+
+  img { width: 100%; height: 100%; object-fit: cover; }
+
+  @media(pointer: fine) { .matt-trigger:hover ~ figure { opacity: 1; }}
+  @media(pointer: fine) { .system-trigger:hover ~ figure { opacity: 1; }}
+  @media(pointer: fine) { .learning-trigger:hover ~ figure { opacity: 1; }}
 
 </style>
 
@@ -84,13 +109,37 @@
 
     mounted() {
       const matt = document.querySelector('.matt')
+      const system = document.querySelector('.system')
+      const learning = document.querySelector('.learning')
 
       document.addEventListener('mousemove', (e) => {
         matt.setAttribute(
           'style',
           `transform: translate(${e.pageX - 100}px, ${e.pageY - 88}px) scale(.88);`
+        ),
+        system.setAttribute(
+          'style',
+          `transform: translate(${e.pageX - 100}px, ${e.pageY - 88}px) scale(.88);`
+        ),
+        learning.setAttribute(
+          'style',
+          `transform: translate(${e.pageX - 100}px, ${e.pageY - 88}px) scale(.88);`
         )
       })
+
+      // document.addEventListener('mousemove', (e) => {
+      //   system.setAttribute(
+      //     'style',
+      //     `transform: translate(${e.pageX - 100}px, ${e.pageY - 88}px) scale(.88);`
+      //   )
+      // })
+
+      // document.addEventListener('mousemove', (e) => {
+      //   learning.setAttribute(
+      //     'style',
+      //     `transform: translate(${e.pageX - 100}px, ${e.pageY - 88}px) scale(.88);`
+      //   )
+      // })
     }
   }
 </script>
