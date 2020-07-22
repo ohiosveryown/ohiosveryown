@@ -62,6 +62,8 @@
     }
   }
 
+  li:first-of-type, li:nth-of-type(2) { display: none; }
+
   figure {
     width: 200px; height: 176px;
     position: fixed;

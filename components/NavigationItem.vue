@@ -54,6 +54,7 @@
   img {
     width: 80%; height: 60%;
     object-fit: cover;
+    object-position: top;
     box-shadow: 0px 4px 20px rgba(0,0,0,.16);
     transition: transform 200ms ease;
   }

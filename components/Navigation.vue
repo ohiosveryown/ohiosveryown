@@ -15,24 +15,6 @@
       >
         <section :class = "[ isOpen ? 'menu-items-opened' : 'menu-items-closed' ]">
           <ul @click = 'isOpen = !isOpen'>
-
-            <HomeAboutItem
-              name = 'Home'
-              excerpt = 'ovo is the web presence for me, Matthew Pence'
-              link = 'test'
-              background = '#FFD6FC'
-              img = './img/navigation/home.jpg'
-            />
-
-            <HomeAboutItem
-              name = 'About'
-              excerpt = 'I tell you about myself here and share some social links'
-              link = 'test'
-              background = '#82FFD2'
-              img = './img/navigation/matt.jpg'
-              class = "cover"
-            />
-
             <NavigationItem v-for="work in works" :work="work" :key="work.id"/>
           </ul>
         </section>
