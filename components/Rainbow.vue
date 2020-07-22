@@ -73,5 +73,54 @@
     data: () => ({
       easter: false
     }),
+
+    mounted() {
+      const mq = matchMedia( '(min-width: 700px)' )
+      // for > md
+      if (mq.matches) {
+        const tl = gsap.timeline()
+        tl.set('.r', {
+          x: 'random(0, 400vw)',
+          y: 'random(-400vh,400vh)',
+        })
+
+        tl.set('.o', {
+          x: 'random(0, 300vw)',
+          y: 'random(-300vh,300vh)',
+        })
+
+        tl.set('.y', {
+          x: 'random(0, 300vw)',
+          y: 'random(-300vh,300vh)',
+        })
+
+        tl.set('.g', {
+          x: 'random(0, 300vw)',
+          y: 'random(-300vh,300vh)',
+        })
+      } else {
+        // for < md
+        const tl = gsap.timeline()
+        tl.set('.r', {
+          x: 'random(0, 300vw)',
+          y: 'random(-300vh,300vh)',
+        })
+
+        tl.set('.o', {
+          x: 'random(0, 300vw)',
+          y: 'random(-300vh,300vh)',
+        })
+
+        tl.set('.y', {
+          x: 'random(0, 300vw)',
+          y: 'random(-300vh,300vh)',
+        })
+
+        tl.set('.g', {
+          x: 'random(0, 300vw)',
+          y: 'random(-300vh,300vh)',
+        })
+      }
+    }
   }
 </script>

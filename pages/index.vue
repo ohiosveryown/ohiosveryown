@@ -64,32 +64,5 @@
     data: () => ({
       works
     }),
-
-    mounted() {
-      const mq = matchMedia( '(min-width: 700px)' )
-      // on lg, etc
-      if (mq.matches) {
-        const tl = gsap.timeline()
-        tl.set('.r', {
-          x: 'random(0, 400vw)',
-          y: 'random(-400vh,400vh)',
-        })
-
-        tl.set('.o', {
-          x: 'random(0, 400vw)',
-          y: 'random(-400vh,400vh)',
-        })
-
-        tl.set('.y', {
-          x: 'random(0, 400vw)',
-          y: 'random(-400vh,400vh)',
-        })
-
-        tl.set('.g', {
-          x: 'random(0, 400vw)',
-          y: 'random(-400vh,400vh)',
-        })
-      }
-    }
   }
 </script>
