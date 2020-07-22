@@ -111,8 +111,8 @@
   .menu-items-closed { opacity: 0; transition: opacity 100ms ease 50ms }
 
   svg { margin-top: .3rem; transition: transform 300ms ease; }
-  .arrow-opened { transform: rotate(-180deg); }
-  .arrow-closed { transform: roate(0deg); }
+  .arrow-opened { transform: scaleY(-1); }
+  .arrow-closed { transform: scaleY(1); }
 
   footer {
     position: sticky;

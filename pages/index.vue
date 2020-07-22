@@ -5,7 +5,7 @@
       <h1 class="mb-2 fs--lg f--c">My name is&nbsp;
         <span class="matt-trigger">Matt.</span>
         <figure ref='matt' class="matt">
-          <img src="~/static/img/matt.jpg" alt="">
+          <img src="~/static/img/matt.jpg" alt="matt">
         </figure>
       </h1>
       <ButtonAdventure label = 'Adventure Time'/>
@@ -13,12 +13,12 @@
         <span class="system-trigger">design systems</span>
         <figure ref='system' class="system">
           <!-- <img src="~/static/img/system.gif" alt=""> -->
-          <img src="~/static/img/learning.gif" alt="">
+          <img src="~/static/img/learning.gif" alt="abstract gif">
         </figure>
         &
         <span class="learning-trigger">machine learning</span>
         <figure ref='learning' class="learning">
-          <img src="~/static/img/learning.gif" alt="">
+          <img src="~/static/img/learning.gif" alt="abstract gif">
         </figure>
       </h2>
     </header>
@@ -87,6 +87,7 @@
   @media(pointer: fine) { .matt-trigger:hover ~ figure { opacity: 1; }}
   @media(pointer: fine) { .system-trigger:hover ~ figure { opacity: 1; }}
   @media(pointer: fine) { .learning-trigger:hover ~ figure { opacity: 1; }}
+  @media(pointer: fine) { span:hover { text-decoration: underline; }}
 
 </style>
 

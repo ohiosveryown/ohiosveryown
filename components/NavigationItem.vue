@@ -28,10 +28,7 @@
     @include breakpoint(md) { padding: 2.4rem 2rem 1.2rem; }
   }
 
-  article {
-    margin-right: 2.8rem;
-
-  }
+  article { margin-right: 2.8rem; }
 
   h4 {
     margin-bottom: .2rem;
@@ -39,9 +36,6 @@
     text-decoration: underline;
     @include breakpoint(md) { font-size: 2.1rem; }
   }
-
-  // hover styles for non-touch
-  @media (pointer: fine) { h4 { &:hover { text-decoration: none; }}}
 
   p {
     font-size: 1.3rem;
