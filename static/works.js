@@ -63,7 +63,7 @@ const works = [
     video: './img/index/supersymmetry.mp4',
     img: './img/navigation/supersymmetry.jpg',
     link: '',
-    background: '#F8F5EC'
+    background: 'maroon'
   }
 ]
 
