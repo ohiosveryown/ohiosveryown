@@ -2,9 +2,13 @@
   <main class="width">
 
     <header class="intro">
-      <h1 class="mb-2 fs--lg f--c">My name is Matt.</h1>
+      <h1 class="mb-2 fs--lg f--c">My name is&nbsp;
+        <span class="matt-trigger">Matt</span>.
+        <img ref='matt' class="easter matt" src="~/static/img/matt.jpg" alt="">
+      </h1>
       <ButtonAdventure label = 'Adventure Time' />
-      <h2 class="fs--md f--g">I’m a product designer in Atlanta, Ga. Presently I’m researching design systems & machine learning.</h2>
+      <h2 class="fs--md f--g">I’m a product designer in Atlanta, Ga. Presently I’m researching design systems & machine learning.
+      </h2>
     </header>
 
     <section>
@@ -46,6 +50,19 @@
     }
   }
 
+  .easter {
+    position: fixed;
+    z-index: var(--zmin);
+    top: 0; left: 0;
+    object-fit: cover;
+    transition: 1200ms cubic-bezier(0.075, 0.82, 0.165, 1) all;
+    opacity: 0;
+    will-change: transform;
+  }
+
+  .matt { width: 200px; height: 175px; }
+  @media(pointer: fine) { .matt-trigger:hover ~ img { opacity: 1; }}
+
 </style>
 
 
@@ -64,5 +81,16 @@
     data: () => ({
       works
     }),
+
+    mounted() {
+      const matt = document.querySelector('.matt')
+
+      document.addEventListener('mousemove', (e) => {
+        matt.setAttribute(
+          'style',
+          `transform: translate(${e.pageX - 100}px, ${e.pageY - 88}px) scale(.88);`
+        )
+      })
+    }
   }
 </script>
