@@ -26,7 +26,7 @@
 
             <HomeAboutItem
               name = 'About'
-              excerpt = 'I say hello here and share some social links'
+              excerpt = 'I tell you about myself here and share some social links'
               link = 'test'
               background = '#82FFD2'
               img = './img/navigation/matt.jpg'

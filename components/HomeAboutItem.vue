@@ -34,14 +34,10 @@
   }
 
   h4 {
-    margin-bottom: .2rem;
     font-size: 1.7rem;
-    text-decoration: underline;
+    line-height: 1.4;
     @include breakpoint(md) { font-size: 2.1rem; }
   }
-
-  // hover styles for non-touch
-  @media (pointer: fine) { h4 { &:hover { text-decoration: none; }}}
 
   p {
     font-size: 1.3rem;
@@ -65,9 +61,7 @@
     transition: transform 200ms ease;
   }
 
-  .active {
-    transform: scale(1.1);
-  }
+  .active { transform: scale(1.1); }
 
   .cover {
     figure { overflow: hidden; }
