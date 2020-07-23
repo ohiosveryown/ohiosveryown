@@ -3,15 +3,29 @@
     <main>
       <header class="intro">
         <h1 class="anim--in mb-2 fs--lg f--c">Information</h1>
-        <h2 class="anim--in fs--md f--g">📨 or 👋🏼's can be sent to: <span>matt@ohiosveryown.co</span></h2>
+        <h2 class="anim--in fs--md f--g">📨 or 👋🏼's can be sent to:
+          <span
+            @mouseenter = 'hover = true'
+            @mouseleave = 'hover = false'
+          >matt@ohiosveryown.co</span>
+        </h2>
       </header>
 
-      <article class="anim--in fs--md f--f">
-        <p class="mb-1">Hi again, just a reminder in case you didn’t read the first page (who reads anymore, anyway?) – my name is Matt and I'm presently a designer at Mailchimp.</p>
-        <p class="mb-1">I spend half my time drawing boxes & the other half explaining them—the other half I’m trying to confuse myself with code; Math is hard.</p>
-        <p> I designed and built this site to share some of the things I’ve worked on and/or made. Enjoy the adventure.</p>
+      <article class="anim--in f--f">
+        <h3 class="mb-1">Hi again, just a reminder in case you didn’t read the first page (who reads anymore, anyway?) – my name is Matt and I'm presently a designer at Mailchimp.</h3>
+        <h3 class="mb-1">I spend half my time drawing boxes & the other half explaining them—the other half
+          <span class="code-trigger">trying to confuse myself with code;</span>
+          <figure ref='code' class="code">
+            <img src="https://media3.giphy.com/media/l3fZLMbuCOqJ82gec/giphy.gif" alt="confused">
+          </figure>
+          I’m Math is hard.</h3>
+        <h3>I designed and built this site to share some of the things I’ve worked on and/or made. Enjoy the adventure
+        </h3>
       </article>
 
+      <figure :class = "{ active : hover }" class="me">
+        <img src="../static/img/placeholder/about.jpg" alt="a photo of me, matt">
+      </figure>
       <Rainbow/>
     </main>
 
@@ -29,6 +43,17 @@
 
 <style lang='scss' scoped>
   @import '../style/grid.scss';
+
+  .me {
+    width: 100vw; height: 100vh;
+    opacity: 0;
+  }
+
+  .active {
+    opacity: 1;
+    // transform: rotate(3deg) translateY(0);
+    transition: opacity 400ms ease 100ms;
+  }
 
   .about {
     display: flex;
@@ -52,7 +77,7 @@
   article {
     @include breakpoint(md) { margin-left: grid-width(1.5); width: grid-width(7); }
     @include breakpoint(mdl) { margin-left: 0; width: 100%; }
-    p + p { text-indent: 3ch; }
+    h3 + h3 { text-indent: 3ch; }
   }
 
   aside {
@@ -80,6 +105,31 @@
     transform: rotate(-135deg);
   }
 
+  figure {
+    width: 200px; height: 176px;
+    position: fixed;
+    z-index: var(--zmin);
+    top: 0; left: 0;
+    object-fit: cover;
+    transition: 1200ms cubic-bezier(0.075, 0.82, 0.165, 1) all;
+    opacity: 0;
+    will-change: transform;
+  }
+
+  figure:before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0; left: 0; bottom: 0;
+    z-index: 1;
+    background: rgba(255, 214, 252, 1);
+    mix-blend-mode: hard-light;
+  }
+
+  img { width: 100%; height: 100%; object-fit: cover; }
+
+  @media(pointer: fine) { .code-trigger:hover ~ figure { opacity: 1; }}
+  @media(pointer: fine) { span:hover { text-decoration: underline; }}
+
 </style>
 
 
@@ -87,6 +137,10 @@
   import Rainbow from '../components/Rainbow'
   export default {
     components: { Rainbow, },
+
+    data: () => ({
+      hover: false,
+    }),
 
     methods: {
       Entrance() {
@@ -101,6 +155,22 @@
 
     mounted() {
       this.Entrance()
+
+      const code = document.querySelector('.code')
+      const adventure = document.querySelector('.adventure')
+      const test = document.querySelector('.test')
+
+      document.addEventListener('mousemove', (e) => {
+        code.setAttribute(
+          'style',
+          `transform: translate(${e.pageX - 100}px, ${e.pageY - 88}px) scale(.88);`
+        )
+        // ,
+        // adventure.setAttribute(
+        //   'style',
+        //   `transform: translate(${e.pageX - 100}px, ${e.pageY - 88}px) scale(.88);`
+        // )
+      })
     },
 
     beforeDestroy() {
