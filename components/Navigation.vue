@@ -79,13 +79,13 @@
     pointer-events: inherit;
     opacity: 1;
     transform: translateY(0);
-    transform-origin: top;
+    transform-origin: top right;
   }
 
   .menu-closed {
     pointer-events: none;
     opacity: 0;
-    transform: translateY(-1rem) scaleY(.6);
+    transform: translateY(-1rem)scaleY(.6);
     transform-origin: top;
   }
 

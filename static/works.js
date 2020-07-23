@@ -18,7 +18,7 @@ const works = [
     excerptSmall: "I tell you about myself here and share some social links",
     video: '',
     img: './img/navigation/matt.jpg',
-    link: 'test',
+    link: 'about',
     background: 'palegreen'
   },
   {

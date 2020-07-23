@@ -1,5 +1,5 @@
 <template>
-  <main class="width">
+  <main class="index width">
 
     <header class="intro">
       <h1 class="anim--in mb-2 fs--lg f--c">My name is&nbsp;
@@ -116,13 +116,19 @@
       Entrance() {
         gsap.from('.anim--in', {
           opacity: 0,
-          // y: 200,
-          // skewY: 10,
           stagger: .075,
-          duration: 1,
+          duration: .8,
           ease: Power2.easeInOut
         })
-      }
+      },
+
+      // Exit() {
+      //   gsap.to('main', {
+      //     opacity: 0,
+      //     // duration: .4,
+      //     ease: Power2.easeInOut
+      //   })
+      // }
     },
 
     mounted() {
@@ -147,6 +153,15 @@
           `transform: translate(${e.pageX - 100}px, ${e.pageY - 88}px) scale(.88);`
         )
       })
+    },
+
+    beforeDestroy() {
+      // this.Exit()
+      const index = document.querySelector('main')
+      index.style.cssText = `
+        opacity: 0;
+        transition: opacity var(--animbase) ease;
+      `
     }
   }
 </script>

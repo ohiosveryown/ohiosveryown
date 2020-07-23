@@ -6,6 +6,11 @@
 </template>
 
 
+<style lang="scss" scoped>
+  .page-leave-active { transition: opacity calc(var(--animbase) * 2) ease; }
+</style>
+
+
 <script>
   import Navigation from '../components/Navigation'
 

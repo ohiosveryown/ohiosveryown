@@ -1,0 +1,92 @@
+<template>
+  <div class="debug about width">
+    <main class="debug">
+      <header class="intro">
+        <h1 class="anim--in mb-2 fs--lg f--c">Information</h1>
+        <h2 class="anim--in fs--md f--g">📨 or 👋🏼's can be sent to: <span>matt@ohiosveryown.co</span></h2>
+      </header>
+
+      <article class="fs--md f--f">
+        <p class="mb-1">Hi again, just a reminder in case you didn’t read the first page (who reads anymore, anyway?) – my name is Matt and I'm presently a designer at Mailchimp.</p>
+        <p class="mb-1">I spend half my time drawing boxes & the other half explaining them—the other half I’m trying to confuse myself with code; Math is hard.</p>
+        <p> I designed and built this site to share some of the things I’ve worked on and/or made. Enjoy the adventure.</p>
+      </article>
+
+      <Rainbow/>
+    </main>
+
+    <aside class="debug">
+      <ul class="mt-2 mb-9 f--f fs--sm uc">
+        <li><a href="https://twitter.com/cmykw_" target="_blank">Twitter</a></li>
+        <li><a href="https://github.com/ohiosveryown" target="_blank">Github</a></li>
+        <li><a href="https://dribbble.com/cmykw" target="_blank">Dribbble</a></li>
+        <li><a href="https://github.com/ohiosveryown/ohiosveryown" target="_blank">Source</a></li>
+      </ul>
+    </aside>
+  </div>
+</template>
+
+
+<style lang='scss' scoped>
+  @import '../style/grid.scss';
+
+  .about {
+    display: flex;
+    flex-direction: column;
+    @include breakpoint(md) { flex-direction: row; justify-content: space-between; }
+  }
+
+  main {
+    margin-top: 16rem;
+    // margin: 16rem 0 6rem;
+    // @include breakpoint(md) { width: grid-width(10); }
+    // @include breakpoint(mdl) { width: grid-width(6); }
+    @include breakpoint(md) { width: grid-width(6); }
+    h1 { display: inline-flex; }
+    // span { text-decoration: underline; }
+  }
+
+  header { margin-bottom: 6rem; }
+
+  article {
+    // @include breakpoint(md) { width: grid-width(5.5); }
+    p + p { text-indent: 3ch; }
+  }
+
+  aside {
+    position: relative;
+    z-index: var(--z2);
+    margin: 16rem 0 0;
+
+    @include breakpoint(md) {
+      // margin-left: grid-width(1);
+      // width: grid-width(4);
+    }
+  }
+
+  ul { display: flex; justify-content: space-between; }
+
+  @media (pointer: fine) { li:hover { text-decoration: underline; }}
+
+  li { margin-left: 3.2rem; }
+
+  li:after {
+    display: inline-block;
+    content: '';
+    margin-left: .6rem;
+    margin: 0 .8rem 0 .4rem;
+    width: 1rem; height: 1rem;
+    background-image: url('../static/img/tab.svg');
+    background-size: 1rem 1rem;
+    transform: rotate(-135deg);
+  }
+
+</style>
+
+
+<script>
+  import Rainbow from '../components/Rainbow'
+  export default {
+    components: { Rainbow, },
+  }
+</script>
