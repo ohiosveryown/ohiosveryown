@@ -1,6 +1,6 @@
 <template>
-  <div class="debug about width">
-    <main class="debug">
+  <div class="about width">
+    <main class="">
       <header class="intro">
         <h1 class="anim--in mb-2 fs--lg f--c">Information</h1>
         <h2 class="anim--in fs--md f--g">📨 or 👋🏼's can be sent to: <span>matt@ohiosveryown.co</span></h2>
@@ -15,7 +15,7 @@
       <Rainbow/>
     </main>
 
-    <aside class="debug">
+    <aside class="">
       <ul class="mt-2 mb-9 f--f fs--sm uc">
         <li><a href="https://twitter.com/cmykw_" target="_blank">Twitter</a></li>
         <li><a href="https://github.com/ohiosveryown" target="_blank">Github</a></li>
@@ -33,23 +33,25 @@
   .about {
     display: flex;
     flex-direction: column;
-    @include breakpoint(md) { flex-direction: row; justify-content: space-between; }
+    @include breakpoint(mdl) { flex-direction: row; justify-content: space-between; }
   }
 
   main {
     margin-top: 16rem;
-    // margin: 16rem 0 6rem;
-    // @include breakpoint(md) { width: grid-width(10); }
-    // @include breakpoint(mdl) { width: grid-width(6); }
-    @include breakpoint(md) { width: grid-width(6); }
+    @include breakpoint(mdl) { width: grid-width(6); }
+
     h1 { display: inline-flex; }
-    // span { text-decoration: underline; }
   }
 
-  header { margin-bottom: 6rem; }
+  header {
+    margin-bottom: 6rem;
+    @include breakpoint(md) { width: grid-width(6); }
+    @include breakpoint(mdl) { width: 100%; }
+  }
 
   article {
-    // @include breakpoint(md) { width: grid-width(5.5); }
+    @include breakpoint(md) { margin-left: grid-width(1.5); width: grid-width(7); }
+    @include breakpoint(mdl) { margin-left: 0; width: 100%; }
     p + p { text-indent: 3ch; }
   }
 
@@ -57,11 +59,6 @@
     position: relative;
     z-index: var(--z2);
     margin: 16rem 0 0;
-
-    @include breakpoint(md) {
-      // margin-left: grid-width(1);
-      // width: grid-width(4);
-    }
   }
 
   ul { display: flex; justify-content: space-between; }
@@ -69,6 +66,8 @@
   @media (pointer: fine) { li:hover { text-decoration: underline; }}
 
   li { margin-left: 3.2rem; }
+  li:first-of-type { margin-left: 0; }
+  li:last-of-type { display: none; @include breakpoint(md) { display: inherit; } }
 
   li:after {
     display: inline-block;
