@@ -117,18 +117,10 @@
         gsap.from('.anim--in', {
           opacity: 0,
           stagger: .075,
-          duration: .8,
+          duration: .4,
           ease: Power2.easeInOut
         })
       },
-
-      // Exit() {
-      //   gsap.to('main', {
-      //     opacity: 0,
-      //     // duration: .4,
-      //     ease: Power2.easeInOut
-      //   })
-      // }
     },
 
     mounted() {

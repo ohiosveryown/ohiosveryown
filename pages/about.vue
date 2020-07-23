@@ -1,12 +1,12 @@
 <template>
   <div class="about width">
-    <main class="">
+    <main>
       <header class="intro">
         <h1 class="anim--in mb-2 fs--lg f--c">Information</h1>
         <h2 class="anim--in fs--md f--g">📨 or 👋🏼's can be sent to: <span>matt@ohiosveryown.co</span></h2>
       </header>
 
-      <article class="fs--md f--f">
+      <article class="anim--in fs--md f--f">
         <p class="mb-1">Hi again, just a reminder in case you didn’t read the first page (who reads anymore, anyway?) – my name is Matt and I'm presently a designer at Mailchimp.</p>
         <p class="mb-1">I spend half my time drawing boxes & the other half explaining them—the other half I’m trying to confuse myself with code; Math is hard.</p>
         <p> I designed and built this site to share some of the things I’ve worked on and/or made. Enjoy the adventure.</p>
@@ -15,12 +15,12 @@
       <Rainbow/>
     </main>
 
-    <aside class="">
+    <aside>
       <ul class="mt-2 mb-9 f--f fs--sm uc">
-        <li><a href="https://twitter.com/cmykw_" target="_blank">Twitter</a></li>
-        <li><a href="https://github.com/ohiosveryown" target="_blank">Github</a></li>
-        <li><a href="https://dribbble.com/cmykw" target="_blank">Dribbble</a></li>
-        <li><a href="https://github.com/ohiosveryown/ohiosveryown" target="_blank">Source</a></li>
+        <li class="anim--in"><a href="https://twitter.com/cmykw_" target="_blank">Twitter</a></li>
+        <li class="anim--in"><a href="https://github.com/ohiosveryown" target="_blank">Github</a></li>
+        <li class="anim--in"><a href="https://dribbble.com/cmykw" target="_blank">Dribbble</a></li>
+        <li class="anim--in"><a href="https://github.com/ohiosveryown/ohiosveryown" target="_blank">Source</a></li>
       </ul>
     </aside>
   </div>
@@ -87,5 +87,29 @@
   import Rainbow from '../components/Rainbow'
   export default {
     components: { Rainbow, },
+
+    methods: {
+      Entrance() {
+        gsap.from('.anim--in', {
+          opacity: 0,
+          stagger: .075,
+          duration: .4,
+          ease: Power2.easeInOut
+        })
+      },
+    },
+
+    mounted() {
+      this.Entrance()
+    },
+
+    beforeDestroy() {
+      // this.Exit()
+      const index = document.querySelector('.about')
+      index.style.cssText = `
+        opacity: 0;
+        transition: opacity var(--animbase) ease;
+      `
+    }
   }
 </script>

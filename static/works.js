@@ -7,7 +7,7 @@ const works = [
     excerptSmall: "ovo is the web presence for me, Matthew Pence",
     video: '',
     img: './img/navigation/home.jpg',
-    link: 'test',
+    link: '',
     background: '#FFD6FC'
   },
   {
