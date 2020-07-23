@@ -14,6 +14,7 @@
       :style = "{ background: work.background }"
     >
       <video
+        preload = "auto"
         autoplay = "autoplay"
         playsinline = ""
         loop = "loop"
