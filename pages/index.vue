@@ -117,7 +117,8 @@
         gsap.from('.anim--in', {
           opacity: 0,
           stagger: .075,
-          duration: .4,
+          delay: .2,
+          duration: .3,
           ease: Power2.easeInOut
         })
       },
@@ -152,7 +153,7 @@
       const index = document.querySelector('main')
       index.style.cssText = `
         opacity: 0;
-        transition: opacity var(--animbase) ease;
+        transition: opacity 200ms ease;
       `
     }
   }

@@ -7,7 +7,7 @@
 
 
 <style lang="scss" scoped>
-  .page-leave-active { transition: opacity calc(var(--animbase) * 2) ease; }
+  // .page-leave-active { transition: opacity var(--animbase) ease; }
 </style>
 
 
