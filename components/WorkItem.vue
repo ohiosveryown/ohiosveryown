@@ -14,11 +14,11 @@
       :style = "{ background: work.background }"
     >
       <video
-        poster = "https://ovo35.netlify.app/img/navigation/home.jpg"
+        :poster = "work.img"
+        :src = "work.video"
         autoplay = "autoplay"
         playsinline = ""
         loop = "loop"
-        :src="work.video"
       />
     </figure>
   </li>

@@ -6,7 +6,7 @@ const works = [
     excerpt: "",
     excerptSmall: "ovo is the web presence for me, Matthew Pence",
     video: '',
-    img: './img/navigation/home.jpg',
+    img: './img/placeholder/home.jpg',
     link: '',
     background: '#FFD6FC'
   },
@@ -17,7 +17,7 @@ const works = [
     excerpt: "",
     excerptSmall: "I tell you about myself here and share some social links",
     video: '',
-    img: './img/navigation/matt.jpg',
+    img: './img/placeholder/about.jpg',
     link: 'about',
     background: 'palegreen'
   },
@@ -28,7 +28,7 @@ const works = [
     excerpt: "Creating an all new editing experience with maximum flexibility to make designing easier",
     excerptSmall: "Creating an all-new editing experience to make designing campaigns easier",
     video: './img/index/send.mp4',
-    img: './img/navigation/mailchimp.jpg',
+    img: './img/placeholder/send.jpg',
     link: 'test',
     background: 'var(--mailchimp)'
   },
@@ -39,7 +39,7 @@ const works = [
     excerpt: "Bringing awareness and celebrating the diversity of Atlanta and it's food",
     excerptSmall: "Celebrating the diversity of Atlanta's culture and food",
     video: './img/index/menu.mp4',
-    img: './img/navigation/menu.jpg',
+    img: './img/placeholder/menu.jpg',
     link: '',
     background: '#D2EDD4'
   },
@@ -50,7 +50,7 @@ const works = [
     excerpt: "Rethinking how users share, sell and organizer their photos and albums",
     excerptSmall: "Rethinking how users share and sell their photos and albums",
     video: './img/index/galleries.mp4',
-    img: './img/navigation/shootproof.jpg',
+    img: './img/placeholder/galleries.jpg',
     link: '',
     background: 'var(--shootproof)'
   },
@@ -61,7 +61,7 @@ const works = [
     excerpt: "A self-initiated project showcasing architecture  & structural engineering",
     excerptSmall: "A project showcasing architecture  & structural engineering",
     video: './img/index/supersymmetry.mp4',
-    img: './img/navigation/supersymmetry.jpg',
+    img: './img/placeholder/supersymmetry.jpg',
     link: '',
     background: 'maroon'
   }
