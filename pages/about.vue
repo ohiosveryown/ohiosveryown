@@ -138,6 +138,10 @@
   export default {
     components: { Rainbow, },
 
+    head: () => ({
+      title: 'ovo – about'
+    }),
+
     data: () => ({
       hover: false,
     }),
@@ -157,8 +161,8 @@
       this.Entrance()
 
       const code = document.querySelector('.code')
-      const adventure = document.querySelector('.adventure')
-      const test = document.querySelector('.test')
+      // const adventure = document.querySelector('.adventure')
+      // const test = document.querySelector('.test')
 
       document.addEventListener('mousemove', (e) => {
         code.setAttribute(
