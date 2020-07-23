@@ -14,7 +14,7 @@
       :style = "{ background: work.background }"
     >
       <video
-        preload = "auto"
+        poster = "https://ovo35.netlify.app/img/navigation/home.jpg"
         autoplay = "autoplay"
         playsinline = ""
         loop = "loop"
