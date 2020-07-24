@@ -161,19 +161,11 @@
       this.Entrance()
 
       const code = document.querySelector('.code')
-      // const adventure = document.querySelector('.adventure')
-      // const test = document.querySelector('.test')
-
       document.addEventListener('mousemove', (e) => {
         code.setAttribute(
           'style',
           `transform: translate(${e.pageX - 100}px, ${e.pageY - 88}px) scale(.88);`
         )
-        // ,
-        // adventure.setAttribute(
-        //   'style',
-        //   `transform: translate(${e.pageX - 100}px, ${e.pageY - 88}px) scale(.88);`
-        // )
       })
     },
 
