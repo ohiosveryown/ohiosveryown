@@ -15,17 +15,20 @@
         <h3 class="mb-1">Hi again, just a reminder in case you didn’t read the first page (who reads anymore, anyway?) – my name is Matt and I'm presently a designer at Mailchimp.</h3>
         <h3 class="mb-1">I spend half my time drawing boxes & the other half explaining them—the other half
           <span class="code-trigger">trying to confuse myself with code;</span>
-          <figure ref='code' class="code">
-            <img src="https://media3.giphy.com/media/l3fZLMbuCOqJ82gec/giphy.gif" alt="confused">
-          </figure>
+          <picture ref='code' class="code">
+            <source media="(min-width: 1000px)" srcset="https://media3.giphy.com/media/l3fZLMbuCOqJ82gec/giphy.gif">
+            <img src="">
+          </picture>
           I’m Math is hard.</h3>
         <h3>I designed and built this site to share some of the things I’ve worked on and/or made. Enjoy the adventure
         </h3>
       </article>
 
-      <figure :class = "{ active : hover }" class="me">
-        <img src="../static/img/placeholder/about.jpg" alt="a photo of me, matt">
-      </figure>
+      <picture  :class = "{ active : hover }" class="me">
+        <source media="(min-width: 1000px)" srcset="../static/img/placeholder/about.jpg">
+        <img src="">
+      </picture>
+
       <Rainbow/>
     </main>
 
@@ -105,7 +108,7 @@
     transform: rotate(-135deg);
   }
 
-  figure {
+  picture {
     width: 200px; height: 176px;
     position: fixed;
     z-index: var(--zmin);
@@ -116,7 +119,7 @@
     will-change: transform;
   }
 
-  figure:before {
+  picture:before {
     content: '';
     position: absolute;
     top: 0; right: 0; left: 0; bottom: 0;
@@ -127,7 +130,7 @@
 
   img { width: 100%; height: 100%; object-fit: cover; }
 
-  @media(pointer: fine) { .code-trigger:hover ~ figure { opacity: 1; }}
+  @media(pointer: fine) { .code-trigger:hover ~ picture { opacity: 1; }}
   @media(pointer: fine) { span:hover { text-decoration: underline; }}
 
 </style>

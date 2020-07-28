@@ -3,18 +3,18 @@
     <nuxt-link to = '/'>
       <span class="mt-0 op-4 fs--sm f--f uc">ovo / 3.5</span>
     </nuxt-link>
-    <header class="debug" @click = 'isOpen = !isOpen, isOpen ? noScrollFx() : Scroll()'>
+    <header @click = 'isOpen = !isOpen'>
       <span class="label mt-0 fs--sm f--f uc">Navigation</span>
       <svg :class = "[ isOpen ? 'arrow-opened' : 'arrow-closed' ]" class="ml-0" width="12" height="12" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M5.444 0h1.112v7.848c.159-.243.331-.478.515-.702C8.043 5.97 9.435 5 11 5v1.111c-1.102 0-2.21.698-3.071 1.743-.862 1.044-1.373 2.311-1.373 3.257H5.444c0-.946-.511-2.213-1.373-3.257C3.21 6.809 2.101 6.11 1 6.11V5c1.565 0 2.957.969 3.929 2.146.184.224.356.459.515.702V0z" fill="#000"/></svg>
     </header>
 
       <div
-        class="debug menu"
+        class="menu"
         :class = "[ isOpen ? 'menu-opened' : 'menu-closed' ]"
+        @mouseleave = 'isOpen = false'
       >
-        <!-- @mouseleave = 'isOpen = false' -->
         <section :class = "[ isOpen ? 'menu-items-opened' : 'menu-items-closed' ]">
-          <ul>
+          <ul @click = 'isOpen = !isOpen'>
             <NavigationItem v-for="work in works" :work="work" :key="work.id"/>
           </ul>
         </section>
@@ -123,28 +123,7 @@
       return {
         works,
         isOpen: false,
-        noScoll: '',
       }
-    },
-
-    methods: {
-      noScrollFx() {
-        this.noScoll = true
-        document.documentElement.style.overflow = 'hidden'
-        console.log('noooooo')
-        // this.isOpen = true
-      },
-
-      Scroll() {
-        this.noScoll = false
-        document.documentElement.style.overflow = 'auto'
-        console.log('yesssss')
-        // this.isOpen = true
-      },
-    },
-
-    // mounted() {
-    //   this.noScroll()
-    // }
+    }
   }
 </script>
