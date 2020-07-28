@@ -4,22 +4,25 @@
     <header class="intro">
       <h1 class="anim--in mb-2 fs--lg f--c">My name is&nbsp;
         <span class="matt-trigger">Matt.</span>
-        <figure ref='matt' class="matt">
-          <img src="~/static/img/matt.jpg" alt="matt">
-        </figure>
+        <picture ref='matt' class="matt">
+          <source media="(min-width: 1000px)" srcset="~/static/img/matt.jpg">
+          <img src="">
+        </picture>
       </h1>
       <ButtonAdventure label = 'Adventure Time'/>
       <h2 class="anim--in fs--md f--g">I’m a product designer in Atlanta, Ga. Presently I’m researching
         <span class="system-trigger">design systems</span>
-        <figure ref='system' class="system">
-          <!-- <img src="~/static/img/system.gif" alt=""> -->
-          <img src="~/static/img/learning.gif" alt="abstract gif">
-        </figure>
+
+        <picture ref='system' class="system">
+          <source media="(min-width: 1000px)" srcset="~/static/img/learning.gif">
+          <img src="">
+        </picture>
         &
         <span class="learning-trigger">machine learning</span>
-        <figure ref='learning' class="learning">
-          <img src="~/static/img/learning.gif" alt="abstract gif">
-        </figure>
+        <picture ref='learning' class="learning">
+          <source media="(min-width: 1000px)" srcset="~/static/img/learning.gif">
+          <img src="">
+        </picture>
       </h2>
     </header>
 
@@ -64,7 +67,7 @@
 
   li:first-of-type, li:nth-of-type(2) { display: none; }
 
-  figure {
+  picture {
     width: 200px; height: 176px;
     position: fixed;
     z-index: var(--zmin);
@@ -75,7 +78,7 @@
     will-change: transform;
   }
 
-  figure:before {
+  picture:before {
     content: '';
     position: absolute;
     top: 0; right: 0; left: 0; bottom: 0;
@@ -86,10 +89,13 @@
 
   img { width: 100%; height: 100%; object-fit: cover; }
 
-  @media(pointer: fine) { .matt-trigger:hover ~ figure { opacity: 1; }}
-  @media(pointer: fine) { .system-trigger:hover ~ figure { opacity: 1; }}
-  @media(pointer: fine) { .learning-trigger:hover ~ figure { opacity: 1; }}
-  @media(pointer: fine) { span:hover { text-decoration: underline; }}
+  // non-touch stlyes
+  @media(pointer: fine) {
+    .matt-trigger:hover ~ picture { opacity: 1; }
+    .system-trigger:hover ~ picture { opacity: 1; }
+    .learning-trigger:hover ~ picture { opacity: 1; }
+    span:hover { text-decoration: underline; }
+  }
 
 </style>
 
