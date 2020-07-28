@@ -20,7 +20,7 @@
             <img src="">
           </picture>
           I’m Math is hard.</h3>
-        <h3>I designed and built this site to share some of the things I’ve worked on and/or made. Enjoy the adventure
+        <h3>I designed and built this site to share some of the things I’ve worked on and/or made. Enjoy the adventure.
         </h3>
       </article>
 

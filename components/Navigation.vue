@@ -1,6 +1,6 @@
 <template>
   <nav class="width">
-    <nuxt-link to = '/'>
+    <nuxt-link class="left" to = '/'>
       <span class="mt-0 op-4 fs--sm f--f uc">ovo / 3.5</span>
     </nuxt-link>
     <header @click = 'isOpen = !isOpen'>
@@ -31,6 +31,15 @@
 
 <style lang='scss' scoped>
   @import '../style/grid.scss';
+
+  nav > a, nav > header {
+    // border: 2px solid;
+    border-radius: 100px;
+    --space: 1rem;
+    padding: var(--space);
+    transform: translate( calc(var(--space) * -1), calc(var(--space) * -1) );
+    backdrop-filter: blur(6px);
+  }
 
   nav {
     display: flex;
