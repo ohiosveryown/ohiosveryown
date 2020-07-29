@@ -27,7 +27,7 @@ const works = [
     name: 'Mailchimp First-time Send',
     excerpt: "Creating an all new editing experience with maximum flexibility to make designing easier",
     excerptSmall: "Creating an all-new editing experience to make designing campaigns easier",
-    video: './img/index/send.mp4',
+    video: 'https://res.cloudinary.com/da32ufmnf/video/upload/v1595993472/send_eugnva.mp4',
     img: './img/placeholder/send.jpg',
     link: 'test',
     background: 'var(--mailchimp)'
@@ -38,7 +38,7 @@ const works = [
     name: 'Menu.black',
     excerpt: "Bringing awareness and celebrating the diversity of Atlanta and it's food",
     excerptSmall: "Celebrating the diversity of Atlanta's culture and food",
-    video: './img/index/menu.mp4',
+    video: 'https://res.cloudinary.com/da32ufmnf/video/upload/v1595993468/menu_t5crwu.mp4',
     img: './img/placeholder/menu.jpg',
     link: '',
     background: '#D2EDD4'
@@ -49,7 +49,7 @@ const works = [
     name: 'ShootProof Galleries',
     excerpt: "Rethinking how users share, sell and organizer their photos",
     excerptSmall: "Rethinking how users share and sell their photos and albums",
-    video: './img/index/galleries.mp4',
+    video: 'https://res.cloudinary.com/da32ufmnf/video/upload/v1595954973/galleries_hfvvwe.mp4',
     img: './img/placeholder/galleries.jpg',
     link: '',
     background: 'var(--shootproof)'
@@ -60,7 +60,7 @@ const works = [
     name: 'Supersymmetry',
     excerpt: "A self-initiated project showcasing architecture  & structural engineering",
     excerptSmall: "A project showcasing architecture  & structural engineering",
-    video: './img/index/supersymmetry.mp4',
+    video: 'https://res.cloudinary.com/da32ufmnf/video/upload/v1595993470/supersymmetry_wwtpie.mp4',
     img: './img/placeholder/supersymmetry.jpg',
     link: '',
     background: 'maroon'
