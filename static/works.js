@@ -47,7 +47,7 @@ const works = [
     id: 5,
     discipline: 'ux',
     name: 'ShootProof Galleries',
-    excerpt: "Rethinking how users share, sell and organizer their photos and albums",
+    excerpt: "Rethinking how users share, sell and organizer their photos",
     excerptSmall: "Rethinking how users share and sell their photos and albums",
     video: './img/index/galleries.mp4',
     img: './img/placeholder/galleries.jpg',

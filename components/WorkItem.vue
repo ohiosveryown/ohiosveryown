@@ -9,19 +9,25 @@
       </article>
     </nuxt-link>
 
-    <picture
+    <figure
       :class = "{ active : hover }"
       :style = "{ background: work.background }"
     >
-      <source
-        media="(min-width: 1000px)"
-        :srcset = "work.video"
+      <video
+        :poster = "work.img"
         autoplay = "autoplay"
         playsinline = ""
         loop = "loop"
       >
-      <img src="" alt="">
-    </picture>
+        <source
+          :src = "work.video"
+          media = "all and (min-width: 1000px)"
+        >
+
+        <source >
+      </video>
+
+    </figure>
   </li>
 
 </template>
@@ -60,7 +66,7 @@
     }
   }
 
-  picture {
+  figure {
     display: flex;
     align-items: center;
     justify-content: center;
