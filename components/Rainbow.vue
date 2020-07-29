@@ -104,9 +104,7 @@
         // this.EntranceFF()
       } else if (mq.matches) {
         this.Entrance()
-      } else {
-
-      }
+      } else { }
 
       // for > md
       if (mq.matches) {

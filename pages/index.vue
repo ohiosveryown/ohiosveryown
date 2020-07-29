@@ -79,12 +79,14 @@
   }
 
   picture:before {
-    content: '';
-    position: absolute;
-    top: 0; right: 0; left: 0; bottom: 0;
-    z-index: 1;
-    background: rgba(255, 214, 252, 1);
-    mix-blend-mode: hard-light;
+    @include breakpoint(mdl) {
+      content: '';
+      position: absolute;
+      top: 0; right: 0; left: 0; bottom: 0;
+      z-index: 1;
+      background: rgba(255, 214, 252, 1);
+      mix-blend-mode: hard-light;
+    }
   }
 
   img { width: 100%; height: 100%; object-fit: cover; }
