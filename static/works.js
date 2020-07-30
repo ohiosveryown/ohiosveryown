@@ -29,7 +29,7 @@ const works = [
     excerptSmall: "Creating an all-new editing experience to make designing campaigns easier",
     video: 'https://res.cloudinary.com/da32ufmnf/video/upload/v1595993472/send_eugnva.mp4',
     img: './img/placeholder/send.jpg',
-    link: 'test',
+    link: 'mc-send',
     background: 'var(--mailchimp)'
   },
   {
