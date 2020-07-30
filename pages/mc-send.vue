@@ -1,7 +1,7 @@
 <template>
   <main class="width">
 
-    <header class="title tac">
+    <header class="anim--in title tac">
       <div class="meta">
         <h1 class="mb-2 fs--lg f--c">Mailchimp First Time Send</h1>
         <h2 class="mb-3 fs--md f--g">Creating an all new editing experience with maximum flexibility to make designing easier.</h2>
@@ -18,7 +18,7 @@
       </div>
 
       <figure>
-        <div class="hero">
+        <div class="anim--in hero">
           <img src="~/static/img/mc-send/01@2x.jpg" alt="mailchimp homepage">
         </div>
         <figcaption class="mt-2 tar uc fs--sm f--f"><span class="mr-0 pt-0 op-5">Fig</span>Nº01</figcaption>

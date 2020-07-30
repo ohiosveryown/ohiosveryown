@@ -67,4 +67,10 @@ const works = [
   }
 ]
 
-export default works
+const links = [
+  '1',
+  '2',
+  '3'
+]
+
+export { works, links }

@@ -1,7 +1,7 @@
 <template>
   <div class="adventure">
     <!-- <nuxt-link to = '/test'> -->
-    <nuxt-link :to=" '/' + selectedRoute">
+    <nuxt-link :to=" '/' + link">
       <button class="fs--sm f--f uc">
         <span>{{ label }}</span>
       </button>
@@ -48,22 +48,18 @@
 
 
 <script>
+  import { links } from '../static/works'
   export default {
     props: [ 'label' ],
 
     data() {
       return {
-        routes: [
-          'one',
-          'two'
-        ],
-        selectedRoute: ''
+        links
       }
     },
 
     created() {
-      const route = Math.floor(Math.random() * this.routes.length)
-      this.selectedRoute = this.routes[route]
+      this.link = this.links[~~(Math.random() * this.links.length)]
     },
   }
 </script>

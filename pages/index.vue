@@ -29,7 +29,7 @@
     <section>
       <header class="anim--in work fs--sm f--f uc">
         <h3>case studies</h3>
-        <h3>2016 – 2020</h3>
+        <h3 class="op-5">2016 – 2020</h3>
       </header>
 
       <ul class="anim--in">
@@ -106,7 +106,7 @@
   import ButtonAdventure from '../components/ButtonAdventure'
   import Rainbow from '../components/Rainbow'
   import WorkItem from '../components/WorkItem'
-  import works from '../static/works'
+  import { works } from '../static/works'
   export default {
     components: { ButtonAdventure, Rainbow, WorkItem },
 

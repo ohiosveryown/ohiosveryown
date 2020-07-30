@@ -79,21 +79,43 @@
   export default {
     components: { Navigation },
 
+    methods: {
+      Entrance() {
+        gsap.from('.anim--in', {
+          opacity: 0,
+          stagger: .1,
+          delay: .2,
+          duration: .6,
+          ease: Power2.easeInOut
+        })
+      },
+    },
+
     mounted() {
+      // entrance
+      this.Entrance()
+
       // fade in on scroll / observer
-      const section = document.querySelectorAll('.figure')
+      const figure = document.querySelectorAll('.figure')
       const observer = new IntersectionObserver(entries => {
         entries.forEach(entry => {
           if (entry.intersectionRatio > 0) {
-            // console.log('in view')
             entry.target.classList.add('in-view')
           } else {
-            // console.log('out of view')
             entry.target.classList.remove('in-view')
           }
         })
-      }, { rootMargin: '0px 0px -200px' })
-      section.forEach(e => { observer.observe(e) })
+      }, { rootMargin: '0px 0px -100px' })
+      figure.forEach(e => { observer.observe(e) })
+    },
+
+    beforeDestroy() {
+      // this.Exit()
+      const index = document.querySelector('main')
+      index.style.cssText = `
+        opacity: 0;
+        transition: opacity 200ms ease;
+      `
     }
   }
 </script>

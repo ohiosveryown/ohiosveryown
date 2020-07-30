@@ -122,7 +122,7 @@
 
 
 <script>
-  import works from '../static/works'
+  import { works } from '../static/works'
   import NavigationItem from './NavigationItem'
   import HomeAboutItem from './HomeAboutItem'
   import ButtonAdventureSm from './ButtonAdventureSm'

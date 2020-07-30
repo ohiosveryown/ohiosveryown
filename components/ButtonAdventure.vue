@@ -7,7 +7,7 @@
       Let the algorithms decide your fate — j/k, clicking on this button will take you to a random case study
     </article>
     <!-- <nuxt-link to = '/test'> -->
-    <nuxt-link :to=" '/' + selectedRoute">
+    <nuxt-link :to=" '/' + link">
       <button
         @mouseenter = 'Mouseenter(), hover = true'
         @mouseleave = 'Mouseleave(), hover = false'
@@ -81,17 +81,14 @@
 
 
 <script>
+  import { links } from '../static/works'
   export default {
     props: [ 'label' ],
 
     data() {
       return {
+        links,
         hover: false,
-        routes: [
-          'one',
-          'two'
-        ],
-        selectedRoute: ''
       }
     },
 
@@ -136,8 +133,7 @@
     },
 
     created() {
-      const route = Math.floor(Math.random() * this.routes.length)
-      this.selectedRoute = this.routes[route]
+      this.link = this.links[~~(Math.random() * this.links.length)]
     },
   }
 </script>
