@@ -3,23 +3,23 @@
 
     <header class="anim--in title tac">
       <div class="meta">
-        <h1 class="mb-2 fs--lg f--c">Mailchimp First Time Send</h1>
-        <h2 class="mb-3 fs--md f--g">Creating an all new editing experience with maximum flexibility to make designing easier.</h2>
+        <h1 class="uc mb-2 fs--lg f--c">menu.black</h1>
+        <h2 class="mb-3 fs--md f--g">Bringing awareness and celebrating the diversity of Atlanta and it's food</h2>
 
         <h4 class="mb-0 uc fs--sm f--f">
-          <span class="pt-0 op-5">user experience design</span>
-          2019–2020
+          <span class="pt-0 op-5">design/development</span>
+          2020
         </h4>
 
         <h4 class="uc fs--sm f--f">
           <span class="pt-0 op-5">url</span>
-          mailchimp.com
+          menu.black
         </h4>
       </div>
 
       <figure>
         <div class="anim--in hero">
-          <img src="~/static/img/mc-send/01@2x.jpg" alt="mailchimp homepage">
+          <img src="~/static/img/placeholder/menu.jpg" alt="mailchimp homepage">
         </div>
         <figcaption class="mt-2 tar uc fs--sm f--f"><span class="mr-0 pt-0 op-5">Fig</span>Nº01</figcaption>
       </figure>
@@ -72,10 +72,10 @@
 
     <!-- footer / next -->
     <Next
-      name = 'menu.black'
-      excerpt = "Celebrating the diversity of Atlanta's culture and food"
-      img = '../img/placeholder/menu.jpg'
-      link = '/menu-black'
+      name = 'ShootProof Galleries'
+      excerpt = 'Rethinking how users share, sell and organizer their photos'
+      img = '../img/placeholder/galleries.jpg'
+      link = '/'
     />
 
   </main>
@@ -83,7 +83,7 @@
 
 
 <style lang="scss" scoped>
-  .hero { background: var(--mailchimp); }
+  .hero { background: var(--menu); }
 </style>
 
 
@@ -94,7 +94,7 @@
     layout: 'work',
 
     head: () => ({
-      title: 'ovo – mc send'
+      title: 'ovo – menu.black'
     }),
   }
 </script>

@@ -1,6 +1,7 @@
 <template>
   <div>
     <Navigation/>
+    <RainbowSm/>
     <nuxt class="work"/>
   </div>
 </template>
@@ -41,7 +42,6 @@
     .hero {
       margin: 4rem auto 0;
       padding: 4rem 4rem 0;
-      background: var(--mailchimp);
       overflow: hidden;
 
       @include breakpoint(md) { margin: 6.4rem auto 0; padding: 8rem 8rem 0; }
@@ -55,7 +55,7 @@
       flex-direction: column;
       align-items: center;
       margin: 4rem auto 8rem;
-      @include breakpoint(mdl) { width: grid-width(6); }
+      @include breakpoint(mdl) { width: grid-width(7); }
     }
 
     .figure {
@@ -75,9 +75,10 @@
 
 <script>
   import Navigation from '../components/Navigation'
+  import RainbowSm from '../components/RainbowSm'
 
   export default {
-    components: { Navigation },
+    components: { Navigation, RainbowSm },
 
     methods: {
       Entrance() {

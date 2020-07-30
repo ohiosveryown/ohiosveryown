@@ -40,7 +40,7 @@ const works = [
     excerptSmall: "Celebrating the diversity of Atlanta's culture and food",
     video: 'https://res.cloudinary.com/da32ufmnf/video/upload/v1595993468/menu_t5crwu.mp4',
     img: './img/placeholder/menu.jpg',
-    link: '',
+    link: 'menu-black',
     background: '#D2EDD4'
   },
   {
@@ -58,8 +58,8 @@ const works = [
     id: 6,
     discipline: 'ux/dev',
     name: 'Supersymmetry',
-    excerpt: "A self-initiated project showcasing architecture  & structural engineering",
-    excerptSmall: "A project showcasing architecture  & structural engineering",
+    excerpt: "A self-initiated project showcasing architecture & structural engineering",
+    excerptSmall: "A project showcasing architecture & structural engineering",
     video: 'https://res.cloudinary.com/da32ufmnf/video/upload/v1595993470/supersymmetry_wwtpie.mp4',
     img: './img/placeholder/supersymmetry.jpg',
     link: '',
