@@ -55,19 +55,19 @@
       flex-direction: column;
       align-items: center;
       margin: 4rem auto 8rem;
-
       @include breakpoint(mdl) { width: grid-width(6); }
     }
 
     .figure {
       opacity: 0;
-      transform: translateY(200px) scale(.75,1) skew(-10deg);
+      transform: translateY(50px) scale(.75,1);
       transition: all 800ms ease;
+      @include breakpoint(mdl) { transform: translateY(150px); }
     }
 
     .in-view {
-      transform: translateY(0) scale(1) skew(0);
       opacity: 1;
+      transform: translateY(0);
     }
   }
 </style>
