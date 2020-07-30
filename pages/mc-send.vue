@@ -11,14 +11,16 @@
           2019–2020
         </h4>
 
-        <h4 class="mb-6 uc fs--sm f--f">
+        <h4 class="mb-8 uc fs--sm f--f">
           <span class="pt-0 op-5">url</span>
           mailchimp.com
         </h4>
       </div>
 
       <figure>
-        <img class="hero" src="~/static/img/mc-send/01@2x.jpg" alt="mailchimp homepage">
+        <div class="hero">
+          <img src="~/static/img/mc-send/01@2x.jpg" alt="mailchimp homepage">
+        </div>
         <figcaption><span>Fig</span>Nº01</figcaption>
       </figure>
     </header>
