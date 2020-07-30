@@ -58,6 +58,17 @@
 
       @include breakpoint(mdl) { width: grid-width(6); }
     }
+
+    .figure {
+      opacity: 0;
+      transform: translateY(200px) scale(.75,1) skew(-10deg);
+      transition: all 800ms ease;
+    }
+
+    .in-view {
+      transform: translateY(0) scale(1) skew(0);
+      opacity: 1;
+    }
   }
 </style>
 
@@ -66,6 +77,23 @@
   import Navigation from '../components/Navigation'
 
   export default {
-    components: { Navigation }
+    components: { Navigation },
+
+    mounted() {
+      // fade in on scroll / observer
+      const section = document.querySelectorAll('.figure')
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.intersectionRatio > 0) {
+            // console.log('in view')
+            entry.target.classList.add('in-view')
+          } else {
+            // console.log('out of view')
+            entry.target.classList.remove('in-view')
+          }
+        })
+      }, { rootMargin: '0px 0px -200px' })
+      section.forEach(e => { observer.observe(e) })
+    }
   }
 </script>

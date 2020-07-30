@@ -50,7 +50,7 @@
       </h4>
     </section>
 
-    <figure>
+    <figure class="figure">
       <img src="~/static/img/mc-send/02@2x.jpg" alt="mailchimp checklist">
       <figcaption class="mt-2 tar uc fs--sm f--f"><span class="mr-0 pt-0 op-5">Fig</span>Nº02</figcaption>
     </figure>
