@@ -60,7 +60,7 @@
 
     .figure {
       opacity: 0;
-      transform: translateY(50px) scale(.75,1);
+      transform: translateY(50px);
       transition: all 800ms ease;
       @include breakpoint(mdl) { transform: translateY(150px); }
     }
