@@ -2,7 +2,7 @@
   <div>
     <Navigation/>
     <RainbowSm/>
-    <nuxt class="work"/>
+    <nuxt class="work anim--in"/>
   </div>
 </template>
 
@@ -11,64 +11,39 @@
   @import '../style/grid.scss';
 
   .work {
-
-    p {
-      margin-bottom: 1rem;
-      font-family: 'Founders', var(--system-ui);
-      font-size: 2.2rem;
-    }
-
-    p + p { text-indent: 3ch; }
-
-    .fs--lg {
-      font-size: 2.6rem;
-      @include breakpoint(md) { font-size: 3rem; }
-    }
-
-    .fs--md {
-      font-size: 2rem;
-      @include breakpoint(md) { font-size: 2.4rem; }
-    }
-
-    .title { margin-bottom: 4rem; }
-
-    .meta {
-      margin: 0 auto;
-      padding-top: 16rem;
-      @include breakpoint(md) { width: grid-width(9); }
-      @include breakpoint(mdl) { width: grid-width(5.5); }
-    }
-
-    .hero {
-      margin: 4rem auto 0;
-      padding: 4rem 4rem 0;
-      overflow: hidden;
-
-      @include breakpoint(md) { margin: 6.4rem auto 0; padding: 8rem 8rem 0; }
-      @include breakpoint(mdl) { padding: 12rem 16rem 0; }
-
-      img { box-shadow: 0px 4px 64px rgba(12,0,0,.08); }
-    }
-
-    section {
+    .wrapper--timeline {
+      // border: 3px solid pink;
       display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin: 4rem auto 8rem;
-      @include breakpoint(mdl) { width: grid-width(7); }
+      position: absolute;
+      left: 0; right: 0;
+      overflow: hidden;
+      width: 100vw; height: 100vh;
+      &.is-draggable { cursor: move; cursor: grab; }
+      &.is-dragging { cursor: grabbing; }
     }
 
-    .figure {
+    ul {
+      display: flex;
+      width: 100%;
+    }
+
+    li {
+      // border: 3px solid green;
+      position: relative;
+      flex: 0 0 auto;
+      margin: auto;
+      width: 100%; height: 100%;
+      overflow-y: scroll;
       opacity: 0;
-      transform: translateY(50px);
-      transition: all 800ms ease;
-      @include breakpoint(mdl) { transform: translateY(150px); }
+      transition: all 500ms ease 300ms;
     }
 
-    .in-view {
+    li.is-selected {
       opacity: 1;
-      transform: translateY(0);
+      z-index: 1;
     }
+
+    article { margin-top: 14rem; }
   }
 </style>
 
@@ -96,18 +71,17 @@
       // entrance
       this.Entrance()
 
-      // fade in on scroll / observer
-      const figure = document.querySelectorAll('.figure')
-      const observer = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-          if (entry.intersectionRatio > 0) {
-            entry.target.classList.add('in-view')
-          } else {
-            entry.target.classList.remove('in-view')
-          }
-        })
-      }, { rootMargin: '0px 0px -100px' })
-      figure.forEach(e => { observer.observe(e) })
+      // embla
+      const emblaNode = document.querySelector('.wrapper--timeline')
+      const embla = EmblaCarousel(emblaNode, {
+        align: 'start',
+        // loop: true,
+        speed: 10,
+        startIndex: 0,
+        selectedClass: 'is-selected',
+        draggableClass: 'is-draggable',
+        draggingClass: 'is-dragging',
+      })
     },
 
     beforeDestroy() {
