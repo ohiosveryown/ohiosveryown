@@ -17,9 +17,11 @@
       position: absolute;
       left: 0; right: 0;
       overflow: hidden;
-      width: 100vw; height: 100vh;
+      width: 100vw; height: calc(100vh - 83px);
       &.is-draggable { cursor: move; cursor: grab; }
       &.is-dragging { cursor: grabbing; }
+
+      @include breakpoint(mdl) { height: 100vh; }
     }
 
     ul {
