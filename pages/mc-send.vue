@@ -30,7 +30,7 @@
 <style lang="scss" scoped>
   .hero { background: var(--mailchimp); }
 
-  p { font-size: 10rem; }
+  p { font-size: 8vw; }
 </style>
 
 
