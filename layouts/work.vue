@@ -30,13 +30,12 @@
     }
 
     li {
-      // border: 3px solid green;
       position: relative;
       flex: 0 0 auto;
       margin: auto;
       width: 100%; height: 100%;
       overflow-y: scroll;
-      opacity: 0;
+      // opacity: 0;
       transition: all 500ms ease 300ms;
     }
 
@@ -45,7 +44,7 @@
       z-index: 1;
     }
 
-    article { margin-top: 14rem; }
+    article { padding: 22rem 0 8rem; }
   }
 </style>
 
@@ -73,17 +72,27 @@
       // entrance
       this.Entrance()
 
-      // embla
-      const emblaNode = document.querySelector('.wrapper--timeline')
-      const embla = EmblaCarousel(emblaNode, {
-        align: 'start',
-        // loop: true,
-        speed: 10,
-        startIndex: 0,
-        selectedClass: 'is-selected',
-        draggableClass: 'is-draggable',
-        draggingClass: 'is-dragging',
-      })
+      const mq = matchMedia( '(min-width: 700px)' )
+      if (mq.matches) {
+        // embla
+        const emblaNode = document.querySelector('.wrapper--timeline')
+        const embla = EmblaCarousel(emblaNode, {
+          align: 'start',
+          // loop: true,
+          speed: 10,
+          startIndex: 0,
+          selectedClass: 'is-selected',
+          draggableClass: 'is-draggable',
+          draggingClass: 'is-dragging',
+        })
+
+        // embla next button(s)
+        const buttonNext = document.querySelector('.button--next')
+
+        buttonNext.addEventListener('click', () => {
+          embla.scrollTo(2)
+        })
+      }
     },
 
     beforeDestroy() {

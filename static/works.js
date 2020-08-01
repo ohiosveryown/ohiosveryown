@@ -8,7 +8,7 @@ const works = [
     video: '',
     img: './img/placeholder/home.jpg',
     link: '',
-    background: '#FFD6FC'
+    background: '#FFD6FC',
   },
   {
     id: 2,
@@ -19,7 +19,7 @@ const works = [
     video: '',
     img: './img/placeholder/about.jpg',
     link: 'about',
-    background: 'palegreen'
+    background: 'palegreen',
   },
   {
     id: 3,
@@ -30,7 +30,7 @@ const works = [
     video: 'https://res.cloudinary.com/da32ufmnf/video/upload/v1595993472/send_eugnva.mp4',
     img: './img/placeholder/send.jpg',
     link: 'mc-send',
-    background: 'var(--mailchimp)'
+    background: 'var(--mailchimp)',
   },
   {
     id: 4,
@@ -41,7 +41,7 @@ const works = [
     video: 'https://res.cloudinary.com/da32ufmnf/video/upload/v1595993468/menu_t5crwu.mp4',
     img: './img/placeholder/menu.jpg',
     link: 'menu-black',
-    background: '#D2EDD4'
+    background: '#D2EDD4',
   },
   {
     id: 5,
@@ -52,7 +52,7 @@ const works = [
     video: 'https://res.cloudinary.com/da32ufmnf/video/upload/v1595954973/galleries_hfvvwe.mp4',
     img: './img/placeholder/galleries.jpg',
     link: '',
-    background: 'var(--shootproof)'
+    background: 'var(--shootproof)',
   },
   {
     id: 6,
@@ -63,7 +63,7 @@ const works = [
     video: 'https://res.cloudinary.com/da32ufmnf/video/upload/v1595993470/supersymmetry_wwtpie.mp4',
     img: './img/placeholder/supersymmetry.jpg',
     link: '',
-    background: 'maroon'
+    background: 'maroon',
   }
 ]
 
