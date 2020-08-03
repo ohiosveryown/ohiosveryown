@@ -3,8 +3,8 @@
 
     <!-- page header -->
     <header class="mb-9">
-      <h1 class="mb-3 fs--xl f--c">Mailchimp First–time&nbsp;Send</h1>
-      <div class="meta">
+      <h1 class="anim--in mb-3 fs--xl f--c">Mailchimp First–time&nbsp;Send</h1>
+      <div class="anim--in meta">
         <h3 class="mb-0 uc fs--sm f--f">
           <span class="pt-0 op-5">user experience design</span>
           2019–2020
@@ -18,7 +18,7 @@
 
     <!-- page hero -->
     <section class="mb-9">
-      <ul class="process mb-3 uc fs--sm f--f">
+      <ul class="anim--in process mb-3 uc fs--sm f--f">
         <li>process</li>
         <span>
           <svg width="60" height="10" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M0 5.556V4.444h55.848a8.054 8.054 0 01-.702-.515C53.97 2.957 53 1.565 53 0h1.111c0 1.102.698 2.21 1.743 3.071 1.044.862 2.311 1.373 3.257 1.373v1.112c-.946 0-2.213.511-3.257 1.373-1.045.861-1.744 1.97-1.744 3.071H53c0-1.565.969-2.957 2.146-3.929.224-.184.459-.356.702-.515H0z" fill="#000"/></svg>
@@ -29,10 +29,10 @@
         <li>deliver</li>
       </ul>
       <header class="case-header mb-7">
-        <h2 class="mb-3 fs--md f--g">Creating an all new editing experience with maximum flexibility to make designing easier.</h2>
+        <h2 class="anim--in mb-3 fs--md f--g">Creating an all new editing experience with maximum flexibility to make designing easier.</h2>
       </header>
       <figure>
-        <div class="img--hero">
+        <div class="anim--in img--hero">
           <img src="https://res.cloudinary.com/da32ufmnf/image/upload/v1596423253/mc-delete_oanyjv.jpg" alt="">
         </div>
         <figcaption class="pt-0 tar">
@@ -55,7 +55,7 @@
         <p>Throughout the life cycle of the project redesign, I played a large role in determining not only the visual design language, but also what features would be added and depreciated.</p>
         <p>Scoping the project was instrumental in informing my design direction and cultivating a seamless user experience.</p>
       </article>
-      <figure class="img--not-wide pb-9">
+      <figure class="r-01 img--not-wide pb-9">
         <div class="img--shadow mt-2">
           <img src="https://res.cloudinary.com/da32ufmnf/image/upload/v1596426547/mc-send/research_erwd6u.png" alt="">
         </div>
@@ -66,7 +66,7 @@
           </span>
         </figcaption>
       </figure>
-      <figure class="img--not-wide">
+      <figure class="r-02 img--not-wide">
         <div class="img--shadow mt-2">
           <img src="https://res.cloudinary.com/da32ufmnf/image/upload/v1596426547/mc-send/research_erwd6u.png" alt="">
         </div>
