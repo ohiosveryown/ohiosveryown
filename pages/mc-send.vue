@@ -104,7 +104,7 @@
     <Next
       name = 'menu.black'
       excerpt = "Celebrating the diversity of Atlanta's culture and food"
-      img = '../img/placeholder/menu.jpg'
+      img = 'https://res.cloudinary.com/da32ufmnf/image/upload/v1596435569/menu/menu_tw8tqd.jpg'
       link = '/menu-black'
     />
   </main>

@@ -104,7 +104,7 @@
     <Next
       name = 'ShootProof Galleries'
       excerpt = 'Rethinking how users share, sell and organizer their photos'
-      img = '../img/placeholder/galleries.jpg'
+      img = 'https://res.cloudinary.com/da32ufmnf/image/upload/v1596478389/sp-galleries/galleries_2x_zkgn70.jpg'
       link = '/'
     />
   </main>
