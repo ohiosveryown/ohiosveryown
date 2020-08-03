@@ -68,9 +68,8 @@ const works = [
 ]
 
 const links = [
-  '1',
-  '2',
-  '3'
+  'mc-send',
+  'menu-black'
 ]
 
 export { works, links }

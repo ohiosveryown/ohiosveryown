@@ -30,10 +30,11 @@
 
     .img--hero {
       margin: 4rem auto 0;
-      padding: 4rem 4rem 0;
+      padding: 3.2rem 3.2rem 0;
       overflow: hidden;
-      @include breakpoint(md)  { margin: 6.4rem auto 0; padding: 8rem 8rem 0; }
-      @include breakpoint(mdl) { padding: 12rem 16rem 0; }
+      @include breakpoint(md)  { margin: 6.4rem auto 0; }
+      @include breakpoint(mdl) { padding: 8rem 8rem 0; }
+      @include breakpoint(lg)  { padding: 12rem 16rem 0; }
       img { box-shadow: 0px 4px 64px rgba(12,0,0,.08); }
     }
 

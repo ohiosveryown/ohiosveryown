@@ -29,11 +29,11 @@
         <li>deliver</li>
       </ul>
       <header class="case-header mb-7">
-        <h2 class="anim--in mb-3 fs--md f--g">Creating an all new editing experience with maximum flexibility to make designing easier.</h2>
+        <h2 class="anim--in mb-3 fs--md f--g">Creating an all new editing experience with maximum flexibility to make designing easier</h2>
       </header>
       <figure>
         <div class="anim--in img--hero">
-          <img src="https://res.cloudinary.com/da32ufmnf/image/upload/v1596423253/mc-delete_oanyjv.jpg" alt="">
+          <img src="https://res.cloudinary.com/da32ufmnf/image/upload/v1596423253/mc-delete_oanyjv.jpg" alt="mailchimp email editor">
         </div>
         <figcaption class="pt-0 tar">
           <span class="uc fs--sm f--f">
