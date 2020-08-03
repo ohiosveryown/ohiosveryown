@@ -13,8 +13,10 @@
   .work {
     padding: 11.8rem 0 8rem;
 
-    .process {
-      display: flex;
+    ul.process {
+      display: none;
+      width: 100%;
+      @include breakpoint(md) { display: flex; }
       * { margin-right: 2.4rem; opacity: .4; }
       li:first-of-type { margin-right: .8rem; opacity: 1; }
       span { margin-right: 0; }
@@ -79,38 +81,12 @@
           duration: .6,
           ease: Power2.easeInOut
         })
-      },
-      Reveal() {
-        gsap.from('.r-01', {
-          opacity: 0,
-          y: 100,
-          ease: Power2.easeOut,
-          duration: .8,
-          scrollTrigger: {
-            trigger: '.r-01',
-            start: 'top 0%',
-            markers: true,
-          }
-        }),
-        gsap.from('.r-02', {
-          opacity: 0,
-          y: 100,
-          ease: Power2.easeOut,
-          duration: .8,
-          scrollTrigger: {
-            trigger: '.r-02',
-            start: 'top 0%',
-            markers: true,
-          }
-        })
       }
     },
 
     mounted() {
       // entrance
       this.Entrance()
-      // reveal on scroll
-      this.Reveal()
     },
 
     beforeDestroy() {

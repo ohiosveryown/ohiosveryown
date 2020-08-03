@@ -55,7 +55,7 @@
         <p>Throughout the life cycle of the project redesign, I played a large role in determining not only the visual design language, but also what features would be added and depreciated.</p>
         <p>Scoping the project was instrumental in informing my design direction and cultivating a seamless user experience.</p>
       </article>
-      <figure class="r-01 img--not-wide pb-9">
+      <figure class="img--not-wide pb-9">
         <div class="img--shadow mt-2">
           <img src="https://res.cloudinary.com/da32ufmnf/image/upload/v1596426547/mc-send/research_erwd6u.png" alt="">
         </div>
@@ -66,7 +66,7 @@
           </span>
         </figcaption>
       </figure>
-      <figure class="r-02 img--not-wide">
+      <figure class="img--not-wide">
         <div class="img--shadow mt-2">
           <img src="https://res.cloudinary.com/da32ufmnf/image/upload/v1596426547/mc-send/research_erwd6u.png" alt="">
         </div>
