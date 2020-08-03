@@ -11,6 +11,46 @@
   @import '../style/grid.scss';
 
   .work {
+    padding: 11.8rem 0 8rem;
+
+    .process {
+      display: flex;
+      * { margin-right: 2.4rem; opacity: .4; }
+      li:first-of-type { margin-right: .8rem; opacity: 1; }
+      span { margin-right: 0; }
+      span, svg, path { opacity: 1; }
+    }
+
+    .case-header {
+      @include breakpoint(md)  { width: grid-width(10); }
+      @include breakpoint(mdl) { max-width: 66rem; width: grid-width(7); }
+    }
+
+    .img--hero {
+      margin: 4rem auto 0;
+      padding: 4rem 4rem 0;
+      overflow: hidden;
+      @include breakpoint(md)  { margin: 6.4rem auto 0; padding: 8rem 8rem 0; }
+      @include breakpoint(mdl) { padding: 12rem 16rem 0; }
+      img { box-shadow: 0px 4px 64px rgba(12,0,0,.08); }
+    }
+
+    article {
+      margin: auto;
+      @include breakpoint(md)  { width: grid-width(9); }
+      @include breakpoint(mdl) { width: grid-width(7); }
+    }
+
+    .img--not-wide {
+      margin: auto;
+      @include breakpoint(md)  { width: grid-width(9); }
+      @include breakpoint(mdl) { width: grid-width(10); }
+    }
+
+    .img--shadow {
+      padding: 3.2rem 2.8rem;
+      box-shadow: 0px 4px 64px rgba(0,0,0,.12);
+    }
 
     p {
       margin-bottom: 1rem;
@@ -19,56 +59,6 @@
     }
 
     p + p { text-indent: 3ch; }
-
-    .fs--lg {
-      font-size: 2.6rem;
-      @include breakpoint(md) { font-size: 3rem; }
-    }
-
-    .fs--md {
-      font-size: 2rem;
-      @include breakpoint(md) { font-size: 2.4rem; }
-    }
-
-    .title { margin-bottom: 4rem; }
-
-    .meta {
-      margin: 0 auto;
-      padding-top: 16rem;
-      @include breakpoint(md) { width: grid-width(9); }
-      @include breakpoint(mdl) { width: grid-width(5.5); }
-    }
-
-    .hero {
-      margin: 4rem auto 0;
-      padding: 4rem 4rem 0;
-      overflow: hidden;
-
-      @include breakpoint(md) { margin: 6.4rem auto 0; padding: 8rem 8rem 0; }
-      @include breakpoint(mdl) { padding: 12rem 16rem 0; }
-
-      img { box-shadow: 0px 4px 64px rgba(12,0,0,.08); }
-    }
-
-    section {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin: 4rem auto 8rem;
-      @include breakpoint(mdl) { width: grid-width(7); }
-    }
-
-    .figure {
-      opacity: 0;
-      transform: translateY(50px);
-      transition: all 800ms ease;
-      @include breakpoint(mdl) { transform: translateY(150px); }
-    }
-
-    .in-view {
-      opacity: 1;
-      transform: translateY(0);
-    }
   }
 </style>
 
@@ -80,43 +70,43 @@
   export default {
     components: { Navigation, RainbowSm },
 
-    methods: {
-      Entrance() {
-        gsap.from('.anim--in', {
-          opacity: 0,
-          stagger: .1,
-          delay: .2,
-          duration: .6,
-          ease: Power2.easeInOut
-        })
-      },
-    },
+    // methods: {
+    //   Entrance() {
+    //     gsap.from('.anim--in', {
+    //       opacity: 0,
+    //       stagger: .1,
+    //       delay: .2,
+    //       duration: .6,
+    //       ease: Power2.easeInOut
+    //     })
+    //   },
+    // },
 
-    mounted() {
-      // entrance
-      this.Entrance()
+    // mounted() {
+    //   // entrance
+    //   this.Entrance()
 
-      // fade in on scroll / observer
-      const figure = document.querySelectorAll('.figure')
-      const observer = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-          if (entry.intersectionRatio > 0) {
-            entry.target.classList.add('in-view')
-          } else {
-            entry.target.classList.remove('in-view')
-          }
-        })
-      }, { rootMargin: '0px 0px -100px' })
-      figure.forEach(e => { observer.observe(e) })
-    },
+    //   // fade in on scroll / observer
+    //   const figure = document.querySelectorAll('.figure')
+    //   const observer = new IntersectionObserver(entries => {
+    //     entries.forEach(entry => {
+    //       if (entry.intersectionRatio > 0) {
+    //         entry.target.classList.add('in-view')
+    //       } else {
+    //         entry.target.classList.remove('in-view')
+    //       }
+    //     })
+    //   }, { rootMargin: '0px 0px -100px' })
+    //   figure.forEach(e => { observer.observe(e) })
+    // },
 
-    beforeDestroy() {
-      // this.Exit()
-      const index = document.querySelector('main')
-      index.style.cssText = `
-        opacity: 0;
-        transition: opacity 200ms ease;
-      `
-    }
+    // beforeDestroy() {
+    //   // this.Exit()
+    //   const index = document.querySelector('main')
+    //   index.style.cssText = `
+    //     opacity: 0;
+    //     transition: opacity 200ms ease;
+    //   `
+    // }
   }
 </script>

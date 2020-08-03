@@ -1,69 +1,91 @@
 <template>
-  <main class="width">
+  <main class="width work">
 
-    <header class="anim--in title tac">
+    <!-- page header -->
+    <header class="mb-9">
+      <h1 class="mb-3 fs--xl f--c">Mailchimp First–time&nbsp;Send</h1>
       <div class="meta">
-        <h1 class="mb-2 fs--lg f--c">Mailchimp First Time Send</h1>
-        <h2 class="mb-3 fs--md f--g">Creating an all new editing experience with maximum flexibility to make designing easier.</h2>
-
-        <h4 class="mb-0 uc fs--sm f--f">
+        <h3 class="mb-0 uc fs--sm f--f">
           <span class="pt-0 op-5">user experience design</span>
           2019–2020
-        </h4>
-
-        <h4 class="uc fs--sm f--f">
+        </h3>
+        <h3 class="uc fs--sm f--f">
           <span class="pt-0 op-5">url</span>
           mailchimp.com
-        </h4>
+        </h3>
       </div>
-
-      <figure>
-        <div class="anim--in hero">
-          <img src="~/static/img/mc-send/01@2x.jpg" alt="mailchimp homepage">
-        </div>
-        <figcaption class="mt-2 tar uc fs--sm f--f"><span class="mr-0 pt-0 op-5">Fig</span>Nº01</figcaption>
-      </figure>
     </header>
 
-    <!-- section -->
-    <section>
-      <header>
-        <h3 class="mb-4 fs--md f--g">Introduction</h3>
+    <!-- page hero -->
+    <section class="mb-9">
+      <ul class="process mb-3 uc fs--sm f--f">
+        <li>process</li>
+        <span>
+          <svg width="60" height="10" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M0 5.556V4.444h55.848a8.054 8.054 0 01-.702-.515C53.97 2.957 53 1.565 53 0h1.111c0 1.102.698 2.21 1.743 3.071 1.044.862 2.311 1.373 3.257 1.373v1.112c-.946 0-2.213.511-3.257 1.373-1.045.861-1.744 1.97-1.744 3.071H53c0-1.565.969-2.957 2.146-3.929.224-.184.459-.356.702-.515H0z" fill="#000"/></svg>
+        </span>
+        <li>discover</li>
+        <li>define</li>
+        <li>develop</li>
+        <li>deliver</li>
+      </ul>
+      <header class="case-header mb-7">
+        <h2 class="mb-3 fs--md f--g">Creating an all new editing experience with maximum flexibility to make designing easier.</h2>
       </header>
-      <article>
+      <figure>
+        <div class="img--hero">
+          <img src="https://res.cloudinary.com/da32ufmnf/image/upload/v1596423253/mc-delete_oanyjv.jpg" alt="">
+        </div>
+        <figcaption class="pt-0 tar">
+          <span class="uc fs--sm f--f">
+            <span class="mr-0 pt-0 op-5">fig Nº01</span>
+            Mailchimp Templates
+          </span>
+        </figcaption>
+      </figure>
+    </section>
+
+    <!-- section -->
+    <section class="mb-4">
+      <article class="pb-9">
+        <header>
+          <h4 class="mb-1 pt-4 uc fs--sm f--f">Discover / Research</h4>
+          <h5 class="mb-4 fs--md f--g">Good user research is key to designing a great user experience and a great product</h5>
+        </header>
         <p>As we started the redesign, I helped scope the project as well as be a product owner to help define what all we'd be incorporating.</p>
         <p>Throughout the life cycle of the project redesign, I played a large role in determining not only the visual design language, but also what features would be added and depreciated.</p>
         <p>Scoping the project was instrumental in informing my design direction and cultivating a seamless user experience.</p>
       </article>
+      <figure class="img--not-wide pb-9">
+        <div class="img--shadow mt-2">
+          <img src="https://res.cloudinary.com/da32ufmnf/image/upload/v1596426547/mc-send/research_erwd6u.png" alt="">
+        </div>
+        <figcaption class="pt-0 tar">
+          <span class="uc fs--sm f--f">
+            <span class="mr-0 pt-0 op-5">fig Nº02</span>
+            Research 01
+          </span>
+        </figcaption>
+      </figure>
+      <figure class="img--not-wide">
+        <div class="img--shadow mt-2">
+          <img src="https://res.cloudinary.com/da32ufmnf/image/upload/v1596426547/mc-send/research_erwd6u.png" alt="">
+        </div>
+        <figcaption class="pt-0 tar">
+          <span class="uc fs--sm f--f">
+            <span class="mr-0 pt-0 op-5">fig Nº03</span>
+            Research 02
+          </span>
+        </figcaption>
+      </figure>
     </section>
-
-    <!-- caption -->
-    <section class="caption tac">
-      <h4 class="mb-0 uc fs--sm f--f">
-        <span class="pt-0 op-5">Fig</span>
-        Nº01 ShootProof Galleries v3
-      </h4>
-
-      <h4 class="uc fs--sm f--f">
-        <span class="pt-0 op-5">Fig</span>
-        Nº02 ShootProof Galleries v2
-      </h4>
-    </section>
-
-    <figure class="figure">
-      <img src="~/static/img/mc-send/02@2x.jpg" alt="mailchimp checklist">
-      <figcaption class="mt-2 tar uc fs--sm f--f"><span class="mr-0 pt-0 op-5">Fig</span>Nº02</figcaption>
-    </figure>
 
     <!-- section -->
-    <section>
-      <header>
-        <h3 class="mb-4 fs--md f--g">Conclusion / Next Steps</h3>
-      </header>
-      <article>
-        <p>As we started the redesign, I helped scope the project as well as be a product owner to help define what all we'd be incorporating.</p>
-        <p>Throughout the life cycle of the project redesign, I played a large role in determining not only the visual design language, but also what features would be added and depreciated.</p>
-        <p>Scoping the project was instrumental in informing my design direction and cultivating a seamless user experience.</p>
+    <section class="mb-9">
+      <article class="pb-9">
+        <header>
+          <h4 class="mb-1 pt-4 uc fs--sm f--f">Define</h4>
+          <h5 class="mb-4 fs--md f--g">Good user research is key to designing a great user experience and a great product</h5>
+        </header>
         <p>As we started the redesign, I helped scope the project as well as be a product owner to help define what all we'd be incorporating.</p>
         <p>Throughout the life cycle of the project redesign, I played a large role in determining not only the visual design language, but also what features would be added and depreciated.</p>
         <p>Scoping the project was instrumental in informing my design direction and cultivating a seamless user experience.</p>
@@ -77,13 +99,12 @@
       img = '../img/placeholder/menu.jpg'
       link = '/menu-black'
     />
-
   </main>
 </template>
 
 
 <style lang="scss" scoped>
-  .hero { background: var(--mailchimp); }
+  .img--hero { background: var(--mailchimp); }
 </style>
 
 
