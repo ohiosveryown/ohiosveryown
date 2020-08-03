@@ -25,7 +25,7 @@
       </article>
 
       <picture  :class = "{ active : hover }" class="me">
-        <source media="(min-width: 1000px)" srcset="../static/img/placeholder/about.jpg">
+        <source media="(min-width: 1000px)" srcset="https://res.cloudinary.com/da32ufmnf/image/upload/v1596478410/about/about_2x_c8btur.jpg">
         <img src="">
       </picture>
 
