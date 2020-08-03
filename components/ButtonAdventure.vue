@@ -56,7 +56,7 @@
     position: absolute;
     left: -6rem;
     width: 4rem; height: 6rem;
-    background: url('../static/img/arrow.svg') no-repeat;
+    background: url('https://res.cloudinary.com/da32ufmnf/image/upload/v1596478789/index/arrow_yr2uo1.svg') no-repeat;
     background-size: cover;
   }
 

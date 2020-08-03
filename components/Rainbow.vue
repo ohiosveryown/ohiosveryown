@@ -20,7 +20,7 @@
 <style lang='scss' scoped>
   @import '../style/grid.scss';
 
-  .active { cursor: url('../static/img/rainbow.svg'), auto; }
+  .active { cursor: url('https://res.cloudinary.com/da32ufmnf/image/upload/v1596478789/index/rainbow_nmlw9t.svg'), auto; }
 
   .rainbow {
     position: fixed;

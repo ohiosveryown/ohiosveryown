@@ -103,7 +103,7 @@
     margin-left: .6rem;
     margin: 0 .8rem 0 .4rem;
     width: 1rem; height: 1rem;
-    background-image: url('../static/img/tab.svg');
+    background-image: url('https://res.cloudinary.com/da32ufmnf/image/upload/v1596478789/index/tab_va4qco.svg');
     background-size: 1rem 1rem;
     transform: rotate(-135deg);
   }

@@ -23,8 +23,8 @@
         <span>
           <svg width="60" height="10" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M0 5.556V4.444h55.848a8.054 8.054 0 01-.702-.515C53.97 2.957 53 1.565 53 0h1.111c0 1.102.698 2.21 1.743 3.071 1.044.862 2.311 1.373 3.257 1.373v1.112c-.946 0-2.213.511-3.257 1.373-1.045.861-1.744 1.97-1.744 3.071H53c0-1.565.969-2.957 2.146-3.929.224-.184.459-.356.702-.515H0z" fill="#000"/></svg>
         </span>
-        <li>discover</li>
-        <li>define</li>
+        <li @click="scrollTo('discover')">discover</li>
+        <li @click="scrollTo('define')">define</li>
         <li>develop</li>
         <li>deliver</li>
       </ul>
@@ -33,7 +33,7 @@
       </header>
       <figure>
         <div class="anim--in img--hero">
-          <img src="https://res.cloudinary.com/da32ufmnf/image/upload/v1596423253/mc-delete_oanyjv.jpg" alt="mailchimp email editor">
+          <img src="https://res.cloudinary.com/da32ufmnf/image/upload/v1596477789/mc-send/01_2x_ab9xk9.jpg" alt="mailchimp email reveiw">
         </div>
         <figcaption class="pt-0 tar">
           <span class="uc fs--sm f--f">
@@ -48,7 +48,11 @@
     <section class="mb-4">
       <article class="pb-9">
         <header>
-          <h4 class="mb-1 pt-4 uc fs--sm f--f">Discover / Research</h4>
+          <h4
+            ref="discover"
+            class="mb-1 pt-4 uc fs--sm f--f">
+            Discover / Research
+          </h4>
           <h5 class="mb-4 fs--md f--g">Good user research is key to designing a great user experience and a great product</h5>
         </header>
         <p>As we started the redesign, I helped scope the project as well as be a product owner to help define what all we'd be incorporating.</p>
@@ -83,7 +87,11 @@
     <section class="mb-9">
       <article class="pb-9">
         <header>
-          <h4 class="mb-1 pt-4 uc fs--sm f--f">Define</h4>
+          <h4
+            ref="define"
+            class="mb-1 pt-4 uc fs--sm f--f">
+            Define
+          </h4>
           <h5 class="mb-4 fs--md f--g">Good user research is key to designing a great user experience and a great product</h5>
         </header>
         <p>As we started the redesign, I helped scope the project as well as be a product owner to help define what all we'd be incorporating.</p>
@@ -117,5 +125,13 @@
     head: () => ({
       title: 'ovo – mc send'
     }),
+
+    methods: {
+      scrollTo(refName) {
+        let element = this.$refs[refName]
+        let top = element.offsetTop
+        window.scrollTo(0, top)
+      }
+    }
   }
 </script>

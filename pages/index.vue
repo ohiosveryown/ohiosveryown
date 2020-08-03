@@ -5,7 +5,7 @@
       <h1 class="anim--in mb-2 fs--lg f--c">
         <span class="matt-trigger">My name is Matt.</span>
         <picture ref='matt' class="matt">
-          <source media="(min-width: 1000px)" srcset="~/static/img/matt.jpg">
+          <source media="(min-width: 1000px)" srcset="https://res.cloudinary.com/da32ufmnf/image/upload/v1596478789/index/matt_qc0qt7.jpg">
           <img src="">
         </picture>
       </h1>
@@ -14,13 +14,13 @@
         <span class="system-trigger">design systems</span>
 
         <picture ref='system' class="system">
-          <source media="(min-width: 1000px)" srcset="~/static/img/learning.gif">
+          <source media="(min-width: 1000px)" srcset="https://res.cloudinary.com/da32ufmnf/image/upload/v1596478789/index/learning_kacyhm.gif">
           <img src="">
         </picture>
         &
         <span class="learning-trigger">machine learning</span>
         <picture ref='learning' class="learning">
-          <source media="(min-width: 1000px)" srcset="~/static/img/learning.gif">
+          <source media="(min-width: 1000px)" srcset="https://res.cloudinary.com/da32ufmnf/image/upload/v1596478789/index/learning_kacyhm.gif">
           <img src="">
         </picture>
       </h2>

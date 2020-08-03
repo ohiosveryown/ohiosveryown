@@ -33,11 +33,9 @@
   @import '../style/grid.scss';
 
   nav > a, nav > header {
-    // border: 2px solid;
-    border-radius: 100px;
     --space: 1rem;
+    border-radius: 100px;
     padding: var(--space);
-    transform: translate( calc(var(--space) * -1), calc(var(--space) * -1) );
     backdrop-filter: blur(6px);
   }
 
@@ -54,8 +52,6 @@
 
   header { display: flex; cursor: pointer; position: relative; z-index: 9999; }
 
-  @media (pointer: fine) { .label:hover { text-decoration: underline; }}
-
   .menu {
     position: absolute;
     top: 4.4rem; left: -.8rem; right: 0;
@@ -68,14 +64,11 @@
     background: #fff;
     box-shadow: 0px 6px 64px rgba(0,0,0,.2);
     transition: var(--ease);
-    // opacity: 0;
-    // transform: translateY(-1rem);
 
     @include breakpoint(md) {
-      top: 3.2rem; right: -1.6rem; left: auto;
+      top: 4.8rem; right: -1.6rem; left: auto;
       width: 48rem;
       height: 80vh; max-height: 44rem;
-      box-shadow: 0px 4px 64px rgba(0,0,0,.12);
     }
 
     @include breakpoint(mdl) { right: -2.8rem; }
@@ -117,6 +110,8 @@
 
   .footer-opened { opacity: 1; transition: opacity 500ms ease 360ms; }
   .footer-closed { opacity: 0; transition: opacity 100ms ease; }
+
+  @media (pointer: fine) { .label:hover { text-decoration: underline; }}
 
 </style>
 

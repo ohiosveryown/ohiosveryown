@@ -62,6 +62,15 @@
     }
 
     p + p { text-indent: 3ch; }
+
+    @media(pointer: fine) {
+      ul.process > li:first-of-type {
+        &:hover { text-decoration: none; cursor: inherit; }
+      }
+      ul.process > li {
+        &:hover { opacity: 1; text-decoration: underline; cursor: pointer; }
+      }
+    }
   }
 </style>
 
@@ -82,7 +91,7 @@
           duration: .6,
           ease: Power2.easeInOut
         })
-      }
+      },
     },
 
     mounted() {
