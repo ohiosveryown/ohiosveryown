@@ -2,7 +2,7 @@
   <div>
     <Navigation/>
     <RainbowSm/>
-    <nuxt class="work"/>
+    <nuxt class="detail"/>
   </div>
 </template>
 
@@ -10,7 +10,7 @@
 <style lang="scss">
   @import '../style/grid.scss';
 
-  .work {
+  .detail {
     padding: 11.8rem 0 8rem;
 
     ul.process {

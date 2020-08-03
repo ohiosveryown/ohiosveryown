@@ -59,13 +59,6 @@
     will-change:transform
   }
 
-  @media (pointer: fine) {
-    article:hover h4:before {
-      opacity: 1;
-      transform: translateX(0);
-    }
-  }
-
   figure {
     display: flex;
     align-items: center;
@@ -84,7 +77,17 @@
     box-shadow: 0px 4px 64px rgba(0,0,0,.2);
   }
 
-  .active { opacity: 1; }
+  // .active { opacity: 1; }
+
+
+  @media (pointer: fine) {
+    article:hover h4:before {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .active { opacity: 1; }
+  }
 
 
 </style>

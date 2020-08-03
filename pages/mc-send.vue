@@ -1,5 +1,5 @@
 <template>
-  <main class="width work">
+  <main class="width">
 
     <!-- page header -->
     <header class="mb-9">
