@@ -2,8 +2,8 @@
   <main class="index width">
 
     <header class="intro">
-      <h1 class="anim--in mb-2 fs--lg f--c">My name is&nbsp;
-        <span class="matt-trigger">Matt.</span>
+      <h1 class="anim--in mb-2 fs--lg f--c">
+        <span class="matt-trigger">My name is Matt.</span>
         <picture ref='matt' class="matt">
           <source media="(min-width: 1000px)" srcset="~/static/img/matt.jpg">
           <img src="">
