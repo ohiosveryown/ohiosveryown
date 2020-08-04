@@ -62,7 +62,7 @@ const works = [
     excerptSmall: "A project showcasing architecture & structural engineering",
     video: 'https://res.cloudinary.com/da32ufmnf/video/upload/v1595993470/supersymmetry/supersymmetry_wwtpie.mp4',
     img: 'https://res.cloudinary.com/da32ufmnf/image/upload/v1596478423/supersymmetry/supersymmetry_2x_w1ol91.jpg',
-    link: '',
+    link: 'supersymmetry',
     background: 'maroon',
   }
 ]
@@ -70,7 +70,8 @@ const works = [
 const links = [
   'mc-send',
   'menu-black',
-  'sp-galleries'
+  'sp-galleries',
+  'supersymmetry'
 ]
 
 export { works, links }

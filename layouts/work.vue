@@ -52,7 +52,7 @@
 
     .img--shadow {
       padding: 3.2rem 2.8rem;
-      box-shadow: 0px 4px 64px rgba(0,0,0,.12);
+      box-shadow: 0 4px 64px rgba(0,0,0,.12);
     }
 
     p {

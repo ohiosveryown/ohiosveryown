@@ -33,7 +33,7 @@
       </header>
       <figure>
         <div class="anim--in img--hero">
-          <img src="https://res.cloudinary.com/da32ufmnf/image/upload/v1596477789/mc-send/01_2x_ab9xk9.jpg" alt="mailchimp email reveiw">
+          <img src="https://res.cloudinary.com/da32ufmnf/image/upload/v1596477789/mc-send/01_2x_ab9xk9.jpg" alt="mailchimp email review">
         </div>
         <figcaption class="pt-0 tar">
           <span class="uc fs--sm f--f">
