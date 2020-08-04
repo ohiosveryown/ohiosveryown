@@ -161,7 +161,7 @@
       const index = document.querySelector('main')
       index.style.cssText = `
         opacity: 0;
-        transition: opacity 200ms ease;
+        transition: opacity 300ms ease;
       `
     }
   }

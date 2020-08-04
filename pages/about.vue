@@ -177,7 +177,7 @@
       const index = document.querySelector('.about')
       index.style.cssText = `
         opacity: 0;
-        transition: opacity var(--animbase) ease;
+        transition: opacity 300 ease;
       `
     }
   }

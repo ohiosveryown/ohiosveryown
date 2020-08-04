@@ -3,15 +3,15 @@
 
     <!-- page header -->
     <header class="mb-9">
-      <h1 class="anim--in mb-3 fs--xl f--c">Mailchimp First–time&nbsp;Send</h1>
+      <h1 class="anim--in mb-3 fs--xl f--c">ShootProof Galleries</h1>
       <div class="anim--in meta">
         <h3 class="mb-0 uc fs--sm f--f">
           <span class="pt-0 op-5">user experience design</span>
-          2019–2020
+          2018
         </h3>
         <h3 class="uc fs--sm f--f">
           <span class="pt-0 op-5">url</span>
-          mailchimp.com
+          shootproof.com
         </h3>
       </div>
     </header>
@@ -29,16 +29,16 @@
         <li>deliver</li>
       </ul>
       <header class="case-header mb-7">
-        <h2 class="anim--in mb-3 fs--md f--g">Creating an all new editing experience with maximum flexibility to make designing easier</h2>
+        <h2 class="anim--in mb-3 fs--md f--g">Rethinking how users share, sell and organizer their photos</h2>
       </header>
       <figure>
         <div class="anim--in img--hero">
-          <img src="https://res.cloudinary.com/da32ufmnf/image/upload/v1596477789/mc-send/01_2x_ab9xk9.jpg" alt="mailchimp email reveiw">
+          <img src="https://res.cloudinary.com/da32ufmnf/image/upload/v1596478389/sp-galleries/galleries_2x_zkgn70.jpg" alt="mailchimp email reveiw">
         </div>
         <figcaption class="pt-0 tar">
           <span class="uc fs--sm f--f">
             <span class="mr-0 pt-0 op-5">fig Nº01</span>
-            Mailchimp Templates
+            ShootProof Galleries
           </span>
         </figcaption>
       </figure>
@@ -102,17 +102,17 @@
 
     <!-- footer / next -->
     <Next
-      name = 'menu.black'
+      name = 'supersymmetry'
       excerpt = "Celebrating the diversity of Atlanta's culture and food"
-      img = 'https://res.cloudinary.com/da32ufmnf/image/upload/v1596435569/menu/menu_tw8tqd.jpg'
-      link = '/menu-black'
+      img = 'https://res.cloudinary.com/da32ufmnf/image/upload/v1596478423/supersymmetry/supersymmetry_2x_w1ol91.jpg'
+      link = '/supersymmetry'
     />
   </main>
 </template>
 
 
 <style lang="scss" scoped>
-  .img--hero { background: var(--mailchimp); }
+  .img--hero { background: var(--shootproof); }
 </style>
 
 
@@ -123,7 +123,7 @@
     layout: 'work',
 
     head: () => ({
-      title: 'ovo – mc send'
+      title: 'ovo – sp galleries'
     }),
 
     methods: {

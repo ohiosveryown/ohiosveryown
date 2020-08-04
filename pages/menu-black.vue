@@ -105,7 +105,7 @@
       name = 'ShootProof Galleries'
       excerpt = 'Rethinking how users share, sell and organizer their photos'
       img = 'https://res.cloudinary.com/da32ufmnf/image/upload/v1596478389/sp-galleries/galleries_2x_zkgn70.jpg'
-      link = '/'
+      link = '/sp-galleries'
     />
   </main>
 </template>
@@ -132,6 +132,15 @@
         let top = element.offsetTop
         window.scrollTo(0, top)
       }
+    },
+
+    beforeDestroy() {
+      // this.Exit()
+      const index = document.querySelector('main')
+      index.style.cssText = `
+        opacity: 0;
+        transition: opacity 300ms ease;
+      `
     }
   }
 </script>

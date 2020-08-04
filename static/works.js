@@ -51,7 +51,7 @@ const works = [
     excerptSmall: "Rethinking how users share and sell their photos and albums",
     video: 'https://res.cloudinary.com/da32ufmnf/video/upload/v1595954973/sp-galleries/galleries_hfvvwe.mp4',
     img: 'https://res.cloudinary.com/da32ufmnf/image/upload/v1596478389/sp-galleries/galleries_2x_zkgn70.jpg',
-    link: '',
+    link: 'sp-galleries',
     background: 'var(--shootproof)',
   },
   {
@@ -69,7 +69,8 @@ const works = [
 
 const links = [
   'mc-send',
-  'menu-black'
+  'menu-black',
+  'sp-galleries'
 ]
 
 export { works, links }

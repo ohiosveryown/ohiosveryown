@@ -99,6 +99,7 @@
   .arrow-closed { transform: scaleY(1); }
 
   footer {
+    display: none;
     position: sticky;
     bottom: 0;
     padding: 2.4rem 1.8rem 1.8rem;
