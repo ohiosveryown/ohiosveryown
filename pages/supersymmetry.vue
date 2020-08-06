@@ -25,7 +25,7 @@
         </span>
         <li @click="scrollTo('discover')">planning</li>
         <li @click="scrollTo('storyboarding')">storyboarding</li>
-        <li @click="scrollTo('define')">implementation</li>
+        <li @click="scrollTo('implementation')">implementation</li>
         <li @click="scrollTo('interating')">iterating</li>
       </ul>
       <header class="case-header mb-7">
@@ -72,6 +72,7 @@
 
       <figure class="img--not-wide">
         <video
+          ref = 'storyboarding'
           class = "img--shadow"
           autoplay = "autoplay"
           playsinline = ""
@@ -97,7 +98,7 @@
       <article class="pb-9">
         <header>
           <h4
-            ref="define"
+            ref="implementation"
             class="mb-1 pt-4 uc fs--sm f--f">
             Implementation
           </h4>
@@ -125,7 +126,7 @@
       <article class="pb-9">
         <header>
           <h4
-            ref="iterating"
+            ref="interating"
             class="mb-3 pt-4 uc fs--sm f--f">
             Interating
           </h4>
