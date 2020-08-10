@@ -103,7 +103,7 @@
     <!-- footer / next -->
     <Next
       name = 'supersymmetry'
-      excerpt = "Celebrating the diversity of Atlanta's culture and food"
+      excerpt = "A project showcasing architecture & structural engineering"
       img = 'https://res.cloudinary.com/da32ufmnf/image/upload/v1596478423/supersymmetry/supersymmetry_2x_w1ol91.jpg'
       link = '/supersymmetry'
     />
