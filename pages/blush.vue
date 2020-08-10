@@ -49,7 +49,7 @@
           </h4>
           <h5 class="mb-4 fs--md f--g">“Here men from the planet Earth first set foot upon the Moon July 1969, A.D. We came in peace for all mankind”</h5>
         </header>
-        <p>Creating a typeface has been on my to-do list for awhile. I never got to formally study type, but have always observed and admired type and type design. </p>
+        <p>Creating a typeface has been on my to-do list for awhile. I never got to formally study type, but have always observed and admired type and type design.</p>
         <p>I remember the first time I really became conscious about the design of a typeface: it was when I saw the Lunar Plaque that accompanied Apollo 11 to the moon. The font used was Futura.</p>
       </article>
 
@@ -66,6 +66,107 @@
       </figure>
     </section>
 
+    <section class="research mb-4">
+      <article class="pb-9">
+        <header>
+          <h4
+            ref="research"
+            class="mb-1 pt-4 uc fs--sm f--f">
+            Research
+          </h4>
+          <h5 class="mb-4 fs--md f--g">Familiar, but with a twist</h5>
+        </header>
+        <p>Blush is influenced slightly by Futura, but the biggest distinction is that I wanted to optimize it specifically for digital media. I also wanted to take away the sharpness and starkness of Futura, while giving Blush a little more course outside of traditional, restrictive letterforms.</p>
+        <p>These were my baseline principles and the foundation for my research. I began here and started creating a repository of fonts that followed these concepts.</p>
+      </article>
+
+      <figure class="not-wide">
+        <div class="mt-2">
+          <img src="https://res.cloudinary.com/da32ufmnf/image/upload/v1597091653/blush/blush_xtksjb.png" alt="Blush Moodboard">
+        </div>
+        <figcaption class="pt-0 tar">
+          <span class="uc fs--sm f--f">
+            <span class="mr-0 pt-0 op-5">fig Nº03</span>
+            Blush Moodboard
+          </span>
+        </figcaption>
+      </figure>
+    </section>
+
+    <section class="design mb-9">
+      <article class="pb-9">
+        <header>
+          <h4
+            ref="design"
+            class="mb-1 pt-4 uc fs--sm f--f">
+            Design
+          </h4>
+        </header>
+        <p>The current design for Blush is ongoing. I’m currently refining the book weight while concurrently working on medium and bold weights. </p>
+        <p>To get a feel for the font in application, you can view some of the mockups below.</p>
+      </article>
+
+      <figure class="not-wide pb-9">
+        <div class="mt-2">
+          <img src="https://res.cloudinary.com/da32ufmnf/image/upload/v1597092057/blush/glyphs_ykkx3t.png" alt="Blush Letterforms">
+        </div>
+        <figcaption class="pt-0 tar">
+          <span class="uc fs--sm f--f">
+            <span class="mr-0 pt-0 op-5">fig Nº04</span>
+            Letterforms
+          </span>
+        </figcaption>
+      </figure>
+
+      <figure class="not-wide pt-4 pb-9">
+        <div style="background: #e6e6e6" class="img--w-bg mt-2">
+          <img class="shadow-01 br-3" src="https://res.cloudinary.com/da32ufmnf/image/upload/v1597092339/blush/glyphs_iiso1y.jpg" alt="Glyphs">
+        </div>
+        <figcaption class="pt-0 tar">
+          <span class="uc fs--sm f--f">
+            <span class="mr-0 pt-0 op-5">fig Nº05</span>
+            Glyphs
+          </span>
+        </figcaption>
+      </figure>
+
+      <figure class="not-wide pt-4 pb-9">
+        <div class="mt-2">
+          <img src="https://res.cloudinary.com/da32ufmnf/image/upload/v1597092187/blush/app_defzub.png" alt="Space Application">
+        </div>
+        <figcaption class="pt-0 tar">
+          <span class="uc fs--sm f--f">
+            <span class="mr-0 pt-0 op-5">fig Nº06</span>
+            Space Application
+          </span>
+        </figcaption>
+      </figure>
+
+      <figure class="pb-9 not-wide">
+        <div style="background: #000" class="img--w-bg mt-2">
+          <video
+            autoplay="autoplay"
+            playsinline=""
+            loop="loop">
+            <source data-v-501ae7c2="" src="https://res.cloudinary.com/da32ufmnf/video/upload/v1597081255/blush/blush_d2t8sk.mp4"><source>
+          </video>
+        </div>
+        <figcaption class="pt-0 tar">
+          <span class="uc fs--sm f--f">
+            <span class="mr-0 pt-0 op-5">fig Nº07</span>
+            Blush is nice
+          </span>
+        </figcaption>
+      </figure>
+    </section>
+
+    <!-- footer / next -->
+    <Next
+      name = 'menu.black'
+      excerpt = "Celebrating the diversity of Atlanta's culture and food"
+      img = 'https://res.cloudinary.com/da32ufmnf/image/upload/v1596435569/menu/menu_tw8tqd.jpg'
+      link = '/menu-black'
+    />
 
   </main>
 </template>
@@ -95,13 +196,13 @@
       title: 'ovo – blush'
     }),
 
-    // methods: {
-    //   scrollTo(refName) {
-    //     let element = this.$refs[refName]
-    //     let top = element.offsetTop
-    //     window.scrollTo(0, top)
-    //   }
-    // },
+    methods: {
+      scrollTo(refName) {
+        let element = this.$refs[refName]
+        let top = element.offsetTop
+        window.scrollTo(0, top)
+      }
+    },
 
     beforeDestroy() {
       // this.Exit()

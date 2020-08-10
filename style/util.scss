@@ -53,6 +53,10 @@
   &:hover { text-decoration: none; }
 }
 
+.shadow-01 { box-shadow: 0 4px 64px rgba(0,0,0,.12); }
+
+.br-3 { border-radius: 3px; }
+
 .gravity { color: var(--gravity); }
 .infrared { color: var(--infrared); }
 .stone { color: var(--stone); }
