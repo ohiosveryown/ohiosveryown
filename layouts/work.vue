@@ -44,10 +44,22 @@
       @include breakpoint(mdl) { width: grid-width(7); }
     }
 
+    .not-wide {
+      margin: auto;
+      @include breakpoint(md)  { width: grid-width(9); }
+      @include breakpoint(mdl) { width: grid-width(10); }
+    }
+
     .img--not-wide {
       margin: auto;
       @include breakpoint(md)  { width: grid-width(9); }
       @include breakpoint(mdl) { width: grid-width(10); }
+    }
+
+    .img--w-bg {
+      padding: 4rem;
+      @include breakpoint(md)  { padding: 6.4rem; }
+      @include breakpoint(mdl) { padding: 11.2rem; }
     }
 
     .img--shadow {

@@ -64,6 +64,17 @@ const works = [
     img: 'https://res.cloudinary.com/da32ufmnf/image/upload/v1596478423/supersymmetry/supersymmetry_2x_w1ol91.jpg',
     link: 'supersymmetry',
     background: 'maroon',
+  },
+  {
+    id: 7,
+    discipline: 'type design',
+    name: 'Blush',
+    excerpt: "Designing a geometric typeface with bright tones and simple quirks; inspired by space✨",
+    excerptSmall: "Designing a geometric typeface with bright tones and simple quirks",
+    video: 'https://res.cloudinary.com/da32ufmnf/video/upload/v1597081255/blush/blush_d2t8sk.mp4',
+    img: 'https://res.cloudinary.com/da32ufmnf/image/upload/v1597077102/blush/blush-01_2x_ndkg4j.png',
+    link: 'blush',
+    background: 'var(--blush)',
   }
 ]
 
@@ -71,7 +82,8 @@ const links = [
   'mc-send',
   'menu-black',
   'sp-galleries',
-  'supersymmetry'
+  'supersymmetry',
+  'blush'
 ]
 
 export { works, links }
