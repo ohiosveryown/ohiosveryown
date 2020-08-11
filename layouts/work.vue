@@ -11,6 +11,11 @@
   @import '../style/grid.scss';
 
   .detail {
+
+    section { padding-bottom: 6vw; }
+    article { padding-bottom: 4vw; }
+
+
     padding: 11.8rem 0 8rem;
 
     ul.process {
@@ -108,7 +113,7 @@
 
     mounted() {
       // entrance
-      this.Entrance()
+      // this.Entrance()
     },
   }
 </script>

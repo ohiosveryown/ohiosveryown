@@ -16,7 +16,7 @@
     </header>
 
     <!-- page hero -->
-    <section class="mb-9">
+    <section>
       <ul class="anim--in process mb-3 uc fs--sm f--f">
         <li>process</li>
         <span>
@@ -41,8 +41,8 @@
       </figure>
     </section>
 
-    <section class="intro mb-4">
-      <article class="pb-9">
+    <section class="intro">
+      <article>
         <header>
           <h4 class="mb-1 pt-4 uc fs--sm f--f">
             Introduction
@@ -66,8 +66,8 @@
       </figure>
     </section>
 
-    <section class="research mb-4">
-      <article class="pb-9">
+    <section class="research">
+      <article>
         <header>
           <h4
             ref="research"
@@ -94,7 +94,7 @@
     </section>
 
     <section class="design mb-9">
-      <article class="pb-9">
+      <article>
         <header>
           <h4
             ref="design"
@@ -106,7 +106,7 @@
         <p>To get a feel for the font in application, you can view some of the mockups below.</p>
       </article>
 
-      <figure class="not-wide pb-9">
+      <figure class="not-wide pb-6">
         <div class="mt-2">
           <img src="https://res.cloudinary.com/da32ufmnf/image/upload/v1597092057/blush/glyphs_ykkx3t.png" alt="Blush Letterforms">
         </div>
@@ -118,7 +118,7 @@
         </figcaption>
       </figure>
 
-      <figure class="not-wide pt-4 pb-9">
+      <figure class="not-wide pb-6">
         <div style="background: #e6e6e6" class="img--w-bg mt-2">
           <img class="shadow-01 br-3" src="https://res.cloudinary.com/da32ufmnf/image/upload/v1597092339/blush/glyphs_iiso1y.jpg" alt="Glyphs">
         </div>
@@ -130,7 +130,7 @@
         </figcaption>
       </figure>
 
-      <figure class="not-wide pt-4 pb-9">
+      <figure class="not-wide pb-6">
         <div class="mt-2">
           <img src="https://res.cloudinary.com/da32ufmnf/image/upload/v1597092187/blush/app_defzub.png" alt="Space Application">
         </div>
@@ -142,7 +142,7 @@
         </figcaption>
       </figure>
 
-      <figure class="pb-9 not-wide">
+      <figure class="not-wide">
         <div style="background: #000" class="img--w-bg mt-2">
           <video
             autoplay="autoplay"
