@@ -39,6 +39,8 @@
     backdrop-filter: blur(6px);
   }
 
+  .left { transform: translateX(-1rem); }
+
   nav {
     display: flex;
     justify-content: space-between;
@@ -50,7 +52,13 @@
     a { display: inline-flex; }
   }
 
-  header { display: flex; cursor: pointer; position: relative; z-index: 9999; }
+  header {
+    display: flex;
+    position: relative;
+    z-index: var(--zmax);
+    cursor: pointer;
+    transform: translateX(1rem);
+  }
 
   .menu {
     position: absolute;

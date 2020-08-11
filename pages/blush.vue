@@ -177,6 +177,7 @@
   @import '../style/grid.scss';
 
   .img--hero {
+    padding: 2rem 2rem 3.2rem;
     background: var(--blushlight);
     @include breakpoint(mdl) { padding: 12rem 12rem 8rem; }
     @include breakpoint(lg)  { padding: 12rem 12rem 8rem; }
