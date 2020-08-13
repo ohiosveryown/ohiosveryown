@@ -158,6 +158,24 @@
           </span>
         </figcaption>
       </figure>
+
+      <figure class="not-wide">
+        <div style="background: #000" class="mt-2">
+          <video
+            style = "margin: 6rem auto; padding: 4rem 0; max-height: 70vh;"
+            autoplay="autoplay"
+            playsinline=""
+            loop="loop">
+            <source data-v-501ae7c2="" src="https://res.cloudinary.com/da32ufmnf/video/upload/v1597337609/blush/poster_je1pl7.mp4"><source>
+          </video>
+        </div>
+        <figcaption class="pt-0 tar">
+          <span class="uc fs--sm f--f">
+            <span class="mr-0 pt-0 op-5">fig Nº07</span>
+            Blush is nice
+          </span>
+        </figcaption>
+      </figure>
     </section>
 
     <!-- footer / next -->
