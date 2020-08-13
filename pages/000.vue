@@ -1,5 +1,5 @@
 <template>
-  <main class="width">
+  <main class="detail width">
     <!-- page header -->
     <header class="mb-9">
       <h1 class="anim--in mb-3 fs--xl f--c">000</h1>
@@ -161,7 +161,7 @@
 
       <figure class="not-wide pb-9">
         <div style="background: var(--zero)" class="img--w-bg mt-2">
-          <img src="https://res.cloudinary.com/da32ufmnf/image/upload/v1597343029/000/detail-to-detail-lg_mpc6ux.gif" alt="Apollo 11 Lunar Plaque">
+          <img src="https://res.cloudinary.com/da32ufmnf/image/upload/v1597343029/000/detail-to-detail-lg_mpc6ux.gif" alt="Detail to Detail Principle Interaction">
         </div>
         <figcaption class="pt-0 tar">
           <span class="uc fs--sm f--f">
@@ -237,16 +237,24 @@
         let element = this.$refs[refName]
         let top = element.offsetTop
         window.scrollTo(0, top)
-      }
+      },
+      Entrance() {
+        gsap.from('.anim--in', {
+          opacity: 0,
+          stagger: .075,
+          duration: .4,
+          ease: Power2.easeInOut
+        })
+      },
     },
 
-    beforeDestroy() {
-      // this.Exit()
-      const index = document.querySelector('main')
-      index.style.cssText = `
-        opacity: 0;
-        transition: opacity 300ms ease;
-      `
-    }
+    // beforeDestroy() {
+    //   // this.Exit()
+    //   const index = document.querySelector('.detail')
+    //   index.style.cssText = `
+    //     opacity: 0;
+    //     transition: opacity 300ms ease;
+    //   `
+    // }
   }
 </script>

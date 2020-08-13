@@ -15,7 +15,6 @@
     section { padding-bottom: 6vw; }
     article { padding-bottom: 4vw; }
 
-
     padding: 11.8rem 0 8rem;
 
     ul.process {
@@ -104,8 +103,8 @@
         gsap.from('.anim--in', {
           opacity: 0,
           stagger: .1,
-          delay: .2,
-          duration: .6,
+          // delay: .2,
+          duration: .5,
           ease: Power2.easeInOut
         })
       },
@@ -113,7 +112,16 @@
 
     mounted() {
       // entrance
-      // this.Entrance()
+      this.Entrance()
     },
+
+    beforeDestroy() {
+      // this.Exit()
+      const index = document.querySelector('.detail')
+      index.style.cssText = `
+        opacity: 0;
+        transition: opacity 300ms ease;
+      `
+    }
   }
 </script>

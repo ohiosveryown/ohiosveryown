@@ -82,7 +82,7 @@ const works = [
     name: '000',
     excerpt: "Building the web presence for 000 – a collection of portraits by photographer Roy Handy",
     excerptSmall: "Building the web presence for 000 – a collection of portraits",
-    video: 'https://res.cloudinary.com/da32ufmnf/video/upload/v1597081255/blush/blush_d2t8sk.mp4',
+    video: 'https://res.cloudinary.com/da32ufmnf/video/upload/v1597342801/000/home_rgjbbz.mp4',
     img: 'https://res.cloudinary.com/da32ufmnf/image/upload/v1597339051/000/01_sfrbbm.jpg',
     link: '000',
     background: '#2F2F2F',

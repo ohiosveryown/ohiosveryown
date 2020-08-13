@@ -158,7 +158,7 @@
 
     beforeDestroy() {
       // this.Exit()
-      const index = document.querySelector('main')
+      const index = document.querySelector('.index')
       index.style.cssText = `
         opacity: 0;
         transition: opacity 300ms ease;
