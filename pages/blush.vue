@@ -160,9 +160,9 @@
       </figure>
 
       <figure class="not-wide">
-        <div style="background: #000" class="mt-2">
+        <div style="background: #e6e6e6" class="mt-2">
           <video
-            style = "margin: 6rem auto; padding: 4rem 0; max-height: 70vh;"
+            style = "margin: 6rem auto 0; padding: 4rem 0; max-height: 70vh;"
             autoplay="autoplay"
             playsinline=""
             loop="loop">
@@ -171,8 +171,8 @@
         </div>
         <figcaption class="pt-0 tar">
           <span class="uc fs--sm f--f">
-            <span class="mr-0 pt-0 op-5">fig Nº07</span>
-            Blush is nice
+            <span class="mr-0 pt-0 op-5">fig Nº08</span>
+            Blush on Posters
           </span>
         </figcaption>
       </figure>
@@ -180,10 +180,10 @@
 
     <!-- footer / next -->
     <Next
-      name = 'menu.black'
-      excerpt = "Celebrating the diversity of Atlanta's culture and food"
-      img = 'https://res.cloudinary.com/da32ufmnf/image/upload/v1596435569/menu/menu_tw8tqd.jpg'
-      link = '/menu-black'
+      name = '000'
+      excerpt = "Building the web presence for 000 – a collection of portraits by photographer Roy Handy"
+      img = 'https://res.cloudinary.com/da32ufmnf/image/upload/v1597339051/000/01_sfrbbm.jpg'
+      link = '/000'
     />
 
   </main>

@@ -75,6 +75,17 @@ const works = [
     img: 'https://res.cloudinary.com/da32ufmnf/image/upload/v1597077102/blush/blush-01_2x_ndkg4j.png',
     link: 'blush',
     background: 'var(--blush)',
+  },
+  {
+    id: 8,
+    discipline: 'ux/dev',
+    name: '000',
+    excerpt: "Building the web presence for 000 – a collection of portraits by photographer Roy Handy",
+    excerptSmall: "Building the web presence for 000 – a collection of portraits",
+    video: 'https://res.cloudinary.com/da32ufmnf/video/upload/v1597081255/blush/blush_d2t8sk.mp4',
+    img: 'https://res.cloudinary.com/da32ufmnf/image/upload/v1597339051/000/01_sfrbbm.jpg',
+    link: '000',
+    background: '#2F2F2F',
   }
 ]
 
@@ -83,7 +94,8 @@ const links = [
   'menu-black',
   'sp-galleries',
   'supersymmetry',
-  'blush'
+  'blush',
+  '000'
 ]
 
 export { works, links }
