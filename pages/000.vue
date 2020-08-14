@@ -10,7 +10,7 @@
         </h3>
         <h3 class="uc fs--sm f--f">
           <span class="pt-0 op-5">url</span>
-          three-zeros.com
+          <a target="_blank" href="https://three-zeros.com">three-zeros.com</a>
         </h3>
       </div>
     </header>
@@ -64,7 +64,7 @@
         <figcaption class="pt-0 tar">
           <span class="uc fs--sm f--f">
             <span class="mr-0 pt-0 op-5">fig Nº02</span>
-            Roy's Initial Affter Effect Prototype
+            Roy's Initial After Effects Prototype
           </span>
         </figcaption>
       </figure>
