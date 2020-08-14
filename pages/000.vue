@@ -81,7 +81,7 @@
           <h5 class="mb-4 fs--md f--g">From After Effects to website – Using Vue and Saber to build a static site that’s easy to maintain</h5>
         </header>
         <p>The video above is an interaction Roy made in After Effects showing what he was thinking for the interaction. After tweaking it a little bit, I started thinking about how I’d go about building the web app.</p>
-        <p>I knew I’d use Vue to build, but I also wanted to create something that would easy to update for someone that might not be super technical. So, after doing some research, I decided to go with a static site generator for Vue, called <a href="https://saber.land" target="_blank" class="link">Saber</a>.</p>
+        <p>I knew I’d use Vue to build, but I also wanted to create something that would be easy to update for someone that might not be super technical. So after doing some research, I decided to go with a static site generator for Vue, called <a href="https://saber.land" target="_blank" class="link">Saber</a>.</p>
       </article>
 
       <figure class="not-wide pb-6">
@@ -97,7 +97,7 @@
       </figure>
 
       <article>
-        <p>Saber was really awesome to work with, in fact I’ve used it in another project you can read about in the Supersymmetry case study. I was able to setup the logic so all Roy needed to do was create a markdown file for each entry and populate the data so that it automatically gets pulled into the index list and creates a unique page for the entry – super slick.</p>
+        <p>Saber was really awesome to work with, in fact I’ve used it in another project you can read about: the Supersymmetry case study. I was able to setup the logic so all Roy needed to do was create a markdown file for each entry and populate the data so that it automatically gets pulled into the index list. That creates a unique page for the entry automatically – super slick.</p>
         <p>I should also mentioned that the site is hosted on Github pages so there’s no hosting cost. All Roy had to do was purchase a domain and I set everything up.</p>
       </article>
 
@@ -159,25 +159,13 @@
         <p>From there I went ahead and fleshed out the three main page layouts for the index page, detail pages and the about page. And also to think about how the transitions happen from unique page to unique page, and for detail to detail pages. The goal was to create a very editorial type layout / experience.</p>
       </article>
 
-      <figure class="not-wide pb-9">
-        <div style="background: var(--zero)" class="img--w-bg mt-2">
-          <img src="https://res.cloudinary.com/da32ufmnf/image/upload/v1597343029/000/detail-to-detail-lg_mpc6ux.gif" alt="Detail to Detail Principle Interaction">
-        </div>
-        <figcaption class="pt-0 tar">
-          <span class="uc fs--sm f--f">
-            <span class="mr-0 pt-0 op-5">fig Nº08</span>
-            Detail to Detail Principle Interaction
-          </span>
-        </figcaption>
-      </figure>
-
       <figure class="not-wide pb-6">
         <div style="background: var(--zero)" class="img--w-bg mt-2">
           <img src="https://res.cloudinary.com/da32ufmnf/image/upload/v1597343774/000/md_oa1zkw.png" alt="About on Medium Screens">
         </div>
         <figcaption class="pt-0 tar">
           <span class="uc fs--sm f--f">
-            <span class="mr-0 pt-0 op-5">fig Nº09</span>
+            <span class="mr-0 pt-0 op-5">fig Nº08</span>
             About on Md
           </span>
         </figcaption>
@@ -189,7 +177,7 @@
         </div>
         <figcaption class="pt-0 tar">
           <span class="uc fs--sm f--f">
-            <span class="mr-0 pt-0 op-5">fig Nº10</span>
+            <span class="mr-0 pt-0 op-5">fig Nº09</span>
             All on Sm
           </span>
         </figcaption>
