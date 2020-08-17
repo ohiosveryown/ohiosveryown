@@ -148,7 +148,7 @@
             autoplay="autoplay"
             playsinline=""
             loop="loop">
-            <source data-v-501ae7c2="" src="https://res.cloudinary.com/da32ufmnf/video/upload/v1597081255/blush/blush_d2t8sk.mp4"><source>
+            <source src="https://res.cloudinary.com/da32ufmnf/video/upload/v1597081255/blush/blush_d2t8sk.mp4"><source>
           </video>
         </div>
         <figcaption class="pt-0 tar">
@@ -166,7 +166,7 @@
             autoplay="autoplay"
             playsinline=""
             loop="loop">
-            <source data-v-501ae7c2="" src="https://res.cloudinary.com/da32ufmnf/video/upload/v1597337609/blush/poster_je1pl7.mp4"><source>
+            <source src="https://res.cloudinary.com/da32ufmnf/video/upload/v1597337609/blush/poster_je1pl7.mp4"><source>
           </video>
         </div>
         <figcaption class="pt-0 tar">
