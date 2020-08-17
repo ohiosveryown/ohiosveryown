@@ -33,7 +33,7 @@
       </header>
       <figure>
         <div class="anim--in img--hero">
-          <img src="https://res.cloudinary.com/da32ufmnf/image/upload/v1596435569/menu/menu_tw8tqd.jpg" alt="homepage">
+          <img src="https://res.cloudinary.com/da32ufmnf/image/upload/v1597694846/menu/00_kgclca.jpg" alt="homepage">
         </div>
         <figcaption class="pt-0 tar">
           <span class="uc fs--sm f--f">
