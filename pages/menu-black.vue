@@ -51,9 +51,9 @@
           <h4 class="mb-1 pt-4 uc fs--sm f--f">
             Introduction
           </h4>
-          <h5 class="mb-4 fs--md f--g">If you’re reading this in the year 2020, you’re well aware of the seriousness of covid-19 and the way it’s changed so many things. You’re also probably aware of the racial and social tension that's been brewing in America for the last 300 or so years. If you're reading this in the future, let me know how and when these issues are resolved</h5>
+          <h5 class="mb-4 fs--md f--g">If you’re reading this in the year 2020, you’re well aware of the seriousness of covid-19. You’re also probably aware of the racial and social tension that's been brewing in America for the last 300 or so years.</h5>
         </header>
-        <p>I currently live in Atlanta, Georgia and I love food. One of my favorite things to do here is explore new places to eat. Atlanta is so diverse in culture and because of that, there’s so much good food that we have available to us, and so many of these places are under the radar.</p>
+        <p>If you're reading this in the future, let me know how and when these issues are resolved. I currently live in Atlanta, Georgia and I love food. One of my favorite things to do here is explore new places to eat. Atlanta is so diverse in culture and because of that, there’s so much good food that we have available to us, and so many of these places are under the radar.</p>
         <p>But, the simple experience of going to a local restaurant and sitting down and eating are just not possible now. One of the most dramatic shifts due to covid has been how small businesses have been forced to evolve their strategic model.</p>
         <p>We’ve seen many restaurants pivot exclusively to a take-out model. Still, as a customer there’s a lot of uncertainty around, a: if a company is still open, and b: if a company that was traditionally a dine-in only experience, now offers the option for take-out.</p>
       </article>
