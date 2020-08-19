@@ -44,7 +44,6 @@
       </figure>
     </section>
 
-
     <!-- section -->
     <section class="mb-4">
       <article class="pb-9">
