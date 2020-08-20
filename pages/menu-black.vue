@@ -178,7 +178,7 @@
         <p>Say you come to menu.black and you’re looking for a specific type of food. You can easily input a search to populate the results for pizza. But what if you’re a visitor that isn’t really sure what you want, or you want to try something new. Well with discover, you can view a couple random places to eat, and just as easily cycle through more by clicking a text button.</p>
       </article>
 
-      <figure class="not-wide">
+      <figure class="not-wide pb-9">
         <div style="background: var(--menu)" class="img--w-bg mt-2">
           <video
             autoplay="autoplay"
@@ -195,13 +195,25 @@
         </figcaption>
       </figure>
 
+      <figure class="not-wide pb-6">
+        <div style="background: #e6e6e6" class="mt-2">
+          <img class="shadows-01 br-3" src="https://res.cloudinary.com/da32ufmnf/image/upload/v1597942248/menu/index_vkuflg.jpg" alt="Home page">
+        </div>
+        <figcaption class="pt-0 tar">
+          <span class="uc fs--sm f--f">
+            <span class="mr-0 pt-0 op-5">fig Nº08</span>
+            Home
+          </span>
+        </figcaption>
+      </figure>
+
       <figure class="not-wide">
         <div class="mt-2">
           <img src="https://res.cloudinary.com/da32ufmnf/image/upload/v1597693968/menu/sm_ozol2h.png" alt="Mobile Views">
         </div>
         <figcaption class="pt-0 tar">
           <span class="uc fs--sm f--f">
-            <span class="mr-0 pt-0 op-5">fig Nº08</span>
+            <span class="mr-0 pt-0 op-5">fig Nº09</span>
             Mobile Views
           </span>
         </figcaption>

@@ -2,7 +2,7 @@
   <main class="index width">
 
     <header class="intro">
-      <h1 class="anim--in mb-2 fs--lg f--c">
+      <h1 class="anim--in mb-2 f--c">
         <span class="matt-trigger">My name is Matt.</span>
         <picture ref='matt' class="matt">
           <source media="(min-width: 1000px)" srcset="https://res.cloudinary.com/da32ufmnf/image/upload/v1596478789/index/matt_qc0qt7.jpg">
@@ -50,7 +50,7 @@
     margin: 16rem 0 8rem;
     @include breakpoint(md) { width: grid-width(10); }
     @include breakpoint(mdl) { width: grid-width(6); }
-    h1 { display: inline-flex; }
+    h1 { display: inline-flex; font-size: 3.2rem; }
   }
 
   section {
