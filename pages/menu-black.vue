@@ -235,7 +235,6 @@
       </article>
     </section>
 
-
     <!-- footer / next -->
     <Next
       name = 'ShootProof Galleries'
