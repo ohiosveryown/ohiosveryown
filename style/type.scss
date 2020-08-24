@@ -1,7 +1,7 @@
 @import '~/style/grid.scss';
 
 @font-face {
-  font-family: "Grenette";
+  font-family: "Gelica";
   src: url("../static/fonts/gelica.woff2") format("woff2");
   font-display: block;
 }
@@ -20,7 +20,7 @@
 
 //
 
-.f--g { font-family: 'Grenette', var(--system-ui); }
+.f--g { font-family: 'Gelica', var(--system-ui); }
 .f--f { font-family: 'Founders', var(--system-ui); }
 .f--c { font-family: 'Cosmica', var(--system-ui); }
 
