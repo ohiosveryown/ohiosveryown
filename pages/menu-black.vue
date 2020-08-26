@@ -220,7 +220,6 @@
       </figure>
     </section>
 
-
     <section class="next">
       <article>
         <header>
