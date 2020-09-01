@@ -18,6 +18,7 @@
         autoplay = "autoplay"
         playsinline = ""
         loop = "loop"
+        muted
       >
         <source
           :src = "work.video"
