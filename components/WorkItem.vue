@@ -27,7 +27,6 @@
 
         <source >
       </video>
-
     </figure>
   </li>
 
