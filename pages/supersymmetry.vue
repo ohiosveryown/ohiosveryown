@@ -5,12 +5,12 @@
     <header class="mb-9">
       <h1 class="anim--in mb-3 fs--xl f--c">Supersymmetry</h1>
       <div class="anim--in meta">
-        <h3 class="mb-0 uc fs--sm f--f">
-          <span class="pt-0 op-5">Design/Development</span>
+        <h3 class="mb-1 uc fs--sm f--f">
+          <span class="mr-0 pt-0 op-6">Design/Development</span>
           2019
         </h3>
         <h3 class="uc fs--sm f--f">
-          <span class="pt-0 op-5">url</span>
+          <span class="mr-0 pt-0 op-6">url</span>
           <a href="https://supersymmetry.design" target="_blank">supersymmetry</a>
         </h3>
       </div>
@@ -50,7 +50,7 @@
         <header>
           <h4
             ref="discover"
-            class="mb-1 pt-4 uc fs--sm f--f">
+            class="mb-2 pt-4 uc fs--sm f--f">
             Planning / Discovery
           </h4>
           <h5 class="mb-4 fs--md f--g">Supersymmetry is a photo blog built on Vue and Saber showcasing architecture, interior design and structural engineering – basically spaces</h5>
@@ -99,7 +99,7 @@
         <header>
           <h4
             ref="implementation"
-            class="mb-1 pt-4 uc fs--sm f--f">
+            class="mb-2 pt-4 uc fs--sm f--f">
             Implementation
           </h4>
           <h5 class="mb-4 fs--md f--g">When is design finished?</h5>

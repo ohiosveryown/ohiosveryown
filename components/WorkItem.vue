@@ -3,8 +3,8 @@
   <li>
     <nuxt-link :to = "'/' + work.link">
       <article @mouseenter = 'hover = true' @mouseleave = 'hover = false'>
-        <h5 class="op-5 mb-00 fs--sm f--f uc">{{ work.discipline }}</h5>
-        <h4 class="mb-2 fs--md f--g">{{ work.name }}</h4>
+        <h5 class="op-5 mb-1 fs--sm f--f uc">{{ work.discipline }}</h5>
+        <h4 class="mb-1 fs--md f--g">{{ work.name }}</h4>
         <p class="f--f">{{ work.excerpt }}</p>
       </article>
     </nuxt-link>
@@ -23,9 +23,7 @@
         <source
           :src = "work.video"
           media = "all and (min-width: 1000px)"
-        >
-
-        <source >
+        />
       </video>
     </figure>
   </li>

@@ -17,8 +17,7 @@
           <source media="(min-width: 1000px)" srcset="https://res.cloudinary.com/da32ufmnf/image/upload/v1596478789/index/learning_kacyhm.gif">
           <img src="">
         </picture>
-        &
-        <span class="learning-trigger">machine learning</span>
+        <span class="hide-sm learning-trigger">& machine learning</span>
         <picture ref='learning' class="learning">
           <source media="(min-width: 1000px)" srcset="https://res.cloudinary.com/da32ufmnf/image/upload/v1596478789/index/learning_kacyhm.gif">
           <img src="">
@@ -55,7 +54,8 @@
 
   section {
     @include breakpoint(md) { margin-left: grid-width(1); width: grid-width(8); }
-    @include breakpoint(mdl) { margin: 0 0 7.2rem 0; width: grid-width(4); }
+    @include breakpoint(mdl) { margin: 0 0 7.2rem 0; width: grid-width(4.5); }
+    @include breakpoint(xl) { margin: 0 0 7.2rem 0; width: grid-width(3.5); }
 
     header {
       display: flex;
@@ -97,6 +97,11 @@
     .system-trigger:hover ~ picture { opacity: 1; }
     .learning-trigger:hover ~ picture { opacity: 1; }
     span:hover { text-decoration: underline; }
+  }
+
+  .hide-sm {
+    display: none;
+    @include breakpoint(md) { display: inline-flex; }
   }
 
 </style>

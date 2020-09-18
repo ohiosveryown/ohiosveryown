@@ -1,9 +1,9 @@
 <template>
 
-  <li>
+  <li class="">
     <nuxt-link :to = "'/' + work.link">
       <article>
-        <h4 class="f--f">{{ work.name }}</h4>
+        <h4 class="mb-0 f--f">{{ work.name }}</h4>
         <p class="f--c">{{ work.excerptSmall }}</p>
       </article>
     </nuxt-link>
@@ -28,12 +28,12 @@
     @include breakpoint(md) { padding: 2.4rem 2rem 1.2rem; }
   }
 
-  article { margin-right: 2.8rem; }
+  article { margin: -1.2rem 2.8rem 0 0; }
 
   h4 {
     font-size: 1.7rem;
     line-height: 1.4;
-    @include breakpoint(md) { font-size: 2.1rem; }
+    @include breakpoint(md) { font-size: 2rem; }
   }
 
   p {

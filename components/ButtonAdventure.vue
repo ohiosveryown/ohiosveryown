@@ -63,7 +63,7 @@
   button {
     display: inline-flex;
     margin-left: 1.6rem;
-    padding: 2rem 1.4rem 1.4rem;
+    padding: 2rem 1.8rem;
     border-radius: 3px;
     background: var(--gravity);
     box-shadow: 0 4px 24px rgba(0,0,0,0.2);

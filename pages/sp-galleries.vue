@@ -5,12 +5,12 @@
     <header class="mb-9">
       <h1 class="anim--in mb-3 fs--xl f--c">ShootProof Galleries</h1>
       <div class="anim--in meta">
-        <h3 class="mb-0 uc fs--sm f--f">
-          <span class="pt-0 op-5">user experience design</span>
+        <h3 class="mb-1 uc fs--sm f--f">
+          <span class="mr-0 pt-0 op-6">user experience design</span>
           2018
         </h3>
         <h3 class="uc fs--sm f--f">
-          <span class="pt-0 op-5">url</span>
+          <span class="mr-0 pt-0 op-6">url</span>
           shootproof.com
         </h3>
       </div>
@@ -29,7 +29,7 @@
         <li>deliver</li>
       </ul>
       <header class="case-header mb-7">
-        <h2 class="anim--in mb-3 fs--md f--g">Rethinking how users share, sell and organizer their photos</h2>
+        <h2 class="anim--in mb-3 fs--md f--g">Rethinking how users share, sell and organizer their albums and photos</h2>
       </header>
       <figure>
         <div class="anim--in img--hero">
@@ -50,7 +50,7 @@
         <header>
           <h4
             ref="discover"
-            class="mb-1 pt-4 uc fs--sm f--f">
+            class="mb-2 pt-4 uc fs--sm f--f">
             Discover / Research
           </h4>
           <h5 class="mb-4 fs--md f--g">Good user research is key to designing a great user experience and a great product</h5>
@@ -89,7 +89,7 @@
         <header>
           <h4
             ref="define"
-            class="mb-1 pt-4 uc fs--sm f--f">
+            class="mb-2 pt-4 uc fs--sm f--f">
             Define
           </h4>
           <h5 class="mb-4 fs--md f--g">Good user research is key to designing a great user experience and a great product</h5>

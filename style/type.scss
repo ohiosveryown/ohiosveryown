@@ -27,13 +27,13 @@
 //
 
 .f--g { font-family: 'Gelica', var(--system-ui); }
-.f--f { font-family: 'Founders', var(--system-ui); }
-.f--c { font-family: 'Cosmica', var(--system-ui); }
+.f--f { font-family: 'Blush', var(--system-ui); }
+.f--c { font-family: 'Blush', var(--system-ui); }
 
 .fs--xl { font-size: 3.4rem; @include breakpoint(md) { font-size: 4rem; }}
 .fs--lg { font-size: 3rem; line-height: 1; }
-.fs--md { font-size: 2.2rem; line-height: 1.4; @include breakpoint(md) { font-size: 2.4rem; }}
-.fs--sm { font-size: 1.5rem; line-height: 1.2; letter-spacing: .6px; }
+.fs--md { font-size: 2.2rem; line-height: 1.4; @include breakpoint(md) { font-size: 2.5rem; }}
+.fs--sm { font-size: 1.3rem; line-height: 1.2; letter-spacing: .8px; }
 
 .uc { text-transform: uppercase; }
 .tac { text-align: center; }

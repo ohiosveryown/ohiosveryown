@@ -1,16 +1,15 @@
 <template>
   <main class="width">
-
     <!-- page header -->
     <header class="mb-9">
       <h1 class="anim--in mb-3 fs--xl f--c">Mailchimp First–time&nbsp;Send</h1>
       <div class="anim--in meta">
-        <h3 class="mb-0 uc fs--sm f--f">
-          <span class="pt-0 op-5">user experience design</span>
+        <h3 class="mb-1 uc fs--sm f--f">
+          <span class="mr-0 pt-0 op-6">user experience design</span>
           2019–2020
         </h3>
         <h3 class="uc fs--sm f--f">
-          <span class="pt-0 op-5">url</span>
+          <span class="mr-0 pt-0 op-6">url</span>
           mailchimp.com
         </h3>
       </div>

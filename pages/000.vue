@@ -4,12 +4,12 @@
     <header class="mb-9">
       <h1 class="anim--in mb-3 fs--xl f--c">000</h1>
       <div class="anim--in meta">
-        <h3 class="mb-0 uc fs--sm f--f">
-          <span class="pt-0 op-5">design/development</span>
+        <h3 class="mb-1 uc fs--sm f--f">
+          <span class="mr-0 pt-0 op-6">design/development</span>
           2019
         </h3>
         <h3 class="uc fs--sm f--f">
-          <span class="pt-0 op-5">url</span>
+          <span class="mr-0 pt-0 op-6">url</span>
           <a target="_blank" href="https://three-zeros.com">three-zeros.com</a>
         </h3>
       </div>
@@ -43,10 +43,10 @@
     <section class="intro">
       <article>
         <header>
-          <h4 class="mb-1 pt-4 uc fs--sm f--f">
+          <h4 class="mb-2 pt-4 uc fs--sm f--f">
             Introduction
           </h4>
-          <h5 class="mb-4 fs--md f--g">Women are pretty amazing. 000 gives them a platform to express the cultural appreciation of owning their true self, through their hair</h5>
+          <h5 class="mb-5 fs--md f--g">Women are pretty amazing. 000 gives them a platform to express the cultural appreciation of owning their true self, through their hair</h5>
         </header>
         <p><a class="link" href="http://roy-handy.com" target="_blank">Roy Handy</a> is a friend and a pretty great photographer and designer. Awhile back he was sharing some of his work with me and we started kicking ideas back and forth around some simple interactions for some of the photos he had taken.</p>
         <p>He published a book of portraits of women talking about embracing their nature hair, and we eventually got on the path of creating a web presence to coincide with the book.</p>
@@ -64,7 +64,7 @@
         <figcaption class="pt-0 tar">
           <span class="uc fs--sm f--f">
             <span class="mr-0 pt-0 op-5">fig Nº02</span>
-            Roy's Initial After Effects Prototype
+            Roy's A.E. Prototype
           </span>
         </figcaption>
       </figure>
@@ -75,7 +75,7 @@
         <header>
           <h4
             ref="planning"
-            class="mb-1 pt-4 uc fs--sm f--f">
+            class="mb-2 pt-4 uc fs--sm f--f">
             Planning & Designing & Building
           </h4>
           <h5 class="mb-4 fs--md f--g">From After Effects to website – Using Vue and Saber to build a static site that’s easy to maintain</h5>
@@ -173,7 +173,7 @@
 
       <figure class="not-wide">
         <div>
-          <img src="https://res.cloudinary.com/da32ufmnf/image/upload/v1597343684/000/sm_j5wows.jpg" alt="All Screens on Small Devices">
+          <img src="https://res.cloudinary.com/da32ufmnf/image/upload/v1600464957/000/xsm_wfcrjd.jpg" alt="All Screens on Small Devices">
         </div>
         <figcaption class="pt-0 tar">
           <span class="uc fs--sm f--f">

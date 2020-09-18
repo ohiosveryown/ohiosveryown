@@ -1,16 +1,15 @@
 <template>
   <main class="width">
-
     <!-- page header -->
     <header class="mb-9">
       <h1 class="anim--in mb-3 fs--xl f--c">menu.black</h1>
       <div class="anim--in meta">
-        <h3 class="mb-0 uc fs--sm f--f">
-          <span class="pt-0 op-5">design/development</span>
+        <h3 class="mb-1 uc fs--sm f--f">
+          <span class="mr-0 pt-0 op-6">design/development</span>
           2020
         </h3>
         <h3 class="uc fs--sm f--f">
-          <span class="pt-0 op-5">url</span>
+          <span class="mr-0 pt-0 op-6">url</span>
           <a href="https://menu.black" target="_blank">menu.black</a>
         </h3>
       </div>
@@ -48,10 +47,10 @@
     <section class="intro">
       <article>
         <header>
-          <h4 class="mb-1 pt-4 uc fs--sm f--f">
+          <h4 class="mb-2 pt-4 uc fs--sm f--f">
             Introduction
           </h4>
-          <h5 class="mb-4 fs--md f--g">If you’re reading this in the year 2020, you’re well aware of the seriousness of covid-19. You’re also probably aware of the racial and social tension that's been brewing in America for the last 300 or so years.</h5>
+          <h5 class="mb-5 fs--md f--g">If you’re reading this in the year 2020, you’re well aware of the seriousness of covid-19. You’re also probably aware of the racial and social tension that's been brewing in America for the last 300 or so years.</h5>
         </header>
         <p>If you're reading this in the future, let me know how and when these issues are resolved. I currently live in Atlanta, Georgia and I love food. One of my favorite things to do here is explore new places to eat. Atlanta is so diverse in culture and because of that, there’s so much good food that we have available to us, and so many of these places are under the radar.</p>
         <p>But, the simple experience of going to a local restaurant and sitting down and eating are just not possible now. One of the most dramatic shifts due to covid has been how small businesses have been forced to evolve their strategic model.</p>
@@ -77,7 +76,7 @@
         <header>
           <h4
             ref="planning"
-            class="mb-1 pt-4 uc fs--sm f--f"
+            class="mb-2 pt-4 uc fs--sm f--f"
           >
             Planning
           </h4>
@@ -122,7 +121,7 @@
         <header>
           <h4
             ref="ideating"
-            class="mb-1 pt-4 uc fs--sm f--f"
+            class="mb-2 pt-4 uc fs--sm f--f"
           >
             Ideating
           </h4>
@@ -151,7 +150,7 @@
         <header>
           <h4
             ref="implementing"
-            class="mb-1 pt-4 uc fs--sm f--f"
+            class="mb-2 pt-4 uc fs--sm f--f"
           >
             Implementing
           </h4>
@@ -226,7 +225,7 @@
         <header>
           <h4
             ref="next"
-            class="mb-1 pt-4 uc fs--sm f--f"
+            class="mb-2 pt-4 uc fs--sm f--f"
           >
             Next Steps
           </h4>

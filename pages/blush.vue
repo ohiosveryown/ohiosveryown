@@ -4,12 +4,12 @@
     <header class="mb-9">
       <h1 class="anim--in mb-3 fs--xl f--c">Blush</h1>
       <div class="anim--in meta">
-        <h3 class="mb-0 uc fs--sm f--f">
-          <span class="pt-0 op-5">typography design</span>
+        <h3 class="mb-1 uc fs--sm f--f">
+          <span class="mr-0 pt-0 op-6">typography design</span>
           2018–2020
         </h3>
         <h3 class="uc fs--sm f--f">
-          <span class="pt-0 op-5">url</span>
+          <span class="mr-0 pt-0 op-6">url</span>
           itscalledblu.sh
         </h3>
       </div>
@@ -44,7 +44,7 @@
     <section class="intro">
       <article>
         <header>
-          <h4 class="mb-1 pt-4 uc fs--sm f--f">
+          <h4 class="mb-2 pt-4 uc fs--sm f--f">
             Introduction
           </h4>
           <h5 class="mb-4 fs--md f--g">“Here men from the planet Earth first set foot upon the Moon July 1969, A.D. We came in peace for all mankind”</h5>
@@ -71,7 +71,7 @@
         <header>
           <h4
             ref="research"
-            class="mb-1 pt-4 uc fs--sm f--f">
+            class="mb-2 pt-4 uc fs--sm f--f">
             Research
           </h4>
           <h5 class="mb-4 fs--md f--g">Familiar, but with a twist</h5>
@@ -98,7 +98,7 @@
         <header>
           <h4
             ref="design"
-            class="mb-1 pt-4 uc fs--sm f--f">
+            class="mb-2 pt-4 uc fs--sm f--f">
             Design
           </h4>
         </header>

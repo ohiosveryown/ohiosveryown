@@ -102,7 +102,7 @@
   .menu-items-opened { opacity: 1; transition: opacity 400ms ease 50ms }
   .menu-items-closed { opacity: 0; transition: opacity 100ms ease 50ms }
 
-  svg { margin-top: .3rem; transition: transform 300ms ease; }
+  svg { margin-top: .5rem; transition: transform 300ms ease; }
   .arrow-opened { transform: scaleY(-1); }
   .arrow-closed { transform: scaleY(1); }
 
