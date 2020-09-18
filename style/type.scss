@@ -18,6 +18,12 @@
   font-display: block;
 }
 
+@font-face {
+  font-family: "Blush";
+  src: url("../static/fonts/blush.woff2") format("woff2");
+  font-display: block;
+}
+
 //
 
 .f--g { font-family: 'Gelica', var(--system-ui); }
