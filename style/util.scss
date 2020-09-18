@@ -31,20 +31,6 @@
   // mix-blend-mode: difference;
 }
 
-.outline--stone {
-  color: transparent;
-  text-stroke: 1px var(--stone);
-  -webkit-text-stroke: 1px var(--stone);
-  // mix-blend-mode: difference;
-}
-
-.outline--infrared {
-  color: transparent;
-  text-stroke: 1px var(--infrared);
-  -webkit-text-stroke: 1px var(--infrared);
-  // mix-blend-mode: difference;
-}
-
 .content-width { width: max-content; }
 
 .link {
