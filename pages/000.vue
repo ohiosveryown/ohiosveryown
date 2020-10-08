@@ -10,7 +10,7 @@
         </h3>
         <h3 class="uc fs--sm f--f">
           <span class="mr-0 pt-0 op-6">url</span>
-          <a target="_blank" href="https://three-zeros.com">threezeros.co</a>
+          <a target="_blank" href="https://threezeros.co">threezeros.co</a>
         </h3>
       </div>
     </header>
