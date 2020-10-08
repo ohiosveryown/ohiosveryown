@@ -88,6 +88,11 @@
       }
     }
   }
+
+  figcaption {
+    text-align: center !important;
+    @include breakpoint(mdl) { text-align: right !important; }
+  }
 </style>
 
 
