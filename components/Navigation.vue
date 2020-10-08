@@ -62,7 +62,7 @@
 
   .menu {
     position: absolute;
-    top: 4.4rem; left: -.8rem; right: 0;
+    top: 4.4rem; right: 0; left: -.8rem;
     margin: 0 auto;
     width: 94vw;
     max-height: 44rem;
@@ -71,7 +71,8 @@
     border-radius: 6px;
     background: #fff;
     box-shadow: 0 8px 64px rgba(0,0,0,.1);
-    transition: all 200ms ease;
+    transform-origin: top right;
+    will-change: transform, opacity;
 
     @include breakpoint(md) {
       top: 4.8rem; right: -1.6rem; left: auto;
@@ -87,20 +88,19 @@
   .menu-opened {
     pointer-events: inherit;
     opacity: 1;
-    transform: translateY(0);
-    transform-origin: top right;
+    transition: opacity 250ms ease 20ms, transform 250ms ease;
   }
 
   .menu-closed {
     pointer-events: none;
     opacity: 0;
-    // transform: translateY(-1rem) scaleY(.6);
-    transform: scaleY(.6);
-    transform-origin: top;
+    transition: opacity 200ms ease, transform 20ms ease 300ms;
+    transform: scale(1,.8);
+    @include breakpoint(md) { transform: scale(.9,.76); }
   }
 
-  .menu-items-opened { opacity: 1; transition: opacity 400ms ease 50ms }
-  .menu-items-closed { opacity: 0; transition: opacity 100ms ease 50ms }
+  /* .menu-items-opened { opacity: 1; transition: opacity 300ms ease 32ms; }
+  .menu-items-closed { opacity: 0; transition: opacity 100ms ease 32ms; } */
 
   svg { margin-top: .56rem; transition: transform 300ms ease; }
   .arrow-opened { transform: scaleY(-1); }
