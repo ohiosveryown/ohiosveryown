@@ -52,7 +52,6 @@
         <p>He published a book of portraits of women talking about embracing their nature hair, and we eventually got on the path of creating a web presence to coincide with the book.</p>
       </article>
 
-
       <figure class="not-wide">
         <video
           style = "width: 100%;"
