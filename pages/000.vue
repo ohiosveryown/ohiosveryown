@@ -187,7 +187,7 @@
     <!-- footer / next -->
     <Next
       name = '000'
-      excerpt = "Building the web presence for 000 – a collection of portraits by photographer Roy Handy"
+      excerpt = "Building the web presence for 000 – a collection of portraits"
       img = 'https://res.cloudinary.com/da32ufmnf/image/upload/v1597339051/000/01_sfrbbm.jpg'
       link = '/000'
     />

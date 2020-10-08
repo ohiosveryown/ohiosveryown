@@ -2,7 +2,7 @@
   <main class="index width">
 
     <header class="intro">
-      <h1 class="anim--in mb-2 f--c">
+      <h1 class="anim--in mb-1 f--cl">
         <span class="matt-trigger">My name is Matt.</span>
         <picture ref='matt' class="matt">
           <source media="(min-width: 1000px)" srcset="https://res.cloudinary.com/da32ufmnf/image/upload/v1596478789/index/matt_qc0qt7.jpg">
@@ -10,7 +10,7 @@
         </picture>
       </h1>
       <ButtonAdventure label = 'Adventure Time'/>
-      <h2 class="anim--in fs--md f--g">I’m a product designer in Atlanta, Ga. Presently I’m researching
+      <h2 class="anim--in f--c">I’m a product designer in Atlanta, Ga. Presently I’m researching
         <span class="system-trigger">design systems</span>
 
         <picture ref='system' class="system">
@@ -50,6 +50,7 @@
     @include breakpoint(md) { width: grid-width(10); }
     @include breakpoint(mdl) { width: grid-width(6); }
     h1 { display: inline-flex; font-size: 3.2rem; }
+    h2 { font-size: 2.2rem; }
   }
 
   section {

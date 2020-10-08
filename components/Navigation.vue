@@ -70,8 +70,8 @@
     overflow-y: scroll;
     border-radius: 6px;
     background: #fff;
-    box-shadow: 0px 6px 64px rgba(0,0,0,.2);
-    transition: var(--ease);
+    box-shadow: 0 8px 64px rgba(0,0,0,.1);
+    transition: all 200ms ease;
 
     @include breakpoint(md) {
       top: 4.8rem; right: -1.6rem; left: auto;
@@ -102,7 +102,7 @@
   .menu-items-opened { opacity: 1; transition: opacity 400ms ease 50ms }
   .menu-items-closed { opacity: 0; transition: opacity 100ms ease 50ms }
 
-  svg { margin-top: .5rem; transition: transform 300ms ease; }
+  svg { margin-top: .56rem; transition: transform 300ms ease; }
   .arrow-opened { transform: scaleY(-1); }
   .arrow-closed { transform: scaleY(1); }
 

@@ -4,8 +4,8 @@
       <h6 class="mb-3 tac uc fs--sm f--f">Up Next</h6>
       <section>
         <div class="content">
-          <h5 class="mb-2 fs--md f--g">{{ name }}</h5>
-          <h6 class="uc fs--sm f--f">{{ excerpt }}</h6>
+          <h5 class="mb-1 fs--md f--g">{{ name }}</h5>
+          <h6 class="f--f">{{ excerpt }}</h6>
         </div>
         <figure>
           <img :src = "img" />
@@ -30,7 +30,8 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    margin-bottom: 11.2rem 0;
+    align-items: center;
+    margin-bottom: 11.2rem;
     padding: 2rem;
     border-radius: 4px;
     background: #fff;
@@ -45,7 +46,9 @@
   .content {
     display: flex;
     flex-direction: column;
+    margin-top: -.8rem;
     width: 60%;
+    h6 { font-size: 1.4rem; }
     @include breakpoint(md)  { width: 50%; }
     @include breakpoint(lg) { width: 60%; }
   }

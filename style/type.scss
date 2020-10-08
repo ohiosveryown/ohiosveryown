@@ -24,11 +24,18 @@
   font-display: block;
 }
 
+@font-face {
+  font-family: "Clifton";
+  src: url("../static/fonts/clifton.woff2") format("woff2");
+  font-display: block;
+}
+
 //
 
-.f--g { font-family: 'Gelica', var(--system-ui); }
+.f--g { font-family: 'Clifton', var(--system-ui); }
 .f--f { font-family: 'Blush', var(--system-ui); }
 .f--c { font-family: 'Blush', var(--system-ui); }
+.f--cl { font-family: 'Clifton', var(--system-ui); }
 
 .fs--xl { font-size: 3.4rem; @include breakpoint(md) { font-size: 4rem; }}
 .fs--lg { font-size: 3rem; line-height: 1; }

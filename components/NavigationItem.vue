@@ -1,9 +1,9 @@
 <template>
 
-  <li class="">
+  <li>
     <nuxt-link :to = "'/' + work.link">
       <article>
-        <h4 class="mb-0 f--f">{{ work.name }}</h4>
+        <h4 class="mb-0 f--cl">{{ work.name }}</h4>
         <p class="f--c">{{ work.excerptSmall }}</p>
       </article>
     </nuxt-link>

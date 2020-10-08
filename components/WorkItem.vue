@@ -4,7 +4,7 @@
     <nuxt-link :to = "'/' + work.link">
       <article @mouseenter = 'hover = true' @mouseleave = 'hover = false'>
         <h5 class="op-5 mb-1 fs--sm f--f uc">{{ work.discipline }}</h5>
-        <h4 class="mb-1 fs--md f--g">{{ work.name }}</h4>
+        <h4 class="mb-1 fs--md f--cl">{{ work.name }}</h4>
         <p class="f--f">{{ work.excerpt }}</p>
       </article>
     </nuxt-link>
