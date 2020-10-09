@@ -65,7 +65,8 @@
   }
 
   main {
-    margin-top: 16rem;
+    margin-top: 10.4rem;
+    @include breakpoint(md)  { margin-top: 16rem; }
     @include breakpoint(mdl) { width: grid-width(6); }
     h1 { display: inline-flex; font-size: 3.2rem; }
     h2 { font-size: 2.1rem; }
