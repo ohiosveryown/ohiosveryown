@@ -46,11 +46,11 @@
   @import '../style/grid.scss';
 
   .intro {
-    margin: 16rem 0 8rem;
-    @include breakpoint(md) { width: grid-width(10); }
+    margin: 10.4rem 0 8rem;
+    @include breakpoint(md) { margin: 16rem 0 12rem; width: grid-width(10); }
     @include breakpoint(mdl) { width: grid-width(6); }
     h1 { display: inline-flex; font-size: 3.2rem; }
-    h2 { font-size: 2.2rem; }
+    h2 { font-size: 2.1rem; }
   }
 
   section {
@@ -61,8 +61,8 @@
     header {
       display: flex;
       justify-content: space-between;
-      margin-bottom: 8rem;
-      @include breakpoint(md) { margin-bottom: 9rem; }
+      margin-bottom: 5.6rem;
+      @include breakpoint(md) { margin-bottom: 6.4rem; }
     }
   }
 

@@ -47,9 +47,10 @@
     align-items: flex-start;
     position: fixed;
     z-index: var(--zmax);
-    top: 3.2rem; right: 0; left: 0;
+    top: 1.6rem; right: 0; left: 0;
     margin: 0 auto;
     a { display: inline-flex; }
+    @include breakpoint(md) { top: 3.2rem; }
   }
 
   header {

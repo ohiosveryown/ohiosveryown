@@ -76,15 +76,15 @@
   }
 
   @media (pointer: fine) {
+    .active { opacity: 1; }
     article:hover h4:before {
       opacity: 1;
       transform: translateX(0);
     }
-
-    .active { opacity: 1; }
   }
 
-
+  .active { opacity: 0; }
+  @include breakpoint(mdl) { .active { opacity: 1; }}
 </style>
 
 

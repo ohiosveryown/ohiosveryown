@@ -2,8 +2,8 @@
   <div class="about width">
     <main>
       <header class="intro">
-        <h1 class="anim--in mb-2 fs--lg f--c">Information</h1>
-        <h2 class="anim--in fs--md f--g">📨 or 👋🏼's can be sent to:
+        <h1 class="anim--in mb-2 fs--lg f--cl">Information</h1>
+        <h2 class="anim--in fs--md f--c">📨 or 👋🏼's can be sent to:
           <span
             @mouseenter = 'hover = true'
             @mouseleave = 'hover = false'
@@ -12,8 +12,8 @@
       </header>
 
       <article class="anim--in f--f">
-        <h3 class="mb-1">Hi again, just a reminder in case you didn’t read the first page (who reads anymore, anyway?) – my name is Matt and I'm presently a designer at Mailchimp.</h3>
-        <h3 class="mb-1">I spend half my time drawing boxes & the other half explaining them—the other half
+        <h3 class="mb-2">Hi again, just a reminder in case you didn’t read the first page (who reads anymore, anyway?) – my name is Matt and I'm presently a designer at Mailchimp.</h3>
+        <h3 class="mb-2">I spend half my time drawing boxes & the other half explaining them—the other half
           <span class="code-trigger">trying to confuse myself with code;</span>
           <picture ref='code' class="code">
             <source media="(min-width: 1000px)" srcset="https://media3.giphy.com/media/l3fZLMbuCOqJ82gec/giphy.gif">
@@ -67,8 +67,8 @@
   main {
     margin-top: 16rem;
     @include breakpoint(mdl) { width: grid-width(6); }
-
-    h1 { display: inline-flex; }
+    h1 { display: inline-flex; font-size: 3.2rem; }
+    h2 { font-size: 2.1rem; }
   }
 
   header {
@@ -80,6 +80,7 @@
   article {
     @include breakpoint(md) { margin-left: grid-width(1.5); width: grid-width(7); }
     @include breakpoint(mdl) { margin-left: 0; width: 100%; }
+    h3 { font-size: 1.8rem; line-height: 1.6; }
     h3 + h3 { text-indent: 3ch; }
   }
 
