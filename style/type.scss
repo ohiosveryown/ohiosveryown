@@ -32,10 +32,10 @@
 
 //
 
-.f--g { font-family: 'Clifton', var(--system-ui); }
+.f--g { font-family: 'Clifton', var(--system-ui); -webkit-text-stroke: .16px var(--gravity); }
 .f--f { font-family: 'Blush', var(--system-ui); }
 .f--c { font-family: 'Blush', var(--system-ui); }
-.f--cl { font-family: 'Clifton', var(--system-ui); }
+.f--cl { font-family: 'Clifton', var(--system-ui); -webkit-text-stroke: .16px var(--gravity); }
 
 .fs--xl { font-size: 3.4rem; @include breakpoint(md) { font-size: 4rem; }}
 .fs--lg { font-size: 3rem; line-height: 1; }

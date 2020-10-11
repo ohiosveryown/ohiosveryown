@@ -37,6 +37,7 @@
     border-radius: 100px;
     padding: var(--space);
     backdrop-filter: blur(6px);
+    -webkit-text-stroke: .16px var(--gravity);
   }
 
   .left { transform: translateX(-1rem); }

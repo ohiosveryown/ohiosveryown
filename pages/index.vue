@@ -92,7 +92,7 @@
 
   img { width: 100%; height: 100%; object-fit: cover; }
 
-  // non-touch stlyes
+  // non-touch styles
   @media(pointer: fine) {
     .matt-trigger:hover ~ picture { opacity: 1; }
     .system-trigger:hover ~ picture { opacity: 1; }
