@@ -1,24 +1,6 @@
 @import '~/style/grid.scss';
 
 @font-face {
-  font-family: "Gelica";
-  src: url("../static/fonts/gelica.woff2") format("woff2");
-  font-display: block;
-}
-
-@font-face {
-  font-family: "Founders";
-  src: url("../static/fonts/founders-light.woff2") format("woff2");
-  font-display: block;
-}
-
-@font-face {
-  font-family: "Cosmica";
-  src: url("../static/fonts/cosmica.woff2") format("woff2");
-  font-display: block;
-}
-
-@font-face {
   font-family: "Blush";
   src: url("../static/fonts/blush.woff2") format("woff2");
   font-display: block;
@@ -32,16 +14,18 @@
 
 //
 
-.f--g { font-family: 'Clifton', var(--system-ui); -webkit-text-stroke: .16px var(--gravity); }
+.f--g { font-family: 'Clifton', var(--system-ui); -webkit-text-stroke: .2px var(--gravity); }
 .f--f { font-family: 'Blush', var(--system-ui); }
 .f--c { font-family: 'Blush', var(--system-ui); }
-.f--cl { font-family: 'Clifton', var(--system-ui); -webkit-text-stroke: .16px var(--gravity); }
+.f--cl { font-family: 'Clifton', var(--system-ui); -webkit-text-stroke: .2px var(--gravity); }
 
 .fs--xl { font-size: 3.4rem; @include breakpoint(md) { font-size: 4rem; }}
 .fs--lg { font-size: 3rem; line-height: 1; }
 .fs--md { font-size: 2.2rem; line-height: 1.4; @include breakpoint(md) { font-size: 2.5rem; }}
 .fs--sm { font-size: 1.3rem; line-height: 1.2; letter-spacing: .8px; }
 
+.heavy { -webkit-text-stroke: .28px var(--gravity); }
+.bold { -webkit-text-stroke: .2px var(--gravity); }
 .uc { text-transform: uppercase; }
 .tac { text-align: center; }
 .tar { text-align: right; }

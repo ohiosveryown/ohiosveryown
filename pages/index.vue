@@ -26,7 +26,7 @@
     </header>
 
     <section>
-      <header class="anim--in work fs--sm f--f uc">
+      <header class="heavy anim--in work fs--sm f--f uc">
         <h3>case studies</h3>
         <h3 class="op-5">2016 – 2020</h3>
       </header>

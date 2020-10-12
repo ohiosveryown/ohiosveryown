@@ -11,7 +11,7 @@
         </h3>
         <h3 class="uc fs--sm f--f">
           <span class="mr-0 pt-0 op-6">url</span>
-          <a href="https://supersymmetry.design" target="_blank">supersymmetry</a>
+          <a href="https://supersymmetry.design" target="_blank">supersymmetry.design</a>
         </h3>
       </div>
     </header>
@@ -29,7 +29,7 @@
         <li @click="scrollTo('interating')">iterating</li>
       </ul>
       <header class="case-header mb-7">
-        <h2 class="anim--in mb-3 fs--md f--g">A self-initiated project showcasing architecture & structural engineering</h2>
+        <h2 class="anim--in mb-3 fs--md f--g">A self-initiated project showcasing architecture and structural engineering</h2>
       </header>
       <figure>
         <div class="anim--in img--hero">
@@ -55,8 +55,8 @@
           </h4>
           <h5 class="mb-4 fs--md f--g">Supersymmetry is a photo blog built on Vue and Saber showcasing architecture, interior design and structural engineering – basically spaces</h5>
         </header>
-        <p>The majority of the time when I begin a side project, I start by defining requirements & scope. Here, the first couple of things I outlined were purpose & style.</p>
-        <p>The style outlines creative & developmental scaffolding. The creative principles focus on things like type, color & copyediting style, while development focuses on accessibility, optimization & code writing style.</p>
+        <p>The majority of the time when I begin a side project, I start by defining requirements and scope. Here, the first couple of things I outlined were purpose and style.</p>
+        <p>The style outlines creative and developmental scaffolding. The creative principles focus on things like type, color and copyediting style, while development focuses on accessibility, optimization and code writing style.</p>
       </article>
       <figure class="img--not-wide pb-9">
         <div class="img--shadow mt-2">
@@ -105,7 +105,7 @@
           <h5 class="mb-4 fs--md f--g">When is design finished?</h5>
         </header>
         <p>A big challenge for me when it comes to visual design is iteration. I tend to over-iterate and try to design for perfect. Of course designing for perfect is impossible, but that doesn't stop me from trying.</p>
-        <p>One piece I'm really proud of was the design & functionality of the Colophon "page." The concept was to create a component that gets triggered by a link on the list page & have motion communicate the transition from the list page to the colophon page.</p>
+        <p>One piece I'm really proud of was the design and functionality of the Colophon "page." The concept was to create a component that gets triggered by a link on the list page and have motion communicate the transition from the list page to the colophon page.</p>
       </article>
       <figure class="img--not-wide">
         <div class="img--shadow mt-2">
@@ -132,7 +132,7 @@
         </header>
         <p>I can say I'm quite confident where I ended up all the while on the other end of the spectrum I'm quite embarrassed with where I started. But that's iteration in a nutshell: progressing intermittently to push the boundaries of complacency.</p>
         <p>The goal for the visual design in this project was to create an intuitive interface while being somewhat opinionated in the aesthetics. Opinionated meaning taking some liberties when it comes to practical design standards.</p>
-        <p>As I continue to update the entries throughout the year, I'm still developing the next steps for Supersymmetry. My initial thought was to update the layout annually and perhaps expand the scope as my familiarity with Vue grows. That may still be in play as I really enjoyed working on both the subject matter & the design for this project.</p>
+        <p>As I continue to update the entries throughout the year, I'm still developing the next steps for Supersymmetry. My initial thought was to update the layout annually and perhaps expand the scope as my familiarity with Vue grows. That may still be in play as I really enjoyed working on both the subject matter and the design for this project.</p>
       </article>
     </section>
 

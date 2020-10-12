@@ -44,6 +44,7 @@
 
     article {
       margin: auto;
+      max-width: 72ch;
       @include breakpoint(md)  { width: grid-width(9); }
       @include breakpoint(mdl) { width: grid-width(7); }
     }
@@ -73,8 +74,10 @@
 
     p {
       margin-bottom: 1rem;
-      font-family: 'Founders', var(--system-ui);
-      font-size: 2.2rem;
+      font-family: 'Blush', var(--system-ui);
+      font-size: 1.8rem;
+      line-height: 1.6;
+      letter-spacing: .25px;
     }
 
     p + p { text-indent: 3ch; }
