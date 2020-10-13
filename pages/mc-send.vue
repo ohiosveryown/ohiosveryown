@@ -6,7 +6,7 @@
       <div class="anim--in meta">
         <h3 class="mb-1 uc fs--sm f--f">
           <span class="mr-0 pt-0 op-6">user experience design</span>
-          2019–2020
+          2020–2021
         </h3>
         <h3 class="uc fs--sm f--f">
           <span class="mr-0 pt-0 op-6">url</span>
@@ -22,13 +22,13 @@
         <span>
           <svg width="60" height="10" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M0 5.556V4.444h55.848a8.054 8.054 0 01-.702-.515C53.97 2.957 53 1.565 53 0h1.111c0 1.102.698 2.21 1.743 3.071 1.044.862 2.311 1.373 3.257 1.373v1.112c-.946 0-2.213.511-3.257 1.373-1.045.861-1.744 1.97-1.744 3.071H53c0-1.565.969-2.957 2.146-3.929.224-.184.459-.356.702-.515H0z" fill="#000"/></svg>
         </span>
-        <li @click="scrollTo('discover')">discover</li>
+        <li @click="scrollTo('planning')">planning</li>
         <li @click="scrollTo('define')">define</li>
         <li>develop</li>
         <li>deliver</li>
       </ul>
       <header class="case-header mb-7">
-        <h2 class="anim--in mb-3 fs--md f--g">Creating an all new editing experience with maximum flexibility to make designing easier</h2>
+        <h2 class="anim--in mb-3 fs--md f--g">Rearchitecting Mailchimp’s highest revenue journey to help users find the right audience at the right moment</h2>
       </header>
       <figure>
         <div class="anim--in img--hero">
@@ -45,38 +45,24 @@
 
     <!-- section -->
     <section class="mb-4">
-      <article class="pb-9">
+      <article>
         <header>
           <h4
-            ref="discover"
             class="mb-1 pt-4 uc fs--sm f--f">
-            Discover / Research
+            Introduction
           </h4>
-          <h5 class="mb-4 fs--md f--g">Good user research is key to designing a great user experience and a great product</h5>
+          <h5 class="mb-4 fs--md f--g">Email is dead; long live email</h5>
         </header>
-        <p>As we started the redesign, I helped scope the project as well as be a product owner to help define what all we'd be incorporating.</p>
-        <p>Throughout the life cycle of the project redesign, I played a large role in determining not only the visual design language, but also what features would be added and depreciated.</p>
-        <p>Scoping the project was instrumental in informing my design direction and cultivating a seamless user experience.</p>
+        <p>Mailchimp helps users send over a million emails a day, but as our users become more sophisticated marketers, we want to empower them to be able to reach a larger audience through channels and platforms they may be intimidated by.</p>
       </article>
-      <figure class="img--not-wide pb-9">
-        <div class="img--shadow mt-2">
-          <img src="https://res.cloudinary.com/da32ufmnf/image/upload/v1596426547/mc-send/research_erwd6u.png" alt="">
+      <figure class="img--not-wide pt-4 pb-0">
+        <div class="mt-2">
+          <img src="https://res.cloudinary.com/da32ufmnf/image/upload/v1602557098/mc-send/3k6Ejdql_gcdqcu.png" alt="Matt running a workshop">
         </div>
         <figcaption class="pt-0 tar">
           <span class="uc fs--sm f--f">
             <span class="mr-0 pt-0 op-5">fig Nº02</span>
-            Research 01
-          </span>
-        </figcaption>
-      </figure>
-      <figure class="img--not-wide">
-        <div class="img--shadow mt-2">
-          <img src="https://res.cloudinary.com/da32ufmnf/image/upload/v1596426547/mc-send/research_erwd6u.png" alt="">
-        </div>
-        <figcaption class="pt-0 tar">
-          <span class="uc fs--sm f--f">
-            <span class="mr-0 pt-0 op-5">fig Nº03</span>
-            Research 02
+            Me, running a cross-department design studio
           </span>
         </figcaption>
       </figure>
@@ -87,15 +73,14 @@
       <article class="pb-9">
         <header>
           <h4
-            ref="define"
+            ref="planning"
             class="mb-1 pt-4 uc fs--sm f--f">
-            Define
+            Planning
           </h4>
-          <h5 class="mb-4 fs--md f--g">Good user research is key to designing a great user experience and a great product</h5>
+          <h5 class="mb-4 fs--md f--g">Collaborating and getting everyone onboard and on the same page</h5>
         </header>
-        <p>As we started the redesign, I helped scope the project as well as be a product owner to help define what all we'd be incorporating.</p>
-        <p>Throughout the life cycle of the project redesign, I played a large role in determining not only the visual design language, but also what features would be added and depreciated.</p>
-        <p>Scoping the project was instrumental in informing my design direction and cultivating a seamless user experience.</p>
+        <p>One of the first things I did was partner with content strategy to map out the current customer journey – from making an account, creating your first template in the editor, to adding a list and testing / sending your first campaign. Mapping out the current experience was important to understand where we might be failing our customers, or where there might be opportunities for improvement.</p>
+        <p>I also partnered with our research department to help coordinate interviews with both current and prospective users. Again, I wanted to establish a baseline of the current experience (and current industry standards) to not only help shape the new journey, but to also put together tangible artifacts to bubble up to leadership to help create alignment of goals and expectations.</p>
       </article>
     </section>
 
