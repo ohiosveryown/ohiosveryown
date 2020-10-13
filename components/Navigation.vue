@@ -89,15 +89,16 @@
   .menu-opened {
     pointer-events: inherit;
     opacity: 1;
-    transition: opacity 250ms ease 20ms, transform 250ms ease;
+    transform: scale(1);
+    transition: opacity 250ms ease 10ms, transform 250ms ease;
   }
 
   .menu-closed {
     pointer-events: none;
     opacity: 0;
-    transition: opacity 200ms ease, transform 20ms ease 300ms;
+    transition: opacity 100ms ease, transform 100ms ease;
     transform: scale(1,.8);
-    @include breakpoint(md) { transform: scale(.9,.76); }
+    @include breakpoint(md) { transform: scale(.92); }
   }
 
   /* .menu-items-opened { opacity: 1; transition: opacity 300ms ease 32ms; }
