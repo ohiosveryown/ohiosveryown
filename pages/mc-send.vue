@@ -82,6 +82,21 @@
         <p>One of the first things I did was partner with content strategy to map out the current customer journey – from making an account, creating your first template in the editor, to adding a list and testing / sending your first campaign. Mapping out the current experience was important to understand where we might be failing our customers, or where there might be opportunities for improvement.</p>
         <p>I also partnered with our research department to help coordinate interviews with both current and prospective users. Again, I wanted to establish a baseline of the current experience (and current industry standards) to not only help shape the new journey, but to also put together tangible artifacts to bubble up to leadership to help create alignment of goals and expectations.</p>
       </article>
+      <figure class="img--not-wide pt-0 pb-9">
+        <div class="mt-2">
+          <img src="https://res.cloudinary.com/da32ufmnf/image/upload/v1602648888/mc-send/outline_qzdyll.png" alt="Studio outline document">
+        </div>
+        <figcaption class="pt-0 tar">
+          <span class="uc fs--sm f--f">
+            <span class="mr-0 pt-0 op-5">fig Nº03</span>
+            Part of the studio outline doc
+          </span>
+        </figcaption>
+      </figure>
+      <article class="pt-4 pb-9">
+        <p>Once I had a solid understanding of where we currently were at, I coordinated a design studio with stakeholders from product design, product management, product marketing, research, support, engineering and brand design – a whole lot of folks with a whole lot of good opinions.</p>
+        <p>Because this would be an extremely expensive meeting, it was important to pre-plan extensively and make that the meeting would be ran as efficiently as possible.</p>
+      </article>
     </section>
 
     <!-- footer / next -->
