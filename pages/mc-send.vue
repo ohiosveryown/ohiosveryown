@@ -84,7 +84,7 @@
       </article>
       <figure class="img--not-wide pt-0 pb-9">
         <div class="mt-2">
-          <img src="https://res.cloudinary.com/da32ufmnf/image/upload/v1602648888/mc-send/outline_qzdyll.png" alt="Studio outline document">
+          <img src="https://res.cloudinary.com/da32ufmnf/image/upload/v1602858464/mc-send/outline_hgxhms.png" alt="Studio outline document">
         </div>
         <figcaption class="pt-0 tar">
           <span class="uc fs--sm f--f">
