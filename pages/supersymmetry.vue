@@ -172,7 +172,6 @@
     },
 
     beforeDestroy() {
-      // this.Exit()
       const index = document.querySelector('main')
       index.style.cssText = `
         opacity: 0;
