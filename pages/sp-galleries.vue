@@ -59,7 +59,8 @@
         <p>Throughout the life cycle of the project redesign, I played a large role in determining not only the visual design language, but also what features would be added and depreciated.</p>
         <p>Scoping the project was instrumental in informing my design direction and cultivating a seamless user experience.</p>
       </article>
-      <figure class="img--not-wide pb-9">
+      <h5 class="tac mt-4 fs--md f--g">More to come...</h5>
+      <!-- <figure class="img--not-wide pb-9">
         <div class="img--shadow mt-2">
           <img src="https://res.cloudinary.com/da32ufmnf/image/upload/v1596426547/mc-send/research_erwd6u.png" alt="">
         </div>
@@ -80,24 +81,7 @@
             Research 02
           </span>
         </figcaption>
-      </figure>
-    </section>
-
-    <!-- section -->
-    <section class="mb-9">
-      <article class="pb-9">
-        <header>
-          <h4
-            ref="define"
-            class="mb-2 pt-4 uc fs--sm f--f">
-            Define
-          </h4>
-          <h5 class="mb-4 fs--md f--g">Good user research is key to designing a great user experience and a great product</h5>
-        </header>
-        <p>As we started the redesign, I helped scope the project as well as be a product owner to help define what all we'd be incorporating.</p>
-        <p>Throughout the life cycle of the project redesign, I played a large role in determining not only the visual design language, but also what features would be added and depreciated.</p>
-        <p>Scoping the project was instrumental in informing my design direction and cultivating a seamless user experience.</p>
-      </article>
+      </figure> -->
     </section>
 
     <!-- footer / next -->

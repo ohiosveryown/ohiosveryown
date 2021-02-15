@@ -138,10 +138,10 @@
 
     <!-- footer / next -->
     <Next
-      name = 'menu.black'
-      excerpt = "Celebrating the diversity of Atlanta's culture and food"
-      img = 'https://res.cloudinary.com/da32ufmnf/image/upload/v1596435569/menu/menu_tw8tqd.jpg'
-      link = '/menu-black'
+      name = 'blush'
+      excerpt = "Designing a geometric typeface inspired by space✨"
+      img = 'https://res.cloudinary.com/da32ufmnf/image/upload/v1597077102/blush/blush-01_2x_ndkg4j.png'
+      link = '/blush'
     />
   </main>
 </template>
