@@ -186,10 +186,10 @@
 
     <!-- footer / next -->
     <Next
-      name = '000'
-      excerpt = "Building the web presence for 000 – a collection of portraits"
-      img = 'https://res.cloudinary.com/da32ufmnf/image/upload/v1597339051/000/01_sfrbbm.jpg'
-      link = '/000'
+      name = 'Mailchimp Journey'
+      excerpt = "Helping users find the right audience with Mailchimp"
+      img = 'https://res.cloudinary.com/da32ufmnf/image/upload/v1596477789/mc-send/01_2x_ab9xk9.jpg'
+      link = '/mc-send'
     />
 
   </main>
