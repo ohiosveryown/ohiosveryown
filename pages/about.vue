@@ -12,7 +12,7 @@
       </header>
 
       <article class="anim--in f--f">
-        <h3 class="mb-2">Hi again, just a reminder in case you didn’t read the first page (who reads anymore, anyway?) – my name is Matt and I'm presently a designer at Mailchimp.</h3>
+        <h3 class="mb-2">Hi again, just a reminder in case you didn’t read the first page (who reads anymore, anyway?) – my name is Matt and I'm presently a staff designer at Mailchimp.</h3>
         <h3 class="mb-2">I spend half my time drawing boxes & the other half explaining them—the other half
           <span class="code-trigger">trying to confuse myself with code;</span>
           <picture ref='code' class="code">
