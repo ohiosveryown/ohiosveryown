@@ -1,9 +1,7 @@
 
 export default {
   mode: 'spa',
-  /*
-  ** Headers of the page
-  */
+  // headers
   head: {
     title: process.env.npm_package_name || '',
     meta: [
@@ -15,41 +13,19 @@ export default {
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ]
   },
-  /*
-  ** Customize the progress-bar color
-  */
   loading: false,
-  /*
-  ** Global CSS
-  */
+  // global styles
   css: [
     '~/style/reset.scss',
     '~/style/type.scss',
     '~/style/util.scss',
   ],
-  /*
-  ** Plugins to load before mounting the App
-  */
-  plugins: [
-  ],
-  /*
-  ** Nuxt.js dev-modules
-  */
-  devModules: [
-  ],
-  /*
-  ** Nuxt.js modules
-  */
+  plugins: [],
+  devModules: [],
   modules: [
     '@nuxtjs/pwa',
   ],
-  /*
-  ** Build configuration
-  */
   build: {
-    /*
-    ** You can extend webpack config here
-    */
     extend (config, ctx) {
     }
   }
