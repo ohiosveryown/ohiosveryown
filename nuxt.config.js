@@ -14,7 +14,7 @@ export default {
     ]
   },
   loading: false,
-  // global styles
+  // styles
   css: [
     '~/style/reset.scss',
     '~/style/type.scss',
