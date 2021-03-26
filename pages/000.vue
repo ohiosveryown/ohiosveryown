@@ -79,7 +79,7 @@
           </h4>
           <h5 class="mb-4 fs--md f--g">From After Effects to website – Using Vue and Saber to build a static site that’s easy to maintain</h5>
         </header>
-        <p>The video above is an interaction Roy made in After Effects showing what he was thinking for the interaction. After tweaking it a little bit, I started thinking about how I’d go about building the web app.</p>
+        <p>The video above is a prototype Roy made in After Effects showing what he was thinking for the interaction. After tweaking it a little bit, I started thinking about how I’d go about building the web app.</p>
         <p>I knew I’d use Vue to build, but I also wanted to create something that would be easy to update for someone that might not be super technical. So after doing some research, I decided to go with a static site generator for Vue, called <a href="https://saber.land" target="_blank" class="link">Saber</a>.</p>
       </article>
 
