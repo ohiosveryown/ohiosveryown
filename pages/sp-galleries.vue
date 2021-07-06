@@ -29,7 +29,7 @@
         <li>deliver</li>
       </ul>
       <header class="case-header mb-7">
-        <h2 class="anim--in mb-3 fs--md f--g">Rethinking how users share, sell and organizer their albums and photos</h2>
+        <h2 class="anim--in mb-3 fs--md f--g">Reconsidering how users share, sell and organizer their albums and photos</h2>
       </header>
       <figure>
         <div class="anim--in img--hero">
@@ -59,7 +59,7 @@
         <p>Throughout the life cycle of the project redesign, I played a large role in determining not only the visual design language, but also what features would be added and depreciated.</p>
         <p>Scoping the project was instrumental in informing my design direction and cultivating a seamless user experience.</p>
       </article>
-      <h5 class="tac mt-4 fs--md f--g">More to come...</h5>
+      <h5 class="tac mt-4 fs--md f--g">To be continued at a later date.</h5>
       <!-- <figure class="img--not-wide pb-9">
         <div class="img--shadow mt-2">
           <img src="https://res.cloudinary.com/da32ufmnf/image/upload/v1596426547/mc-send/research_erwd6u.png" alt="">
