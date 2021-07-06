@@ -96,7 +96,7 @@
       <article class="pt-4 pb-9">
         <p>Once I had a solid understanding of where we currently were at, I coordinated a design studio with stakeholders from product design, product management, product marketing, research, support, engineering and brand design – a whole lot of folks with a whole lot of good opinions.</p>
         <p>Because this would be an extremely expensive meeting, it was important to pre-plan extensively and make that the meeting would be ran as efficiently as possible.</p>
-        <h5 class="tac mt-4 fs--md f--g">More to come...</h5>
+        <h5 class="tac mt-4 fs--md f--g">To be continued at a later date.</h5>
       </article>
     </section>
 
