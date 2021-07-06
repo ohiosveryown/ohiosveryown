@@ -163,7 +163,7 @@
 
       <figure class="not-wide">
         <div style="background: #B49BFB" class="mt-2">
-          <img src="https://res.cloudinary.com/da32ufmnf/image/upload/v1597693090/menu/stories_nlodmi.jpg" alt="Veggies Illustration">
+          <img src="https://res.cloudinary.com/da32ufmnf/image/upload/v1625592299/menu/stories_tou6zm.jpg" alt="Veggies Illustration">
         </div>
         <figcaption class="pt-0 tar">
           <span class="uc fs--sm f--f">
