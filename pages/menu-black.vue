@@ -208,7 +208,7 @@
 
       <figure class="not-wide">
         <div class="mt-2">
-          <img src="https://res.cloudinary.com/da32ufmnf/image/upload/v1597693968/menu/sm_ozol2h.png" alt="Mobile Views">
+          <img src="https://res.cloudinary.com/da32ufmnf/image/upload/v1625591525/menu/sm_x8aycb.png" alt="Mobile Views">
         </div>
         <figcaption class="pt-0 tar">
           <span class="uc fs--sm f--f">
