@@ -37,7 +37,7 @@
         <figcaption class="pt-0 tar">
           <span class="uc fs--sm f--f">
             <span class="mr-0 pt-0 op-5">fig Nº01</span>
-            Mailchimp Templates
+            Pre-launch View
           </span>
         </figcaption>
       </figure>
