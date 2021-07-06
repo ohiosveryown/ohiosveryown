@@ -162,7 +162,7 @@
       </article>
 
       <figure class="not-wide">
-        <div style="background: #ECE7D4" class="mt-2">
+        <div style="background: #B49BFB" class="mt-2">
           <img src="https://res.cloudinary.com/da32ufmnf/image/upload/v1597693090/menu/stories_nlodmi.jpg" alt="Veggies Illustration">
         </div>
         <figcaption class="pt-0 tar">
