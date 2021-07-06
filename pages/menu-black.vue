@@ -196,7 +196,7 @@
 
       <figure class="not-wide pb-6">
         <div style="background: #e6e6e6" class="mt-2">
-          <img class="shadows-01 br-3" src="https://res.cloudinary.com/da32ufmnf/image/upload/v1597942248/menu/index_vkuflg.jpg" alt="Home page">
+          <img class="shadows-01 br-3" src="https://res.cloudinary.com/da32ufmnf/image/upload/v1625591333/menu/scroll_be4u1i.jpg" alt="Home page">
         </div>
         <figcaption class="pt-0 tar">
           <span class="uc fs--sm f--f">
