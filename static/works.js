@@ -41,7 +41,7 @@ const works = [
     video: 'https://res.cloudinary.com/da32ufmnf/video/upload/v1595993468/menu/menu_t5crwu.mp4',
     img: 'https://res.cloudinary.com/da32ufmnf/image/upload/v1596435569/menu/menu_tw8tqd.jpg',
     link: 'menu-black',
-    background: '#D2EDD4',
+    background: '#B49BFB',
   },
   {
     id: 5,
