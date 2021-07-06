@@ -32,7 +32,7 @@
       </header>
       <figure>
         <div class="anim--in img--hero">
-          <img src="https://res.cloudinary.com/da32ufmnf/image/upload/v1597694846/menu/00_kgclca.jpg" alt="homepage">
+          <img src="https://res.cloudinary.com/da32ufmnf/image/upload/v1623960677/menu/cover_g9xoj7.png" alt="homepage">
         </div>
         <figcaption class="pt-0 tar">
           <span class="uc fs--sm f--f">
@@ -58,7 +58,7 @@
       </article>
 
       <figure class="not-wide">
-        <div style="background: #ECE7D4" class="mt-2 img--w-bg">
+        <div style="background: #B49BFB" class="mt-2 img--w-bg">
           <img class="shadow-01" src="https://res.cloudinary.com/da32ufmnf/image/upload/v1597692381/menu/03_vglufi.png" alt="Codepen Prototype">
         </div>
         <figcaption class="pt-0 tar">
@@ -87,7 +87,7 @@
       </article>
 
       <figure class="not-wide">
-        <div style="background: #ECE7D4" class="mt-2 pt-4 pb-4">
+        <div style="background: #B49BFB" class="mt-2 pt-4 pb-4">
           <img src="https://res.cloudinary.com/da32ufmnf/image/upload/v1597687785/menu/02_kkqbpi.jpg" alt="JSON File Image">
         </div>
         <figcaption class="pt-0 tar">
@@ -103,7 +103,7 @@
       </article>
 
       <figure class="not-wide">
-        <div style="background: #ECE7D4" class="mt-2 img--w-bg">
+        <div style="background: #B49BFB" class="mt-2 img--w-bg">
           <img class="shadow-01" src="https://res.cloudinary.com/da32ufmnf/image/upload/v1597688612/menu/03_ucnnui.jpg" alt="Codepen Prototype">
         </div>
         <figcaption class="pt-0 tar">
@@ -132,7 +132,7 @@
       </article>
 
       <figure class="not-wide">
-        <div style="background: #ECE7D4" class="mt-2 img--w-bg">
+        <div style="background: #B49BFB" class="mt-2 img--w-bg">
           <img src="https://res.cloudinary.com/da32ufmnf/image/upload/v1597692775/menu/veggies_adyxhd.png" alt="Veggies Illustration">
         </div>
         <figcaption class="pt-0 tar">
@@ -162,7 +162,7 @@
       </article>
 
       <figure class="not-wide">
-        <div style="background: #ECE7D4" class="mt-2">
+        <div style="background: #B49BFB" class="mt-2">
           <img src="https://res.cloudinary.com/da32ufmnf/image/upload/v1597693090/menu/stories_nlodmi.jpg" alt="Veggies Illustration">
         </div>
         <figcaption class="pt-0 tar">
