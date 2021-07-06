@@ -183,7 +183,7 @@
             autoplay="autoplay"
             playsinline=""
             loop="loop">
-            <source src="https://res.cloudinary.com/da32ufmnf/video/upload/v1597693634/menu/discover_bcd16z.mp4"><source>
+            <source src="https://res.cloudinary.com/da32ufmnf/video/upload/v1625590756/menu/refresh_v06zoo.mp4"><source>
           </video>
         </div>
         <figcaption class="pt-0 tar">
