@@ -36,7 +36,7 @@ const works = [
     id: 4,
     discipline: 'ux/dev',
     name: 'menu.black',
-    excerpt: "Bringing awareness and celebrating the diversity of Atlanta and it's food",
+    excerpt: "Bringing awareness and celebrating the diversity of Atlanta and its food",
     excerptSmall: "Celebrating the diversity of Atlanta's culture and food",
     video: 'https://res.cloudinary.com/da32ufmnf/video/upload/v1625595468/menu/03_vanugl.mp4',
     img: 'https://res.cloudinary.com/da32ufmnf/image/upload/v1623960677/menu/cover_g9xoj7.png',

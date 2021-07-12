@@ -28,7 +28,7 @@
         <li @click="scrollTo('next')">next steps</li>
       </ul>
       <header class="case-header mb-7">
-        <h2 class="anim--in mb-3 fs--md f--g">Bringing awareness, and celebrating the diversity of Atlanta, it’s food and it’s people</h2>
+        <h2 class="anim--in mb-3 fs--md f--g">Bringing awareness, and celebrating the diversity of Atlanta, its food and its people</h2>
       </header>
       <figure>
         <div class="anim--in img--hero">
