@@ -1,4 +1,4 @@
-const works = [
+export const works = [
   {
     id: 1,
     discipline: '',
@@ -88,14 +88,3 @@ const works = [
     background: '#2F2F2F',
   }
 ]
-
-const links = [
-  'mc-send',
-  'menu-black',
-  'sp-galleries',
-  'supersymmetry',
-  'blush',
-  '000'
-]
-
-export { works, links }

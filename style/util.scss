@@ -3,50 +3,12 @@
 // various
 .debug { border: 2px solid hotpink; }
 .pointer { &:hover { cursor: pointer; } }
-
-// for scrolling
-.viewport {
-  width: 100%; height: 100%;
-
-  @include breakpoint(md) {
-    overflow: hidden;
-    position: fixed;
-    width: 100%; height: 100%;
-    top: 0; right: 0; bottom: 0; left: 0;
-  }
-}
-
 .width {
   position: relative;
   margin: 0 auto;
   max-width: var(--max-width);
   width: 90vw;
 }
-
-// general
-.outline {
-  color: transparent;
-  text-stroke: 1px var(--gravity);
-  -webkit-text-stroke: 1px var(--gravity);
-  // mix-blend-mode: difference;
-}
-
-.content-width { width: max-content; }
-
-.link {
-  text-decoration: underline;
-  cursor: pointer;
-  &:hover { text-decoration: none; }
-}
-
-.shadow-01 { box-shadow: 0 4px 64px rgba(0,0,0,.12); }
-
-.br-3 { border-radius: 3px; }
-
-.gravity { color: var(--gravity); }
-.infrared { color: var(--infrared); }
-.stone { color: var(--stone); }
-.difference { mix-blend-mode: difference; }
 
 .mt-00 { margin-top: calc(var(--unit) * 0.2 ); }
 .mt-0 { margin-top: calc(var(--unit) * 0.5 ); }
