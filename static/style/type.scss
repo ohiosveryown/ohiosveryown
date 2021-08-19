@@ -39,8 +39,8 @@
 }
 
 .caption {
-  font: normal 1.4rem/1.25 'tomato-grotesk', var(--system-ui);
-  @include breakpoint(md) { font-size: 1.3vw; }
+  font: normal 1.4rem/1.4 'tomato-grotesk', var(--system-ui);
+  @include breakpoint(md) { font-size: 1.5vw; }
 }
 
 .caption--sm {

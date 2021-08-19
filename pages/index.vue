@@ -1,22 +1,30 @@
 <template>
   <main class="width">
-    <h1 class="mb-1 title">Mailchimp Experience Vision</h1>
-    <h2 class="mb-6 brow">Email is dead; long live email</h2>
-    <h3 class="mb-9 subtitle">Mailchimp helps users send over a million emails a day, but as our users become more sophisticated marketers, we want to empower them to be able to reach a larger audience through channels and platforms they may be intimidated by. Collaborating and getting everyone onboard and on the same page.</h3>
+    <header>
+      <h1 class="mb-1 title">My name is Matt 👋🏼</h1>
+      <h2 class="brow">
+        I’m a product designer living in Atlanta, Ga.<br>
+        Presently I’m researching <a href="" class="link">machine learning</a>.
+      </h2>
+    </header>
 
-    <p class="mb-3 p">While this is just an abridged showcase of the crazy amount of work that went into this project, I’d be happy to extrapolate and share more if you’re curious. In the old, previous experience, getting started and sending a campaign was entirely isolated and a disjointed experience. More importantly:</p>
+    <section>
+      <header class="caption">
+        <h3 class="mr-4">Digital Projects</h3>
+        <h3 class="mr-1">2018—2021</h3>
+        <h3>↯</h3>
+      </header>
 
-    <h4 class="mb-9 pb-9 subtitle">“...researched show 5 out of 7 people failed to send a campaign. With the redesigned effort, customers now have a 85% on average success rate for sending a campaign.”</h4>
+      <ul>
+        <list
+          v-for="work in works"
+          :work="work"
+          :key="work.id"
+        />
+      </ul>
+    </section>
 
-    <h5 class="caption">Digital Projects <span class="ml-9">2018—2021</span></h5>
-
-    <ul class="pt-9">
-      <li class="mb-7" v-for="work in works" :key="work.id">
-        <h5 class="caption--sm">{{ work.contribution }}</h5>
-        <h4 class="p">{{ work.name }}</h4>
-        <p class="caption">{{ work.excerpt }}</p>
-      </li>
-    </ul>
+    <rainbow/>
   </main>
 </template>
 
@@ -27,14 +35,29 @@
 
   h1 {
     margin-top: 11.2rem;
-    color: red;
+    margin: 11.2rem 0 2rem;
     @include breakpoint(md) { color: var(--gravity); }
+  }
+
+  section {
+    @include breakpoint(md) { margin-left: grid-width(1); width: grid-width(8); }
+    @include breakpoint(mdl) { margin: 8.8rem 0 7.2rem 0; width: grid-width(5); }
+    header {
+      display: flex;
+      /* justify-content: space-between; */
+      margin-bottom: 5.6rem;
+      width: 100%;
+      opacity: .56;
+      @include breakpoint(md) { margin-bottom: 6.4rem; width: 80%; font-size: 1vw; }
+    }
   }
 </style>
 
 
 <script>
   import { works } from '~/static/works'
+  import list from '~/components/list'
+  import rainbow from '~/components/rainbow'
   export default {
     head: () => ({
       title: 'ohiosveryown'
@@ -42,5 +65,6 @@
     data: () => ({
       works
     }),
+    components: { list, rainbow }
   }
 </script>

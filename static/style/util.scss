@@ -6,8 +6,16 @@
   position: relative;
   margin: 0 auto;
   max-width: var(--max-width);
-  width: 90vw;
+  width: 93vw;
 }
+
+.link {
+  border-bottom: 1px solid var(--gravity);
+  opacity: .64;
+  transition: opacity 200ms ease;
+}
+
+@media(pointer: fine) { .link:hover { opacity: 1; }}
 
 .mt-0 { margin-top: calc(var(--unit) * 0.5 ); }
 .mt-1 { margin-top: calc(var(--unit) * 1 ); }
