@@ -8,6 +8,8 @@
 
     <h4 class="mb-9 pb-9 subtitle">“...researched show 5 out of 7 people failed to send a campaign. With the redesigned effort, customers now have a 85% on average success rate for sending a campaign.”</h4>
 
+    <h5 class="caption">Digital Projects <span class="ml-9">2018—2021</span></h5>
+
     <ul class="pt-9">
       <li class="mb-7" v-for="work in works" :key="work.id">
         <h5 class="caption--sm">{{ work.contribution }}</h5>
