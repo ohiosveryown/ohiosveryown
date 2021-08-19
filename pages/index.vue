@@ -3,7 +3,7 @@
 
     <header class="intro">
       <h1 class="anim--in mb-1 f--cl">
-        <span class="matt-trigger">My name is Matt.</span>
+        <span class="matt-trigger">My name is Matttttt.</span>
         <picture ref='matt' class="matt">
           <source media="(min-width: 1000px)" srcset="https://res.cloudinary.com/da32ufmnf/image/upload/v1596478789/index/matt_qc0qt7.jpg">
           <img src="">
