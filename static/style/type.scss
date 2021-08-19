@@ -1,10 +1,52 @@
 @import '~/static/style/grid.scss';
 
-// @font-face {
-//   font-family: "polysans";
-//   src: url("../static/fonts/polysans.woff2") format("woff2");
-//   font-display: swap;
-// }
+@font-face {
+  font-family: "tomato-grotesk";
+  src: url("~/static/type/tomato-grotesk.woff2") format("woff2");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "gt-alpina-fine";
+  src: url("~/static/type/gt-alpina-fine.woff2") format("woff2");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "gt-alpina-thin";
+  src: url("~/static/type/gt-alpina-thin.woff2") format("woff2");
+  font-display: swap;
+}
+
+.title {
+  font: normal 1.4rem/1.1 'tomato-grotesk', var(--system-ui);
+  @include breakpoint(md) { font-size: 4vw; }
+}
+
+.brow {
+  font: normal 1.4rem/1.1 'gt-alpina-fine', var(--system-ui);
+  @include breakpoint(md) { font-size: 2.8vw; }
+}
+
+.subtitle {
+  font: normal 1.4rem/1.25 'gt-alpina-thin', var(--system-ui);
+  @include breakpoint(md) { font-size: 3vw; }
+}
+
+.p {
+  font: normal 1.4rem/1.64 'tomato-grotesk', var(--system-ui);
+  @include breakpoint(md) { font-size: 2.1vw; }
+}
+
+.caption {
+  font: normal 1.4rem/1.25 'tomato-grotesk', var(--system-ui);
+  @include breakpoint(md) { font-size: 1.3vw; }
+}
+
+.caption--sm {
+  font: normal 1.4rem/1.1 'gt-alpina-fine', var(--system-ui);
+  @include breakpoint(md) { font-size: 1.2vw; }
+}
 
 .uc { text-transform: uppercase; }
 .tac { text-align: center; }

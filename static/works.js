@@ -1,7 +1,7 @@
 export const works = [
   {
     id: 1,
-    discipline: '',
+    contribution: '',
     name: 'Home',
     excerpt: "",
     excerptSmall: "ovo is the web presence for me, Matthew Pence",
@@ -12,7 +12,7 @@ export const works = [
   },
   {
     id: 2,
-    discipline: '',
+    contribution: '',
     name: 'About',
     excerpt: "",
     excerptSmall: "I tell you about myself here and share some social links",
@@ -23,7 +23,7 @@ export const works = [
   },
   {
     id: 3,
-    discipline: 'ux',
+    contribution: 'Design',
     name: 'Mailchimp Customer Journey',
     excerpt: "Re-architecting Mailchimp’s highest revenue journey to help users find the right audience",
     excerptSmall: "Helping users find the right audience with Mailchimp",
@@ -34,7 +34,7 @@ export const works = [
   },
   {
     id: 4,
-    discipline: 'ux/dev',
+    contribution: 'Design / Development',
     name: 'menu.black',
     excerpt: "Bringing awareness and celebrating the diversity of Atlanta and its food",
     excerptSmall: "Celebrating the diversity of Atlanta's culture and food",
@@ -45,7 +45,7 @@ export const works = [
   },
   {
     id: 5,
-    discipline: 'ux',
+    contribution: 'Design',
     name: 'ShootProof Galleries',
     excerpt: "Rethinking how users share, sell and organizer their photos",
     excerptSmall: "Rethinking how users share and sell their photos and albums",
@@ -56,7 +56,7 @@ export const works = [
   },
   {
     id: 6,
-    discipline: 'ux/dev',
+    contribution: 'Design / Development',
     name: 'Supersymmetry',
     excerpt: "A self-initiated project showcasing architecture & structural engineering",
     excerptSmall: "A project showcasing architecture & structural engineering",
@@ -67,7 +67,7 @@ export const works = [
   },
   {
     id: 7,
-    discipline: 'type design',
+    contribution: 'Type Design',
     name: 'Blush',
     excerpt: "Designing a geometric typeface with bright tones and simple quirks; inspired by space✨",
     excerptSmall: "Designing a geometric typeface with bright tones and simple quirks",
@@ -78,7 +78,7 @@ export const works = [
   },
   {
     id: 8,
-    discipline: 'ux/dev',
+    contribution: 'Design / Development',
     name: '000',
     excerpt: "Building the web presence for 000 – a collection of portraits by photographer Roy Handy",
     excerptSmall: "Building the web presence for 000 – a collection of portraits",
