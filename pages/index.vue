@@ -5,7 +5,7 @@
 
     <ul>
       <li class="mb-3" v-for="work in works" :key="work.id">
-        <h5>{{ work.discipline }}</h5>
+        <h5>{{ work.contribution }}</h5>
         <h4>{{ work.name }}</h4>
         <p>{{ work.excerpt }}</p>
       </li>
