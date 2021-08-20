@@ -19,12 +19,12 @@
 }
 
 .title {
-  font: normal 1.4rem/1.1 'tomato-grotesk', var(--system-ui);
+  font: normal 9.6vw/1.1 'tomato-grotesk', var(--system-ui);
   @include breakpoint(md) { font-size: 4vw; }
 }
 
 .brow {
-  font: normal 1.4rem/1.1 'gt-alpina-fine', var(--system-ui);
+  font: normal 7.4vw/1.1 'gt-alpina-fine', var(--system-ui);
   @include breakpoint(md) { font-size: 2.8vw; }
 }
 
@@ -34,21 +34,23 @@
 }
 
 .p {
-  font: normal 1.4rem/1.64 'tomato-grotesk', var(--system-ui);
+  font: normal 5.8vw/1.64 'tomato-grotesk', var(--system-ui);
   @include breakpoint(md) { font-size: 2.1vw; }
 }
 
 .caption {
-  font: normal 1.4rem/1.4 'tomato-grotesk', var(--system-ui);
-  @include breakpoint(md) { font-size: 1.5vw; }
+  font: normal 4.2vw/1.4 'tomato-grotesk', var(--system-ui);
+  @include breakpoint(md) { font-size: 2vw; }
+  @include breakpoint(lg) { font-size: 1.5vw; }
 }
 
 .caption--sm {
-  font: normal 1.4rem/1.1 'gt-alpina-fine', var(--system-ui);
-  @include breakpoint(md) { font-size: 1.2vw; }
+  font: normal 4.2vw/1.1 'gt-alpina-fine', var(--system-ui);
+  @include breakpoint(md) { font-size: 1.8vw; }
+  @include breakpoint(lg) { font-size: 1.2vw; }
 }
 
-.uc { text-transform: uppercase; }
+.uc  { text-transform: uppercase; }
 .tac { text-align: center; }
 .tar { text-align: right; }
 .taj { text-align: justify; }

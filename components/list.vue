@@ -1,9 +1,12 @@
 <template>
   <li>
     <nuxt-link :to = "'/' + work.link">
-      <article @mouseenter = 'hover = true' @mouseleave = 'hover = false'>
-        <h5 class="mb-00 caption--sm">{{ work.contribution }}</h5>
-        <h4 class="mb-0 p">{{ work.name }}</h4>
+      <article
+        @mouseenter = 'hover = true'
+        @mouseleave = 'hover = false'
+        >
+        <h5 class="caption--sm">{{ work.contribution }}</h5>
+        <h4 class="p">{{ work.name }}</h4>
         <p class="caption">{{ work.excerpt }}</p>
       </article>
     </nuxt-link>
@@ -21,7 +24,7 @@
       >
         <source
           :src = "work.video"
-          media = "all and (min-width: 1000px)"
+          media = "all and (min-width: 1100px)"
         />
       </video>
     </figure>
@@ -45,8 +48,13 @@
     article:hover h4 { background: rgba(0,0,0,.05); }
   }
 
+  h5 {
+    margin-bottom: .6rem;
+  }
+
   h4 {
     position: relative;
+    margin-bottom: .4rem;
     width: max-content;
     transition: background 200ms ease;
   }
@@ -85,16 +93,18 @@
     box-shadow: 0 4px 64px rgba(0,0,0,.32);
   }
 
+  .active { opacity: 1; }
+
   @media (pointer: fine) {
-    .active { opacity: 1; }
     article:hover h4:before {
       opacity: 1;
       transform: translateX(0);
     }
   }
 
-  .active { opacity: 0; }
-  @include breakpoint(mdl) { .active { opacity: 1; }}
+  @media (pointer: coarse) {
+    figure { display: none; }
+  }
 </style>
 
 
