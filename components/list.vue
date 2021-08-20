@@ -49,9 +49,7 @@
     article:hover h4 { background: rgba(0,0,0,.05); }
   }
 
-  h5 {
-    margin-bottom: .6rem;
-  }
+  h5 { margin-bottom: .6rem; }
 
   h4 {
     position: relative;
@@ -119,15 +117,22 @@
     }),
     methods: {
       smallVideo: function() {
-        console.log(this.$refs.video)
         const mq = matchMedia( '(max-width: 1100px)' );
         if (mq.matches) {
           this.$refs.video.src = "https://res.cloudinary.com/da32ufmnf/video/upload/v1629475132/ovo-3.6/sm_xenrhs.mp4"
+        } else {}
+      },
+      reducedMotion: function() {
+        const prm = window.matchMedia('(prefers-reduced-motion: reduce)');
+        if (prm.matches) {
+          // this.$refs.video.autoplay = 'false'; doesn't work 🤔
+          this.$refs.video.src = ""
         } else {}
       }
     },
     mounted() {
       this.smallVideo()
+      this.reducedMotion()
     }
   }
 </script>

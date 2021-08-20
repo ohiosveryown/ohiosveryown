@@ -4,7 +4,8 @@
       <h1 class="mb-1 title">My name is Matt 👋🏼</h1>
       <h2 class="brow">
         I’m a product designer living in Atlanta, Ga.<br>
-        Presently I’m researching <a href="" class="link">machine learning</a>.
+        Presently I’m researching
+        <research/>
       </h2>
     </header>
 
@@ -64,13 +65,14 @@
   import { works } from '~/static/works'
   import list from '~/components/list'
   import rainbow from '~/components/rainbow'
+  import research from '~/components/research'
   export default {
     head: () => ({
       title: 'ohiosveryown'
     }),
     data: () => ({
-      works
+      works,
     }),
-    components: { list, rainbow },
+    components: { list, rainbow, research },
   }
 </script>
