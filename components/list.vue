@@ -41,7 +41,15 @@
     flex-direction: column;
   }
 
-  h4 { position: relative; }
+  @media(pointer: fine) {
+    article:hover h4 { background: rgba(0,0,0,.05); }
+  }
+
+  h4 {
+    position: relative;
+    width: max-content;
+    transition: background 200ms ease;
+  }
 
   h4:before {
     content: "\219D";

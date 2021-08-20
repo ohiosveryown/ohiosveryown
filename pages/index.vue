@@ -10,9 +10,8 @@
 
     <section>
       <header class="caption">
-        <h3 class="mr-4">Digital Projects</h3>
-        <h3 class="mr-1">2018—2021</h3>
-        <h3>↯</h3>
+        <h3>Digital Projects ↯</h3>
+        <h3>2018—2021</h3>
       </header>
 
       <ul>
@@ -44,11 +43,11 @@
     @include breakpoint(mdl) { margin: 8.8rem 0 7.2rem 0; width: grid-width(5); }
     header {
       display: flex;
-      /* justify-content: space-between; */
+      justify-content: space-between;
       margin-bottom: 5.6rem;
       width: 100%;
       opacity: .56;
-      @include breakpoint(md) { margin-bottom: 6.4rem; width: 80%; font-size: 1vw; }
+      @include breakpoint(md) { margin-bottom: 6.4rem; width: 64%; font-size: 1vw; }
     }
   }
 </style>

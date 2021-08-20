@@ -25,7 +25,7 @@
   .rainbow {
     position: fixed;
     z-index: var(--zmin);
-    top: -70vh; right: 0;
+    top: 0vh; right: 0;
     width: 100vw; height: 100vh;
     filter: blur(80px) saturate(1.5);
     will-change: transform, opacity;
@@ -82,10 +82,8 @@
           opacity: 0,
           x: 800,
           scale: .5,
-          duration: 1.4,
+          duration: 2,
           ease: Power2.easeInOut
-          // skewY: 10,
-          // stagger: .075,
         })
       },
 
