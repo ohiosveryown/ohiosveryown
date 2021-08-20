@@ -16,6 +16,7 @@
       :style = "{ background: work.background }"
     >
       <video
+        ref="video"
         :poster = "work.img"
         autoplay = "autoplay"
         playsinline = ""
@@ -116,5 +117,17 @@
     data: () => ({
       hover: false,
     }),
+    methods: {
+      smallVideo: function() {
+        console.log(this.$refs.video)
+        const mq = matchMedia( '(max-width: 1100px)' );
+        if (mq.matches) {
+          this.$refs.video.src = "https://res.cloudinary.com/da32ufmnf/video/upload/v1629475132/ovo-3.6/sm_xenrhs.mp4"
+        } else {}
+      }
+    },
+    mounted() {
+      this.smallVideo()
+    }
   }
 </script>
