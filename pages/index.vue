@@ -2,10 +2,11 @@
   <main class="width">
     <header>
       <h1 class="mb-1 title">My name is Matt 👋🏼</h1>
+      <adventure/>
       <h2 class="brow">
         I’m a product designer living in Atlanta, Ga.<br>
         Presently I’m researching
-        <research/>
+        <subjects/>
       </h2>
     </header>
 
@@ -35,8 +36,9 @@
   br { display: none; @include breakpoint(md) { display: inherit; }}
 
   h1 {
+    display: inline-flex;
     margin: 8rem 0 2rem;
-    @include breakpoint(md) { margin: 11.2rem 0 2rem; color: var(--gravity); }
+    @include breakpoint(md) { margin: 12rem 0 2rem; color: var(--gravity); }
   }
 
   h2 {
@@ -64,8 +66,9 @@
 <script>
   import { works } from '~/static/works'
   import list from '~/components/list'
+  import adventure from '~/components/adventure'
   import rainbow from '~/components/rainbow'
-  import research from '~/components/research'
+  import subjects from '~/components/subjects'
   export default {
     head: () => ({
       title: 'ohiosveryown'
@@ -73,6 +76,6 @@
     data: () => ({
       works,
     }),
-    components: { list, rainbow, research },
+    components: { list, rainbow, subjects, adventure },
   }
 </script>
