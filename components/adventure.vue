@@ -3,7 +3,7 @@
     <article
       class="caption"
       :class = "{ active : hover }">
-      Let the algorithms decide your fate — clicking here will take you to a random case study
+      Let the algorithms decide your fate — clicking here will take you to a random project page
     </article>
     <nuxt-link :to=" '/' + adventureWork.link">
       <button
@@ -60,9 +60,9 @@
     border-radius: 3px;
     font-size: 1.3rem;
     background: var(--gravity);
-    box-shadow: 0 4px 24px rgba(0,0,0,0.2);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.32);
     transform: rotate(-6deg) translateY(-1.2rem);
-    will-change: transform, box-shadow, opacity;
+    will-change: transform, opacity;
     transform-origin: center;
 
     span {
@@ -78,48 +78,51 @@
 <script>
   import { works } from '../static/works'
   export default {
-    data() {
-      return {
-        works,
-        adventureWork: null,
-        adventureWorks: null,
-        hover: false,
-      }
-    },
+    data: () => ({
+      works,
+      adventureWork: null,
+      adventureWorks: null,
+      hover: false,
+      prm: window.matchMedia('(prefers-reduced-motion: reduce)'),
+    }),
 
     methods: {
       // on page load / mount
       Enter() {
-        gsap.from(this.$refs.button, {
-          opacity: 0,
-          scale: .8,
-          rotate: '-10deg',
-          duration: 1.2,
-          delay: 2.8,
-          ease: 'elastic.out(1.25,.3)',
-        })
+        if (this.prm.matches) {} else {
+          gsap.from(this.$refs.button, {
+            opacity: 0,
+            scale: .8,
+            rotate: '-10deg',
+            duration: 1.2,
+            delay: 2.8,
+            ease: 'elastic.out(1.25,.3)',
+          })
+        }
       },
 
       Mouseenter() {
-        gsap.to(this.$refs.button, {
-          scale: 1.15,
-          boxShadow: '0 8px 32px rgba(0,0,0,0.32)',
-          rotate: '-10deg',
-          ease: 'elastic.out(1.25,.3)',
-          duration: 1.2,
-          delay: .08,
-        })
+        if (this.prm.matches) {} else {
+          gsap.to(this.$refs.button, {
+            scale: 1.15,
+            rotate: '-10deg',
+            ease: 'elastic.out(1.25,.3)',
+            duration: 1.2,
+            delay: .08,
+          })
+        }
       },
 
       Mouseleave() {
-        gsap.to(this.$refs.button, {
-          scale: 1,
-          boxShadow: '0 4px 24px rgba(0,0,0,0.2)',
-          rotate: '-6deg',
-          ease: 'elastic.out(1,.3)',
-          duration: 1.2,
-          delay: .15,
-        })
+        if (this.prm.matches) {} else {
+          gsap.to(this.$refs.button, {
+            scale: 1,
+            rotate: '-6deg',
+            ease: 'elastic.out(1,.3)',
+            duration: 1.2,
+            delay: .15,
+          })
+        }
       }
     },
 

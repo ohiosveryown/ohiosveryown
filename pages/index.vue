@@ -1,6 +1,7 @@
 <template>
-  <main class="width">
-    <header>
+  <main ref="index" class="width">
+    <nuxt-link to="/about">to about</nuxt-link>
+    <header class="anim--in">
       <h1 class="mb-1 title">My name is Matt 👋🏼</h1>
       <adventure/>
       <h2 class="brow">
@@ -10,7 +11,7 @@
       </h2>
     </header>
 
-    <section>
+    <section class="anim--in">
       <header class="caption">
         <h3>Digital Projects ↯</h3>
         <h3>2018—2021</h3>
@@ -25,7 +26,7 @@
       </ul>
     </section>
 
-    <rainbow/>
+    <!-- <rainbow/> -->
   </main>
 </template>
 
@@ -77,5 +78,25 @@
       works,
     }),
     components: { list, rainbow, subjects, adventure },
+    methods: {
+      Entrance() {
+        gsap.from('.anim--in', {
+          opacity: 0,
+          stagger: .05,
+          delay: .2,
+          duration: .3,
+          ease: Power2.easeInOut
+        })
+      },
+    },
+    mounted() {
+      this.Entrance()
+    },
+    beforeDestroy() {
+      this.$refs.index.style.cssText = `
+        opacity: 0;
+        transition: opacity 200ms ease;
+      `
+    },
   }
 </script>

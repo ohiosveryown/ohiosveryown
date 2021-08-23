@@ -1,14 +1,13 @@
 <template>
   <figure
-    class="link"
     @mouseenter= 'Mouseenter(), hover = true'
     @mouseleave= 'Mouseleave(), hover = false'>
-    <figcaption>{{ subject.label }}.</figcaption>
+    <figcaption>{{ label }}</figcaption>
     <img
       ref= "target"
       :class = "{ hoverClass : hover }"
-      :src = "subject.img"
-      :alt="subject.label">
+      :src = "img"
+      :alt="label">
   </figure>
 </template>
 
@@ -17,10 +16,10 @@
   @import '~static/style/grid.scss';
   .link { position: relative; }
 
-  figure { display: inline-block; }
+  figure { display: inline-block; mix-blend-mode: multiply; }
 
   img {
-    --width: 14vw;
+    --width: 12vw;
     position: absolute;
     top: 6.4rem; left: 50%;
     margin: auto;
@@ -28,6 +27,7 @@
     width: var(--width); height: auto;
     object-fit: cover;
     transform: translate(-50%,-2.4rem) scale(.2, .8);
+    transform-origin: top;
     transition: opacity 300ms ease;
     opacity: 0;
     pointer-events: none;
@@ -52,28 +52,15 @@
     data: () => ({
       hover: false,
       prm: window.matchMedia('(prefers-reduced-motion: reduce)'),
-      easeValue: 'elastic.out(1,.35)',
-      subjects: [
-        {
-          label: "machine learning",
-          img: "https://res.cloudinary.com/da32ufmnf/image/upload/v1629727400/ovo-3.6/subjects/machine-learning_q26myx.png",
-        },
-        {
-          label: "design systems",
-          img: "https://res.cloudinary.com/da32ufmnf/image/upload/v1629727398/ovo-3.6/subjects/design-systems_hunt47.png",
-        },
-        {
-          label: "Vue 3",
-          img: "https://res.cloudinary.com/da32ufmnf/image/upload/v1629727540/ovo-3.6/subjects/vue_qdcweu.png",
-        },
-      ],
-      subject: ''
+      easeValue: 'elastic.out(1,.35)'
     }),
-    methods: {
-      randomSubject : function() {
-        this.subject = this.subjects[~~(Math.random() * this.subjects.length)]
-      },
 
+    props: {
+      label: { type: String },
+      img: { type: String }
+    },
+
+    methods: {
       Mouseenter() {
         if (this.prm.matches) {
         } else {
@@ -101,8 +88,6 @@
         }
       }
     },
-    created() {
-      this.randomSubject()
-    }
+    created() {}
   }
 </script>
