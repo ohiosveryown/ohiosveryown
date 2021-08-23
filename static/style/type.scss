@@ -3,19 +3,19 @@
 @font-face {
   font-family: "tomato-grotesk";
   src: url("~/static/type/tomato-grotesk.woff2") format("woff2");
-  font-display: swap;
+  font-display: optional;
 }
 
 @font-face {
   font-family: "gt-alpina-fine";
   src: url("~/static/type/gt-alpina-fine.woff2") format("woff2");
-  font-display: swap;
+  font-display: optional;
 }
 
 @font-face {
   font-family: "gt-alpina-thin";
   src: url("~/static/type/gt-alpina-thin.woff2") format("woff2");
-  font-display: swap;
+  font-display: optional;
 }
 
 .title {

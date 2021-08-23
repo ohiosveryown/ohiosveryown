@@ -59,6 +59,7 @@
   }
 
   h4:before {
+    display: none;
     content: "\219D";
     position: absolute;
     top: -.3rem; left: -2vw;
@@ -68,7 +69,8 @@
     transform: translateX(-.8rem);
     transition: transform 200ms ease, opacity 300ms ease;
     will-change: transform, opacity;
-    @include breakpoint(lg) { top: .3rem; }
+    /* @include breakpoint(mdl) { display: inherit; } */
+    @include breakpoint(lg) { display: inherit; top: .3rem; }
     @include breakpoint(xl) { top: 1.4rem; }
   }
 
