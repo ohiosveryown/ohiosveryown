@@ -86,7 +86,7 @@
           gsap.from('.anim--in', {
             opacity: 0,
             stagger: .05,
-            delay: .2,
+            delay: .4,
             duration: .3,
             ease: Power2.easeInOut
           })
