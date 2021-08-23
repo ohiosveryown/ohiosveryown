@@ -133,27 +133,34 @@
   export default {
     data: () => ({
       hoverEmail: false,
+      prm: window.matchMedia('(prefers-reduced-motion: reduce)'),
     }),
     components: { rainbow, arrow, hover },
     methods: {
       Entrance() {
-        gsap.from('.anim--in', {
-          opacity: 0,
-          stagger: .05,
-          // delay: .2,
-          duration: .2,
-          ease: Power2.easeInOut
-        })
+        if (this.prm.matches) {
+        } else {
+          gsap.from('.anim--in', {
+            opacity: 0,
+            stagger: .05,
+            duration: .2,
+            ease: Power2.easeInOut
+          })
+        }
       },
     },
     mounted() {
       this.Entrance()
     },
     beforeDestroy() {
-      this.$refs.index.style.cssText = `
-        opacity: 0;
-        transition: opacity 200ms ease;
-      `
+      if (this.prm.matches) {
+
+      } else {
+        this.$refs.index.style.cssText = `
+          opacity: 0;
+          transition: opacity 200ms ease;
+        `
+      }
     },
   }
 </script>

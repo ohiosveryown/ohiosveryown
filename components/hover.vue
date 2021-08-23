@@ -54,12 +54,10 @@
       prm: window.matchMedia('(prefers-reduced-motion: reduce)'),
       easeValue: 'elastic.out(1,.35)'
     }),
-
     props: {
       label: { type: String },
       img: { type: String }
     },
-
     methods: {
       Mouseenter() {
         if (this.prm.matches) {
@@ -73,7 +71,6 @@
           })
         }
       },
-
       Mouseleave() {
         if (this.prm.matches) {
         } else {
