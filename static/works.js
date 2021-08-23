@@ -23,7 +23,7 @@ export const works = [
     id: 3,
     contribution: 'Design',
     name: 'Mailchimp Customer Journey',
-    excerpt: "Re-architecting Mailchimp’s highest revenue journey to help users find the right audience.",
+    excerpt: "Re-architecting Mailchimp’s highest revenue journey to help users find and reach the right audience.",
     video: 'https://res.cloudinary.com/da32ufmnf/video/upload/v1595993472/mc-send/send_eugnva.mp4',
     img: 'https://res.cloudinary.com/da32ufmnf/image/upload/v1596477789/mc-send/01_2x_ab9xk9.jpg',
     link: 'mc-send',

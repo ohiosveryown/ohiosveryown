@@ -114,17 +114,17 @@
     },
     data: () => ({
       hover: false,
+      mq: matchMedia( '(max-width: 1100px)' ),
+      prm: window.matchMedia('(prefers-reduced-motion: reduce)'),
     }),
     methods: {
       smallVideo: function() {
-        const mq = matchMedia( '(max-width: 1100px)' );
-        if (mq.matches) {
+        if (this.mq.matches) {
           this.$refs.video.src = "https://res.cloudinary.com/da32ufmnf/video/upload/v1629475132/ovo-3.6/sm_xenrhs.mp4"
         } else {}
       },
       reducedMotion: function() {
-        const prm = window.matchMedia('(prefers-reduced-motion: reduce)');
-        if (prm.matches) {
+        if (this.prm.matches) {
           // this.$refs.video.autoplay = 'false'; doesn't work 🤔
           this.$refs.video.src = ""
         } else {}

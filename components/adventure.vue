@@ -5,7 +5,7 @@
       :class = "{ active : hover }">
       Let the algorithms decide your fate — clicking here will take you to a random case study
     </article>
-    <nuxt-link :to=" '/' + work.link">
+    <nuxt-link :to=" '/' + adventureWork.link">
       <button
         @mouseenter = 'Mouseenter(), hover = true'
         @mouseleave = 'Mouseleave(), hover = false'
@@ -33,13 +33,13 @@
     transform: rotate(3deg) translateY(.2rem);
     opacity: 0;
     transition: all 400ms ease;
-    @include breakpoint(mdl) { top: -7rem; left: 12rem; width: 34ch; font-size: 1.3rem; }
-    @include breakpoint(lg) { top: -8rem; left: 14rem; width: 38ch; font-size: 1.6rem; }
+    @include breakpoint(mdl) { top: -7.4rem; left: 12rem; width: 34ch; font-size: 1.3rem; }
+    /* @include breakpoint(lg) { top: -8rem; left: 14rem; width: 38ch; font-size: 1.6rem; } */
   }
 
   .active {
     opacity: 1;
-    transform: rotate(3deg) translateY(0);
+    transform: rotate(3deg) translateY(-.2rem);
     transition: opacity 400ms ease 100ms, transform 800ms ease;
   }
 
@@ -85,23 +85,24 @@
     data() {
       return {
         works,
-        work: null,
+        adventureWork: null,
+        adventureWorks: null,
         hover: false,
       }
     },
 
     methods: {
       // on page load / mount
-      Enter() {
-        gsap.from('button', {
-          opacity: 0,
-          scale: .8,
-          rotate: '-10deg',
-          duration: 1.8,
-          delay: 2,
-          ease: 'elastic.out(1,.3)',
-        })
-      },
+      // Enter() {
+      //   gsap.from('button', {
+      //     opacity: 0,
+      //     scale: .8,
+      //     rotate: '-10deg',
+      //     duration: 1.8,
+      //     delay: 2,
+      //     ease: 'elastic.out(1,.3)',
+      //   })
+      // },
 
       Mouseenter() {
         // const tl = gsap.timeline()
@@ -131,8 +132,9 @@
     },
 
     created() {
-      this.works.splice(0,2)
-      this.work = this.works[~~(Math.random() * this.works.length)]
+      this.adventureWorks = Array.from(this.works)
+      this.adventureWorks.splice(0,2)
+      this.adventureWork = this.adventureWorks[~~(Math.random() * this.adventureWorks.length)]
     },
   }
 </script>

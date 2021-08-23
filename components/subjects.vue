@@ -5,7 +5,7 @@
     @mouseleave = 'hover = false'>
     <figcaption>{{ subject.label }}.</figcaption>
     <img
-      :class = "{ active : hover }"
+      :class = "{ hoverClass : hover }"
       :src = "subject.img"
       :alt="subject.label">
   </figure>
@@ -33,7 +33,7 @@
     will-change: transform, opacity;
   }
 
-  .active {
+  .hoverClass {
     transform: translate(-50%,0);
     transition: transform 200ms ease, opacity 320ms ease;
     opacity: 1;
@@ -53,15 +53,15 @@
       subjects: [
         {
           label: "machine learning",
-          img: "https://miro.medium.com/max/1000/1*x7P7gqjo8k2_bj2rTQWAfg.jpeg",
+          img: "https://res.cloudinary.com/da32ufmnf/image/upload/v1629727400/ovo-3.6/subjects/machine-learning_q26myx.png",
         },
         {
           label: "design systems",
-          img: "https://miro.medium.com/max/1838/1*vI3VLuqj0NPUjI6MX25RuQ.jpeg",
+          img: "https://res.cloudinary.com/da32ufmnf/image/upload/v1629727398/ovo-3.6/subjects/design-systems_hunt47.png",
         },
         {
           label: "Vue 3",
-          img: "https://www.dotcom-monitor.com/blog/wp-content/uploads/sites/3/2020/05/Vue-logo-1.png",
+          img: "https://res.cloudinary.com/da32ufmnf/image/upload/v1629727540/ovo-3.6/subjects/vue_qdcweu.png",
         },
       ],
       subject: ''
