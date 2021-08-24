@@ -45,10 +45,6 @@
     flex-direction: column;
   }
 
-  @media(pointer: fine) {
-    article:hover h4 { background: rgba(0,0,0,.05); }
-  }
-
   h5 { margin-bottom: .6rem; }
 
   h4 {
@@ -74,6 +70,10 @@
     @include breakpoint(xl) { top: 1.4rem; }
   }
 
+  @media(pointer: fine) {
+    article:hover h4 { background: rgba(0,0,0,.05); }
+  }
+
   figure {
     display: flex;
     align-items: center;
@@ -88,7 +88,6 @@
 
   video, img {
     border-radius: 12px;
-    /* border: 2px solid rgba(0,0,0,1); */
     max-width: 84%;
     max-height: 84%; height: auto;
     box-shadow: 0 4px 64px rgba(0,0,0,.32);
