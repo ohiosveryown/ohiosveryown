@@ -85,9 +85,7 @@
       hover: false,
       prm: window.matchMedia('(prefers-reduced-motion: reduce)'),
     }),
-
     methods: {
-      // on page load / mount
       Enter() {
         if (this.prm.matches) {} else {
           gsap.from(this.$refs.button, {
@@ -100,7 +98,6 @@
           })
         }
       },
-
       Mouseenter() {
         if (this.prm.matches) {} else {
           gsap.to(this.$refs.button, {
@@ -112,7 +109,6 @@
           })
         }
       },
-
       Mouseleave() {
         if (this.prm.matches) {} else {
           gsap.to(this.$refs.button, {
@@ -125,11 +121,9 @@
         }
       }
     },
-
     mounted() {
       this.Enter()
     },
-
     created() {
       this.adventureWorks = Array.from(this.works)
       this.adventureWorks.splice(0,2)

@@ -1,5 +1,6 @@
 <template>
   <div>
+    <navigation/>
     <nuxt/>
     <rainbow/>
   </div>
@@ -7,8 +8,9 @@
 
 
 <script>
+  import navigation from '~/components/navigation'
   import rainbow from '~/components/rainbow'
   export default {
-    components: { rainbow },
+    components: { navigation, rainbow },
   }
 </script>

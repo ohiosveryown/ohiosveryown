@@ -1,6 +1,5 @@
 <template>
   <main ref="index" class="width">
-    <nuxt-link to="/about">to about</nuxt-link>
     <header class="anim--in">
       <h1 class="mb-1 title">My name is Matt 👋🏼</h1>
       <adventure/>
@@ -38,12 +37,11 @@
 
   h1 {
     display: inline-flex;
-    margin: 8rem 0 2rem;
-    @include breakpoint(md) { margin: 12rem 0 2rem; color: var(--gravity); }
+    margin-bottom: 2rem;
   }
 
   h2 {
-    margin-bottom: 8.8rem;
+    margin-bottom: 5.6rem;
     @include breakpoint(md) { margin-bottom: 8.8rem; }
   }
 

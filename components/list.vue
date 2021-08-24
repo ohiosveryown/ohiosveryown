@@ -127,7 +127,6 @@
       },
       reducedMotion: function() {
         if (this.prm.matches) {
-          // this.$refs.video.autoplay = 'false'; doesn't work 🤔
           this.$refs.video.src = ""
         } else {}
       }

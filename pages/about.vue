@@ -131,6 +131,9 @@
   import arrow from '~/components/arrow'
   import hover from '~/components/hover'
   export default {
+    head: () => ({
+      title: 'ohiosveryown – about'
+    }),
     data: () => ({
       hoverEmail: false,
       prm: window.matchMedia('(prefers-reduced-motion: reduce)'),
