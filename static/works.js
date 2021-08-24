@@ -5,7 +5,7 @@ export const works = [
     name: 'Home',
     excerpt: "This site is the web presence for me, Matthew Pence; and this is the homepage.",
     video: '',
-    img: 'https://res.cloudinary.com/da32ufmnf/image/upload/v1596478444/index/home_2x_or9uof.jpg',
+    img: 'https://res.cloudinary.com/da32ufmnf/image/upload/v1629788174/ovo-3.6/home_euz7wv.png',
     link: '',
     background: '#FFD6FC',
   },

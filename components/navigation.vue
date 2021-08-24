@@ -1,21 +1,32 @@
 <template>
   <nav class="width">
-    <nuxt-link class="caption--sm" to = '/'>
+    <nuxt-link class="home caption--sm" to = '/'>
       ovo / 3.6
     </nuxt-link>
 
     <section>
       <header
-        @click = 'navOpen = !navOpen'
+        @click="navOpen = !navOpen, [ navOpen ? showList() : hideList() ]"
         class="caption--sm pointer">
-        Navigation
+        <span v-if="navOpen">
+          Close Navigation
+        </span>
+        <span v-else>Navigation</span>
         <arrow class="arrow" :class = "[ navOpen ? 'arrow-opened' : 'arrow-closed' ]"/>
       </header>
 
-      <ul class="menu">
+      <div
+        @click="navOpen = false, hideList()"
+        @mouseleave="navOpen = false, hideList()"
+        :class = "[ navOpen ? 'ulOpen' : 'ul-wrapper' ]"
+        class="ul-wrapper">
+        <ul
+        ref="list"
+        class="menu">
         <li
           v-for="work in navWorks"
           :key="work.id">
+          <nuxt-link :to="'/' + work.link">
           <div class="copy">
             <div class="name mb-0 caption">{{ work.name }}</div>
             <div class="caption--sm">{{ work.excerpt }}</div>
@@ -25,8 +36,10 @@
               :src="work.img"
               :alt="work.img">
           </figure>
+          </nuxt-link>
         </li>
       </ul>
+      </div>
     </section>
   </nav>
 </template>
@@ -41,35 +54,52 @@
     z-index: var(--zmax);
     display: flex;
     justify-content: space-between;
-    align-items: flex-end;
-    margin: 2.4rem auto 5.6rem;
-    @include breakpoint(md) { margin: 2.4rem auto 8rem; }
+    margin-bottom: 8.8rem;
+    @include breakpoint(md) { top: 4rem; margin-bottom: 12rem; }
+  }
+
+  section { position: relative; }
+
+  .ul-wrapper {
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 100ms ease;
+    will-change: opacity;
+  }
+
+  .ulOpen {
+    pointer-events: inherit;
+    opacity: 1;
+    transition: opacity 400ms ease;
   }
 
   ul {
     display: flex;
     flex-direction: column;
     position: absolute;
-    top: 3.2rem; right: 0rem;
-    height: 70vh;
+    top: 4rem; right: 0;
+    width: 93vw; height: 70vh;
     overflow: scroll;
     padding: 0 2rem 2rem;
     border-radius: 12px;
     background: #fff;
-    box-shadow: 0 20px 64px rgba(0,0,0,.28);
+    box-shadow: 0 0 40px rgba(0,0,0,.28);
+    transform: scale(.9,.7);
+    transform-origin: top right;
+    will-change: transform;
     @include breakpoint(mdl) {
       box-shadow: 0 4px 64px rgba(0,0,0,.2);
-      right: -1.2vw;
+      top: 3.2rem; right: -1.2vw;
       width: 44vw; height: 72vh;
       padding: 0 2.8rem 2.8rem;
     }
     @include breakpoint(xl) {
-      top: 5.6rem;
+      top: 1.2rem;
       width: 36vw; height: 64vh;
     }
   }
 
-  li {
+  a {
     margin: 2rem 0;
     @include breakpoint(md) {
       display: flex;
@@ -79,9 +109,16 @@
      }
   }
 
-  li:first-of-type { margin-top: 2.8rem; }
-  li:last-of-type { margin-bottom: .8rem; }
+  li {
+    margin: 2rem 0;
+    @include breakpoint(md) { margin: 0; }
+  }
+
+  a:first-of-type { margin-top: 2.8rem; }
+  a:last-of-type { margin-bottom: .8rem; }
   li:hover { img { transform: scale(1.1); }}
+
+  .home, .home:first-of-type { margin: 0; }
 
   @media (pointer: coarse) {
     li:hover { img { transform: scale(1); }}
@@ -158,10 +195,33 @@
   export default {
     data: () => ({
       prm: window.matchMedia('(prefers-reduced-motion: reduce)'),
-      navOpen: true,
+      navOpen: false,
       works,
     }),
     components: { arrow },
+    methods: {
+      showList() {
+        if (this.prm.matches) {} else {
+          gsap.to(this.$refs.list, {
+            duration: .6,
+            scaleX: 1,
+            scaleY: 1,
+            ease: 'elastic.out(1,.5)',
+          })
+        }
+      },
+      hideList() {
+        if (this.prm.matches) {} else {
+          gsap.to(this.$refs.list, {
+            duration: .1,
+            delay: .4,
+            scaleX: .9,
+            scaleY: .7,
+            ease: 'elastic.out(1,.5)',
+          })
+        }
+      },
+    },
     created() {
       this.navWorks = Array.from(this.works)
       // this.navWorks.splice(0,2)

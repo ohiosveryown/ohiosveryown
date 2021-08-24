@@ -1,6 +1,5 @@
 <template>
   <main ref="index" class="width">
-    <nuxt-link to="/">to home</nuxt-link>
     <header class="anim--in">
       <h1 class="mb-1 title">Information</h1>
       <h2 class="brow">
@@ -65,8 +64,8 @@
 
   h1 {
     display: inline-flex;
-    margin: 8rem 0 2rem;
-    @include breakpoint(md) { margin: 12rem 0 2rem; color: var(--gravity); }
+    margin-bottom: 2rem;
+    @include breakpoint(md) { margin-bottom: 2rem; color: var(--gravity); }
   }
 
   section {
