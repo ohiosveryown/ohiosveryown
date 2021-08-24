@@ -24,7 +24,7 @@
         ref="list"
         class="menu">
         <li
-          v-for="work in navWorks"
+          v-for="work in works"
           :key="work.id">
           <nuxt-link :to="'/' + work.link">
           <div class="copy">
@@ -48,14 +48,24 @@
 <style lang='scss' scoped>
   @import '~static/style/grid.scss';
 
+  .home, header {
+    border-radius: 100px;
+    /* border: .5px solid rgba(0,0,0,.1); */
+    padding: 1rem;
+    backdrop-filter: blur(6px);
+  }
+
+  .home { transform: translateX(-1rem); }
+  header { transform: translateX(1rem); }
+
   nav {
     position: sticky;
-    top: 2.4rem;
+    top: 1.6rem;
     z-index: var(--zmax);
     display: flex;
     justify-content: space-between;
     margin-bottom: 8.8rem;
-    @include breakpoint(md) { top: 4rem; margin-bottom: 12rem; }
+    @include breakpoint(md) { top: 2.4rem; margin-bottom: 12rem; }
   }
 
   section { position: relative; }
@@ -77,7 +87,8 @@
     display: flex;
     flex-direction: column;
     position: absolute;
-    top: 4rem; right: 0;
+    top: 5.6rem; right: 0;
+    max-height: 72rem;
     width: 93vw; height: 70vh;
     overflow: scroll;
     padding: 0 2rem 2rem;
@@ -89,21 +100,26 @@
     will-change: transform;
     @include breakpoint(mdl) {
       box-shadow: 0 4px 64px rgba(0,0,0,.2);
-      top: 3.2rem; right: -1.2vw;
+      top: 4.8rem; right: -1.2vw;
       width: 44vw; height: 72vh;
       padding: 0 2.8rem 2.8rem;
     }
     @include breakpoint(xl) {
-      top: 1.2rem;
+      top: 6.2rem;
       width: 36vw; height: 64vh;
     }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    ul { transform: scale(1); }
+    .ul-wrapper, .ulOpen { transition: opacity 100ms ease; }
   }
 
   a {
     margin: 2rem 0;
     @include breakpoint(md) {
       display: flex;
-      align-items: center;
+      align-items: flex-end;
       justify-content: space-between;
       margin: 2rem 0;
      }
@@ -137,10 +153,11 @@
     width: max-content;
     transition: background 200ms ease;
     will-change: background;
-    @include breakpoint(md) { margin-bottom: 0; }
+    /* @include breakpoint(md) { margin-bottom: 0; } */
   }
 
   @media(pointer: fine) {
+    .name { margin-bottom: .4rem; }
     li:hover .name { background: rgba(0,0,0,.05); }
   }
 
@@ -195,12 +212,14 @@
   export default {
     data: () => ({
       prm: window.matchMedia('(prefers-reduced-motion: reduce)'),
+      getHTML: document.documentElement,
       navOpen: false,
       works,
     }),
     components: { arrow },
     methods: {
       showList() {
+        this.getHTML.classList.add('lock')
         if (this.prm.matches) {} else {
           gsap.to(this.$refs.list, {
             duration: .6,
@@ -211,6 +230,7 @@
         }
       },
       hideList() {
+        this.getHTML.classList.remove('lock')
         if (this.prm.matches) {} else {
           gsap.to(this.$refs.list, {
             duration: .1,
@@ -221,10 +241,6 @@
           })
         }
       },
-    },
-    created() {
-      this.navWorks = Array.from(this.works)
-      // this.navWorks.splice(0,2)
     },
   }
 </script>

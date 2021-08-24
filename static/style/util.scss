@@ -1,7 +1,7 @@
 @import '~/static/style/grid.scss';
-
+.lock { overflow: hidden !important; }
 .debug { border: 2px solid hotpink; }
-.pointer { &:hover { cursor: pointer; } }
+.pointer { &:hover { cursor: pointer; }}
 .width {
   position: relative;
   margin: 0 auto;
