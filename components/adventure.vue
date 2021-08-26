@@ -33,9 +33,8 @@
     line-height: 1.2;
     transform: rotate(3deg) translateY(.2rem);
     opacity: 0;
-    transition: all 400ms ease;
+    transition: opacity 400ms ease, transform 400ms ease;
     @include breakpoint(mdl) { top: -7.4rem; left: 12rem; width: 34ch; font-size: 1.3rem; }
-    /* @include breakpoint(lg) { top: -8rem; left: 14rem; width: 38ch; font-size: 1.6rem; } */
   }
 
   .active {
@@ -93,7 +92,7 @@
             scale: .8,
             rotate: '-10deg',
             duration: 1.2,
-            delay: 2.8,
+            delay: 1,
             ease: 'elastic.out(1.25,.3)',
           })
         }
