@@ -24,17 +24,17 @@
         ref="list"
         class="menu">
         <li
-          v-for="work in works"
-          :key="work.id">
-          <nuxt-link :to="'/' + work.link">
+          v-for="project in projects"
+          :key="project.id">
+          <nuxt-link :to="'/' + project.link">
           <div class="copy">
-            <div class="name mb-0 caption">{{ work.name }}</div>
-            <div class="caption--sm">{{ work.excerpt }}</div>
+            <div class="name mb-0 caption">{{ project.name }}</div>
+            <div class="caption--sm">{{ project.excerpt }}</div>
           </div>
-          <figure :style= "{ background: work.background }">
+          <figure :style= "{ background: project.background }">
             <img
-              :src="work.img"
-              :alt="work.img">
+              :src="project.img"
+              :alt="project.img">
           </figure>
           </nuxt-link>
         </li>
@@ -207,14 +207,14 @@
 
 
 <script>
-  import { works } from '~/static/works'
+  import { projects } from '~/static/projects'
   import arrow from '~/components/arrow'
   export default {
     data: () => ({
       prm: window.matchMedia('(prefers-reduced-motion: reduce)'),
       getHTML: document.documentElement,
       navOpen: false,
-      works,
+      projects,
     }),
     components: { arrow },
     methods: {

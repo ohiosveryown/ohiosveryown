@@ -18,9 +18,9 @@
 
       <ul>
         <list
-          v-for="work in works"
-          :work="work"
-          :key="work.id"
+          v-for="project in projects"
+          :project="project"
+          :key="project.id"
         />
       </ul>
     </section>
@@ -63,7 +63,7 @@
 
 
 <script>
-  import { works } from '~/static/works'
+  import { projects } from '~/static/projects'
   import list from '~/components/list'
   import adventure from '~/components/adventure'
   import rainbow from '~/components/rainbow'
@@ -73,7 +73,7 @@
       title: 'ohiosveryown'
     }),
     data: () => ({
-      works,
+      projects,
       prm: window.matchMedia('(prefers-reduced-motion: reduce)'),
     }),
     components: { list, rainbow, subjects, adventure },

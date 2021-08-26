@@ -5,7 +5,7 @@
       :class = "{ active : hover }">
       Let the algorithms decide your fate — clicking here will take you to a random project page
     </article>
-    <nuxt-link :to=" '/' + adventureWork.link">
+    <nuxt-link :to=" '/' + adventureproject.link">
       <button
         ref= "button"
         class="uc"
@@ -75,12 +75,12 @@
 
 
 <script>
-  import { works } from '../static/works'
+  import { projects } from '../static/projects'
   export default {
     data: () => ({
-      works,
-      adventureWork: null,
-      adventureWorks: null,
+      projects,
+      adventureproject: null,
+      adventureprojects: null,
       hover: false,
       prm: window.matchMedia('(prefers-reduced-motion: reduce)'),
     }),
@@ -124,9 +124,9 @@
       this.Enter()
     },
     created() {
-      this.adventureWorks = Array.from(this.works)
-      this.adventureWorks.splice(0,2)
-      this.adventureWork = this.adventureWorks[~~(Math.random() * this.adventureWorks.length)]
+      this.adventureprojects = Array.from(this.projects)
+      this.adventureprojects.splice(0,2)
+      this.adventureproject = this.adventureprojects[~~(Math.random() * this.adventureprojects.length)]
     },
   }
 </script>

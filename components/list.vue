@@ -1,30 +1,30 @@
 <template>
   <li>
-    <nuxt-link :to = "'/' + work.link">
+    <nuxt-link :to = "'/' + project.link">
       <article
         @mouseenter = 'hover = true'
         @mouseleave = 'hover = false'
         >
-        <h5 class="caption--sm">{{ work.contribution }}</h5>
-        <h4 class="p">{{ work.name }}</h4>
-        <p class="caption">{{ work.excerpt }}</p>
+        <h5 class="caption--sm">{{ project.contribution }}</h5>
+        <h4 class="p">{{ project.name }}</h4>
+        <p class="caption">{{ project.excerpt }}</p>
       </article>
     </nuxt-link>
 
     <figure
       :class = "{ active : hover }"
-      :style = "{ background: work.background }"
+      :style = "{ background: project.background }"
     >
       <video
         ref="video"
-        :poster = "work.img"
+        :poster = "project.img"
         autoplay = "autoplay"
         playsinline = ""
         loop = "loop"
         muted
       >
         <source
-          :src = "work.video"
+          :src = "project.video"
           media = "all and (min-width: 1100px)"
         />
       </video>
@@ -111,7 +111,7 @@
 <script>
   export default {
     props: {
-      work: Object
+      project: Object
     },
     data: () => ({
       hover: false,

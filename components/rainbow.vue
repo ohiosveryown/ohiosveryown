@@ -25,12 +25,16 @@
   .rainbow {
     position: fixed;
     z-index: var(--zmin);
-    top: 0vh; right: 0;
+    top: 0; right: 0;
     width: 100vw; height: 100vh;
     filter: blur(80px) saturate(1.5);
     will-change: transform, opacity;
     @include breakpoint(md) { top: 0; right: 0; bottom: 0; }
     @include breakpoint(mdl) { width: 46vw; height: 100vh; }
+  }
+
+  .rainbow--sm {
+    filter: blur(0) saturate(1.5);
   }
 
   .area {

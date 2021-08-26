@@ -16,6 +16,8 @@
 }
 
 .pointer { cursor: pointer; }
+.elevation-00 { box-shadow: var(--elevation-00); }
+.elevation-01 { box-shadow: var(--elevation-01); }
 
 @media(pointer: fine) { .link:hover { opacity: 1; }}
 
