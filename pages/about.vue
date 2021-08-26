@@ -73,6 +73,10 @@
     @include breakpoint(mdl) { width: grid-width(7); }
   }
 
+  .p {
+    @include breakpoint(md) { font-size: 2vw; }
+  }
+
   p + p { text-indent: 2ch; @include breakpoint(mdl) { text-indent: 3ch; }}
   a, figcaption, figure { text-indent: 0ch; }
 

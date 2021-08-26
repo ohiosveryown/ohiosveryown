@@ -26,7 +26,7 @@ export const works = [
     excerpt: "Re-architecting the highest revenue journey to help users find and reach the right audience.",
     video: 'https://res.cloudinary.com/da32ufmnf/video/upload/v1595993472/mc-send/send_eugnva.mp4',
     img: 'https://res.cloudinary.com/da32ufmnf/image/upload/v1596477789/mc-send/01_2x_ab9xk9.jpg',
-    link: 'mc-send',
+    link: 'projects/mailchimp-core-journey',
     background: 'var(--mailchimp)',
   },
   {
