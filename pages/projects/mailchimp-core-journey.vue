@@ -51,57 +51,13 @@
       </figure>
 
       <figure class="space size--half">
-        <div class="bleed--full mailchimp-02">
-          <img
-            class="elevation-00 border--full smaller"
-            src="https://res.cloudinary.com/da32ufmnf/image/upload/v1629946961/ovo-3.6/mailchimp-core-journey/challenges_ugzsoc.png"
-            alt="Campaign Review">
-        </div>
-        <figcaption>
-          <span>Fig Nº02</span>
-          My first tasks were working with research and product to define user and business challenges. I then facilitated a design studio with cross-functional peers to create alignment and generate ideas; inclusivity 🤲
-        </figcaption>
-      </figure>
-
-      <figure class="space size--half">
-        <div class="bleed--full mailchimp-02">
-          <img
-            class="elevation-00 border--full smaller"
-            src="https://res.cloudinary.com/da32ufmnf/image/upload/v1629946961/ovo-3.6/mailchimp-core-journey/challenges_ugzsoc.png"
-            alt="Campaign Review">
-        </div>
-        <figcaption>
-          <span>Fig Nº02</span>
-          My first tasks were working with research and product to define user and business challenges. I then facilitated a design studio with cross-functional peers to create alignment and generate ideas; inclusivity 🤲
-        </figcaption>
-      </figure>
-
-      <p class="p space">After defining the primary flows, I jumped into prototype mode to quickly validate the journey. Sometimes I find static mocks to be difficult to really get a sense for how the experience might feel. It’s also easier to share with internal and externals folks to get a temperature check.</p>
-
-      <figure class="space">
-        <div class="bleed--full mailchimp-02">
-          <video
-            class="elevation-01 border--full"
-            autoplay="autoplay"
-            playsinline=""
-            loop="loop">
-            <source src="https://res.cloudinary.com/da32ufmnf/video/upload/v1625590756/menu/refresh_v06zoo.mp4"><source>
-          </video>
-        </div>
-        <figcaption>
-          <span>Fig Nº02</span>
-          My first tasks were working with research and product to define user and business challenges. I then facilitated a design studio with cross-functional peers to create alignment and generate ideas; inclusivity 🤲
-        </figcaption>
-      </figure>
-
-      <figure class="space size--half">
         <div>
           <img
             src="https://res.cloudinary.com/da32ufmnf/image/upload/v1629956049/ovo-3.6/mailchimp-core-journey/studio-01_t5l4st.jpg"
             alt="Campaign Review">
         </div>
         <figcaption>
-          <span>Fig Nº02</span>
+          <span>Fig Nº03</span>
           Coordinating a design studio with stakeholders from design, product, marketing, research, support, and engineering – a whole lot of folks
         </figcaption>
       </figure>
@@ -113,8 +69,24 @@
             alt="Campaign Review">
         </div>
         <figcaption>
-          <span>Fig Nº02</span>
+          <span>Fig Nº04</span>
           Obligatory dot voting
+        </figcaption>
+      </figure>
+
+      <figure class="space">
+        <div class="bleed--half mailchimp-02">
+          <video
+            class="elevation-00 smaller border--half"
+            autoplay="autoplay"
+            playsinline=""
+            loop="loop">
+            <source src="https://res.cloudinary.com/da32ufmnf/video/upload/v1630012387/ovo-3.6/mailchimp-core-journey/paper_mfltkg.mp4"><source>
+          </video>
+        </div>
+        <figcaption>
+          <span>Fig Nº05</span>
+          User Scenarios, stories, etc.
         </figcaption>
       </figure>
 

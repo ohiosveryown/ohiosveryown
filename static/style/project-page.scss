@@ -59,9 +59,9 @@ ul {
  .border--full { border-radius: 8px; }
 
  .bleed--half {
-    // margin-bottom: .8rem;
     padding: 7.2vw 7.2vw 0;
     overflow: hidden;
+    box-shadow: 0 .5px 0 rgba(0,0,0,.1);
     background: ghostwhite;
     @include breakpoint(md) { padding: 6.4vw 6.4vw 0; }
  }
@@ -77,6 +77,6 @@ ul {
  .smaller {
    @include breakpoint(md) {
     margin: 0 auto;
-    width: 80%; height: auto;
+    width: 64%; height: auto;
    }
  }
