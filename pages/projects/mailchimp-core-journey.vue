@@ -18,7 +18,7 @@
           class="link"
           target="_blank"
           href="https://mailchimp.com">
-          Mailchimp</a> helps users send over a million emails per day, but as they become more sophisticated marketers, they'll need support to reach larger audiences via channels and platforms that they may be intimidated by. How might we create a connective, intuitive experience to support these needs for Mailchimp's most profitable product?</h3>
+          Mailchimp</a><arrow class="arrow"/> helps users send over a million emails per day, but as they become more sophisticated marketers, they need support to reach larger audiences via channels and platforms that they may be intimidated by. How might we create a connective, intuitive experience to support these needs for Mailchimp's most profitable product?</h3>
     </header>
 
     <section>
@@ -133,10 +133,12 @@
 
 
 <script>
+  import arrow from '~/components/arrow'
   export default {
     head: () => ({
       title: 'ohiosveryown – mailchimp core journey'
     }),
-    layout: 'project-page-layout'
+    layout: 'project-page-layout',
+    components: { arrow },
   }
 </script>

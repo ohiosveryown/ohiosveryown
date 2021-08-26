@@ -11,6 +11,8 @@ main { position: relative; z-index: var(--z1); }
   }
 }
 
+.arrow { transform: rotate(-135deg); }
+
 .size--half > figcaption { max-width: 100%; }
 
 .size--half > .bleed--full {
@@ -33,6 +35,7 @@ ul {
 .space {
   margin-bottom: 6.4rem;
   @include breakpoint(md) { margin-bottom: 11.2rem; }
+  @include breakpoint(xl) { margin-bottom: 18rem; }
  }
 
  figure { overflow: hidden; }
