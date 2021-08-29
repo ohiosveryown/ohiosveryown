@@ -2,6 +2,8 @@
 
 .mailchimp-02 { background: #FEF8EF !important; }
 
+p + p { text-indent: 2ch; }
+
 main { position: relative; z-index: var(--z1); }
 .caption--sm { font-family: 'tomato-grotesk', var(--system-ui); }
 .size--half {

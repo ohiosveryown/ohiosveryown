@@ -27,7 +27,7 @@
           <img
             class="elevation-01 border--half"
           src="https://res.cloudinary.com/da32ufmnf/image/upload/v1629946707/ovo-3.6/mailchimp-core-journey/hero_u8dmae.jpg"
-          alt="Campaign Review">
+          alt="Campaign review">
         </div>
         <figcaption>
           <span>Fig Nº01</span>
@@ -40,9 +40,9 @@
       <figure class="space">
         <div class="bleed--full mailchimp-02">
           <img
-            class="elevation-00 border--full smaller"
+            class="elevation-02 border--full smaller"
             src="https://res.cloudinary.com/da32ufmnf/image/upload/v1629946961/ovo-3.6/mailchimp-core-journey/challenges_ugzsoc.png"
-            alt="Campaign Review">
+            alt="Challenges document">
         </div>
         <figcaption>
           <span>Fig Nº02</span>
@@ -54,7 +54,7 @@
         <div>
           <img
             src="https://res.cloudinary.com/da32ufmnf/image/upload/v1629956049/ovo-3.6/mailchimp-core-journey/studio-01_t5l4st.jpg"
-            alt="Campaign Review">
+            alt="Design studio workshop">
         </div>
         <figcaption>
           <span>Fig Nº03</span>
@@ -66,7 +66,7 @@
         <div>
           <img
             src="https://res.cloudinary.com/da32ufmnf/image/upload/v1629956049/ovo-3.6/mailchimp-core-journey/studio-02_qklqzi.jpg"
-            alt="Campaign Review">
+            alt="Dot voting exercise">
         </div>
         <figcaption>
           <span>Fig Nº04</span>
@@ -77,16 +77,152 @@
       <figure class="space">
         <div class="bleed--half mailchimp-02">
           <video
-            class="elevation-00 smaller border--half"
+            ref="vid"
+            class="elevation-02 smaller border--half"
             autoplay="autoplay"
             playsinline=""
+            muted="true"
             loop="loop">
-            <source src="https://res.cloudinary.com/da32ufmnf/video/upload/v1630012387/ovo-3.6/mailchimp-core-journey/paper_mfltkg.mp4"><source>
+            <source src="https://res.cloudinary.com/da32ufmnf/video/upload/v1630012387/ovo-3.6/mailchimp-core-journey/paper_mfltkg.mp4#t=0.1"><source>
           </video>
         </div>
         <figcaption>
           <span>Fig Nº05</span>
           User Scenarios, stories, etc.
+        </figcaption>
+      </figure>
+
+      <figure class="space">
+        <div class="bleed--full mailchimp-02">
+          <video
+            ref="vid"
+            class=""
+            autoplay="autoplay"
+            playsinline=""
+            muted="true"
+            loop="loop">
+            <source src="https://res.cloudinary.com/da32ufmnf/video/upload/v1630267499/ovo-3.6/mailchimp-core-journey/f2_pqnplj.mp4#t=0.1"><source>
+          </video>
+        </div>
+        <figcaption>
+          <span>Fig Nº06</span>
+          Iterations of user flows
+        </figcaption>
+      </figure>
+
+      <p class="p">After defining the primary flows, I jumped into prototype mode to quickly validate the journey. Sometimes I find static mocks to be difficult to really get a sense for how the experience might feel. It’s also easier to share with internal and externals folks to get a temperature check.</p>
+      <p class="p space">Below was an initial concept of the flow, but it was also important to emphasis the shared elements transitions early to see if it tracked as a way-finding device and to get a temperature check with engineering.</p>
+
+      <figure class="space">
+        <div class="bleed--full mailchimp-02">
+          <video
+            ref="vid"
+            class="border--full elevation-02"
+            autoplay="autoplay"
+            playsinline=""
+            muted="true"
+            loop="loop">
+            <source src="https://res.cloudinary.com/da32ufmnf/video/upload/v1630268588/ovo-3.6/mailchimp-core-journey/flow-concept-01-o_ndjg0x.mp4#t=0.1"><source>
+          </video>
+        </div>
+        <figcaption>
+          <span>Fig Nº07</span>
+          Initial concept
+        </figcaption>
+      </figure>
+
+      <figure class="space">
+        <div class="bleed--full mailchimp-02">
+          <video
+            ref="vid"
+            class="border--full elevation-02"
+            autoplay="autoplay"
+            playsinline=""
+            muted="true"
+            loop="loop">
+            <source src="https://res.cloudinary.com/da32ufmnf/video/upload/v1630270854/ovo-3.6/mailchimp-core-journey/concept-02-o_uciqrl.mp4#t=0.1"><source>
+          </video>
+        </div>
+        <figcaption>
+          <span>Fig Nº08</span>
+          Iterative concept
+        </figcaption>
+      </figure>
+
+      <figure class="space size--half">
+        <div class="bleed--full mailchimp-02">
+          <img
+            src="https://res.cloudinary.com/da32ufmnf/image/upload/v1630269925/ovo-3.6/mailchimp-core-journey/template-selection_oalbh1.png"
+            alt="Template selection">
+        </div>
+        <figcaption>
+          <span>Fig Nº09</span>
+          Template selection
+        </figcaption>
+      </figure>
+
+      <figure class="space size--half">
+        <div class="bleed--full mailchimp-02">
+          <img
+            src="https://res.cloudinary.com/da32ufmnf/image/upload/v1630269306/ovo-3.6/mailchimp-core-journey/exploded_ejmbjk.jpg"
+            alt="Campaign details">
+        </div>
+        <figcaption>
+          <span>Fig Nº10</span>
+          Campaign details
+        </figcaption>
+      </figure>
+
+      <figure class="space">
+        <div class="bleed--full mailchimp-02">
+          <img
+            class="elevation-00 border--full"
+            src="https://res.cloudinary.com/da32ufmnf/image/upload/v1630270333/ovo-3.6/mailchimp-core-journey/edit_bgpj3n.jpg"
+            alt="Designing / editor">
+        </div>
+        <figcaption>
+          <span>Fig Nº11</span>
+          Designing / editor
+        </figcaption>
+      </figure>
+
+      <figure class="space">
+        <div class="bleed--full mailchimp-02">
+          <img
+            class="elevation-02 border--full"
+            src="https://res.cloudinary.com/da32ufmnf/image/upload/v1630271423/ovo-3.6/mailchimp-core-journey/segmentation_vut4s6.jpg"
+            alt="Segmentation / Audience selection">
+        </div>
+        <figcaption>
+          <span>Fig Nº12</span>
+          Segmentation / Audience selection
+        </figcaption>
+      </figure>
+
+      <p class="p mb-4">While this is just an abridged showcase of the crazy amount of work that went into this project, I’d be happy to extrapolate and share more if you’re curious. After settling in on a visual direction, I began prototyping in react to test the design with users. In the old, previous experience, getting started and sending a campaign was entirely isolated and a disjointed experience. More importantly:</p>
+      <blockquote class="subtitle space">“...researched show 5 out of 7 people failed to send a campaign. With the redesigned effort, customers now have a 85% on average success rate for sending a campaign.”</blockquote>
+
+      <figure class="space size--half">
+        <div>
+          <img
+            src="https://res.cloudinary.com/da32ufmnf/image/upload/v1630272371/ovo-3.6/mailchimp-core-journey/usertesting-01_xexzmo.jpg"
+            alt="User testing feedback">
+        </div>
+        <figcaption>
+          <span>Fig Nº13</span>
+          User-testing the react prototype
+        </figcaption>
+      </figure>
+
+      <figure class="space size--half">
+        <div>
+          <img
+            src="https://res.cloudinary.com/da32ufmnf/image/upload/v1630272371/ovo-3.6/mailchimp-core-journey/usertesting-02_vqmhic.jpg"
+            alt="User testing feedback">
+        </div>
+        <figcaption>
+          <span>Fig Nº14</span>
+          More feedback from usability testing
         </figcaption>
       </figure>
 
@@ -110,7 +246,29 @@
     head: () => ({
       title: 'ohiosveryown – mailchimp core journey'
     }),
+    data: () => ({
+      prm: window.matchMedia('(prefers-reduced-motion: reduce)'),
+    }),
     layout: 'project-page-layout',
     components: { arrow },
+    methods: {
+      // reducedMotion: function() {
+      //   if (this.prm.matches) {
+      //     this.$refs.vid.removeAttribute('autoplay')
+      //     this.$refs.vid.controls = true
+      //   } else {}
+      // }
+    },
+    mounted() {
+      // this.reducedMotion()
+      const prm = window.matchMedia('(prefers-reduced-motion: reduce)')
+      const videos = document.querySelectorAll('video')
+      videos.forEach((video) => {
+        if (prm.matches) {
+          video.removeAttribute('autoplay')
+          video.controls = true
+        } else {}
+      })
+    }
   }
 </script>
