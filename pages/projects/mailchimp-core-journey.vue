@@ -9,23 +9,26 @@
           <span>Design, Front-end Development</span>
         </li>
         <li>
-          <span class="op-6 mr-0">Duration:</span>
+          <span class="op-6 mr-0 mb-00">Duration:</span>
           <span>2019–2020</span>
         </li>
+        <!-- <li>
+          <span class="op-6 mr-0">As a forewarning, this page has muted video autoplaying</span>
+        </li> -->
       </ul>
       <h3 class="subtitle">
         <a
           class="link"
           target="_blank"
           href="https://mailchimp.com">
-          Mailchimp</a><arrow class="arrow"/> helps users send over a million emails per day, but as they become more sophisticated marketers, they need support to reach larger audiences via channels and platforms that they may be intimidated by. How might we create a connective, intuitive experience to support these needs for Mailchimp's most profitable product?</h3>
+          Mailchimp</a><arrow class="arrow"/> helps marketers send over a billion emails per day, but as small and medium sized businesses grow, the need to reach the right audience with the right touchpoint evolves. My time at Mailchimp has been spent partially working on how we'll support users as they mature into the product and use features and tools that compliment and integrate with the core product offering, email.</h3>
     </header>
 
     <section>
       <figure class="space">
         <div class="hero bleed--half">
           <img
-            class="elevation-01 border--half"
+            class="elevation-01 radius--small"
           src="https://res.cloudinary.com/da32ufmnf/image/upload/v1629946707/ovo-3.6/mailchimp-core-journey/hero_u8dmae.jpg"
           alt="Campaign review">
         </div>
@@ -40,7 +43,7 @@
       <figure class="space">
         <div class="bleed--full mailchimp-02">
           <img
-            class="elevation-02 border--full smaller"
+            class="elevation-02 radius--big smaller"
             src="https://res.cloudinary.com/da32ufmnf/image/upload/v1629946961/ovo-3.6/mailchimp-core-journey/challenges_ugzsoc.png"
             alt="Challenges document">
         </div>
@@ -78,7 +81,7 @@
         <div class="bleed--half mailchimp-02">
           <video
             ref="vid"
-            class="elevation-02 smaller border--half"
+            class="elevation-02 smaller radius--small"
             autoplay="autoplay"
             playsinline=""
             muted="true"
@@ -110,14 +113,14 @@
         </figcaption>
       </figure>
 
-      <p class="p">After defining the primary flows, I jumped into prototype mode to quickly validate the journey. Sometimes I find static mocks to be difficult to really get a sense for how the experience might feel. It’s also easier to share with internal and externals folks to get a temperature check.</p>
-      <p class="p space">Below was an initial concept of the flow, but it was also important to emphasis the shared elements transitions early to see if it tracked as a way-finding device and to get a temperature check with engineering.</p>
+      <p class="p">After defining the primary red routes, I began prototyping to try and validate the direction I was going. Sometimes I find static mocks to be difficult to really get a sense for how the experience might feel. Prototypes also help give context when sharing with internal and external folks – <a target="_blank" href="https://twitter.com/johnmaeda/status/518556402902925313?lang=en" class="link">a prototype is worth a thousand meetings</a>.</p>
+      <p class="p space">Seen below are initial concepts for one flow. You can see me exploring shared element transitions as a proxy for wayfinding. It also works from a storytelling perspective as you have these pieces that travel with you throughout the journey, which eventually are sent out into the world.</p>
 
       <figure class="space">
         <div class="bleed--full mailchimp-02">
           <video
             ref="vid"
-            class="border--full elevation-02"
+            class="radius--big elevation-02"
             autoplay="autoplay"
             playsinline=""
             muted="true"
@@ -135,7 +138,7 @@
         <div class="bleed--full mailchimp-02">
           <video
             ref="vid"
-            class="border--full elevation-02"
+            class="radius--big elevation-02"
             autoplay="autoplay"
             playsinline=""
             muted="true"
@@ -176,7 +179,7 @@
       <figure class="space">
         <div class="bleed--full mailchimp-02">
           <img
-            class="elevation-00 border--full"
+            class="elevation-00 radius--big"
             src="https://res.cloudinary.com/da32ufmnf/image/upload/v1630270333/ovo-3.6/mailchimp-core-journey/edit_bgpj3n.jpg"
             alt="Designing / editor">
         </div>
@@ -189,7 +192,7 @@
       <figure class="space">
         <div class="bleed--full mailchimp-02">
           <img
-            class="elevation-02 border--full"
+            class="elevation-02 radius--big"
             src="https://res.cloudinary.com/da32ufmnf/image/upload/v1630271423/ovo-3.6/mailchimp-core-journey/segmentation_vut4s6.jpg"
             alt="Segmentation / Audience selection">
         </div>
@@ -205,7 +208,7 @@
       <figure class="space size--half">
         <div>
           <img
-            src="https://res.cloudinary.com/da32ufmnf/image/upload/v1630272371/ovo-3.6/mailchimp-core-journey/usertesting-01_xexzmo.jpg"
+            src="https://res.cloudinary.com/da32ufmnf/image/upload/v1630294235/ovo-3.6/mailchimp-core-journey/usertesting-01_recarc.jpg"
             alt="User testing feedback">
         </div>
         <figcaption>
@@ -217,7 +220,7 @@
       <figure class="space size--half">
         <div>
           <img
-            src="https://res.cloudinary.com/da32ufmnf/image/upload/v1630272371/ovo-3.6/mailchimp-core-journey/usertesting-02_vqmhic.jpg"
+            src="https://res.cloudinary.com/da32ufmnf/image/upload/v1630294235/ovo-3.6/mailchimp-core-journey/usertesting-02_l8zx4u.jpg"
             alt="User testing feedback">
         </div>
         <figcaption>
@@ -264,6 +267,12 @@
       const prm = window.matchMedia('(prefers-reduced-motion: reduce)')
       const videos = document.querySelectorAll('video')
       videos.forEach((video) => {
+        video.addEventListener('mouseenter', () => {
+          video.controls = true
+        })
+        video.addEventListener('mouseleave', () => {
+          video.controls = false
+        })
         if (prm.matches) {
           video.removeAttribute('autoplay')
           video.controls = true
