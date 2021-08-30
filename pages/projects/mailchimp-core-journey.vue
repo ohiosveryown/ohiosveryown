@@ -113,7 +113,7 @@
         </figcaption>
       </figure>
 
-      <p class="p">After defining the primary red routes, I began prototyping to try and validate the direction I was going. Sometimes I find static mocks to be difficult to really get a sense for how the experience might feel. Prototypes also help give context when sharing with internal and external folks – <a target="_blank" href="https://twitter.com/johnmaeda/status/518556402902925313?lang=en" class="link">a prototype is worth a thousand meetings</a>.</p>
+      <p class="p">After defining the primary red routes, I began prototyping to try and validate the direction I was going. Sometimes I find static mocks to be difficult to really get a sense for how the experience might feel. Prototypes also help give context when sharing with internal and external folks – <a target="_blank" href="https://twitter.com/johnmaeda/status/518556402902925313?lang=en" class="link">a prototype is worth a thousand meetings</a><arrow class="arrow"/>.</p>
       <p class="p space">Seen below are initial concepts for one flow. You can see me exploring shared element transitions as a proxy for wayfinding. It also works from a storytelling perspective as you have these pieces that travel with you throughout the journey, which eventually are sent out into the world.</p>
 
       <figure class="space">

@@ -31,6 +31,16 @@ export const projects = [
   },
   {
     id: 4,
+    contribution: 'Design',
+    name: 'Mailchimp Interaction & Motion',
+    excerpt: "Creating a motion and interaction system for the Mailchimp web app.",
+    video: 'https://res.cloudinary.com/da32ufmnf/video/upload/v1595993472/mc-send/send_eugnva.mp4',
+    img: 'https://res.cloudinary.com/da32ufmnf/image/upload/v1630299684/ovo-3.6/mailchimp-motion-interaction/primitives--timings__lg_wfjd6s.jpg',
+    link: 'projects/mailchimp-core-journey',
+    background: 'var(--mailchimp)',
+  },
+  {
+    id: 5,
     contribution: 'Design / Development',
     name: 'menu.black',
     excerpt: "A ✊🏿✊🏾✊🏽 collection of black-owned restaurants celebrating the diversity of Atlanta and its food.",
@@ -40,7 +50,7 @@ export const projects = [
     background: 'var(--menu)',
   },
   {
-    id: 5,
+    id: 6,
     contribution: 'Design',
     name: 'ShootProof Galleries',
     excerpt: "Rethinking how photographers organize, share, and sell their photos – 'Focus On What Matters Most'.",
@@ -50,7 +60,7 @@ export const projects = [
     background: 'var(--shootproof)',
   },
   {
-    id: 6,
+    id: 7,
     contribution: 'Design / Development',
     name: 'Supersymmetry',
     excerpt: "A self-initiated project showcasing architecture & structural engineering and other interesting spaces.",
@@ -60,7 +70,7 @@ export const projects = [
     background: 'var(--supersymmetry)',
   },
   {
-    id: 7,
+    id: 8,
     contribution: 'Type Design',
     name: 'Blush',
     excerpt: "Designing a geometric typeface with bright tones and simple quirks; inspired by space ✨.",
@@ -70,7 +80,7 @@ export const projects = [
     background: 'var(--blush)',
   },
   {
-    id: 8,
+    id: 9,
     contribution: 'Design / Development',
     name: '000',
     excerpt: "Building the web presence for 000 – a collection of portraits by photographer Roy Handy.",
