@@ -21,7 +21,7 @@
           class="link"
           target="_blank"
           href="https://mailchimp.com">
-          Mailchimp</a><arrow class="arrow"/> helps marketers send over a billion emails per day, but as small businesses grow and evolve, the need to reach the right audience at the right touchpoint changes. My time at Mailchimp has been spent partially working on how we'll support users as they mature into the product—using features and tools that complement and integrate with the core product offering, email.</h3>
+          Mailchimp</a><arrow class="arrow"/> helps marketers send over a billion emails per day, but as small businesses grow and evolve, the need to reach the right audience at the right touchpoint changes. Part of my time at Mailchimp has been spent working on how we'll support users as they mature into the product—using features and tools that complement and integrate with the core product offering, email.</h3>
     </header>
 
     <section>
@@ -49,7 +49,7 @@
         </div>
         <figcaption>
           <span>Fig Nº02</span>
-          My first tasks were working with research and product to define user and business challenges. I then facilitated a design studio with cross-functional peers to create alignment and generate ideas; inclusivity 🤲
+          My first tasks were working with research and product to define user needs and business challenges. I then facilitated a design studio with cross-functional peers to create alignment and generate ideas; inclusivity 🤲
         </figcaption>
       </figure>
 
@@ -91,7 +91,7 @@
         </div>
         <figcaption>
           <span>Fig Nº05</span>
-          User Scenarios, stories, etc.
+          Writing user scenarios, stories, etc.
         </figcaption>
       </figure>
 
