@@ -58,7 +58,7 @@
     display: none;
     content: "\219D";
     position: absolute;
-    top: -.3rem; left: -2vw;
+    top: -.3rem; left: -2.8vw;
     opacity: 0;
     font-size: 4rem;
     line-height: 1;

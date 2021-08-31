@@ -32,7 +32,7 @@ export const projects = [
   {
     id: 4,
     contribution: 'Design',
-    name: 'Mailchimp Interaction & Motion',
+    name: 'Mailchimp Motion & Interaction',
     excerpt: "Creating a motion and interaction system for the Mailchimp web app.",
     video: 'https://res.cloudinary.com/da32ufmnf/video/upload/v1595993472/mc-send/send_eugnva.mp4',
     img: 'https://res.cloudinary.com/da32ufmnf/image/upload/v1630299684/ovo-3.6/mailchimp-motion-interaction/primitives--timings__lg_wfjd6s.jpg',
