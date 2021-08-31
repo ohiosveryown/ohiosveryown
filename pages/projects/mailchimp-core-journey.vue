@@ -21,7 +21,7 @@
           class="link"
           target="_blank"
           href="https://mailchimp.com">
-          Mailchimp</a><arrow class="arrow"/> helps marketers send over a billion emails per day, but as small and medium sized businesses grow, the need to reach the right audience with the right touchpoint evolves. My time at Mailchimp has been spent partially working on how we'll support users as they mature into the product and use features and tools that compliment and integrate with the core product offering, email.</h3>
+          Mailchimp</a><arrow class="arrow"/> helps marketers send over a billion emails per day, but as small businesses grow and evolve, the need to reach the right audience at the right touchpoint changes. My time at Mailchimp has been spent partially working on how we'll support users as they mature into the product—using features and tools that complement and integrate with the core product offering, email.</h3>
     </header>
 
     <section>
@@ -198,7 +198,7 @@
         </div>
         <figcaption>
           <span>Fig Nº12</span>
-          Segmentation / Audience selection
+          Segmentation / Audience selection – tying template selection (the thing you do first), with things like goals and audience help pre-populate some of that information for later
         </figcaption>
       </figure>
 
