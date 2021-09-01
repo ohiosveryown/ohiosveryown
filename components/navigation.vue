@@ -50,7 +50,6 @@
 
   .home, header {
     border-radius: 100px;
-    /* border: .5px solid rgba(0,0,0,.1); */
     padding: 1rem;
     backdrop-filter: blur(6px);
   }
@@ -99,7 +98,8 @@
     transform-origin: top right;
     will-change: transform;
     @include breakpoint(mdl) {
-      box-shadow: 0 4px 64px rgba(0,0,0,.2);
+      /* box-shadow: 0 4px 64px rgba(0,0,0,.2); */
+      box-shadow: 0 4px 64px rgba(0, 0, 0, 0.1);
       top: 4.8rem; right: -1.2vw;
       width: 44vw; height: 72vh;
       padding: 0 2.8rem 2.8rem;
@@ -225,7 +225,8 @@
             duration: .6,
             scaleX: 1,
             scaleY: 1,
-            ease: 'elastic.out(1,.5)',
+            // ease: 'elastic.out(1,.5)',
+            ease: 'elastic.out(1.1,.7)',
           })
         }
       },

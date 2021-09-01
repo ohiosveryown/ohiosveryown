@@ -44,10 +44,10 @@ ul {
 
  figcaption {
    font-size: 1.4rem;
-   line-height: 1.3;
+   line-height: 1.5;
    margin-top: .8rem;
    font-family: 'tomato-grotesk', var(--system-ui);
-   @include breakpoint(md) { max-width: 80%; font-size: 1.8rem; }
+   @include breakpoint(md) { max-width: 80%; font-size: 1.8rem; line-height: 1.4; }
    @include breakpoint(xl) { font-size: 2rem; }
  }
 

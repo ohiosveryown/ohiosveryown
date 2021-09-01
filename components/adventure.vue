@@ -34,7 +34,7 @@
     transform: rotate(3deg) translateY(.2rem);
     opacity: 0;
     transition: opacity 400ms ease, transform 400ms ease;
-    @include breakpoint(mdl) { top: -7.4rem; left: 12rem; width: 34ch; font-size: 1.3rem; }
+    @include breakpoint(mdl) { top: -7.4rem; left: 12rem; width: 34ch; font-size: 1.4rem; }
   }
 
   .active {
