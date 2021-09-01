@@ -228,8 +228,12 @@
           More feedback from usability testing
         </figcaption>
       </figure>
-
     </section>
+
+    <projectFooter
+      name="Supersymmetry"
+      excerpt="A self-initiated project showcasing architecture & structural engineering"
+      src="https://res.cloudinary.com/da32ufmnf/image/upload/v1596478423/supersymmetry/supersymmetry_2x_w1ol91.jpg"/>
 
   </main>
 </template>
@@ -245,6 +249,7 @@
 
 <script>
   import arrow from '~/components/arrow'
+  import projectFooter from '~/components/projectFooter'
   export default {
     head: () => ({
       title: 'ohiosveryown – mailchimp core journey'
@@ -253,7 +258,7 @@
       prm: window.matchMedia('(prefers-reduced-motion: reduce)'),
     }),
     layout: 'project-page-layout',
-    components: { arrow },
+    components: { arrow, projectFooter },
     methods: {
       // reducedMotion: function() {
       //   if (this.prm.matches) {
