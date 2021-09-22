@@ -47,7 +47,7 @@
             playsinline=""
             muted="true"
             loop="loop">
-            <source src="https://res.cloudinary.com/da32ufmnf/video/upload/v1630267499/ovo-3.6/mailchimp-core-journey/f2_pqnplj.mp4#t=0.1"><source>
+            <source src="https://res.cloudinary.com/da32ufmnf/video/upload/v1632337458/ovo-3.6/mailchimp-motion-interaction/ixd-presentation2_hhamy6.mp4#t=0.1"><source>
           </video>
         </div>
         <figcaption>
@@ -106,7 +106,7 @@
             playsinline=""
             muted="true"
             loop="loop">
-            <source src="https://res.cloudinary.com/da32ufmnf/video/upload/v1630267499/ovo-3.6/mailchimp-core-journey/f2_pqnplj.mp4#t=0.1"><source>
+            <source src="https://res.cloudinary.com/da32ufmnf/video/upload/v1632338087/ovo-3.6/mailchimp-motion-interaction/bench_yizrns.mp4#t=0.1"><source>
           </video>
         </div>
         <figcaption>
