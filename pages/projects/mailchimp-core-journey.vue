@@ -148,7 +148,7 @@
         </div>
         <figcaption>
           <span>Fig Nº08</span>
-          Iterative concept
+          Still not quite there
         </figcaption>
       </figure>
 
@@ -233,7 +233,8 @@
     <projectFooter
       name="Supersymmetry"
       excerpt="A self-initiated project showcasing architecture & structural engineering"
-      src="https://res.cloudinary.com/da32ufmnf/image/upload/v1596478423/supersymmetry/supersymmetry_2x_w1ol91.jpg"/>
+      src="https://res.cloudinary.com/da32ufmnf/image/upload/v1596478423/supersymmetry/supersymmetry_2x_w1ol91.jpg"
+    />
 
   </main>
 </template>
@@ -272,16 +273,17 @@
       const prm = window.matchMedia('(prefers-reduced-motion: reduce)')
       const videos = document.querySelectorAll('video')
       videos.forEach((video) => {
-        video.addEventListener('mouseenter', () => {
-          video.controls = true
-        })
-        video.addEventListener('mouseleave', () => {
-          video.controls = false
-        })
         if (prm.matches) {
           video.removeAttribute('autoplay')
           video.controls = true
-        } else {}
+        } else {
+          video.addEventListener('mouseenter', () => {
+            video.controls = true
+          })
+          video.addEventListener('mouseleave', () => {
+            video.controls = false
+          })
+        }
       })
     }
   }

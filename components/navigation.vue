@@ -127,7 +127,7 @@
 
   li {
     margin: 2rem 0;
-    @include breakpoint(md) { margin: 0; }
+    @include breakpoint(md) { margin: .6rem 0; }
   }
 
   a:first-of-type { margin-top: 2.8rem; }
