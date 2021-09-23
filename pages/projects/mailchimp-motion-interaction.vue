@@ -42,7 +42,7 @@
         <div class="bleed--full peach">
           <video
             ref="vid"
-            class=""
+            class="radius--big"
             autoplay="autoplay"
             playsinline=""
             muted="true"
@@ -86,7 +86,7 @@
       <figure class="space">
         <div class="peach bleed--full">
           <img
-            src="https://res.cloudinary.com/da32ufmnf/image/upload/v1632335173/ovo-3.6/mailchimp-motion-interaction/cards_qit9je.png"
+            src="https://res.cloudinary.com/da32ufmnf/image/upload/v1632411156/ovo-3.6/mailchimp-motion-interaction/cards_lptbkl.png"
             alt="Cinematic metaphors and customer experiences mapped to UI">
         </div>
         <figcaption>

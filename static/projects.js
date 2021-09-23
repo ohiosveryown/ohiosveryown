@@ -32,12 +32,13 @@ export const projects = [
   {
     id: 4,
     contribution: 'Design',
-    name: 'Mailchimp Motion & Interaction',
-    excerpt: "Creating a motion and interaction system for application in the Mailchimp web app.",
-    video: 'https://res.cloudinary.com/da32ufmnf/video/upload/v1632339849/ovo-3.6/mailchimp-motion-interaction/poster-2_ndc8py.mp4',
-    img: 'https://res.cloudinary.com/da32ufmnf/image/upload/v1630705997/ovo-3.6/mailchimp-motion-interaction/motion-poster_ujbl4a.jpg',
-    link: 'projects/mailchimp-motion-interaction',
-    background: '#C14953',
+    name: 'Mailchimp Experience Vision',
+    excerpt: "Designing end-to-end experiences across domains; bolstering Mailchimp's strategic direction.",
+    // video: 'https://res.cloudinary.com/da32ufmnf/video/upload/v1632421585/ovo-3.6/mailchimp-xv/xv2_bi8xet.mp4',
+    video: 'https://res.cloudinary.com/da32ufmnf/video/upload/v1632421584/ovo-3.6/mailchimp-xv/xv1_xeiqjj.mp4',
+    img: 'https://res.cloudinary.com/da32ufmnf/image/upload/v1632420539/ovo-3.6/mailchimp-xv/poster_af7lgw.png',
+    link: 'projects/mailchimp-experience-vision',
+    background: '#007C89',
   },
   {
     id: 5,
@@ -52,6 +53,16 @@ export const projects = [
   {
     id: 6,
     contribution: 'Design',
+    name: 'Mailchimp Motion & Interaction',
+    excerpt: "Creating a motion and interaction system for application in the Mailchimp web app.",
+    video: 'https://res.cloudinary.com/da32ufmnf/video/upload/v1632339849/ovo-3.6/mailchimp-motion-interaction/poster-2_ndc8py.mp4',
+    img: 'https://res.cloudinary.com/da32ufmnf/image/upload/v1630705997/ovo-3.6/mailchimp-motion-interaction/motion-poster_ujbl4a.jpg',
+    link: 'projects/mailchimp-motion-interaction',
+    background: '#C14953',
+  },
+  {
+    id: 7,
+    contribution: 'Design',
     name: 'ShootProof Galleries',
     excerpt: "Rethinking how photographers organize, share, and sell their photos – 'Focus On What Matters Most'.",
     video: 'https://res.cloudinary.com/da32ufmnf/video/upload/v1595954973/sp-galleries/galleries_hfvvwe.mp4',
@@ -60,7 +71,7 @@ export const projects = [
     background: 'var(--shootproof)',
   },
   {
-    id: 7,
+    id: 8,
     contribution: 'Design / Development',
     name: 'Supersymmetry',
     excerpt: "A self-initiated project showcasing architecture & structural engineering and other interesting spaces.",
@@ -70,7 +81,7 @@ export const projects = [
     background: 'var(--supersymmetry)',
   },
   {
-    id: 8,
+    id: 9,
     contribution: 'Type Design',
     name: 'Blush',
     excerpt: "Designing a geometric typeface with bright tones and simple quirks; inspired by space ✨.",
@@ -80,7 +91,7 @@ export const projects = [
     background: 'var(--blush)',
   },
   {
-    id: 9,
+    id: 10,
     contribution: 'Design / Development',
     name: '000',
     excerpt: "Building the web presence for 000 – a collection of portraits by photographer Roy Handy.",
