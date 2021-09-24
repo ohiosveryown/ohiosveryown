@@ -99,6 +99,7 @@
           Jumping into Figma, I began mapping out user-flows. I like to use
           <a
             class="link"
+            target="_blank"
             href="https://adamstacoviak.com/ryan-singers-shorthand-for-designing-user-flows"
             >this method by Ryan Singer</a>
           for diagraming userflows
@@ -210,13 +211,28 @@
         </figcaption>
       </figure>
 
-      <projectFooter
-        name="Supersymmetry"
-        excerpt="A self-initiated project showcasing architecture & structural engineering"
-        src="https://res.cloudinary.com/da32ufmnf/image/upload/v1596478423/supersymmetry/supersymmetry_2x_w1ol91.jpg"
-      />
+      <figure class="space">
+        <div class="bleed--half violet">
+          <img
+            class="elevation-00 radius--small"
+            src="https://res.cloudinary.com/da32ufmnf/image/upload/v1632492887/ovo-3.6/mailchimp-xv/feedback_gmqdqo.jpg"
+          alt="Data synthesis">
+        </div>
+        <figcaption>
+          <span>Fig Nº14</span>
+          Part of the data synth. teach-back
+        </figcaption>
+      </figure>
 
+      <p class="p">After running some unmoderated tests, we gathered data from what worked well and what we could improve upon. I then synthesized what we found so it could be shared with leadership and the rest of our design and product peers for roadmap planning.</p>
+      <h4 class="mt-3 subtitle space">All in all, the new prototypes we tested were net positive in terms of usability and overall direction. When trying to raise the bar for metrics like CSAT, HEART, etc., listening to prospective and current customers is vital for improving experiences.</h4>
     </section>
+
+    <projectFooter
+      name="Supersymmetry"
+      excerpt="A self-initiated project showcasing architecture & structural engineering"
+      src="https://res.cloudinary.com/da32ufmnf/image/upload/v1596478423/supersymmetry/supersymmetry_2x_w1ol91.jpg"
+    />
   </main>
 </template>
 

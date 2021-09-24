@@ -30,7 +30,7 @@
 
   footer {
     display: flex;
-    margin: 40rem 0 6rem;
+    margin: 12rem 0 6rem;
     width: 100%;
     @include breakpoint(md) {
       margin: 8rem 0 12rem;
