@@ -101,7 +101,7 @@
             class="link"
             target="_blank"
             href="https://adamstacoviak.com/ryan-singers-shorthand-for-designing-user-flows"
-            >this method by Ryan Singer</a>
+            >this method by Ryan Singer<arrow class="arrow"/></a>
           for diagraming userflows
         </figcaption>
       </figure>
@@ -242,6 +242,7 @@
   @import '~static/style/project-page.scss';
 
   .hero { background: var(--kale); }
+  .arrow { transform: rotate(-135deg); }
 </style>
 
 
