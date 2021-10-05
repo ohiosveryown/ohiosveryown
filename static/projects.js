@@ -77,7 +77,7 @@ export const projects = [
     excerpt: "Rethinking how photographers organize, share, and sell their photos – 'Focus On What Matters Most'.",
     video: 'https://res.cloudinary.com/da32ufmnf/video/upload/v1595954973/sp-galleries/galleries_hfvvwe.mp4',
     img: 'https://res.cloudinary.com/da32ufmnf/image/upload/v1596478389/sp-galleries/galleries_2x_zkgn70.jpg',
-    link: 'sp-galleries',
+    link: 'projects/shootproof',
     background: 'var(--shootproof)',
   },
   {
@@ -87,7 +87,7 @@ export const projects = [
     excerpt: "A self-initiated project showcasing architecture & structural engineering and other interesting spaces.",
     video: 'https://res.cloudinary.com/da32ufmnf/video/upload/v1595993470/supersymmetry/supersymmetry_wwtpie.mp4',
     img: 'https://res.cloudinary.com/da32ufmnf/image/upload/v1596478423/supersymmetry/supersymmetry_2x_w1ol91.jpg',
-    link: 'supersymmetry',
+    link: 'projects/supersymmetry',
     background: 'var(--supersymmetry)',
   },
   {
@@ -97,7 +97,7 @@ export const projects = [
     excerpt: "Designing a geometric typeface with bright tones and simple quirks; inspired by space ✨.",
     video: 'https://res.cloudinary.com/da32ufmnf/video/upload/v1597081255/blush/blush_d2t8sk.mp4',
     img: 'https://res.cloudinary.com/da32ufmnf/image/upload/v1597077102/blush/blush-01_2x_ndkg4j.png',
-    link: 'blush',
+    link: 'projects/blush',
     background: 'var(--blush)',
   },
   {
@@ -107,7 +107,7 @@ export const projects = [
     excerpt: "Building the web presence for 000 – a collection of portraits by photographer Roy Handy.",
     video: 'https://res.cloudinary.com/da32ufmnf/video/upload/v1597342801/000/home_rgjbbz.mp4',
     img: 'https://res.cloudinary.com/da32ufmnf/image/upload/v1597339051/000/01_sfrbbm.jpg',
-    link: '000',
+    link: 'projects/000',
     background: 'var(--zero)',
   }
 ]

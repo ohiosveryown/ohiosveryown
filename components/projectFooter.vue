@@ -57,14 +57,14 @@
 
   h4 {
     margin-bottom: .8rem;
-    width: max-content;
+    /* width: max-content; */
     @include breakpoint(md) { margin-bottom: 1.6rem; }
   }
 
   h5 {
     max-width: 34ch;
     width: max-content;
-    @include breakpoint(md) { max-width: 40ch; }
+    @include breakpoint(md) { max-width: 40ch; width: max-content; }
   }
 
 </style>

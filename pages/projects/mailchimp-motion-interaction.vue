@@ -133,9 +133,9 @@
 
       <projectFooter
         link="/"
-        name="Supersymmetry"
-        excerpt="A self-initiated project showcasing architecture & structural engineering"
-        src="https://res.cloudinary.com/da32ufmnf/image/upload/v1596478423/supersymmetry/supersymmetry_2x_w1ol91.jpg"
+        name="ShootProof"
+        excerpt="Rethinking how photographers organize, share, and sell their photos – 'Focus On What Matters Most'"
+        src="https://res.cloudinary.com/da32ufmnf/image/upload/v1596478389/sp-galleries/galleries_2x_zkgn70.jpg"
       />
 
     </section>

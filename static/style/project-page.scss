@@ -4,6 +4,8 @@
 .peach { background: #FFE7DD !important; }
 .violet { background: #F7EFFE !important; }
 
+h1 { max-width: 15ch; @include breakpoint(md) { max-width: 100%; }}
+
 p + p { text-indent: 2ch; }
 
 main {
