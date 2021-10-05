@@ -6,7 +6,18 @@
 
 p + p { text-indent: 2ch; }
 
-main { position: relative; z-index: var(--z1); }
+main {
+  position: relative;
+  z-index: var(--z1);
+  opacity: .1;
+  animation: enter 200ms ease forwards;
+}
+
+@keyframes enter {
+  from { opacity: .1; }
+  to { opacity: 1; }
+}
+
 .caption--sm { font-family: 'tomato-grotesk', var(--system-ui); }
 .size--half {
   @include breakpoint(md) {

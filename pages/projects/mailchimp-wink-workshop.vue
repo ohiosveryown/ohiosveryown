@@ -1,5 +1,5 @@
 <template>
-  <main class="width">
+  <main ref="main" class="width">
     <header class="space">
       <h1 class="mb-1 title">Mailchimp Wink Workshop</h1>
       <h2 class="brow">Crafting exceptional experiences – together</h2>
@@ -237,6 +237,16 @@
           })
         }
       })
-    }
+    },
+    beforeDestroy() {
+//       if (this.prm.matches) {
+//
+//       } else {
+//         this.$refs.main.style.cssText = `
+//           opacity: 0;
+//           transition: opacity 200ms ease;
+//         `
+//       }
+    },
   }
 </script>
