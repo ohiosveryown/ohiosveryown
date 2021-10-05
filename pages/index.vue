@@ -33,6 +33,8 @@
 <style lang="scss" scoped>
   @import '~static/style/grid.scss';
   li:nth-child(-n+2) { display: none; }
+
+  h5:nth-of-type(3) { color: red; }
   br { display: none; @include breakpoint(md) { display: inherit; }}
 
   h1 {

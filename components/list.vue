@@ -6,7 +6,7 @@
         @mouseleave = 'hover = false'
         >
         <h5 class="caption--sm">{{ project.contribution }}</h5>
-        <h4 class="p">{{ project.name }}</h4>
+        <h4 class="p project-name">{{ project.name }}</h4>
         <p class="caption">{{ project.excerpt }}</p>
       </article>
     </nuxt-link>

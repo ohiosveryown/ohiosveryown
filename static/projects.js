@@ -47,7 +47,7 @@ export const projects = [
     excerpt: "A ✊🏿✊🏾✊🏽 collection of black-owned restaurants celebrating the diversity of Atlanta and its food.",
     video: 'https://res.cloudinary.com/da32ufmnf/video/upload/v1625595468/menu/03_vanugl.mp4',
     img: 'https://res.cloudinary.com/da32ufmnf/image/upload/v1623960677/menu/cover_g9xoj7.png',
-    link: 'menu-black',
+    link: 'projects/menu-black',
     background: 'var(--menu)',
   },
   {
