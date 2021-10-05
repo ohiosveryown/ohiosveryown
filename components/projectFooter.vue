@@ -1,6 +1,6 @@
 <template>
   <footer>
-    <nuxt-link to = "/">
+    <nuxt-link :to = "link">
       <div
       @mouseenter= 'Mouseenter(), hover = true'
       @mouseleave= 'Mouseleave(), hover = false'>

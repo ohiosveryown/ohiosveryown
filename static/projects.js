@@ -43,7 +43,7 @@ export const projects = [
   {
     id: 5,
     contribution: 'Design / Development',
-    name: 'menu.black',
+    name: "menu.black",
     excerpt: "A ✊🏿✊🏾✊🏽 collection of black-owned restaurants celebrating the diversity of Atlanta and its food.",
     video: 'https://res.cloudinary.com/da32ufmnf/video/upload/v1625595468/menu/03_vanugl.mp4',
     img: 'https://res.cloudinary.com/da32ufmnf/image/upload/v1623960677/menu/cover_g9xoj7.png',

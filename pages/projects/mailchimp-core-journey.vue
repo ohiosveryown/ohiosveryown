@@ -231,9 +231,10 @@
     </section>
 
     <projectFooter
-      name="Supersymmetry"
-      excerpt="A self-initiated project showcasing architecture & structural engineering"
-      src="https://res.cloudinary.com/da32ufmnf/image/upload/v1596478423/supersymmetry/supersymmetry_2x_w1ol91.jpg"
+      link="/projects/mailchimp-experience-vision"
+      name="Mailchimp Experience Vision"
+      excerpt="Designing end-to-end experiences across domains; bolstering Mailchimp's strategic direction"
+      src="https://res.cloudinary.com/da32ufmnf/image/upload/v1632420539/ovo-3.6/mailchimp-xv/poster_af7lgw.png"
     />
 
   </main>

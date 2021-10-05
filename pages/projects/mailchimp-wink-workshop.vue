@@ -182,9 +182,10 @@
     </section>
 
     <projectFooter
-      name="Supersymmetry"
-      excerpt="A self-initiated project showcasing architecture & structural engineering"
-      src="https://res.cloudinary.com/da32ufmnf/image/upload/v1596478423/supersymmetry/supersymmetry_2x_w1ol91.jpg"
+      link="/projects/mailchimp-motion-interaction"
+      name="Mailchimp Motion & Interaction"
+      excerpt="Creating a motion and interaction system for the Mailchimp web app"
+      src="https://res.cloudinary.com/da32ufmnf/image/upload/v1630705997/ovo-3.6/mailchimp-motion-interaction/motion-poster_ujbl4a.jpg"
     />
 
   </main>
