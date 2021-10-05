@@ -64,7 +64,7 @@ export const projects = [
     id: 7,
     contribution: 'Design Systems',
     name: 'Mailchimp Motion & Interaction',
-    excerpt: "Creating a motion and interaction system for application in the Mailchimp web app.",
+    excerpt: "Creating a motion and interaction system for the Mailchimp web app.",
     video: 'https://res.cloudinary.com/da32ufmnf/video/upload/v1632339849/ovo-3.6/mailchimp-motion-interaction/poster-2_ndc8py.mp4',
     img: 'https://res.cloudinary.com/da32ufmnf/image/upload/v1630705997/ovo-3.6/mailchimp-motion-interaction/motion-poster_ujbl4a.jpg',
     link: 'projects/mailchimp-motion-interaction',
