@@ -129,10 +129,10 @@
     </section>
 
     <projectFooter
-      link="/projects/supersymmetry"
-      name="Supersymmetry"
-      excerpt="A self-initiated project showcasing architecture & structural engineering and other interesting spaces"
-      src="https://res.cloudinary.com/da32ufmnf/image/upload/v1596478423/supersymmetry/supersymmetry_2x_w1ol91.jpg"
+      link="/projects/mailchimp-wink-workshop"
+      name="Wink Workshop"
+      excerpt="Teaching designers and engineers how to use the Mailchimp design system"
+      src="https://res.cloudinary.com/da32ufmnf/image/upload/v1632496102/ovo-3.6/mailchimp-wink-workshop/wink-poster_b6gy73.png"
     />
 
   </main>

@@ -132,7 +132,7 @@
       <p class="p space">I should also mention accessibility was top of mind when working through the animation and transition values. Just like this site, if a user has a preference for reduced-motion, the amount of non-essential motion is either reduced significantly or removed all together.</p>
 
       <projectFooter
-        link="/"
+        link="/projects/shootproof"
         name="ShootProof"
         excerpt="Rethinking how photographers organize, share, and sell their photos – 'Focus On What Matters Most'"
         src="https://res.cloudinary.com/da32ufmnf/image/upload/v1596478389/sp-galleries/galleries_2x_zkgn70.jpg"
