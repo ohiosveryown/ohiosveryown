@@ -229,10 +229,10 @@
     </section>
 
     <projectFooter
-      link="/projects/mailchimp-experience-vision"
-      name="Supersymmetry"
-      excerpt="A self-initiated project showcasing architecture & structural engineering"
-      src="https://res.cloudinary.com/da32ufmnf/image/upload/v1596478423/supersymmetry/supersymmetry_2x_w1ol91.jpg"
+      link="/projects/menu-black"
+      name="menu.black"
+      excerpt="A ✊🏿✊🏾✊🏽 collection of black-owned restaurants celebrating the diversity of Atlanta and its food"
+      src="https://res.cloudinary.com/da32ufmnf/image/upload/v1623960677/menu/cover_g9xoj7.png"
     />
   </main>
 </template>
