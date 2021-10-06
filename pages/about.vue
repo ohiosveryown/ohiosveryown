@@ -1,186 +1,172 @@
 <template>
-  <div class="about width">
-    <main>
-      <header class="intro">
-        <h1 class="anim--in mb-2 fs--lg f--cl">Information</h1>
-        <h2 class="anim--in fs--md f--c">📨 or 👋🏼's can be sent to:
-          <span
-            @mouseenter = 'hover = true'
-            @mouseleave = 'hover = false'
-          >matt@ohiosveryown.co</span>
-        </h2>
-      </header>
+  <main ref="index" class="width">
+    <header class="anim--in">
+      <h1 class="mb-1 title">Information</h1>
+      <h2 class="brow">
+        📨 or 👋🏼's can be sent to:
+        <span
+        @mouseenter= 'hoverEmail = true'
+        @mouseleave= 'hoverEmail = false'
+        class="link--fine">
+          matt@ohiosveryown.co
+        </span>
+      </h2>
+    </header>
 
-      <article class="anim--in f--f">
-        <h3 class="mb-2">Hi again, just a reminder in case you didn’t read the first page (who reads anymore, anyway?) – my name is Matt and I'm presently a staff designer at Mailchimp.</h3>
-        <h3 class="mb-2">I spend half my time drawing boxes & the other half explaining them—the other half
-          <span class="code-trigger">trying to confuse myself with code;</span>
-          <picture ref='code' class="code">
-            <source media="(min-width: 1000px)" srcset="https://media3.giphy.com/media/l3fZLMbuCOqJ82gec/giphy.gif">
-            <img src="">
-          </picture>
-          Math is hard.</h3>
-        <h3>I designed and built this site to share some of the things I’ve worked on and/or made. Enjoy the adventure.
-        </h3>
-      </article>
+    <section class="anim--in p">
+      <p>Hi again. Just a reminder in case you didn’t read the first page (who reads anymore, anyway?) – my name is Matt and I'm presently a staff designer at Mailchimp 🍌</p>
+      <p>
+        I spend half my time drawing and explaining boxes; the other half I'm trying to confuse myself with code. I also make furniture at
+        <a
+          target="_blank"
+          href="https://proportional.design">
+          <hover
+            class="link link--coarse"
+            label="proportional.design"
+            img="https://res.cloudinary.com/da32ufmnf/image/upload/v1629742674/ovo-3.6/subjects/thumbnail-prop_lqkcba.jpg"
+          />
+          <arrow/>
+        </a>
+        🪑
+      </p>
+      <p>
+        I designed and built this site to share some of the things I’ve worked on and/or made. Enjoy the adventure, and the
+        <hover
+          class="link"
+          label="easter eggs"
+          img="https://res.cloudinary.com/da32ufmnf/image/upload/v1629742815/ovo-3.6/subjects/thumb-easter_wjpekr.gif"
+        />
+        🥚
+      </p>
+    </section>
 
-      <picture :class = "{ active : hover }" class="me">
-        <source media="(min-width: 1000px)" srcset="https://res.cloudinary.com/da32ufmnf/image/upload/v1596478410/about/about_2x_c8btur.jpg">
-        <img src="">
-      </picture>
-
-      <Rainbow/>
-    </main>
-
-    <aside>
-      <ul class="mt-2 mb-9 f--f fs--sm uc">
-        <li class="anim--in"><a href="https://twitter.com/cmykw_" target="_blank">Twitter</a></li>
-        <li class="anim--in"><a href="https://github.com/ohiosveryown" target="_blank">Github</a></li>
-        <li class="anim--in"><a href="https://dribbble.com/cmykw" target="_blank">Dribbble</a></li>
-        <li class="anim--in"><a href="https://github.com/ohiosveryown/ohiosveryown" target="_blank">Source</a></li>
+    <footer class="anim--in caption">
+      <ul>
+        <li><a target="_blank" href="https://twitter.com/cmykw_">Twitter <arrow/></a></li>
+        <li><a target="_blank" href="https://github.com/ohiosveryown">Github <arrow/></a></li>
+        <li><a target="_blank" href="http://instagram.com/proportional.design">IG <arrow/></a></li>
+        <li><a target="_blank" href="https://dribbble.com/cmykw">Dribbble <arrow/></a></li>
       </ul>
-    </aside>
-  </div>
+    </footer>
+
+    <div
+      :class = "{ active : hoverEmail }"
+      class="bg"/>
+    <!-- <rainbow/> -->
+  </main>
 </template>
 
 
-<style lang='scss' scoped>
-  @import '../style/grid.scss';
+<style lang="scss" scoped>
+  @import '~static/style/grid.scss';
 
-  .me {
-    width: 100vw; height: 100vh;
-    opacity: 0;
+  header { margin-bottom: 7.2rem; }
+
+  h1 {
+    display: inline-flex;
+    margin-bottom: 2rem;
+    @include breakpoint(md) { margin-bottom: 2rem; color: var(--gravity); }
   }
 
-  .active {
-    opacity: 1;
-    // transform: rotate(3deg) translateY(0);
-    transition: opacity 400ms ease 100ms;
+  section {
+    margin-bottom: 12.4rem;
+    @include breakpoint(mdl) { width: grid-width(7); }
   }
 
-  .about {
-    display: flex;
-    flex-direction: column;
-    @include breakpoint(mdl) { flex-direction: row; justify-content: space-between; }
+  .p {
+    @include breakpoint(md) { font-size: 2vw; }
   }
 
-  main {
-    margin-top: 10.4rem;
-    @include breakpoint(md)  { margin-top: 16rem; }
-    @include breakpoint(mdl) { width: grid-width(6); }
-    h1 { display: inline-flex; font-size: 3.2rem; }
-    h2 { font-size: 2.1rem; }
-  }
+  p + p { text-indent: 2ch; @include breakpoint(mdl) { text-indent: 3ch; }}
+  a, figcaption, figure { text-indent: 0ch; }
 
-  header {
-    margin-bottom: 6rem;
-    @include breakpoint(md) { width: grid-width(6); }
-    @include breakpoint(mdl) { width: 100%; }
-  }
-
-  article {
-    @include breakpoint(md) { margin-left: grid-width(1.5); width: grid-width(7); }
-    @include breakpoint(mdl) { margin-left: 0; width: 100%; }
-    h3 { font-size: 1.8rem; line-height: 1.6; }
-    h3 + h3 { text-indent: 3ch; }
-  }
-
-  aside {
+  footer {
     position: relative;
-    z-index: var(--z2);
-    margin: 16rem 0 0;
+    z-index: var(--z3);
   }
 
-  ul { display: flex; justify-content: space-between; }
-
-  @media (pointer: fine) { li:hover { text-decoration: underline; }}
-
-  li { margin-left: 3.2rem; }
-  li:first-of-type { margin-left: 0; }
-  li:last-of-type { display: none; @include breakpoint(md) { display: inherit; } }
-
-  li:after {
-    display: inline-block;
-    content: '';
-    margin-left: .6rem;
-    margin: 0 .8rem 0 .4rem;
-    width: 1rem; height: 1rem;
-    background-image: url('https://res.cloudinary.com/da32ufmnf/image/upload/v1596478789/index/tab_va4qco.svg');
-    background-size: 1rem 1rem;
-    transform: rotate(-135deg);
+  ul {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 4rem;
+    width: 100%;
   }
 
-  picture {
-    width: 200px; height: 176px;
-    position: fixed;
-    z-index: var(--zmin);
-    top: 0; left: 0;
-    object-fit: cover;
-    transition: 1200ms cubic-bezier(0.075, 0.82, 0.165, 1) all;
-    opacity: 0;
-    will-change: transform;
-  }
+  svg { transform: rotate(-135deg); }
 
-  picture:before {
-    content: '';
+  .bg:before {
+    content: "";
     position: absolute;
-    top: 0; right: 0; left: 0; bottom: 0;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
     z-index: 1;
-    background: rgba(255, 214, 252, 1);
+    background: #ffd6fc;
     mix-blend-mode: hard-light;
   }
 
-  img { width: 100%; height: 100%; object-fit: cover; }
+  .bg {
+    position: fixed;
+    top: 0; right: 0; bottom: 0; left: 0;
+    width: 100vw; height: 100vh;
+    z-index: var(--zmin);
+    background: url('https://res.cloudinary.com/da32ufmnf/image/upload/v1629744613/ovo-3.6/subjects/az1_pinac8.jpg') no-repeat center center;
+    background-size: cover;
+    opacity: 0;
+    transition: opacity 300ms ease;
+    will-change: opacity;
+  }
 
-  @media(pointer: fine) { .code-trigger:hover ~ picture { opacity: 1; }}
-  @media(pointer: fine) { span:hover { text-decoration: underline; }}
+  .active { opacity: 1; }
 
+
+  @media (pointer: coarse) {
+    .bg { display: none; }
+    .link--fine { border-bottom: none; opacity: 1; }
+    .link--coarse { border-bottom: 1px solid var(--gravity); opacity: .64; }
+  }
 </style>
 
 
 <script>
-  import Rainbow from '../components/Rainbow'
+  import rainbow from '~/components/rainbow'
+  import arrow from '~/components/arrow'
+  import hover from '~/components/hover'
   export default {
-    components: { Rainbow, },
-
     head: () => ({
-      title: 'ovo – about'
+      title: 'ohiosveryown – about'
     }),
-
     data: () => ({
-      hover: false,
+      hoverEmail: false,
+      prm: window.matchMedia('(prefers-reduced-motion: reduce)'),
     }),
-
+    components: { rainbow, arrow, hover },
     methods: {
       Entrance() {
-        gsap.from('.anim--in', {
-          opacity: 0,
-          stagger: .075,
-          duration: .4,
-          ease: Power2.easeInOut
-        })
+        if (this.prm.matches) {
+        } else {
+          gsap.from('.anim--in', {
+            opacity: 0,
+            stagger: .05,
+            duration: .2,
+            ease: Power2.easeInOut
+          })
+        }
       },
     },
-
     mounted() {
       this.Entrance()
-
-      const code = document.querySelector('.code')
-      document.addEventListener('mousemove', (e) => {
-        code.setAttribute(
-          'style',
-          `transform: translate(${e.pageX - 100}px, ${e.pageY - 88}px) scale(.88);`
-        )
-      })
     },
-
     beforeDestroy() {
-      // this.Exit()
-      const index = document.querySelector('.about')
-      index.style.cssText = `
-        opacity: 0;
-        transition: opacity 300 ease;
-      `
-    }
+      if (this.prm.matches) {
+
+      } else {
+        this.$refs.index.style.cssText = `
+          opacity: 0;
+          transition: opacity 200ms ease;
+        `
+      }
+    },
   }
 </script>

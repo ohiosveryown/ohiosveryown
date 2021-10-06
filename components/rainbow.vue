@@ -1,23 +1,46 @@
 <template>
-  <div class="rainbow">
-    <div class="r"/>
-    <div class="o"/>
-    <div class="y"/>
-    <div class="g"/>
+  <div>
+    <div
+      class="area"
+      :class = "{ active : easter }"
+      @click = 'easter = true'
+      @mouseleave = 'easter = false'
+    />
+
+    <aside class="rainbow">
+      <div class="r"/>
+      <div class="o"/>
+      <div class="y"/>
+      <div class="g"/>
+    </aside>
   </div>
 </template>
 
 
 <style lang='scss' scoped>
-  @import '../style/grid.scss';
+  @import '~static/style/grid.scss';
+
+  .active { cursor: url('https://res.cloudinary.com/da32ufmnf/image/upload/v1596478789/index/rainbow_nmlw9t.svg'), auto; }
 
   .rainbow {
     position: fixed;
     z-index: var(--zmin);
-    top: -70vh; right: 0;
+    top: 0; right: 0;
     width: 100vw; height: 100vh;
     filter: blur(80px) saturate(1.5);
+    will-change: transform, opacity;
+    @include breakpoint(md) { top: 0; right: 0; bottom: 0; }
     @include breakpoint(mdl) { width: 46vw; height: 100vh; }
+  }
+
+  .rainbow--sm {
+    filter: blur(0) saturate(1.5);
+  }
+
+  .area {
+    position: fixed;
+    top: 0; right: 0; bottom: 0;
+    width: 46vw; height: 100vh;
   }
 
   .rainbow > div {
@@ -53,20 +76,17 @@
 
 <script>
   export default {
-    data() {
-      return {
-        easter: false
-      }
-    },
+    data: () => ({
+      easter: false,
+    }),
 
     methods: {
       Entrance() {
         gsap.from('.rainbow', {
           opacity: 0,
-          y: 200,
-          skewY: 10,
-          stagger: .075,
-          duration: 1,
+          x: 800,
+          scale: .5,
+          duration: 2,
           ease: Power2.easeInOut
         })
       },

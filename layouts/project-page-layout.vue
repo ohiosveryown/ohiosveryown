@@ -2,12 +2,18 @@
   <div>
     <navigation/>
     <nuxt/>
-    <rainbow/>
+    <rainbow class="rainbow--sm"/>
   </div>
 </template>
 
 
+<style lang="scss">
+  .rainbow--sm > aside { top: -70vh !important; }
+</style>
+
+
 <script>
+  import { projects } from '~/static/projects'
   import navigation from '~/components/navigation'
   import rainbow from '~/components/rainbow'
   export default {

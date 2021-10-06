@@ -1,0 +1,100 @@
+@import '~/static/style/grid.scss';
+
+.mailchimp-02 { background: #FEF8EF !important; }
+.peach { background: #FFE7DD !important; }
+.violet { background: #F7EFFE !important; }
+
+h1 { max-width: 15ch; @include breakpoint(md) { max-width: 100%; }}
+
+p + p { text-indent: 2ch; }
+
+main {
+  position: relative;
+  z-index: var(--z1);
+  opacity: .1;
+  animation: enter 200ms ease forwards;
+}
+
+@keyframes enter {
+  from { opacity: .1; }
+  to { opacity: 1; }
+}
+
+.caption--sm { font-family: 'tomato-grotesk', var(--system-ui); }
+.size--half {
+  @include breakpoint(md) {
+    display: inline-block;
+    width: grid-width(5.75);
+  }
+}
+
+.arrow { transform: rotate(-135deg); }
+
+.size--half > figcaption { max-width: 100%; }
+
+.size--half > .bleed--full {
+  padding: 7.2vw;
+  @include breakpoint(md) { padding: 2.4vw; }
+}
+
+.size--half + .size--half { float: right; }
+
+h2 {
+  margin-bottom: 4rem;
+  @include breakpoint(md) { margin-bottom: 6.4rem; }
+ }
+
+ul {
+  margin-bottom: 4rem;
+  @include breakpoint(md) { margin-bottom: 6.4rem; }
+ }
+
+.space {
+  margin-bottom: 4rem;
+  @include breakpoint(md) { margin-bottom: 11.2rem; }
+  @include breakpoint(xl) { margin-bottom: 18rem; }
+ }
+
+ figure { overflow: hidden; width: 100%; }
+
+ figcaption {
+   font-size: 1.4rem;
+   line-height: 1.5;
+   margin-top: .8rem;
+   font-family: 'tomato-grotesk', var(--system-ui);
+   @include breakpoint(md) { max-width: 80%; font-size: 1.8rem; line-height: 1.4; }
+   @include breakpoint(xl) { font-size: 2rem; }
+ }
+
+ figcaption > span {
+   margin-right: .4rem;
+   opacity: .6;
+   font-family: 'gt-alpina-thin', var(--system-ui);
+ }
+
+ .radius--small { border-radius: 8px 8px 0 0; }
+ .radius--big { border-radius: 8px; }
+
+ .bleed--half {
+    padding: 7.2vw 7.2vw 0;
+    overflow: hidden;
+    box-shadow: 0 .5px 0 rgba(0,0,0,.1);
+    background: ghostwhite;
+    @include breakpoint(md) { padding: 6.4vw 6.4vw 0; }
+ }
+
+ .bleed--full {
+    // margin-bottom: .8rem;
+    padding: 7.2vw;
+    overflow: hidden;
+    background: ghostwhite;
+    @include breakpoint(md) { padding: 6.4vw; }
+ }
+
+ .smaller {
+   width: 100%; height: auto;
+   @include breakpoint(md) {
+    margin: 0 auto;
+    width: 64%; height: auto;
+   }
+ }

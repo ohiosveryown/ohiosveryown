@@ -1,4 +1,3 @@
-
 export default {
   ssr: false,
   // headers
@@ -13,18 +12,29 @@ export default {
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ]
   },
+  // loader
   loading: false,
-  // styles
+  // global css
   css: [
-    '~/style/reset.scss',
-    '~/style/type.scss',
-    '~/style/util.scss',
+    '~/static/style/reset.scss',
+    '~/static/style/type.scss',
+    '~/static/style/util.scss',
   ],
-  plugins: [],
-  devModules: [],
+  // plugins
+  plugins: [
+  ],
+  devModules: [
+  ],
+  // dev server
+  server: {
+    port: 8000,
+    host: '0.0.0.0'
+  },
+  // nuxt js modules
   modules: [
     '@nuxtjs/pwa',
   ],
+  // build config
   build: {
     extend (config, ctx) {
     }
