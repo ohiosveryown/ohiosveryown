@@ -27,6 +27,7 @@
     z-index: var(--zmin);
     top: 0; right: 0;
     width: 100vw; height: 100vh;
+    /* filter: saturate(1.5); */
     filter: blur(80px) saturate(1.5);
     will-change: transform, opacity;
     @include breakpoint(md) { top: 0; right: 0; bottom: 0; }
@@ -85,9 +86,10 @@
         gsap.from('.rainbow', {
           opacity: 0,
           x: 800,
-          scale: .5,
+          // scale: .5,
           duration: 2,
-          ease: Power2.easeInOut
+          ease: Power2.easeInOut,
+          // delay: 1,
         })
       },
 

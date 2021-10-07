@@ -1,4 +1,6 @@
 @import '~/static/style/grid.scss';
+// .lazyLoad { opacity: 0; transition: opacity 400ms ease; }
+// .isLoaded { opacity: 1; transition: opacity 400ms ease; }
 .lock { overflow: hidden !important; }
 .debug { border: 2px solid hotpink; }
 .pointer { &:hover { cursor: pointer; }}

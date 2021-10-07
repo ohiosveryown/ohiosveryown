@@ -2,7 +2,7 @@
   <main ref="index" class="width">
     <header class="anim--in">
       <h1 class="mb-1 title">My name is Matt 👋🏼</h1>
-      <adventure/>
+      <!-- <adventure/> -->
       <h2 class="brow">
         I’m a product designer living in Atlanta, Ga.<br>
         Presently I’m researching

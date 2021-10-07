@@ -29,8 +29,8 @@
         <div class="hero bleed--half">
           <img
             class="elevation-01 radius--small"
-          src="https://res.cloudinary.com/da32ufmnf/image/upload/v1631058022/ovo-3.6/mailchimp-core-journey/checklist_iepr44.jpg"
-          alt="Campaign review">
+            src="https://res.cloudinary.com/da32ufmnf/image/upload/v1631058022/ovo-3.6/mailchimp-core-journey/checklist_iepr44.jpg"
+            alt="Campaign review">
         </div>
         <figcaption>
           <span>Fig Nº01</span>
