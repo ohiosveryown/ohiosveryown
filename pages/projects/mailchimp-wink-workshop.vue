@@ -24,7 +24,7 @@
         <div class="hero bleed--half">
           <img
             class="elevation-01 radius--small"
-            src="https://res.cloudinary.com/da32ufmnf/image/upload/v1632496102/ovo-3.6/mailchimp-wink-workshop/wink-poster_b6gy73.png"
+            src="https://res.cloudinary.com/da32ufmnf/image/upload/v1633620336/ovo-3.6/mailchimp-wink-workshop/wink-poster_nweyrc.png"
             alt="Presentation title card">
         </div>
         <figcaption>

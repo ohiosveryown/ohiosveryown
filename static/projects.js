@@ -56,7 +56,7 @@ export const projects = [
     name: 'Mailchimp Wink Workshop',
     excerpt: "Teaching designers and engineers how to use the Mailchimp design system.",
     video: 'https://res.cloudinary.com/da32ufmnf/video/upload/v1632339849/ovo-3.6/mailchimp-motion-interaction/poster-2_ndc8py.mp4',
-    img: 'https://res.cloudinary.com/da32ufmnf/image/upload/v1632496102/ovo-3.6/mailchimp-wink-workshop/wink-poster_b6gy73.png',
+    img: 'https://res.cloudinary.com/da32ufmnf/image/upload/v1633620336/ovo-3.6/mailchimp-wink-workshop/wink-poster_nweyrc.png',
     link: 'projects/mailchimp-wink-workshop',
     background: '#3E353B',
   },
