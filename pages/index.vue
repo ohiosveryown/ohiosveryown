@@ -4,7 +4,7 @@
       <h1 class="mb-1 title">My name is Matt 👋🏼</h1>
       <adventure/>
       <h2 class="brow">
-        I’m a product designer living in Atlanta, Ga.<br>
+        I’m a staff designer living in Atlanta, Ga.<br>
         Presently I’m researching
         <subjects/>
       </h2>
