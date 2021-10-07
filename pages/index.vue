@@ -2,7 +2,7 @@
   <main ref="index" class="width">
     <header class="anim--in">
       <h1 class="mb-1 title">My name is Matt 👋🏼</h1>
-      <!-- <adventure/> -->
+      <adventure/>
       <h2 class="brow">
         I’m a product designer living in Atlanta, Ga.<br>
         Presently I’m researching
@@ -33,8 +33,6 @@
 <style lang="scss" scoped>
   @import '~static/style/grid.scss';
   li:nth-child(-n+2) { display: none; }
-
-  h5:nth-of-type(3) { color: red; }
   br { display: none; @include breakpoint(md) { display: inherit; }}
 
   h1 {

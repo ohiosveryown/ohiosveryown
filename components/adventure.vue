@@ -12,7 +12,7 @@
         @mouseenter= 'Mouseenter(), hover = true'
         @mouseleave= 'Mouseleave(), hover = false'
       >
-        <span class="">adventure time</span>
+        <span class="adventure-label">adventure time</span>
       </button>
     </nuxt-link>
   </div>
