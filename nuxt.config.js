@@ -14,6 +14,9 @@ export default {
   },
   // loader
   loading: false,
+  generate: {
+    fallback: true
+  },
   // global css
   css: [
     '~/static/style/reset.scss',
