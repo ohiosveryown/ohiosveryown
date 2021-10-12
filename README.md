@@ -5,5 +5,4 @@
 *<a target="_blank" href="http://ohiosveryown.co">ohiosveryown</a>* is the web presence and portfolio of work for me, Matthew Pence – a designer living in Atlanta, Ga.
 Feel free to dig around and check out the inner workings of the site.
 
-### UI 🎨
 ![Ohiosveryown Interface](https://res.cloudinary.com/da32ufmnf/image/upload/v1634000392/ovo-3.6/readme_pqrsl8.jpg)
