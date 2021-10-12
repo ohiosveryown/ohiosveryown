@@ -1,7 +1,7 @@
 <template>
   <nav class="width">
     <nuxt-link class="home caption--sm" to = '/'>
-      ovo / 3.6
+      ovo / 3.5
     </nuxt-link>
 
     <section>
