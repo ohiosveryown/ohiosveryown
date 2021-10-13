@@ -21,24 +21,24 @@
         :class = "[ navOpen ? 'ulOpen' : 'ul-wrapper' ]"
         class="ul-wrapper">
         <ul
-        ref="list"
-        class="menu">
-        <li
-          v-for="project in projects"
-          :key="project.id">
-          <nuxt-link :to="'/' + project.link">
-          <div class="copy">
-            <div class="name mb-0 caption">{{ project.name }}</div>
-            <div class="caption--sm">{{ project.excerpt }}</div>
-          </div>
-          <figure :style= "{ background: project.background }">
-            <img
-              :src="project.img"
-              :alt="project.img">
-          </figure>
-          </nuxt-link>
-        </li>
-      </ul>
+          ref="list"
+          class="menu">
+          <li
+            v-for="project in projects"
+            :key="project.id">
+            <nuxt-link :to="'/' + project.link">
+            <div class="copy">
+              <div class="name mb-0 caption">{{ project.name }}</div>
+              <div class="caption--sm">{{ project.excerpt }}</div>
+            </div>
+            <figure :style= "{ background: project.background }">
+              <img
+                :src="project.img"
+                :alt="project.img">
+            </figure>
+            </nuxt-link>
+          </li>
+        </ul>
       </div>
     </section>
   </nav>
@@ -72,7 +72,7 @@
   .ul-wrapper {
     pointer-events: none;
     opacity: 0;
-    transition: opacity 100ms ease;
+    transition: opacity 300ms ease;
     will-change: opacity;
   }
 

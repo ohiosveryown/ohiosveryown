@@ -114,10 +114,10 @@
     </section>
 
     <projectFooter
-      link="/projects/mailchimp-experience-vision"
-      name="Mailchimp Experience Vision"
-      excerpt="Designing end-to-end experiences across domains; bolstering Mailchimp's strategic direction"
-      src="https://res.cloudinary.com/da32ufmnf/image/upload/v1632420539/ovo-3.6/mailchimp-xv/poster_af7lgw.png"
+      link="/projects/blush"
+      name="Blush"
+      excerpt="Designing a geometric typeface with bright tones and simple quirks; inspired by space ✨"
+      src="https://res.cloudinary.com/da32ufmnf/image/upload/v1597077102/blush/blush-01_2x_ndkg4j.png"
     />
 
   </main>
