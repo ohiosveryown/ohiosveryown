@@ -21,7 +21,7 @@
         <div class="hero bleed--half">
           <img
             class="elevation-01 radius--small"
-            src="https://res.cloudinary.com/da32ufmnf/image/upload/v1633406208/ovo-3.6/sp/index_kvl7ly.jpg"
+            src="https://res.cloudinary.com/da32ufmnf/image/upload/v1623960677/menu/cover_g9xoj7.png"
             alt="Version 2020">
         </div>
         <figcaption>
@@ -32,100 +32,102 @@
     </section>
 
     <section class="works">
+      <p class="p">The simple experience of going to a local restaurant and sitting down and eating are just not possible now. One of the most dramatic shifts due to covid has been how small businesses have been forced to evolve their way of serving transaction.</p>
+      <p class="p space">We’ve seen many restaurants pivot exclusively to a take-out model. Still, as a customer there’s a lot of uncertainty around, a: if a company is still open, and b: if a company that was traditionally a dine-in only experience, now offers the option for take-out.</p>
+
       <figure class="space">
-        <div class="bleed--full green">
+        <div class="bleed--full secondary">
           <img
-            class=""
-            src="https://res.cloudinary.com/da32ufmnf/image/upload/v1633406208/ovo-3.6/sp/small_ksqmqr.png"
-            alt="Mobile screens">
+            class="elevation-02 radius--big"
+            src="https://res.cloudinary.com/da32ufmnf/image/upload/v1634089507/ovo-3.6/menu%5Bdot%5Dblack/menu-01_rm8uwv.png"
+            alt="Restaurant Take Out Only">
         </div>
         <figcaption>
           <span>Fig Nº02</span>
-          Mobile screens
+          Take out only model
         </figcaption>
       </figure>
 
+      <h4 class="subtitle space">I started out looking for an api or some sort of repository for black-owned businesses specifically in the food sector, but that type of information isn’t publicly available, or if it is I couldn’t find it. So after coming up empty-handed, I started to manually search for restaurants in the Atlanta area that were black-owned. I crowd source this task as well, asking friends and peers for restaurant options.</h4>
+
       <figure class="space">
-        <div class="bleed--full green">
+        <div class="bleed--full secondary">
           <img
-            class=""
-            src="https://res.cloudinary.com/da32ufmnf/image/upload/v1633406677/ovo-3.6/sp/ui-components_qygoko.png"
-            alt="UI components">
+            class="elevation-00 radius--big"
+            src="https://res.cloudinary.com/da32ufmnf/image/upload/v1634089507/ovo-3.6/menu%5Bdot%5Dblack/menu-02_nebjan.png"
+            alt="Creating a list">
         </div>
         <figcaption>
           <span>Fig Nº03</span>
-          UI components
+          Creating a list
         </figcaption>
       </figure>
 
-      <h5 class="subtitle space">Unfortunately I lost a lot of the original sources of design and research so this is all I have to offer from this experience. I do remember a goal of wanting the application UI to be subdued to allow the photography and source material to shine.</h5>
+      <p class="p space">From there I started prototyping with the code to see how the functionality of searching and filtering would work. I find myself typically starting more and more in the browser first, before visually designing anything. This helps me surface some of the constraints I might have immediately rather than later down the road – constraints can be a good thing!</p>
 
       <figure class="space">
-        <div class="bleed--full green">
+        <div class="bleed--full secondary">
           <img
-            class="elevation-02 radius--big"
-            src="https://res.cloudinary.com/da32ufmnf/image/upload/v1633406846/ovo-3.6/sp/photo-detail_gofxna.jpg"
-            alt="Photo detail">
+            class="elevation-00 radius--big"
+            src="https://res.cloudinary.com/da32ufmnf/image/upload/v1634089506/ovo-3.6/menu%5Bdot%5Dblack/menu-03_gokash.jpg"
+            alt="Codepen prototype">
         </div>
         <figcaption>
           <span>Fig Nº04</span>
-          Photo detail
+          Codepen prototype
         </figcaption>
       </figure>
 
-      <figure class="space size--half">
-        <div class="">
-          <video
-            ref="vid"
-            class="radius--small"
-            autoplay="autoplay"
-            playsinline=""
-            muted="true"
-            loop="loop">
-            <source src="https://res.cloudinary.com/da32ufmnf/video/upload/v1633405966/ovo-3.6/sp/gallery-album-photos__sm_zhtwji.mp4#t=0.1"><source>
-          </video>
+      <p class="p">I started to build out the list, with basic sorting for location and food type, but then I started thinking about how to make the site feel fresh, as well as the core principle of helping give more exposure to more businesses.</p>
+      <p class="p space">Then I started to think about the whole stories metaphor that so many application have: snapchat, IG, YouTube, etc. Instead of trying to replicate the product thinking here, I stole the layout and structure and created a “discover” feature/component that live on the right side of the homepage.</p>
+
+      <figure class="space">
+        <div class="bleed--full secondary">
+          <img
+            class="smaller"
+            src="https://res.cloudinary.com/da32ufmnf/image/upload/v1634089507/ovo-3.6/menu%5Bdot%5Dblack/menu-04_h7bbzp.png"
+          alt="Stories">
         </div>
         <figcaption>
           <span>Fig Nº05</span>
-          Mobile interaction test
+          Stories
         </figcaption>
       </figure>
 
-      <figure class="space size--half">
-        <div class="">
+      <h4 class="subtitle space">Say you come to menu.black and you’re looking for a specific type of food, you can easily input a search to populate the results for pizza. But, what if you’re a visitor that isn’t really sure what you want, or you want to try something new? Well with discover, you can view a couple random places to eat, and just as easily cycle through more by clicking a text button.</h4>
+
+      <figure class="space">
+        <div class="bleed--full secondary">
           <video
             ref="vid"
-            class="radius--small"
+            class="elevation-00 radius--big"
             autoplay="autoplay"
             playsinline=""
             muted="true"
             loop="loop">
-            <source src="https://res.cloudinary.com/da32ufmnf/video/upload/v1633405965/ovo-3.6/sp/actions-dropdown_gol2aq.mp4#t=0.1"><source>
+            <source src="https://res.cloudinary.com/da32ufmnf/video/upload/v1634090777/ovo-3.6/menu%5Bdot%5Dblack/discover_isufzt.mp4#t=0.1"><source>
           </video>
         </div>
         <figcaption>
           <span>Fig Nº06</span>
-          Gallery photos test
+          Random discovery
         </figcaption>
       </figure>
 
       <figure class="space">
-        <div class="bleed--full green">
-          <video
-            ref="vid"
-            class=""
-            autoplay="autoplay"
-            playsinline=""
-            muted="true"
-            loop="loop">
-            <source src="https://res.cloudinary.com/da32ufmnf/video/upload/v1633405966/ovo-3.6/sp/change-albums-o_ai9j0h.mp4#t=0.1"><source>
-          </video>
+        <div class="bleed--full secondary">
+          <img
+            class="elevation-00 radius--big"
+            src="https://res.cloudinary.com/da32ufmnf/image/upload/v1634089506/ovo-3.6/menu%5Bdot%5Dblack/menu-06_j5jbeg.jpg"
+          alt="Search provisions">
         </div>
         <figcaption>
           <span>Fig Nº07</span>
-          Album selection
+          Search provisions
         </figcaption>
       </figure>
+
+      <p class="p space">My goals for the future are to keep adding more businesses to the list and to develop a more robust search and filtering system. What I have now is good for a v1, but have more complexity around how a user searches and filters was some of the initial feedback I got. I’m looking forward to iterating on menu.black and helping create maybe a little more awareness around some of the best food in Atlanta.</p>
     </section>
 
     <projectFooter
@@ -143,8 +145,8 @@
   @import '~static/style/grid.scss';
   @import '~static/style/project-page.scss';
 
-  .hero { background: var(--shootproof); }
-  .green { background: #F4FAF7; }
+  .hero { background: #A8A6F8; }
+  .secondary { background: #F6F4EB; }
 </style>
 
 

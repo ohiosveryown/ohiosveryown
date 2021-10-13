@@ -42,7 +42,7 @@
 
   h2 {
     margin-bottom: 5.6rem;
-    @include breakpoint(md) { margin-bottom: 8.8rem; }
+    @include breakpoint(md) { margin-bottom: 8.8rem; line-height: 1.2; }
   }
 
   section {

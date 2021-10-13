@@ -168,7 +168,7 @@
       </figure>
 
       <figure class="space">
-        <div class="bleed--full  violet">
+        <div class="bleed--full violet">
           <video
             ref="vid"
             class="elevation-00 radius--big"
