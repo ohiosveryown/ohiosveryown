@@ -87,14 +87,14 @@
     methods: {
       Enter() {
         if (this.prm.matches) {} else {
-          gsap.from(this.$refs.button, {
-            opacity: 0,
-            scale: .8,
-            rotate: '-10deg',
-            duration: 1.2,
-            delay: 1,
-            ease: 'elastic.out(1.25,.3)',
-          })
+          // gsap.from(this.$refs.button, {
+          //   opacity: 0,
+          //   scale: .8,
+          //   rotate: '-10deg',
+          //   duration: 1.2,
+          //   delay: 1,
+          //   ease: 'elastic.out(1.25,.3)',
+          // })
         }
       },
       Mouseenter() {

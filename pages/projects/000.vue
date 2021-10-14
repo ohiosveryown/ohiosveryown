@@ -196,31 +196,13 @@
     }),
     // layout: 'project-page-layout',
     components: { arrow, projectFooter },
-    methods: {
-      // reducedMotion: function() {
-      //   if (this.prm.matches) {
-      //     this.$refs.vid.removeAttribute('autoplay')
-      //     this.$refs.vid.controls = true
-      //   } else {}
-      // }
-    },
     mounted() {
-      // this.reducedMotion()
       const prm = window.matchMedia('(prefers-reduced-motion: reduce)')
       const videos = document.querySelectorAll('video')
       videos.forEach((video) => {
-        if (prm.matches) {
-          video.removeAttribute('autoplay')
-          video.controls = true
-        } else {
-          video.addEventListener('mouseenter', () => {
-            video.controls = true
-          })
-          video.addEventListener('mouseleave', () => {
-            video.controls = false
-          })
-        }
+        video.removeAttribute('autoplay')
+        video.controls = true
       })
-    }
+    },
   }
 </script>

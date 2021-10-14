@@ -146,51 +146,13 @@
     }),
     // layout: 'project-page-layout',
     components: { arrow, projectFooter },
-    methods: {
-      // reducedMotion: function() {
-      //   if (this.prm.matches) {
-      //     this.$refs.vid.removeAttribute('autoplay')
-      //     this.$refs.vid.controls = true
-      //   } else {}
-      // },
-      Exit() {
-        if (this.prm.matches) {
-        } else {
-          gsap.to('.anim--out', {
-            opacity: 0,
-            duration: .8,
-            ease: Power2.easeInOut
-          })
-        }
-      },
-    },
     mounted() {
-      // this.reducedMotion()
       const prm = window.matchMedia('(prefers-reduced-motion: reduce)')
       const videos = document.querySelectorAll('video')
       videos.forEach((video) => {
-        if (prm.matches) {
-          video.removeAttribute('autoplay')
-          video.controls = true
-        } else {
-          video.addEventListener('mouseenter', () => {
-            video.controls = true
-          })
-          video.addEventListener('mouseleave', () => {
-            video.controls = false
-          })
-        }
+        video.removeAttribute('autoplay')
+        video.controls = true
       })
-    },
-    beforeDestroy() {
-      // this.Exit()
-      // if (this.prm.matches) {
-      // } else {
-      //   this.$refs.index.style.cssText = `
-      //     opacity: 0;
-      //     transition: opacity 900ms ease;
-      //   `
-      // }
     },
   }
 </script>

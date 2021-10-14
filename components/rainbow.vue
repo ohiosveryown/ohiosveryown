@@ -94,7 +94,7 @@
           // scale: .5,
           duration: 2,
           ease: Power2.easeInOut,
-          // delay: 1,
+          delay: 1.5,
         })
       },
 

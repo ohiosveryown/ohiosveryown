@@ -261,23 +261,12 @@
     // layout: 'project-page-layout',
     components: { arrow, projectFooter },
     mounted() {
-      // this.reducedMotion()
       const prm = window.matchMedia('(prefers-reduced-motion: reduce)')
       const videos = document.querySelectorAll('video')
       videos.forEach((video) => {
-          video.removeAttribute('autoplay')
-          video.controls = true
-        // if (prm.matches) {
-        //   video.controls = true
-        // } else {
-        //   video.addEventListener('mouseenter', () => {
-        //     video.controls = true
-        //   })
-        //   video.addEventListener('mouseleave', () => {
-        //     video.controls = false
-        //   })
-        // }
+        video.removeAttribute('autoplay')
+        video.controls = true
       })
-    }
+    },
   }
 </script>
