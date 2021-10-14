@@ -256,6 +256,7 @@
     head: () => ({
       title: 'ohiosveryown – mailchimp core journey'
     }),
+    scrollToTop: true,
     data: () => ({
       prm: window.matchMedia('(prefers-reduced-motion: reduce)'),
     }),

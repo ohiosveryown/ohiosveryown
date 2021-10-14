@@ -160,7 +160,6 @@
     },
     beforeDestroy() {
       if (this.prm.matches) {
-
       } else {
         this.$refs.index.style.cssText = `
           opacity: 0;

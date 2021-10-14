@@ -158,6 +158,7 @@
     head: () => ({
       title: 'ohiosveryown – mailchimp motion & interaction'
     }),
+    scrollToTop: true,
     data: () => ({
       prm: window.matchMedia('(prefers-reduced-motion: reduce)'),
     }),

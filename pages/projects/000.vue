@@ -190,6 +190,7 @@
     head: () => ({
       title: 'ohiosveryown – 000'
     }),
+    scrollToTop: true,
     data: () => ({
       prm: window.matchMedia('(prefers-reduced-motion: reduce)'),
     }),

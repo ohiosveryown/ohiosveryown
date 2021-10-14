@@ -160,6 +160,7 @@
     head: () => ({
       title: 'ohiosveryown – shootproof'
     }),
+    scrollToTop: true,
     data: () => ({
       prm: window.matchMedia('(prefers-reduced-motion: reduce)'),
     }),

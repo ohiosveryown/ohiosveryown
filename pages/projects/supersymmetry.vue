@@ -1,5 +1,5 @@
 <template>
-  <main class="width">
+  <main ref="index" class="anim--out width">
     <header class="space">
       <h1 class="mb-1 title">Supersymmetry</h1>
       <h2 class="brow">From Wegner to Zaha Hadid</h2>
@@ -140,6 +140,7 @@
     head: () => ({
       title: 'ohiosveryown – supersymmetry'
     }),
+    scrollToTop: true,
     data: () => ({
       prm: window.matchMedia('(prefers-reduced-motion: reduce)'),
     }),
@@ -151,7 +152,17 @@
       //     this.$refs.vid.removeAttribute('autoplay')
       //     this.$refs.vid.controls = true
       //   } else {}
-      // }
+      // },
+      Exit() {
+        if (this.prm.matches) {
+        } else {
+          gsap.to('.anim--out', {
+            opacity: 0,
+            duration: .8,
+            ease: Power2.easeInOut
+          })
+        }
+      },
     },
     mounted() {
       // this.reducedMotion()
@@ -170,6 +181,16 @@
           })
         }
       })
-    }
+    },
+    beforeDestroy() {
+      // this.Exit()
+      // if (this.prm.matches) {
+      // } else {
+      //   this.$refs.index.style.cssText = `
+      //     opacity: 0;
+      //     transition: opacity 900ms ease;
+      //   `
+      // }
+    },
   }
 </script>

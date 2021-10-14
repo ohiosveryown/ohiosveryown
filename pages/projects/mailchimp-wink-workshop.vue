@@ -208,6 +208,7 @@
     head: () => ({
       title: 'ohiosveryown – mailchimp wink workshop'
     }),
+    scrollToTop: true,
     data: () => ({
       prm: window.matchMedia('(prefers-reduced-motion: reduce)'),
     }),
