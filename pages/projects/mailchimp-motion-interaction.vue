@@ -165,21 +165,11 @@
     // layout: 'project-page-layout',
     components: { arrow, projectFooter },
     mounted() {
-      // this.reducedMotion()
       const prm = window.matchMedia('(prefers-reduced-motion: reduce)')
       const videos = document.querySelectorAll('video')
       videos.forEach((video) => {
-        if (prm.matches) {
           video.removeAttribute('autoplay')
           video.controls = true
-        } else {
-          video.addEventListener('mouseenter', () => {
-            video.controls = true
-          })
-          video.addEventListener('mouseleave', () => {
-            video.controls = false
-          })
-        }
       })
     }
   }

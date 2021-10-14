@@ -5,10 +5,10 @@
         @click = "theme(), darkMode = !darkMode"
         class="theme pointer">
       <span v-if="darkMode">
-        <svg class="moon" width="20" height="20" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M10 20c5.523 0 10-4.477 10-10S15.523 0 10 0 0 4.477 0 10s4.477 10 10 10Zm0-3.333a6.667 6.667 0 1 0 0-13.334 6.667 6.667 0 0 0 0 13.334Z"  /></svg>
+        <svg class="icon" width="20" height="20" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M10.707.707a1 1 0 0 0-1.414 0L7 3H4a1 1 0 0 0-1 1v3L.707 9.292a1 1 0 0 0 0 1.415L3 12.998V16a1 1 0 0 0 1 1h3l2.293 2.292a1 1 0 0 0 1.414 0L13 17H16a1 1 0 0 0 1-1v-3l2.293-2.293a1 1 0 0 0 0-1.415L17 7V4a1 1 0 0 0-1-1h-3L10.707.707Z"/></svg>
       </span>
       <span v-else>
-        <svg class="moon" width="20" height="20" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M19.968 10.802c-.264.02-.532.031-.801.031-5.523 0-10-4.477-10-10 0-.27.01-.537.031-.801C4.05.44 0 4.747 0 10c0 5.523 4.477 10 10 10 5.253 0 9.56-4.05 9.968-9.198Z" /></svg>
+        <svg class="icon" width="20" height="20" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M19.968 10.802c-.264.02-.532.031-.801.031-5.523 0-10-4.477-10-10 0-.27.01-.537.031-.801C4.05.44 0 4.747 0 10c0 5.523 4.477 10 10 10 5.253 0 9.56-4.05 9.968-9.198Z" /></svg>
       </span>
     </span>
       <nuxt-link class="home caption--sm" to = '/'>
@@ -137,7 +137,7 @@
     }
   }
 
-  .moon { fill: #000; }
+  .icon { fill: #000; }
   .light-nav { color: var(--gravity); background: #fff; }
   .dark-nav { color: #fff; background: #27272B; }
   .light-arrow { fill: #fff; }
@@ -259,7 +259,7 @@
         document.querySelector('svg').classList.toggle('dark-arrow')
         const rb = document.querySelector('.rainbow')
         if ( document.body.classList.contains('dark') ) {
-          rb.style.opacity = ".72"
+          rb.style.opacity = ".64"
         } else {
           rb.style.opacity = "1"
         }

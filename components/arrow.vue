@@ -6,6 +6,8 @@
 <style lang="scss" scoped>
   @import '~static/style/grid.scss';
 
+  svg { fill: grey; }
+
 </style>
 
 

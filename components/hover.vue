@@ -16,7 +16,7 @@
   @import '~static/style/grid.scss';
   .link { position: relative; }
 
-  figure { display: inline-block; mix-blend-mode: multiply; }
+  figure { display: inline-block; }
 
   img {
     --width: 12vw;
