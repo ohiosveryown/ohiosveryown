@@ -259,7 +259,7 @@
     data: () => ({
       prm: window.matchMedia('(prefers-reduced-motion: reduce)'),
     }),
-    layout: 'project-page-layout',
+    // layout: 'project-page-layout',
     components: { arrow, projectFooter },
     methods: {
       // reducedMotion: function() {
@@ -271,6 +271,7 @@
     },
     mounted() {
       // this.reducedMotion()
+      // reduce motion mq
       const prm = window.matchMedia('(prefers-reduced-motion: reduce)')
       const videos = document.querySelectorAll('video')
       videos.forEach((video) => {

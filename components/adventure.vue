@@ -7,7 +7,7 @@
     </article>
     <nuxt-link :to=" '/' + adventureproject.link">
       <button
-        ref= "button"
+        ref="button"
         class="uc"
         @mouseenter= 'Mouseenter(), hover = true'
         @mouseleave= 'Mouseleave(), hover = false'

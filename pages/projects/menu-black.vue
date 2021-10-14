@@ -160,7 +160,7 @@
     data: () => ({
       prm: window.matchMedia('(prefers-reduced-motion: reduce)'),
     }),
-    layout: 'project-page-layout',
+    // layout: 'project-page-layout',
     components: { arrow, projectFooter },
     methods: {
       // reducedMotion: function() {
