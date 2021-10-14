@@ -176,6 +176,7 @@
     head: () => ({
       title: 'ohiosveryown – Blush'
     }),
+    scrollToTop: true,
     data: () => ({
       prm: window.matchMedia('(prefers-reduced-motion: reduce)'),
     }),
