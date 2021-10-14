@@ -66,6 +66,10 @@
           label: "Vue 3",
           img: "https://res.cloudinary.com/da32ufmnf/image/upload/v1629727540/ovo-3.6/subjects/vue_qdcweu.png",
         },
+        {
+          label: "chairmaking",
+          img: "https://res.cloudinary.com/da32ufmnf/image/upload/v1634147723/ovo-3.6/subjects/chair_wz3r5u.jpg",
+        },
       ],
       subject: ''
     }),

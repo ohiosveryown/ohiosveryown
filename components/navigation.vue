@@ -1,8 +1,20 @@
 <template>
   <nav class="width">
-    <nuxt-link class="home caption--sm" to = '/'>
-      ovo / 3.5
-    </nuxt-link>
+    <span class="left">
+      <span
+        @click = "theme(), darkMode = !darkMode"
+        class="theme">
+      <span v-if="darkMode">
+        <svg class="moon" width="20" height="20" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M10 20c5.523 0 10-4.477 10-10S15.523 0 10 0 0 4.477 0 10s4.477 10 10 10Zm0-3.333a6.667 6.667 0 1 0 0-13.334 6.667 6.667 0 0 0 0 13.334Z"  /></svg>
+      </span>
+      <span v-else>
+        <svg class="moon" width="20" height="20" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M19.968 10.802c-.264.02-.532.031-.801.031-5.523 0-10-4.477-10-10 0-.27.01-.537.031-.801C4.05.44 0 4.747 0 10c0 5.523 4.477 10 10 10 5.253 0 9.56-4.05 9.968-9.198Z" /></svg>
+      </span>
+    </span>
+      <nuxt-link class="home caption--sm" to = '/'>
+        ovo / 3.5
+      </nuxt-link>
+    </span>
 
     <section>
       <header
@@ -22,7 +34,8 @@
         class="ul-wrapper">
         <ul
           ref="list"
-          class="menu">
+          class="menu"
+          :class = "[ darkMode ? 'dark-nav' : 'light-nav' ]">
           <li
             v-for="project in projects"
             :key="project.id">
@@ -48,14 +61,21 @@
 <style lang='scss' scoped>
   @import '~static/style/grid.scss';
 
-  .home, header {
+  .home, header, .theme {
     border-radius: 100px;
     padding: 1rem;
     backdrop-filter: blur(6px);
+    /* background: pink; */
   }
 
   .home { transform: translateX(-1rem); }
   header { transform: translateX(1rem); }
+
+  .theme {
+    margin-right: .8rem;
+    padding: 1rem 1rem .6rem;
+    @include breakpoint(md) { margin-right: 2rem; }
+  }
 
   nav {
     position: sticky;
@@ -65,6 +85,12 @@
     justify-content: space-between;
     margin-bottom: 8.8rem;
     @include breakpoint(md) { top: 2.4rem; margin-bottom: 12rem; }
+  }
+
+  .left {
+    display: flex;
+    align-items: center;
+    transform: translateY(-.25rem);
   }
 
   section { position: relative; }
@@ -109,6 +135,12 @@
       width: 36vw; height: 64vh;
     }
   }
+
+  .moon { fill: #000; }
+  .light-nav { color: var(--gravity); background: #fff; }
+  .dark-nav { color: #fff; background: #27272B; }
+  .light-arrow { fill: #fff; }
+  .dark-arrow { fill: red; }
 
   @media (prefers-reduced-motion: reduce) {
     ul { transform: scale(1); }
@@ -214,10 +246,15 @@
       prm: window.matchMedia('(prefers-reduced-motion: reduce)'),
       getHTML: document.documentElement,
       navOpen: false,
+      darkMode: false,
       projects,
     }),
     components: { arrow },
     methods: {
+      theme() {
+        document.body.classList.toggle('dark')
+        document.querySelector('svg').classList.toggle('dark-arrow')
+      },
       showList() {
         this.getHTML.classList.add('lock')
         if (this.prm.matches) {} else {

@@ -36,6 +36,7 @@ export default {
   // nuxt js modules
   modules: [
     '@nuxtjs/pwa',
+    '@nuxtjs/color-mode',
   ],
   // build config
   build: {

@@ -22,7 +22,14 @@
   --elevation-00: 0 2px 22px rgba(0, 0, 0, 0.16);
   --elevation-01: 0 4px 64px rgba(0, 0, 0, 0.16);
   --elevation-02: 0 4px 64px rgba(0, 0, 0, 0.1);
+  // light
+  --color: #0e0e0f;
+  --bg: #fff;
+}
 
+.dark {
+  --color: #fff;
+  --bg: #0e0e0f;
 }
 
 *,
@@ -46,7 +53,8 @@ html:focus-within {
 
 body {
   min-height: 100vh;
-  color: var(--gravity);
+  color: var(--color);
+  background: var(--bg);
   font: normal 1.8rem/1.4 var(--system-ui);
   text-rendering: optimizeSpeed;
 }
