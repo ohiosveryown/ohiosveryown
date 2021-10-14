@@ -3,7 +3,7 @@
     <span class="left">
       <span
         @click = "theme(), darkMode = !darkMode"
-        class="theme">
+        class="theme pointer">
       <span v-if="darkMode">
         <svg class="moon" width="20" height="20" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M10 20c5.523 0 10-4.477 10-10S15.523 0 10 0 0 4.477 0 10s4.477 10 10 10Zm0-3.333a6.667 6.667 0 1 0 0-13.334 6.667 6.667 0 0 0 0 13.334Z"  /></svg>
       </span>
@@ -24,7 +24,8 @@
           Close Navigation
         </span>
         <span v-else>Navigation</span>
-        <arrow class="arrow" :class = "[ navOpen ? 'arrow-opened' : 'arrow-closed' ]"/>
+        <arrow class="arrow"
+        :class = "[ navOpen ? 'arrow-opened' : 'arrow-closed', darkMode ? 'arrow-light' : 'arrow-dark' ]"/>
       </header>
 
       <div
@@ -90,7 +91,7 @@
   .left {
     display: flex;
     align-items: center;
-    transform: translateY(-.25rem);
+    transform: translateY(0rem);
   }
 
   section { position: relative; }
@@ -140,7 +141,7 @@
   .light-nav { color: var(--gravity); background: #fff; }
   .dark-nav { color: #fff; background: #27272B; }
   .light-arrow { fill: #fff; }
-  .dark-arrow { fill: red; }
+  .dark-arrow { fill: #fff; }
 
   @media (prefers-reduced-motion: reduce) {
     ul { transform: scale(1); }
@@ -235,6 +236,8 @@
   .arrow { transition: transform 300ms ease; }
   .arrow-opened { transform: scaleY(-1) translateY(-.1rem); }
   .arrow-closed { transform: scaleY(1) translateY(.1rem); }
+  .arrow-light { fill: #fff; }
+  .arrow-dark { fill: var(--gravity); }
 </style>
 
 
@@ -254,6 +257,12 @@
       theme() {
         document.body.classList.toggle('dark')
         document.querySelector('svg').classList.toggle('dark-arrow')
+        const rb = document.querySelector('.rainbow')
+        if ( document.body.classList.contains('dark') ) {
+          rb.style.opacity = ".72"
+        } else {
+          rb.style.opacity = "1"
+        }
       },
       showList() {
         this.getHTML.classList.add('lock')
@@ -279,6 +288,16 @@
           })
         }
       },
+    },
+    mounted() {
+      // if (window.matchMedia('(prefers-color-scheme: dark)')) {
+      //   const bigBody = document.body
+      //   bigBody.classList.add('dark')
+      //   console.log('🌑')
+      // } else {
+      //   bigBody.classList.remove('dark')
+      //   console.log('☀️')
+      // }
     },
   }
 </script>

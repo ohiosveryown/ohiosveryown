@@ -42,6 +42,11 @@
     position: fixed;
     top: 0; right: 0; bottom: 0;
     width: 46vw; height: 100vh;
+    pointer-events: none;
+  }
+
+  @media(pointer: fine) {
+    .area { pointer-events: inherit; }
   }
 
   .rainbow > div {

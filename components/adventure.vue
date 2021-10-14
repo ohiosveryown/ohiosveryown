@@ -8,7 +8,7 @@
     <nuxt-link :to=" '/' + adventureproject.link">
       <button
         ref="button"
-        class="uc"
+        class="uc button--adv"
         @mouseenter= 'Mouseenter(), hover = true'
         @mouseleave= 'Mouseleave(), hover = false'
       >
@@ -58,7 +58,7 @@
     padding: 1.6rem 1.8rem;
     border-radius: 3px;
     font-size: 1.3rem;
-    background: var(--gravity);
+    background: #3B3838;
     box-shadow: 0 8px 32px rgba(0,0,0,0.32);
     transform: rotate(-6deg) translateY(-1.2rem);
     will-change: transform, opacity;

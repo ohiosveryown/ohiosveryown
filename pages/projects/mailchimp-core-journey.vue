@@ -68,7 +68,7 @@
       <figure class="space size--half">
         <div>
           <img
-            src="https://res.cloudinary.com/da32ufmnf/image/upload/v1629956049/ovo-3.6/mailchimp-core-journey/studio-02_qklqzi.jpg"
+            src="https://res.cloudinary.com/da32ufmnf/image/upload/v1634223980/ovo-3.6/mailchimp-core-journey/studio-02_r4zgwh.jpg"
             alt="Dot voting exercise">
         </div>
         <figcaption>
@@ -262,32 +262,24 @@
     }),
     // layout: 'project-page-layout',
     components: { arrow, projectFooter },
-    methods: {
-      // reducedMotion: function() {
-      //   if (this.prm.matches) {
-      //     this.$refs.vid.removeAttribute('autoplay')
-      //     this.$refs.vid.controls = true
-      //   } else {}
-      // }
-    },
-    mounted() {
-      // this.reducedMotion()
-      // reduce motion mq
-      const prm = window.matchMedia('(prefers-reduced-motion: reduce)')
-      const videos = document.querySelectorAll('video')
-      videos.forEach((video) => {
-        if (prm.matches) {
-          video.removeAttribute('autoplay')
-          video.controls = true
-        } else {
-          video.addEventListener('mouseenter', () => {
-            video.controls = true
-          })
-          video.addEventListener('mouseleave', () => {
-            video.controls = false
-          })
-        }
-      })
-    }
+mounted() {
+  // this.reducedMotion()
+  const prm = window.matchMedia('(prefers-reduced-motion: reduce)')
+  const videos = document.querySelectorAll('video')
+  videos.forEach((video) => {
+      video.removeAttribute('autoplay')
+      video.controls = true
+    // if (prm.matches) {
+    //   video.controls = true
+    // } else {
+    //   video.addEventListener('mouseenter', () => {
+    //     video.controls = true
+    //   })
+    //   video.addEventListener('mouseleave', () => {
+    //     video.controls = false
+    //   })
+    // }
+  })
+}
   }
 </script>
