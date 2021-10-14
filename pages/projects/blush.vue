@@ -74,6 +74,19 @@
       </figure>
 
       <figure class="space">
+        <div class="bleed--half secondary">
+          <img
+            class="radius--small elevation-01"
+            src="https://res.cloudinary.com/da32ufmnf/image/upload/v1634229507/ovo-3.6/blush/fi_djfdpv.png"
+            alt="Ligature">
+        </div>
+        <figcaption>
+          <span>Fig Nº05</span>
+          Ligature – 🤔
+        </figcaption>
+      </figure>
+
+      <figure class="space">
         <div class="bleed--full secondary">
           <img
             class="radius--big elevation-01"
@@ -81,7 +94,7 @@
             alt="More glyphs">
         </div>
         <figcaption>
-          <span>Fig Nº05</span>
+          <span>Fig Nº06</span>
           More glyphs
         </figcaption>
       </figure>
@@ -96,7 +109,7 @@
             alt="Original style in different renders">
         </div>
         <figcaption>
-          <span>Fig Nº06</span>
+          <span>Fig Nº07</span>
           Original style in different renders
         </figcaption>
       </figure>
@@ -109,7 +122,7 @@
             alt="More rendering">
         </div>
         <figcaption>
-          <span>Fig Nº07</span>
+          <span>Fig Nº08</span>
           More rendering
         </figcaption>
       </figure>
@@ -122,7 +135,7 @@
             alt="Type sample">
         </div>
         <figcaption>
-          <span>Fig Nº08</span>
+          <span>Fig Nº09</span>
           Ultimately, this is the direction I ended up going
         </figcaption>
       </figure>
@@ -140,12 +153,12 @@
           </video>
         </div>
         <figcaption>
-          <span>Fig Nº09</span>
+          <span>Fig Nº10</span>
           Type test sample
         </figcaption>
       </figure>
 
-      <h4 class="space subtitle">The current design for Blush is still a work in progress. I’m currently refining the book weight while concurrently working on medium and bold weights.</h4>
+      <h4 class="space subtitle">The current design for Blush is still a work in progress. I’m refining the book weight and concurrently working on medium and bold weights.</h4>
 
     </section>
 
