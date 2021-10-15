@@ -110,5 +110,5 @@ export const projects = [
     img: 'https://res.cloudinary.com/da32ufmnf/image/upload/v1597339051/000/01_sfrbbm.jpg',
     link: 'projects/000',
     background: 'var(--zero)',
-  }
+  },
 ]
