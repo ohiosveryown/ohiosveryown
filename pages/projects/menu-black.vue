@@ -13,7 +13,14 @@
           <span>2020–Present</span>
         </li>
       </ul>
-      <h3 class="subtitle">If you’re reading this in the year 2020, you’re well aware of the seriousness of covid-19. You’re also probably aware of the racial and social tension that's been brewing in America for the last 300 or so years. If you're reading this in the future, let me know how and when these issues are resolved. Atlanta is my current home and one of my favorite things to do here is find new places to eat. Atlanta is so diverse in its culture, there are so many under the radar spots for good food – menu.black is a catalog of those places.</h3>
+      <h3 class="subtitle">If you’re reading this in the year 2020, you’re well aware of the seriousness of covid-19. You’re also probably aware of the racial and social tension that's been brewing in America for the last 300 or so years. If you're reading this in the future, let me know how and when these issues are resolved. Atlanta is my current home and one of my favorite things to do here is find new places to eat. Atlanta is so diverse in its culture, there are so many under the radar spots for good food –
+        <a
+          class="link"
+          target="_blank"
+          href="https://menu.black">
+          menu.black</a><arrow class="arrow"
+        />
+      is a catalog of those places.</h3>
     </header>
 
     <section>
