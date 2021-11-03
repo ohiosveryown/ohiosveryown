@@ -221,13 +221,15 @@
   }
 
   .caption {
-    font: normal 4.8vw/1.4 'tomato-grotesk', var(--system-ui);
+    font: 300 4.8vw/1.4 'tomato-grotesk-vf', var(--system-ui);
+    font-variation-settings: 'slnt' 0;
     @include breakpoint(md) { font-size: 2vw; }
     @include breakpoint(lg) { font-size: 1.5vw; }
   }
 
   .caption--sm {
-    font: normal 4.2vw/1.24 'tomato-grotesk', var(--system-ui);
+    font: 300 4.2vw/1.24 'tomato-grotesk-vf', var(--system-ui);
+    font-variation-settings: 'slnt' 0;
     @include breakpoint(md) { font-size: 2vw; }
     @include breakpoint(mdl) { font-size: 1.6vw; }
     @include breakpoint(lg) { font-size: 1.2vw; }

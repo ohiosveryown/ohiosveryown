@@ -7,6 +7,14 @@
 }
 
 @font-face {
+  font-family: "tomato-grotesk-vf";
+  src: url("~/static/type/tomato-grotesk-vf.woff2") format("woff2");
+  font-display: block;
+  font-weight: 100 1000;
+  font-stretch: 25% 151%;
+}
+
+@font-face {
   font-family: "gt-alpina-fine";
   src: url("~/static/type/gt-alpina-fine.woff2") format("woff2");
   font-display: block;
@@ -19,7 +27,8 @@
 }
 
 .title {
-  font: normal 9.6vw/1.1 'tomato-grotesk', var(--system-ui);
+  font: 300 9.6vw/1.1 'tomato-grotesk-vf', var(--system-ui);
+  font-variation-settings: 'slnt' 0;
   @include breakpoint(md) { font-size: 4vw; }
 }
 
@@ -34,12 +43,14 @@
 }
 
 .p {
-  font: normal 5.2vw/1.64 'tomato-grotesk', var(--system-ui);
+  font: 300 5.2vw/1.64 'tomato-grotesk-vf', var(--system-ui);
+  font-variation-settings: 'slnt' 0;
   @include breakpoint(md) { font-size: 2.1vw; }
 }
 
 .caption {
-  font: normal 4.2vw/1.4 'tomato-grotesk', var(--system-ui);
+  font: 300 4.2vw/1.4 'tomato-grotesk-vf', var(--system-ui);
+  font-variation-settings: 'slnt' 0;
   @include breakpoint(md) { font-size: 2vw; }
   @include breakpoint(lg) { font-size: 1.5vw; }
 }
