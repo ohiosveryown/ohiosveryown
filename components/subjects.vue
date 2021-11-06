@@ -74,6 +74,10 @@
           label: "type design",
           img: "https://res.cloudinary.com/da32ufmnf/image/upload/v1634230091/ovo-3.6/subjects/type-design_xo0u6b.png",
         },
+        {
+          label: "GLSL",
+          img: "https://res.cloudinary.com/da32ufmnf/image/upload/v1636162784/ovo-3.6/subjects/shade_dqrjis.png",
+        },
       ],
       subject: ''
     }),
