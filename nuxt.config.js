@@ -36,10 +36,14 @@ export default {
   // nuxt js modules
   modules: [
     '@nuxtjs/pwa',
+    '@nuxtjs/google-analytics',
   ],
   // build config
   build: {
     extend (config, ctx) {
     }
+  },
+  googleAnalytics: {
+    id: 'UA-58339982-1'
   }
 }
