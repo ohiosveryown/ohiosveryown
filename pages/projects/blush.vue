@@ -32,7 +32,7 @@
     </section>
 
     <section>
-      <p class="p">Blush is influenced slightly by Futura, with the biggest distinction is that I wanted to optimize it specifically for digital media. I also wanted to take away the sharpness and starkness of Futura, while giving Blush a little more course outside of traditional, restrictive letterforms.</p>
+      <p class="p">Blush is influenced slightly by Futura, with the biggest distinction being that I wanted to optimize it specifically for digital media. I also wanted to take away the sharpness and starkness of Futura, while giving Blush a little more course outside of traditional, restrictive letterforms.</p>
       <p class="p space">These were my baseline principles and the foundation for my research. I began here and started creating a repository of fonts that followed these concepts.</p>
 
       <figure class="space">
@@ -99,7 +99,7 @@
         </figcaption>
       </figure>
 
-      <h4 class="space subtitle mb-4">Originally I had designed the face in a slightly different style. I wanted the curves to have a much tighter radius or shape. But, after playing with it in application, I didn't like the direction it was heading, so I abandoned the tighter shaping.</h4>
+      <h4 class="space subtitle mb-4">Originally I had designed the face in a slightly different style. I wanted the curves to have a much tighter radius and shape. But, after playing with it in application, I didn't like the direction it was heading, so I abandoned the tighter shaping.</h4>
 
       <figure class="space size--half">
         <div class="bleed--full secondary">
