@@ -1,58 +1,73 @@
 <template>
   <figure
     class="link"
-    @mouseenter= 'Mouseenter(), hover = true'
-    @mouseleave= 'Mouseleave(), hover = false'>
+    @mouseenter="Mouseenter(), (hover = true)"
+    @mouseleave="Mouseleave(), (hover = false)"
+  >
     <figcaption>{{ subject.label }}.</figcaption>
     <img
-      ref= "target"
-      :class = "{ hoverClass : hover }"
-      :src = "subject.img"
-      :alt="subject.label">
+      ref="target"
+      :class="{ hoverClass: hover }"
+      :src="subject.img"
+      :alt="subject.label"
+    />
   </figure>
 </template>
 
-
 <style lang="scss" scoped>
-  @import '~static/style/grid.scss';
-  .link { position: relative; }
+  @import "~static/style/grid.scss";
+  .link {
+    position: relative;
+  }
 
-  figure { display: inline-block; }
+  figure {
+    display: inline-block;
+  }
 
   img {
     --width: 14vw;
     position: absolute;
-    top: 6.4rem; left: 50%;
+    top: 6.4rem;
+    left: 50%;
     margin: auto;
     min-width: var(--width);
-    width: var(--width); height: auto;
+    width: var(--width);
+    height: auto;
     object-fit: cover;
-    transform: translate(-50%,-2.4rem) scale(.2, .8);
+    transform: translate(-50%, -2.4rem) scale(0.2, 0.8);
     transition: opacity 300ms ease;
     opacity: 0;
     pointer-events: none;
     will-change: transform, opacity;
   }
 
-  .hoverClass { opacity: 1; }
+  .hoverClass {
+    opacity: 1;
+  }
 
   @media (pointer: coarse) {
-    img { display: none; }
-    .link { border-bottom: none; opacity: 1; }
+    img {
+      display: none;
+    }
+    .link {
+      border-bottom: none;
+      opacity: 1;
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    img { transform: translate(-50%,-1.2rem) scale(1); }
+    img {
+      transform: translate(-50%, -1.2rem) scale(1);
+    }
   }
 </style>
-
 
 <script>
   export default {
     data: () => ({
       hover: false,
-      prm: window.matchMedia('(prefers-reduced-motion: reduce)'),
-      easeValue: 'elastic.out(1,.35)',
+      prm: window.matchMedia("(prefers-reduced-motion: reduce)"),
+      easeValue: "elastic.out(1,.35)",
       subjects: [
         {
           label: "machine learning",
@@ -68,7 +83,7 @@
         },
         {
           label: "chairmaking",
-          img: "https://res.cloudinary.com/da32ufmnf/image/upload/v1634147723/ovo-3.6/subjects/chair_wz3r5u.jpg",
+          img: "https://res.cloudinary.com/da32ufmnf/image/upload/v1641542165/proportional.design-v2/hero/ankixfjfug4qon09ndtx.jpg",
         },
         {
           label: "type design",
@@ -79,10 +94,10 @@
           img: "https://res.cloudinary.com/da32ufmnf/image/upload/v1636162784/ovo-3.6/subjects/shade_dqrjis.png",
         },
       ],
-      subject: ''
+      subject: "",
     }),
     methods: {
-      randomSubject : function() {
+      randomSubject: function () {
         this.subject = this.subjects[~~(Math.random() * this.subjects.length)]
       },
 
@@ -90,11 +105,11 @@
         if (this.prm.matches) {
         } else {
           gsap.to(this.$refs.target, {
-            y: '-1.2rem',
+            y: "-1.2rem",
             scale: 1,
             ease: this.easeValue,
             duration: 1,
-            delay: .08,
+            delay: 0.08,
           })
         }
       },
@@ -103,18 +118,18 @@
         if (this.prm.matches) {
         } else {
           gsap.to(this.$refs.target, {
-            y: '-2.4rem',
-            scaleY: .8,
-            scaleX: .2,
+            y: "-2.4rem",
+            scaleY: 0.8,
+            scaleX: 0.2,
             ease: this.easeValue,
-            duration: .5,
-            delay: .15,
+            duration: 0.5,
+            delay: 0.15,
           })
         }
-      }
+      },
     },
     created() {
       this.randomSubject()
-    }
+    },
   }
 </script>
