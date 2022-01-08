@@ -17,6 +17,10 @@
       </header>
 
       <ul>
+        <linkProportional class="show" />
+      </ul>
+
+      <ul>
         <list
           v-for="project in projects"
           :project="project"
@@ -34,6 +38,11 @@
   li:nth-child(-n + 2) {
     display: none;
   }
+
+  li.show:nth-child(-n + 2) {
+    display: inherit;
+  }
+
   br {
     display: none;
     @include breakpoint(md) {
@@ -87,6 +96,7 @@
 <script>
   import { projects } from "~/static/projects"
   import list from "~/components/list"
+  import linkProportional from "~/components/linkProportional"
   import adventure from "~/components/adventure"
   import rainbow from "~/components/rainbow"
   import subjects from "~/components/subjects"
@@ -98,7 +108,7 @@
       projects,
       prm: window.matchMedia("(prefers-reduced-motion: reduce)"),
     }),
-    components: { list, rainbow, subjects, adventure },
+    components: { list, linkProportional, rainbow, subjects, adventure },
     methods: {
       Entrance() {
         if (this.prm.matches) {

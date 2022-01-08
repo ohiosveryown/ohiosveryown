@@ -1,27 +1,39 @@
 <template>
-  <li :class="project.classs">
-    <nuxt-link :to="'/' + project.link">
-      <article @mouseenter="hover = true" @mouseleave="hover = false">
-        <h5 class="caption--sm">{{ project.contribution }}</h5>
-        <h4 class="p project-name">{{ project.name }}</h4>
-        <p class="caption">{{ project.excerpt }}</p>
-      </article>
-    </nuxt-link>
-
-    <figure
-      :class="{ active: hover }"
-      :style="{ background: project.background }"
+  <li>
+    <a
+      href="https://twitter.com/cmykw_/status/1479634249124913152"
+      target="_blank"
     >
-      <video
-        ref="video"
-        :poster="project.img"
-        autoplay="autoplay"
-        playsinline=""
-        loop="loop"
-        muted
-      >
-        <source :src="project.video" media="all and (min-width: 700px)" />
-      </video>
+      <article @mouseenter="hover = true" @mouseleave="hover = false">
+        <h5 class="caption--sm">Design / Development</h5>
+        <h4 class="p project-name">
+          proportional.design
+          <svg
+            width="12"
+            height="12"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              fill-rule="evenodd"
+              clip-rule="evenodd"
+              d="m1.525 11.937-1.02-1.02 7.208-7.21c-.37.078-.744.135-1.118.171-1.975.19-4.143-.2-5.58-1.637l1.02-1.02c1.012 1.012 2.671 1.388 4.422 1.22 1.75-.167 3.385-.862 4.253-1.73l1.02 1.02c-.868.868-1.562 2.503-1.73 4.253-.168 1.751.209 3.41 1.22 4.422l-1.02 1.02C8.763 9.99 8.374 7.822 8.563 5.847c.036-.374.093-.748.17-1.118l-7.208 7.209Z"
+              fill="#000"
+            />
+          </svg>
+        </h4>
+        <p class="caption">
+          A twitter thread on how I built the second iteration of my woodworking
+          site.
+        </p>
+      </article>
+    </a>
+
+    <figure :class="{ active: hover }" style="background: #272328">
+      <img
+        src="https://res.cloudinary.com/da32ufmnf/image/upload/v1641656765/ohiosveryown/a7fokwce9f4scj9xpdtz.jpg"
+        alt=""
+      />
     </figure>
   </li>
 </template>

@@ -21,17 +21,18 @@ export const projects = [
     link: "about",
     background: "#F5EDD2",
   },
-  {
-    id: 3,
-    contribution: "Design / Development",
-    name: "proportional.design",
-    excerpt:
-      "I share more information about myself here. It's really gripping content, come check it out.",
-    video: "",
-    img: "https://res.cloudinary.com/da32ufmnf/image/upload/v1629771330/ovo-3.6/me_hmuouu.jpg",
-    link: "about",
-    background: "#F5EDD2",
-  },
+  // {
+  //   id: 3,
+  //   contribution: "Design / Development",
+  //   classs: "third",
+  //   name: "proportional.design ↗️",
+  //   excerpt:
+  //     "A twitter thread on how I built the second iteration of my woodworking site.",
+  //   video: "",
+  //   img: "https://res.cloudinary.com/da32ufmnf/image/upload/v1629771330/ovo-3.6/me_hmuouu.jpg",
+  //   link: "https://twitter.com/cmykw_/status/1479634249124913152",
+  //   background: "#F5EDD2",
+  // },
   {
     id: 4,
     contribution: "Design",
