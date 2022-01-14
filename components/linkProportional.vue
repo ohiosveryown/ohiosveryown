@@ -29,11 +29,26 @@
       </article>
     </a>
 
-    <figure :class="{ active: hover }" style="background: #272328">
+    <!--     <figure :class="{ active: hover }" style="background: #272328">
       <img
         src="https://res.cloudinary.com/da32ufmnf/image/upload/v1641656765/ohiosveryown/a7fokwce9f4scj9xpdtz.jpg"
         alt=""
       />
+    </figure> -->
+
+    <figure :class="{ active: hover }" style="background: #272328">
+      <video
+        poster="https://res.cloudinary.com/da32ufmnf/image/upload/v1641656765/ohiosveryown/a7fokwce9f4scj9xpdtz.jpg"
+        autoplay="autoplay"
+        playsinline=""
+        loop="loop"
+        muted
+      >
+        <source
+          src="https://res.cloudinary.com/da32ufmnf/video/upload/v1642203208/ovo-3.6/00_etahea.mp4"
+          media="all and (min-width: 700px)"
+        />
+      </video>
     </figure>
   </li>
 </template>
