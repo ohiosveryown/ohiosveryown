@@ -14,7 +14,7 @@
     </header>
 
     <section class="anim--in p">
-      <p>Hi again. Just a reminder in case you didn’t read the first page (who reads anymore, anyway?) – my name is Matt and I'm presently a staff designer at Mailchimp 🍌</p>
+      <p>Hi again. Just a reminder in case you didn’t read the first page (who reads anymore, anyway?) – my name is Matt and I'm presently a staff designer at GitHub 🐙</p>
       <p>
         I spend half my time drawing and explaining boxes; the other half I'm trying to confuse myself with code. I also make furniture at
         <a
