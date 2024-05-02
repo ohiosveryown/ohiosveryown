@@ -10,12 +10,4 @@ Look at the [Content documentation](https://content.nuxtjs.org/) to learn more.
 
 ---
 
-<!-- This is :test content -->
-
-This is a
-
-::test
-Testttt component
-::
-
-here.
+This is :test[testing] component

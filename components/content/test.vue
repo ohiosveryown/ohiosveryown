@@ -1,5 +1,5 @@
 <template>
-  <span>
+  <span :class="[title]">
     <ContentSlot :use="$slots.default" unwrap="p" />
   </span>
 </template>
@@ -9,3 +9,12 @@
     background: pink;
   }
 </style>
+
+<script setup>
+  defineProps({
+    title: {
+      type: String,
+      default: "Default title",
+    },
+  })
+</script>
