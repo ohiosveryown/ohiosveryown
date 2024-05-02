@@ -1,10 +1,42 @@
-[![Netlify Status](https://api.netlify.com/api/v1/badges/df9b4aeb-4e66-4b84-ba69-08c0f7110664/deploy-status)](https://app.netlify.com/sites/ohiosveryown/deploys)
+# Content v2 Minimal Starter
 
-# OHIOSVERYOWN
+Look at the [Content documentation](https://content.nuxt.com/) to learn more.
 
-### Welcome! 👋🏼
+## Setup
 
-_<a target="_blank" href="http://ohiosveryown.co">ohiosveryown</a>_ is the web presence and portfolio of work for me, Matthew Pence – a designer living in Atlanta, Ga.
-Feel free to dig around and check out the inner workings of the site.
+Make sure to install the dependencies:
 
-![Ohiosveryown Interface](https://res.cloudinary.com/da32ufmnf/image/upload/v1634146496/ovo-3.6/readme_nwkn70.jpg)
+```bash
+# yarn
+yarn install
+
+# npm
+npm install
+
+# pnpm
+pnpm install
+```
+
+## Development Server
+
+Start the development server on http://localhost:3000
+
+```bash
+npm run dev
+```
+
+## Production
+
+Build the application for production:
+
+```bash
+npm run build
+```
+
+Locally preview production build:
+
+```bash
+npm run preview
+```
+
+Checkout the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
