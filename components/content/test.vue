@@ -1,6 +1,6 @@
 <template>
-  <span :class="[title]">
-    <ContentSlot :use="$slots.default" unwrap="p" />
+  <span>
+    <ContentSlot :use="$slots.title" unwrap="p" />
   </span>
 </template>
 
@@ -15,6 +15,10 @@
     title: {
       type: String,
       default: "Default title",
+    },
+    description: {
+      type: String,
+      default: "Default description",
     },
   })
 </script>
