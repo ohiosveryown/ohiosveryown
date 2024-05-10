@@ -14,12 +14,14 @@
     /* display: flex; */
     /* align-items: baseline; */
     /* flex-direction: column; */
-    margin: 20px 0;
+    margin: 20px 20px;
     font-size: 52px;
     letter-spacing: -0.75px;
+    width: 100%;
   }
 
   h2 {
     display: flex;
+    /* width: max-content; */
   }
 </style>

@@ -1,7 +1,5 @@
 <template>
-  <div>
-    <NuxtPage />
-  </div>
+  <NuxtPage class="debug width" />
 </template>
 
 <style>

@@ -30,11 +30,14 @@
 }
 
 * {
-  cursor: url("/ovo--3.7/cursor/cursor.png"), auto;
+  cursor: url("https://ik.imagekit.io/ohiosveryown/ovo--3.7/cursor/cursor.png"),
+    auto;
   cursor: -webkit-image-set(
-      url("/ovo--3.7/cursor/cursor.png") 1x,
-      url("/ovo--3.7/cursor/cursor@2x.png") 2x,
-      url("/ovo--3.7/cursor/cursor@3x.png") 3x
+      url("https://ik.imagekit.io/ohiosveryown/ovo--3.7/cursor/cursor.png") 1x,
+      url("https://ik.imagekit.io/ohiosveryown/ovo--3.7/cursor/cursor@2x.png")
+        2x,
+      url("https://ik.imagekit.io/ohiosveryown/ovo--3.7/cursor/cursor@3x.png")
+        3x
     ),
     auto;
 }
@@ -129,6 +132,13 @@ ul {
 
 .debug {
   border: 2px solid hotpink;
+}
+
+.width {
+  position: relative;
+  margin: 0 auto;
+  max-width: var(--max-width);
+  width: 90vw;
 }
 
 :focus {
