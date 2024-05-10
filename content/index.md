@@ -10,4 +10,22 @@ Look at the [Content documentation](https://content.nuxtjs.org/) to learn more.
 
 ---
 
-This is :test[testing] component
+This is:
+
+::test
+Default slot text
+
+[rich text]
+
+#title
+titlessss
+
+#description
+This will be rendered inside the `description` slot.
+::
+
+component.
+
+---
+
+This is: :test[test] component.
