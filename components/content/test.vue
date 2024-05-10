@@ -2,11 +2,12 @@
   <span>
     <span><slot /></span>
     <span class="trigger">
-      <slot unwrap="p" name="description" />
+      <ContentSlot :use="$slots.description" unwrap="p" />
     </span>
     <span class="img">
       <ContentSlot :use="$slots.title" unwrap="p" />
     </span>
+    <img :src="src" />
   </span>
 </template>
 
@@ -35,6 +36,9 @@
     description: {
       type: String,
       default: "Default description",
+    },
+    src: {
+      type: String,
     },
   })
 </script>

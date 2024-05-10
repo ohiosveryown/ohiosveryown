@@ -1,31 +1,32 @@
-# Nuxt Content
+# Home page
 
-This page corresponds to the `/` route of your website. You can delete it or create another file in the `content/` directory.
-
-Try to navigate to [/about](/about). These 2 pages are rendered by the `pages/[...slug].vue` component.
+[to about](/about)
 
 ---
 
-Look at the [Content documentation](https://content.nuxtjs.org/) to learn more.
-
----
-
-This is:
-
-::test
-Default slot text
-
-[rich text]
-
-#title
-titlessss
+::hero
+Default slot text.
 
 #description
 This will be rendered inside the `description` slot.
-::
 
-component.
+<rm
+  trigger="Atlanta"
+	label="the city in a forest"
+	img="https://res.cloudinary.com/da32ufmnf/image/upload/v1629742674/ovo-3.6/subjects/thumbnail-prop_lqkcba.jpg"
+/>
+
+::
 
 ---
 
-This is: :test[test] component.
+::test
+Test component.
+
+<rm
+	trigger="Chairmaking"
+	label="the city in a forest"
+	img="https://res.cloudinary.com/da32ufmnf/image/upload/v1629742674/ovo-3.6/subjects/thumbnail-prop_lqkcba.jpg"
+/>
+
+::
