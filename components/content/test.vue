@@ -1,5 +1,5 @@
 <template>
-  <span>
+  <span class="wrapper debug">
     <span><slot /></span>
     <span class="trigger">
       <ContentSlot :use="$slots.description" unwrap="p" />
@@ -14,6 +14,10 @@
 <style scoped>
   .debug {
     border: 2px solid pink;
+  }
+
+  .wrapper {
+    margin-left: 4px;
   }
 
   .trigger:hover ~ .img {

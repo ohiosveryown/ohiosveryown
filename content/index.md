@@ -5,15 +5,15 @@
 ---
 
 ::hero
-Default slot text.
+Welcome traveler.
 
-#description
-This will be rendered inside the `description` slot.
+#subhead
+I'm Matt, a staff designer at Github 🐙, living in always peachy,
 
 <rm
-  trigger="Atlanta"
+  trigger="Atlanta Ga 🍑."
 	label="the city in a forest"
-	img="https://res.cloudinary.com/da32ufmnf/image/upload/v1629742674/ovo-3.6/subjects/thumbnail-prop_lqkcba.jpg"
+	img="https://ik.imagekit.io/ohiosveryown/ovo--3.7/index/atlanta.webp"
 />
 
 ::
@@ -24,9 +24,9 @@ This will be rendered inside the `description` slot.
 Test component.
 
 <rm
-	trigger="Chairmaking"
-	label="the city in a forest"
-	img="https://res.cloudinary.com/da32ufmnf/image/upload/v1629742674/ovo-3.6/subjects/thumbnail-prop_lqkcba.jpg"
+	trigger="Always learning"
+	label="chair making"
+	img="https://ik.imagekit.io/ohiosveryown/ovo--3.7/index/hero.webp"
 />
 
 ::
