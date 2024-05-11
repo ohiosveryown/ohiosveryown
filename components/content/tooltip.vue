@@ -31,7 +31,8 @@
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -128%);
+    transform: translate(-50%, -132%) scale(0.96);
+    transform-origin: bottom;
     /* z-index: var(--zmin); */
     margin: 0 auto;
     border-radius: 15px;
@@ -78,6 +79,7 @@
     font-size: 1.3rem;
     font-weight: 550;
     letter-spacing: -0.15px;
+    line-height: 1.4;
     opacity: 0;
     transition: opacity 1ms ease;
     will-change: transform, opacity;
@@ -85,7 +87,7 @@
 
   .showImg {
     opacity: 1;
-    transform: translate(-50%, -132%);
+    transform: translate(-50%, -136%) scale(1);
     transition: all 400ms ease;
   }
 

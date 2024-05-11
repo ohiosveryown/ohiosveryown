@@ -41,3 +41,12 @@ $gutter: 2%;
     @return calc((100% / #{$columns}) * #{$cols});
   }
 }
+
+//
+
+.view {
+  padding-top: 5.8rem;
+  @include breakpoint(mdl) {
+    padding-top: 12rem;
+  }
+}
