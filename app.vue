@@ -1,13 +1,5 @@
 <template>
-  <NuxtPage class="debug width" />
+  <NuxtLayout>
+    <NuxtPage />
+  </NuxtLayout>
 </template>
-
-<style>
-  * {
-    margin: 0;
-  }
-
-  p {
-    /* margin-right: 4px; */
-  }
-</style>

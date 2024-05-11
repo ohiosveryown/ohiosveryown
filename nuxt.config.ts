@@ -6,6 +6,13 @@ export default defineNuxtConfig({
   // global styles
   css: ["~/assets/style/reset.scss", "~/assets/style/type.scss"],
 
+  // content
+  content: {
+    markdown: {
+      anchorLinks: false,
+    },
+  },
+
   //imagekit
   image: {
     imagekit: {

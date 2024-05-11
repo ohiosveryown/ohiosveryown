@@ -1,20 +1,15 @@
-::hero
-Welcome traveler.
-#subhead
-I'm Matt, a staff designer at Github 🐙, living in always peachy,
-<rm
-  trigger="Atlanta Ga 🍑."
-	label="the city in a forest"
-	img="https://ik.imagekit.io/ohiosveryown/ovo--3.7/index/atlanta.webp"
-/>
-::
+---
+layout: default
+---
+
+# Hello travler
+
+## I’m :tooltip{trigger="Matt" img="https://ik.imagekit.io/ohiosveryown/ovo--3.7/index/me@3x.webp" alt="Illustration of me" label="Hey there 👋"}, a staff designer at :tooltip{trigger="GitHub" img="https://ik.imagekit.io/ohiosveryown/ovo--3.7/index/gh@3x.png" alt="GitHub illustration" label="#octocat"} 🐙, <br>living in always peachy, :tooltip{trigger="Atlanta, Ga" img="https://ik.imagekit.io/ohiosveryown/ovo--3.7/index/atlanta.webp" alt="Atlanta illustration" label="the city in a forest"} 🍑.
 
 ---
 
-::hero
-Welcome traveler.
+::intro
 
-#subhead
-I'm Matt, a staff designer at Github 🐙, living in always peachy,
-:rm{trigger="Atlanta, Ga 🏠" label="labellllll" img="https://ik.imagekit.io/ohiosveryown/ovo--3.7/index/atlanta.webp"}
+## I’m :tooltip{trigger="Matt" img="https://ik.imagekit.io/ohiosveryown/ovo--3.7/index/me@3x.webp" alt="Illustration of me" label="Hey there 👋"}, a staff designer at :tooltip{trigger="GitHub" img="https://ik.imagekit.io/ohiosveryown/ovo--3.7/index/gh@3x.png" alt="GitHub illustration" label="#octocat"} 🐙, living in always peachy, :tooltip{trigger="Atlanta, Ga" img="https://ik.imagekit.io/ohiosveryown/ovo--3.7/index/atlanta.webp" alt="Atlanta illustration" label="the city in a forest"} 🍑.
+
 ::
