@@ -11,13 +11,20 @@
 </template>
 
 <style lang="scss" scoped>
+  @import "/assets/style/grid.scss";
+
   .rainbow {
     position: fixed;
-    top: 0;
-    bottom: 0;
+    top: 20rem;
     right: 0;
     z-index: var(--zmin);
-    transform: scale(80);
+    transform: scale(40);
     pointer-events: none;
+
+    @include breakpoint(md) {
+      top: 0;
+      right: 10rem;
+      transform: scale(80);
+    }
   }
 </style>
