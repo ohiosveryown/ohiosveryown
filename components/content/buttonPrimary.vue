@@ -22,7 +22,7 @@
       0 1px 1px 0 rgba(0, 0, 0, 0.05) inset, 0 20px 18px 0px rgba(0, 0, 0, 0.05),
       0 6px 5px 0px rgba(0, 0, 0, 0.03);
 
-    padding: 1.2rem 1.6rem;
+    padding: 1.2rem 1.6rem 1.4rem;
     font-size: 1.4rem;
     font-weight: 600;
     line-height: 1;
@@ -45,8 +45,6 @@
 
   button:active {
     transform: scale(0.98);
-    box-shadow: 0 -1px 1px 0 rgba(0, 0, 0, 0.12) inset,
-      0 1px 1px 0 rgba(0, 0, 0, 0.05) inset, 0 6px 5px 0px rgba(0, 0, 0, 0.03);
   }
 
   button:focus {

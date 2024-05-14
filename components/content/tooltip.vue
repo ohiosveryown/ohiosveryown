@@ -67,6 +67,7 @@
 
   .label {
     position: absolute;
+    z-index: var(--z2);
     top: 0;
     left: 0;
     border-radius: 100px;
