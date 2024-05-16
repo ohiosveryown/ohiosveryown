@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <span class="container">
     <figure>
       <img v-if="img" :class="{ showImg: show }" :src="img" :alt="alt" />
       <figcaption
@@ -14,7 +14,7 @@
     <span ref="label" :class="{ showLabel: show }" class="label">{{
       label
     }}</span>
-  </div>
+  </span>
 </template>
 
 <style lang="scss" scoped>

@@ -1,3 +1,8 @@
-# About Content v2
+---
+layout: default
+qty: 2
+---
+
+# About
 
 [Back home](/)

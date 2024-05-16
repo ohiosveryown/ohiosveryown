@@ -8,6 +8,7 @@ export default defineNuxtConfig({
 
   // content
   content: {
+    documentDriven: true,
     markdown: {
       anchorLinks: false,
     },
