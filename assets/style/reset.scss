@@ -138,6 +138,8 @@ ul {
   -webkit-margin-after: 0;
 }
 
+// utilities
+
 .debug {
   border: 2px solid hotpink;
 }
@@ -148,6 +150,64 @@ ul {
   max-width: var(--max-width);
   width: 90vw;
 }
+
+.label {
+  position: absolute;
+  z-index: var(--z2);
+  top: 0;
+  left: 0;
+  border-radius: 100px;
+  padding: 3px 10px 4px;
+  background: var(--night);
+  box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.32);
+  color: var(--cloud);
+  text-align: center;
+  font-family: var(--system-ui);
+  font-size: 1.3rem;
+  font-weight: 550;
+  letter-spacing: -0.15px;
+  line-height: 1.4;
+  opacity: 0;
+  transition: opacity 1ms ease;
+  will-change: transform, opacity;
+}
+
+.showLabel {
+  opacity: 1;
+  transition: opacity 400ms ease;
+}
+
+.thumbnail {
+  --unit: 92px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -132%) scale(0.96);
+  transform-origin: bottom;
+  margin: 0 auto;
+  border-radius: 15px;
+  width: var(--unit);
+  height: auto;
+  opacity: 0;
+  box-shadow: var(--elevation-x1);
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+
+.showImg {
+  opacity: 1;
+  transform: translate(-50%, -136%) scale(1);
+  transition: opacity 300ms ease, transform 200ms ease;
+}
+
+@media (pointer: coarse) {
+  .label,
+  .thumbnail {
+    display: none;
+  }
+}
+
+// a11y
 
 :focus {
   outline: 1px solid rgba(155, 199, 251, 0.5);
