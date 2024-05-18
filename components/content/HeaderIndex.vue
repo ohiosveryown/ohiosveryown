@@ -12,7 +12,7 @@
         trigger="Github"
         img="https://ik.imagekit.io/ohiosveryown/ovo--3.7/index/gh@3x.png"
         alt="GitHub illustration"
-        label="#octocat"
+        label="Copilot"
       />
       🐙,
       <br />
@@ -21,7 +21,7 @@
         trigger="Atlanta, Ga"
         img="https://ik.imagekit.io/ohiosveryown/ovo--3.7/index/atlanta.webp"
         alt="Atlanta illustration"
-        label="the city in a forest"
+        label="The city in a forest"
       />
       🍑.
     </h2>
@@ -29,9 +29,10 @@
 </template>
 
 <style lang="scss" scoped>
+  @import "/assets/style/grid.scss";
+
   .container {
     margin: 3.2rem 0 4rem;
-    /* margin: 4.2rem 0 4.8rem; */
   }
 </style>
 

@@ -92,11 +92,11 @@
         },
         {
           bg: "https://ik.imagekit.io/ohiosveryown/ovo--3.7/index/skills/design-systems.webp",
-          label: "Design Systems",
+          label: "Design systems",
         },
         {
           bg: "https://ik.imagekit.io/ohiosveryown/ovo--3.7/index/skills/machine-learning.webp",
-          label: "Machine Learning",
+          label: "Machine learning",
         },
         {
           bg: "https://ik.imagekit.io/ohiosveryown/ovo--3.7/index/skills/chairmaking.webp",
@@ -104,7 +104,7 @@
         },
         {
           bg: "https://ik.imagekit.io/ohiosveryown/ovo--3.7/index/skills/vue.webp",
-          label: "Vue3",
+          label: "Vue 3",
         },
       ],
       skill: "",

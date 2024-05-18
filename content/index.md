@@ -8,3 +8,4 @@ title: "ovo – home"
 
 :HeaderIndex
 :BtnGroup
+:Logos

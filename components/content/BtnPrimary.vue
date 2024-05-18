@@ -1,9 +1,13 @@
 <template>
-  <button role="button">
+  <button role="button" @mouseenter="show = true" @mouseleave="show = false">
     <span class="sheen" />
     <span class="bg" />
     {{ label }}
   </button>
+
+  <span ref="label" :class="{ showLabel: show }" class="label">
+    Let algorithms shape your destiny
+  </span>
 </template>
 
 <style lang="scss" scoped>
@@ -32,7 +36,7 @@
     .bg {
       opacity: 1;
       transform: scale(2);
-      transition: opacity 300ms ease, transform 25s ease;
+      transition: opacity 300ms ease, transform 18s ease;
     }
   }
 
@@ -79,8 +83,26 @@
 
 <script>
   export default {
+    data: () => ({
+      show: false,
+    }),
     props: {
       label: String,
+    },
+    methods: {
+      moveLabel(e) {
+        const label = this.$refs.label
+        label.setAttribute(
+          "style",
+          `transform: translate(${e.pageX - 92}px, ${e.pageY + 12}px);`
+        )
+      },
+    },
+    mounted() {
+      document.addEventListener("pointermove", this.moveLabel)
+    },
+    beforeDestroy() {
+      document.removeEventListener("pointermove", this.moveLabel)
     },
   }
 </script>
