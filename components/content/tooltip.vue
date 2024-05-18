@@ -9,6 +9,7 @@
         :alt="alt"
       />
       <figcaption
+        tabindex="0"
         @mouseenter="show = true"
         @mouseleave="show = false"
         class="trigger"
@@ -71,7 +72,7 @@
         const label = this.$refs.label
         label.setAttribute(
           "style",
-          `transform: translate(${e.pageX - 92}px, ${e.pageY + 12}px);`
+          `transform: translate(${e.pageX - 62}px, ${e.pageY + 12}px);`
         )
       },
     },

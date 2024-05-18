@@ -3,7 +3,7 @@
     "helvetica neue", helvetica, ubuntu, roboto, noto, "segoe ui", arial,
     sans-serif;
   --unit: 8px;
-  --max-width: 140rem;
+  --max-width: 210rem;
   --ease: all 400ms ease;
   --zmax: 9999;
   --z5: 5;
@@ -15,7 +15,7 @@
   --zmin: -9999;
 
   --cloud: #fff;
-  --night: #354138;
+  --night: #4d5558;
   --gravity: #121214;
 
   --elevation-00: 0 2px 22px rgba(0, 0, 0, 0.16);
@@ -64,6 +64,7 @@ html:focus-within {
 body {
   min-height: 100vh;
   font: normal 1.6rem/1.4 var(--system-ui);
+  color: var(--gravity);
   text-rendering: optimizeSpeed;
 }
 
@@ -210,7 +211,7 @@ ul {
 // a11y
 
 :focus {
-  outline: 1px solid rgba(155, 199, 251, 0.5);
+  outline: 1px solid rgba(0, 0, 0, 0.2);
 }
 
 @media (prefers-reduced-motion: reduce) {

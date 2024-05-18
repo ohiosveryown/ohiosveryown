@@ -67,10 +67,6 @@
     background: #f7f7f7;
   }
 
-  button:focus {
-    outline: 1px solid rgba(0, 0, 0, 0.4);
-  }
-
   .dot {
     margin-right: 0.2rem;
     border-radius: 100px;
@@ -120,7 +116,7 @@
         const label = this.$refs.label
         label.setAttribute(
           "style",
-          `transform: translate(${e.pageX - 92}px, ${e.pageY + 12}px);`
+          `transform: translate(${e.pageX - 62}px, ${e.pageY + 12}px);`
         )
       },
     },

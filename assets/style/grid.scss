@@ -50,3 +50,9 @@ $gutter: 2%;
     padding-top: 12rem;
   }
 }
+
+.column {
+  @include breakpoint(md) {
+    width: grid-width(5);
+  }
+}

@@ -1,11 +1,12 @@
 ---
 layout: default
-qty: 1
+key: 1
 title: "ovo – home"
 ---
 
 # Welcome traveler.
 
 :HeaderIndex
-:BtnGroup
-:Logos
+:BtnGroup{class="column"}
+:Logos{class="column"}
+:List{class="column"}

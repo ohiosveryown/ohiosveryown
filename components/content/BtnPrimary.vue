@@ -4,10 +4,6 @@
     <span class="bg" />
     {{ label }}
   </button>
-
-  <span ref="label" :class="{ showLabel: show }" class="label">
-    Let algorithms shape your destiny
-  </span>
 </template>
 
 <style lang="scss" scoped>
@@ -88,21 +84,6 @@
     }),
     props: {
       label: String,
-    },
-    methods: {
-      moveLabel(e) {
-        const label = this.$refs.label
-        label.setAttribute(
-          "style",
-          `transform: translate(${e.pageX - 92}px, ${e.pageY + 12}px);`
-        )
-      },
-    },
-    mounted() {
-      document.addEventListener("pointermove", this.moveLabel)
-    },
-    beforeDestroy() {
-      document.removeEventListener("pointermove", this.moveLabel)
     },
   }
 </script>

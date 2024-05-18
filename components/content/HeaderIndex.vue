@@ -21,7 +21,7 @@
         trigger="Atlanta, Ga"
         img="https://ik.imagekit.io/ohiosveryown/ovo--3.7/index/atlanta.webp"
         alt="Atlanta illustration"
-        label="The city in a forest"
+        label="The city in a Forest"
       />
       🍑.
     </h2>

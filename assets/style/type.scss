@@ -8,8 +8,8 @@
 }
 
 @font-face {
-  font-family: "fine";
-  src: url("~/assets/type/fine.woff2") format("woff2");
+  font-family: "thin";
+  src: url("~/assets/type/light-cond.woff2") format("woff2");
   font-display: block;
 }
 
@@ -38,6 +38,14 @@
 
 .fine {
   font-family: "fine";
+}
+
+.thin {
+  font-family: "thin";
+}
+
+.italic {
+  font-family: "italic";
 }
 
 .uc {
