@@ -30,7 +30,8 @@
 
 <style lang="scss" scoped>
   .container {
-    margin: 3.2rem 0 3.6rem;
+    margin: 3.2rem 0 4rem;
+    /* margin: 4.2rem 0 4.8rem; */
   }
 </style>
 

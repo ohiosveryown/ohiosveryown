@@ -4,7 +4,7 @@
       class="sans"
       role="button"
       @click="randoskill()"
-      @mouseenter="randoskill(), (show = true)"
+      @mouseenter="show = true"
       @mouseleave="show = false"
     >
       <span class="dot" />
