@@ -16,7 +16,7 @@
         label="Copilot"
       />
       🐙,
-      <br />
+      <br class="show-lg" />
       living in always peachy,
       <Tooltip
         trigger="Atlanta, Ga"
@@ -35,6 +35,13 @@
   .container {
     @include breakpoint(lg) {
       margin-bottom: 4rem;
+    }
+  }
+
+  .show-lg {
+    display: none;
+    @include breakpoint(md) {
+      display: inherit;
     }
   }
 </style>

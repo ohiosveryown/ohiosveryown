@@ -4,6 +4,9 @@ title: "ovo – GitHub Projects"
 name: "GitHub"
 caption: "Planning and tracking work on GitHub for developers and everyone else."
 kicker: "Product strategy, Human interface design"
+poster: ""
+video: "https://ik.imagekit.io/ohiosveryown/ovo--3.7/index/covers/proportionaldesign.mp4"
+background: "#2E46C2"
 ---
 
 # GitHub Projects
