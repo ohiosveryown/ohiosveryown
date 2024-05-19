@@ -147,7 +147,7 @@
     },
     {
       label: "Microsoft",
-      icon: "https://ik.imagekit.io/ohiosveryown/ovo--3.7/index/logos/logo__microsoft@3x.webp",
+      icon: "https://ik.imagekit.io/ohiosveryown/ovo--3.7/index/logos/logo__ms@3x.webp",
     },
   ])
 </script>

@@ -25,7 +25,7 @@
   }
 
   ul {
-    padding: 0rem 0 4.8rem;
+    padding: 0rem 0 6.4rem;
     @include breakpoint(lg) {
       padding-top: 2rem;
     }

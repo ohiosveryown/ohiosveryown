@@ -1,11 +1,11 @@
 <template>
-  <div class="view width">
+  <main class="view width">
     <slot />
-  </div>
+  </main>
 
   <img
     class="rainbow"
-    src="https://ik.imagekit.io/ohiosveryown/ovo--3.7/noisey-gradient(1).webp?updatedAt=1714145724935"
+    src="https://ik.imagekit.io/ohiosveryown/ovo--3.7/noisey-gradient(1).webp"
     alt="rainbow mesh gradient"
   />
 </template>

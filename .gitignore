@@ -6,6 +6,8 @@ node_modules
 .output
 .data
 .env
+.npmrc
+.DS_Store
 dist
 nova
 .nova

@@ -1,5 +1,6 @@
 <template>
-  <div class="container">
+  <header class="container">
+    <h1>Welcome traveler.</h1>
     <h2>
       I'm
       <Tooltip
@@ -10,7 +11,7 @@
       />, a staff designer at
       <Tooltip
         trigger="Github"
-        img="https://ik.imagekit.io/ohiosveryown/ovo--3.7/index/gh@3x.png"
+        img="https://ik.imagekit.io/ohiosveryown/ovo--3.7/index/gh@3x.webp"
         alt="GitHub illustration"
         label="Copilot"
       />
@@ -19,13 +20,13 @@
       living in always peachy,
       <Tooltip
         trigger="Atlanta, Ga"
-        img="https://ik.imagekit.io/ohiosveryown/ovo--3.7/index/atlanta.webp"
+        img="https://ik.imagekit.io/ohiosveryown/ovo--3.7/index/atlanta@3x.webp"
         alt="Atlanta illustration"
         label="The city in a Forest"
       />
       🍑.
     </h2>
-  </div>
+  </header>
 </template>
 
 <style lang="scss" scoped>
