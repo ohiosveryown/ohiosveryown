@@ -2,11 +2,7 @@
   <ul>
     <li v-for="post in posts" :key="post.id">
       <span class="kicker thin">{{ post.kicker }}</span>
-      <nuxtLink
-        :to="post._path"
-        @mouseenter="show = true"
-        @mouseleave="show = false"
-      >
+      <nuxtLink :to="post._path">
         <h3 class="name sans">{{ post.name }}</h3>
         <p class="caption sans">{{ post.caption }}</p>
       </nuxtLink>
@@ -39,6 +35,7 @@
     object-fit: cover;
     opacity: 0;
     pointer-events: none;
+    transition: opacity 400ms ease 200ms;
     @include breakpoint(md) {
       display: flex;
     }
@@ -52,6 +49,13 @@
     video {
       display: inherit;
     }
+
+    li:hover {
+      figure {
+        opacity: 1;
+        transition: opacity 300ms ease;
+      }
+    }
   }
 
   video,
@@ -62,10 +66,6 @@
     max-height: 84%;
     height: auto;
     box-shadow: 0 4px 64px rgba(0, 0, 0, 0.32);
-  }
-
-  .showBg {
-    opacity: 1;
   }
 
   /* comment */
@@ -98,13 +98,13 @@
     }
   }
 
-  h3,
+  .name,
   p {
     position: relative;
     cursor: pointer;
   }
 
-  h3:after {
+  .name:after {
     @include breakpoint(lg) {
       content: "☼";
       position: absolute;
@@ -120,16 +120,15 @@
     .name {
       background: rgba(0, 0, 0, 0.05);
     }
-    h3:after {
+    .name:after {
       opacity: 1;
     }
   }
 
   .kicker {
-    font-size: 1.8rem;
-    font-size: 1.46vw;
-    font-size: clamp(1.7rem, 1.46vw, 2rem);
+    font-size: clamp(1.7rem, 1.46vw, 1.9rem);
     color: var(--night);
+    opacity: 0.8;
   }
 
   .name {
@@ -145,8 +144,6 @@
   }
 
   .caption {
-    font-size: 2rem;
-    font-size: 1.25vw;
     font-size: clamp(1.9rem, 1.35vw, 2.3rem);
     font-weight: 372;
   }

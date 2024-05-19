@@ -5,10 +5,12 @@ name: "GitHub"
 caption: "Planning and tracking work on GitHub for developers and everyone else."
 kicker: "Product strategy, Human interface design"
 poster: ""
-video: "https://ik.imagekit.io/ohiosveryown/ovo--3.7/index/covers/proportionaldesign.mp4"
-background: "#2E46C2"
+video: "https://res.cloudinary.com/da32ufmnf/video/upload/v1633631810/ovo-3.6/index/mc-core_ph7qd4.mp4"
+background: "linear-gradient(164deg, #4730BB 1%, #7D0863 99%)"
 ---
 
 # GitHub Projects
 
-## Projects is an adaptable, flexible tool for planning and tracking work on GitHub. Build an adaptable spreadsheet, task-board, and road map that integrates with your issues and pull requests on GitHub to help you plan and track your work effectively.
+## Planning and tracking work on GitHub for developers and everyone else.
+
+### Projects is an adaptable, flexible tool for planning and tracking work on GitHub. Build an adaptable spreadsheet, task-board, and road map that integrates with your issues and pull requests on GitHub to help you plan and track your work effectively.
