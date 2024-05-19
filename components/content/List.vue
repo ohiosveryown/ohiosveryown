@@ -16,6 +16,8 @@
 </template>
 
 <style lang="scss" scoped>
+  @import "/assets/style/grid.scss";
+
   a {
     display: flex;
     flex-direction: column;
@@ -23,12 +25,30 @@
   }
 
   ul {
-    padding-bottom: 4rem;
+    padding: 0rem 0 4.8rem;
+    @include breakpoint(lg) {
+      padding-top: 2rem;
+    }
   }
 
   li {
-    margin-top: 6.4rem;
-    pointer: initial;
+    margin-top: 5.2rem;
+    cursor: pointer;
+    @include breakpoint(lg) {
+      margin-top: 7.2rem;
+    }
+  }
+
+  a:focus {
+    outline: none;
+    .name {
+      background: rgba(0, 0, 0, 0.05);
+    }
+  }
+
+  h3,
+  p {
+    cursor: pointer;
   }
 
   li:hover {
@@ -39,6 +59,8 @@
 
   .kicker {
     font-size: 1.8rem;
+    font-size: 1.46vw;
+    font-size: clamp(1.7rem, 1.46vw, 2rem);
     color: var(--night);
   }
 
@@ -46,21 +68,27 @@
     margin: 0.6rem 0 0.4rem;
     border-radius: 5px;
     width: max-content;
-    font-size: 3rem;
-    font-weight: 400;
+    font-size: clamp(2.4rem, 2.1vw, 2.9rem);
+    font-weight: 450;
+    @include breakpoint(lg) {
+      margin: 1rem 0 0.6rem;
+      font-weight: 410;
+    }
   }
 
   .caption {
     font-size: 2rem;
+    font-size: 1.25vw;
+    font-size: clamp(1.9rem, 1.35vw, 2.3rem);
     font-weight: 350;
   }
 </style>
 
 <script setup>
   const { data: posts } = await useAsyncData("posts", () =>
-    queryContent()
+    queryContent("/work")
       // .sort({ date: -1 })
-      .skip(2)
+      // .skip(2)
       .sort({ key: 1 })
       .find()
   )

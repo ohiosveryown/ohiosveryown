@@ -45,15 +45,18 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-top: 11.2rem;
-    /* @include breakpoint(md) {
-      width: grid-width(5);
-    } */
+    margin-top: 6.4rem;
+    @include breakpoint(lg) {
+      margin-top: 11.2rem;
+    }
   }
 
   ul {
-    display: flex;
+    display: none;
     align-items: center;
+    @include breakpoint(lg) {
+      display: flex;
+    }
   }
 
   li {

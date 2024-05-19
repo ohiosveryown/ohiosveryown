@@ -9,8 +9,11 @@
   @import "/assets/style/grid.scss";
 
   .container {
-    display: flex;
-    gap: 0.8rem;
+    display: none;
+    @include breakpoint(lg) {
+      display: flex;
+      gap: 0.8rem;
+    }
   }
 </style>
 

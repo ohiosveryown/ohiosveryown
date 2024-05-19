@@ -32,7 +32,9 @@
   @import "/assets/style/grid.scss";
 
   .container {
-    margin: 3.2rem 0 4rem;
+    @include breakpoint(lg) {
+      margin-bottom: 4rem;
+    }
   }
 </style>
 

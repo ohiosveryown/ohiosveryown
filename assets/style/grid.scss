@@ -23,7 +23,7 @@
       @content;
     }
   } @else if $class == xl {
-    @media (min-width: 1500px) {
+    @media (min-width: 2000px) {
       @content;
     }
   }
@@ -52,7 +52,10 @@ $gutter: 2%;
 }
 
 .column {
-  @include breakpoint(md) {
-    width: grid-width(5);
+  @include breakpoint(lg) {
+    width: grid-width(4.5);
+  }
+  @include breakpoint(xl) {
+    width: grid-width(3.5);
   }
 }
