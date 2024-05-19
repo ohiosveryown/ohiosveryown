@@ -11,7 +11,7 @@
         :class="{ showBg: show }"
         :style="{ background: post.background }"
       >
-        <video autoplay="autoplay" playsinline="" loop="loop" muted>
+        <video autoplay="autoplay" playsinline="" loop="loop" muted="muted">
           <source :src="post.video" media="all and (min-width: 700px)" />
         </video>
       </figure>
