@@ -2,7 +2,7 @@
   <ul>
     <ContentList path="/work">
       <div v-for="post in posts" :key="post._path" :post="post">
-        <Listz />
+        <Listz :post="post" />
       </div>
     </ContentList>
   </ul>
