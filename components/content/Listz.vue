@@ -18,11 +18,7 @@
           loop="loop"
           muted="muted"
         >
-          <source
-            :src="post.video"
-            type="video/webm"
-            media="all and (min-width: 700px)"
-          />
+          <source :src="post.video" />
         </video>
       </figure>
     </li>
