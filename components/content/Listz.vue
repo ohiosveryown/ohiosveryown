@@ -11,8 +11,18 @@
         :class="{ showBg: show }"
         :style="{ background: post.background }"
       >
-        <video autoplay="autoplay" playsinline="" loop="loop" muted="muted">
-          <source :src="post.video" media="all and (min-width: 700px)" />
+        <video
+          :poster="post.poster"
+          autoplay="autoplay"
+          playsinline=""
+          loop="loop"
+          muted="muted"
+        >
+          <source
+            :src="post.video"
+            type="video/webm"
+            media="all and (min-width: 700px)"
+          />
         </video>
       </figure>
     </li>
