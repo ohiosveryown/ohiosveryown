@@ -4,8 +4,8 @@ title: "ovo – blush"
 name: "Blush"
 caption: "Capturing the essence of cosmic geometries through a geometric typeface ✨."
 kicker: "Typeface design"
-poster: ""
-video: "https://ik.imagekit.io/ohiosveryown/ovo--3.7/index/covers/proportionaldesign.mp4"
+poster: "https://res.cloudinary.com/da32ufmnf/image/upload/v1597077102/blush/blush-01_2x_ndkg4j.png"
+video: "https://res.cloudinary.com/da32ufmnf/video/upload/v1633631810/ovo-3.6/index/blush_azudkg.mp4"
 background: "#282228"
 ---
 
