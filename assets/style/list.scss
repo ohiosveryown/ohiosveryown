@@ -46,19 +46,6 @@ video {
   display: none;
 }
 
-@media (pointer: fine) {
-  video {
-    display: inherit;
-  }
-
-  li:hover {
-    figure {
-      opacity: 1;
-      transition: opacity 300ms ease;
-    }
-  }
-}
-
 video,
 img {
   display: inherit;
@@ -90,13 +77,6 @@ li {
   }
 }
 
-a:focus {
-  outline: none;
-  .name {
-    background: rgba(0, 0, 0, 0.05);
-  }
-}
-
 .name,
 .caption {
   position: relative;
@@ -115,11 +95,29 @@ a:focus {
   }
 }
 
-li:hover {
-  .name {
-    background: rgba(0, 0, 0, 0.05);
+@media (pointer: fine) {
+  video {
+    display: inherit;
   }
-  .name:after {
-    opacity: 1;
+
+  li:hover {
+    .name {
+      background: rgba(0, 0, 0, 0.05);
+    }
+    .name:after {
+      opacity: 1;
+    }
+
+    figure {
+      opacity: 1;
+      transition: opacity 300ms ease;
+    }
+  }
+
+  a:focus {
+    outline: none;
+    .name {
+      background: rgba(0, 0, 0, 0.05);
+    }
   }
 }

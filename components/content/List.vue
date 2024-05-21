@@ -1,5 +1,11 @@
 <template>
   <ul>
+    <ListItemLink
+      linz="https://google.com"
+      kicker="Human interface design"
+      name="External Project"
+      caption="Doing the most, with the least"
+    />
     <ContentList>
       <ListItem v-for="post in posts" :key="post._path" :post="post" />
     </ContentList>
