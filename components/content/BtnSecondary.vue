@@ -3,12 +3,12 @@
     <button
       class="sans"
       role="button"
-      @click="randoskill()"
+      @click="randomSkill()"
       @mouseenter="show = true"
       @mouseleave="show = false"
     >
       <span class="dot" />
-      {{ label }}
+      {{ btnLabel }}
       <svg width="14" height="14" fill="none">
         <g>
           <rect width="13" height="13" x=".5" y=".5" stroke="#000" rx="6.5" />
@@ -29,7 +29,7 @@
   </div>
 
   <span ref="label" :class="{ showLabel: show }" class="label">
-    {{ skill.label }}
+    {{ skill.tooltipLabel }}
   </span>
 </template>
 
@@ -89,55 +89,54 @@
   }
 </style>
 
-<script>
-  export default {
-    data: () => ({
-      show: false,
-      skills: [
-        {
-          bg: "https://ik.imagekit.io/ohiosveryown/ovo--3.7/index/skills/shade.webp",
-          label: "GLSL",
-        },
-        {
-          bg: "https://ik.imagekit.io/ohiosveryown/ovo--3.7/index/skills/design-systems.webp",
-          label: "Design systems",
-        },
-        {
-          bg: "https://ik.imagekit.io/ohiosveryown/ovo--3.7/index/skills/machine-learning.webp",
-          label: "Machine learning",
-        },
-        {
-          bg: "https://ik.imagekit.io/ohiosveryown/ovo--3.7/index/skills/chairmaking.webp",
-          label: "Chairmaking",
-        },
-        {
-          bg: "https://ik.imagekit.io/ohiosveryown/ovo--3.7/index/skills/vue.webp",
-          label: "Vue 3",
-        },
-      ],
-      skill: "",
-    }),
-    props: {
-      label: String,
+<script setup>
+  defineProps({
+    btnLabel: String,
+  })
+
+  let show = ref(false)
+  let skills = [
+    {
+      bg: "https://ik.imagekit.io/ohiosveryown/ovo--3.7/index/skills/shade.webp",
+      tooltipLabel: "GLSL",
     },
-    methods: {
-      randoskill: function (e) {
-        this.skill = this.skills[~~(Math.random() * this.skills.length)]
-      },
-      moveLabel(e) {
-        const label = this.$refs.label
-        label.setAttribute(
-          "style",
-          `transform: translate(${e.pageX - 62}px, ${e.pageY + 12}px);`
-        )
-      },
+    {
+      bg: "https://ik.imagekit.io/ohiosveryown/ovo--3.7/index/skills/design-systems.webp",
+      tooltipLabel: "Design systems",
     },
-    mounted() {
-      this.randoskill()
-      document.addEventListener("pointermove", this.moveLabel)
+    {
+      bg: "https://ik.imagekit.io/ohiosveryown/ovo--3.7/index/skills/machine-learning.webp",
+      tooltipLabel: "Machine learning",
     },
-    beforeUnmount() {
-      document.removeEventListener("pointermove", this.moveLabel)
+    {
+      bg: "https://ik.imagekit.io/ohiosveryown/ovo--3.7/index/skills/chairmaking.webp",
+      tooltipLabel: "Chairmaking",
     },
+    {
+      bg: "https://ik.imagekit.io/ohiosveryown/ovo--3.7/index/skills/vue.webp",
+      tooltipLabel: "Vue 3",
+    },
+  ]
+  let skill = ref("")
+  let label = ref("")
+
+  const randomSkill = () => {
+    skill.value = skills[~~(Math.random() * skills.length)]
   }
+
+  const moveLabel = (e) => {
+    label.value.setAttribute(
+      "style",
+      `transform: translate(${e.pageX - 62}px, ${e.pageY + 12}px);`
+    )
+  }
+
+  onMounted(() => {
+    randomSkill()
+    document.addEventListener("pointermove", moveLabel)
+  })
+
+  onUnmounted(() => {
+    document.removeEventListener("pointermove", moveLabel)
+  })
 </script>

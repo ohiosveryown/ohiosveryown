@@ -7,13 +7,13 @@
         trigger="Matt"
         img="https://ik.imagekit.io/ohiosveryown/ovo--3.7/index/me@3x.webp"
         alt="Illustration of me"
-        label="Hey there 👋"
+        tooltipLabel="Hey there 👋"
       />, a staff designer at
       <Tooltip
         trigger="Github"
         img="https://ik.imagekit.io/ohiosveryown/ovo--3.7/index/gh@3x.webp"
         alt="GitHub illustration"
-        label="Copilot"
+        tooltipLabel="Copilot"
       />
       🐙,
       <br class="show-lg" />
@@ -22,7 +22,7 @@
         trigger="Atlanta, Ga"
         img="https://ik.imagekit.io/ohiosveryown/ovo--3.7/index/atlanta@3x.webp"
         alt="Atlanta illustration"
-        label="The city in a Forest"
+        tooltipLabel="The city in a Forest"
       />
       🍑.
     </h2>
@@ -52,5 +52,3 @@
     }
   }
 </style>
-
-<script setup lang="ts"></script>

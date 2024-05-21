@@ -1,8 +1,8 @@
 <template>
-  <button role="button" @mouseenter="show = true" @mouseleave="show = false">
+  <button role="button">
     <span class="sheen" />
     <span class="bg" />
-    {{ label }}
+    {{ btnLabel }}
   </button>
 </template>
 
@@ -76,13 +76,8 @@
   }
 </style>
 
-<script>
-  export default {
-    data: () => ({
-      show: false,
-    }),
-    props: {
-      label: String,
-    },
-  }
+<script setup>
+  defineProps({
+    btnLabel: String,
+  })
 </script>

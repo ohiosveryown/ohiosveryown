@@ -1,9 +1,9 @@
 ---
 key: 1
 title: "ovo – GitHub Projects"
+kicker: "Product strategy, Human interface design"
 name: "GitHub Projects"
 caption: "Flexible project planning for developers – and everyone else."
-kicker: "Product strategy, Human interface design"
 date: "2024"
 poster: "https://res.cloudinary.com/da32ufmnf/image/upload/v1596477789/mc-send/01_2x_ab9xk9.jpg"
 video: "https://res.cloudinary.com/da32ufmnf/video/upload/v1633631810/ovo-3.6/index/mc-core_ph7qd4.mp4"

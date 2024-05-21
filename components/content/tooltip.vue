@@ -19,7 +19,7 @@
     </figure>
 
     <span ref="label" :class="{ showLabel: show }" class="label">{{
-      label
+      tooltipLabel
     }}</span>
   </span>
 </template>
@@ -54,34 +54,29 @@
   }
 </style>
 
-<script>
-  export default {
-    data: () => ({
-      show: false,
-    }),
+<script setup>
+  const props = defineProps({
+    img: String,
+    alt: String,
+    trigger: String,
+    tooltipLabel: String,
+  })
 
-    props: {
-      img: String,
-      alt: String,
-      trigger: String,
-      label: String,
-    },
+  let show = ref(false)
+  let label = ref("")
 
-    methods: {
-      moveLabel(e) {
-        const label = this.$refs.label
-        label.setAttribute(
-          "style",
-          `transform: translate(${e.clientX - 62}px, ${e.clientY + 12}px);`
-        )
-      },
-    },
-    mounted() {
-      document.addEventListener("pointermove", this.moveLabel)
-    },
-    beforeUnmount() {
-      console.log("deeeestroy")
-      document.removeEventListener("pointermove", this.moveLabel)
-    },
+  const moveLabel = (e) => {
+    label.value.setAttribute(
+      "style",
+      `transform: translate(${e.clientX - 62}px, ${e.clientY + 12}px);`
+    )
   }
+
+  onMounted(() => {
+    document.addEventListener("pointermove", moveLabel)
+  })
+
+  onBeforeUnmount(() => {
+    document.removeEventListener("pointermove", moveLabel)
+  })
 </script>

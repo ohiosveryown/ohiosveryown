@@ -18,7 +18,6 @@
 </style>
 
 <script setup>
-  // const posts = ""
   const show = ref(false)
   const { data: posts } = await useAsyncData("posts", () =>
     queryContent("/work").sort({ key: 1 }).find()

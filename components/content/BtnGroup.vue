@@ -1,7 +1,7 @@
 <template>
   <menu class="container">
-    <BtnPrimary label="Adventure time" />
-    <BtnSecondary label="Always learning" />
+    <BtnPrimary btnLabel="Adventure time" />
+    <BtnSecondary btnLabel="Always learning" />
   </menu>
 </template>
 
@@ -16,5 +16,3 @@
     }
   }
 </style>
-
-<script setup lang="ts"></script>
