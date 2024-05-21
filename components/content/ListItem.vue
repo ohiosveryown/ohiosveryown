@@ -8,6 +8,7 @@
 
     <figure :class="{ showBg: show }" :style="{ background: post.background }">
       <video
+        ref="videoRef"
         :poster="post.poster"
         autoplay="autoplay"
         playsinline=""
@@ -159,4 +160,23 @@
   const { data: posts } = await useAsyncData("posts", () =>
     queryContent("/work").sort({ key: 1 }).find()
   )
+
+  // onMounted(() => {
+  //   const prm = window.matchMedia("(prefers-reduced-motion: reduce)")
+  //   const videos = document.querySelectorAll("video")
+  //   videos.forEach((video) => {
+  //     if (prm.matches) {
+  //       video.removeAttribute("autoplay")
+  //       video.controls = true
+  //     }
+  //   })
+  // })
+
+  const videoRef = ref(null)
+
+  onMounted(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      videoRef.value.pause()
+    }
+  })
 </script>
