@@ -1,8 +1,8 @@
 <template>
-  <div class="container">
+  <menu class="container">
     <BtnPrimary label="Adventure time" />
     <BtnSecondary label="Always learning" />
-  </div>
+  </menu>
 </template>
 
 <style lang="scss" scoped>

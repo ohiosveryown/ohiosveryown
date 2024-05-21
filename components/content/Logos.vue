@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <section class="container">
     <ul>
       <li v-for="logo in logos">
         <figure>
@@ -35,11 +35,15 @@
       </div>
       <span class="thin">2018–2024</span>
     </header>
-  </div>
+  </section>
 </template>
 
 <style lang="scss" scoped>
   @import "/assets/style/grid.scss";
+
+  .logo {
+    border-radius: 100px;
+  }
 
   .container {
     display: flex;
@@ -67,7 +71,7 @@
   .icon {
     border-radius: 100px;
     border: 3px solid #fff;
-    width: 3.4rem;
+    width: 3.6rem;
     transition: transform 200ms ease;
   }
 
@@ -131,23 +135,23 @@
   const logos = ref([
     {
       label: "GitHub",
-      icon: "https://ik.imagekit.io/ohiosveryown/ovo--3.7/index/logos/logo__gh@3x.webp",
+      icon: "https://ik.imagekit.io/ohiosveryown/ovo--3.7/index/logos/logo__gh.svg",
     },
     {
       label: "Mailchimp",
-      icon: "https://ik.imagekit.io/ohiosveryown/ovo--3.7/index/logos/logo__mc@3x.webp",
+      icon: "https://ik.imagekit.io/ohiosveryown/ovo--3.7/index/logos/logo__mc.svg",
     },
     {
       label: "Intuit",
-      icon: "https://ik.imagekit.io/ohiosveryown/ovo--3.7/index/logos/logo__intuit@3x.webp",
+      icon: "https://ik.imagekit.io/ohiosveryown/ovo--3.7/index/logos/logo__intuit.svg",
     },
     {
       label: "Nike",
-      icon: "https://ik.imagekit.io/ohiosveryown/ovo--3.7/index/logos/logo__nike@3x.webp",
+      icon: "https://ik.imagekit.io/ohiosveryown/ovo--3.7/index/logos/logo__nike.svg",
     },
     {
       label: "Microsoft",
-      icon: "https://ik.imagekit.io/ohiosveryown/ovo--3.7/index/logos/logo__ms@3x.webp",
+      icon: "https://ik.imagekit.io/ohiosveryown/ovo--3.7/index/logos/logo__ms.svg?updatedAt=1716255214571",
     },
   ])
 </script>

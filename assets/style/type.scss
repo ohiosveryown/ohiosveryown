@@ -9,7 +9,7 @@
 
 @font-face {
   font-family: "thin";
-  src: url("~/assets/type/light-cond.woff2") format("woff2");
+  src: url("~/assets/type/thin.woff2") format("woff2");
   font-display: block;
 }
 
@@ -24,8 +24,8 @@
   font-family: "sans";
 }
 
-@mixin fine {
-  font-family: "fine";
+@mixin thin {
+  font-family: "thin";
 }
 
 @mixin italic {
@@ -34,10 +34,6 @@
 
 .sans {
   font-family: "sans";
-}
-
-.fine {
-  font-family: "fine";
 }
 
 .thin {
@@ -63,21 +59,21 @@
 
 h1 {
   @include sans;
-  margin-bottom: 1.6rem;
-  // font-size: 5.2rem;
   font-size: clamp(1rem, -0.875rem + 12vw, 6rem);
   font-weight: 360;
   letter-spacing: -0.5px;
   line-height: 116%;
-  @include breakpoint(md) {
-    margin-bottom: 2rem;
-  }
 }
 
 h2 {
   @include italic;
-  font-size: 3.4rem;
   font-size: clamp(1rem, -0.875rem + 10vw, 4.2rem);
   font-weight: 100;
   line-height: 144%;
+}
+
+h3 {
+  @include thin;
+  font-size: clamp(3.2rem, -0.875rem + 4vw, 4.2rem);
+  line-height: 132%;
 }

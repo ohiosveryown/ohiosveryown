@@ -7,5 +7,4 @@ layout: default
 :HeaderIndex
 :BtnGroup{class="column"}
 :Logos{class="column"}
-:Parent{class="column"}
 :List{class="column"}

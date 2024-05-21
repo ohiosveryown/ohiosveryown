@@ -74,6 +74,18 @@
     height: 8px;
     background: #4ed70e;
     filter: drop-shadow(0 3px 4px rgba(29, 167, 34, 0.3));
+    /* animation: pulse 2s ease alternate infinite; */
+  }
+
+  @keyframes pulse {
+    from {
+      background: #4ed70e;
+      filter: drop-shadow(0 3px 4px rgba(29, 167, 34, 0.3));
+    }
+    to {
+      background: #f7f7f7;
+      filter: drop-shadow(0 3px 4px rgba(29, 167, 34, 0));
+    }
   }
 </style>
 
@@ -124,7 +136,7 @@
       this.randoskill()
       document.addEventListener("pointermove", this.moveLabel)
     },
-    beforeDestroy() {
+    beforeUnmount() {
       document.removeEventListener("pointermove", this.moveLabel)
     },
   }

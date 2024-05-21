@@ -72,14 +72,15 @@
         const label = this.$refs.label
         label.setAttribute(
           "style",
-          `transform: translate(${e.pageX - 62}px, ${e.pageY + 12}px);`
+          `transform: translate(${e.clientX - 62}px, ${e.clientY + 12}px);`
         )
       },
     },
     mounted() {
       document.addEventListener("pointermove", this.moveLabel)
     },
-    beforeDestroy() {
+    beforeUnmount() {
+      console.log("deeeestroy")
       document.removeEventListener("pointermove", this.moveLabel)
     },
   }

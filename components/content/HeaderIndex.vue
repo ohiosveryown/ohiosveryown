@@ -1,5 +1,5 @@
 <template>
-  <header class="container">
+  <header class="test container">
     <h1>Welcome traveler.</h1>
     <h2>
       I'm
@@ -42,6 +42,13 @@
     display: none;
     @include breakpoint(md) {
       display: inherit;
+    }
+  }
+
+  h1 {
+    margin-bottom: 1.6rem;
+    @include breakpoint(md) {
+      margin-bottom: 2rem;
     }
   }
 </style>

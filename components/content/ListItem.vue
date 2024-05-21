@@ -1,32 +1,50 @@
 <template>
-  <ul>
-    <li>
-      <span class="kicker thin">{{ post.kicker }}</span>
-      <nuxtLink :to="post._path">
-        <h3 class="name sans">{{ post.name }}</h3>
-        <p class="caption sans">{{ post.caption }}</p>
-      </nuxtLink>
+  <li>
+    <span class="kicker thin">{{ post.kicker }}</span>
+    <nuxtLink :to="post._path">
+      <header class="name sans">{{ post.name }}</header>
+      <p class="caption sans">{{ post.caption }}</p>
+    </nuxtLink>
 
-      <figure
-        :class="{ showBg: show }"
-        :style="{ background: post.background }"
+    <figure :class="{ showBg: show }" :style="{ background: post.background }">
+      <video
+        :poster="post.poster"
+        autoplay="autoplay"
+        playsinline=""
+        loop="loop"
+        muted="muted"
       >
-        <video
-          :poster="post.poster"
-          autoplay="autoplay"
-          playsinline=""
-          loop="loop"
-          muted="muted"
-        >
-          <source :src="post.video" />
-        </video>
-      </figure>
-    </li>
-  </ul>
+        <source :src="post.video" />
+      </video>
+    </figure>
+  </li>
 </template>
 
 <style lang="scss" scoped>
   @import "/assets/style/grid.scss";
+
+  .kicker {
+    font-size: clamp(1.7rem, 1.46vw, 1.9rem);
+    color: var(--night);
+    opacity: 0.8;
+  }
+
+  .name {
+    margin: 0.6rem 0 0.4rem;
+    border-radius: 5px;
+    width: max-content;
+    font-size: clamp(2.4rem, 2.1vw, 2.9rem);
+    font-weight: 450;
+    @include breakpoint(lg) {
+      margin: 1rem 0 0.6rem;
+      font-weight: 424;
+    }
+  }
+
+  .caption {
+    font-size: clamp(1.9rem, 1.35vw, 2.3rem);
+    font-weight: 380;
+  }
 
   figure {
     display: none;
@@ -105,7 +123,7 @@
   }
 
   .name,
-  p {
+  .caption {
     position: relative;
     cursor: pointer;
   }
@@ -129,29 +147,6 @@
     .name:after {
       opacity: 1;
     }
-  }
-
-  .kicker {
-    font-size: clamp(1.7rem, 1.46vw, 1.9rem);
-    color: var(--night);
-    opacity: 0.8;
-  }
-
-  .name {
-    margin: 0.6rem 0 0.4rem;
-    border-radius: 5px;
-    width: max-content;
-    font-size: clamp(2.4rem, 2.1vw, 2.9rem);
-    font-weight: 450;
-    @include breakpoint(lg) {
-      margin: 1rem 0 0.6rem;
-      font-weight: 410;
-    }
-  }
-
-  .caption {
-    font-size: clamp(1.9rem, 1.35vw, 2.3rem);
-    font-weight: 372;
   }
 </style>
 
