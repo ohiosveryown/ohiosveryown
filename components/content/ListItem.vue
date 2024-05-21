@@ -8,7 +8,7 @@
 
     <figure :class="{ showBg: show }" :style="{ background: post.background }">
       <video
-        ref="videoRef"
+        v-show="!isReducedMotion"
         :poster="post.poster"
         autoplay="autoplay"
         playsinline=""
@@ -17,6 +17,7 @@
       >
         <source :src="post.video" />
       </video>
+      <img :src="post.poster" alt="Static Image" v-show="isReducedMotion" />
     </figure>
   </li>
 </template>
@@ -161,22 +162,10 @@
     queryContent("/work").sort({ key: 1 }).find()
   )
 
-  // onMounted(() => {
-  //   const prm = window.matchMedia("(prefers-reduced-motion: reduce)")
-  //   const videos = document.querySelectorAll("video")
-  //   videos.forEach((video) => {
-  //     if (prm.matches) {
-  //       video.removeAttribute("autoplay")
-  //       video.controls = true
-  //     }
-  //   })
-  // })
-
-  const videoRef = ref(null)
-
+  const isReducedMotion = ref(false)
   onMounted(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      videoRef.value.pause()
+      isReducedMotion.value = true
     }
   })
 </script>
