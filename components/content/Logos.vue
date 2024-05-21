@@ -48,7 +48,8 @@
   .container {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    gap: 2.4rem;
+    /* justify-content: space-between; */
     margin-top: 6.4rem;
     @include breakpoint(lg) {
       margin-top: 11.2rem;

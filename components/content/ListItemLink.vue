@@ -1,7 +1,7 @@
 <template>
   <li>
     <span class="kicker thin">{{ kicker }}</span>
-    <NuxtLink :to="{ linz }">
+    <a :href="externalLink" rel="noopener noreferrer" target="_blank">
       <header class="name sans">
         {{ name }}
         <svg width="12" height="32" fill="none">
@@ -21,7 +21,20 @@
         </svg>
       </header>
       <p class="caption sans">{{ caption }}</p>
-    </NuxtLink>
+    </a>
+
+    <figure :class="{ showBg: show }" :style="{ background }">
+      <video
+        v-show="!isReducedMotion"
+        :poster="poster"
+        autoplay="autoplay"
+        playsinline=""
+        loop="loop"
+        muted="muted"
+      >
+        <source :src="video" />
+      </video>
+    </figure>
   </li>
 </template>
 
@@ -31,9 +44,20 @@
 
 <script setup>
   defineProps({
-    linz: String,
+    externalLink: String,
     kicker: String,
     name: String,
     caption: String,
+    poster: String,
+    video: String,
+    background: String,
+  })
+
+  const show = ref(false)
+  const isReducedMotion = ref(false)
+  onMounted(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      isReducedMotion.value = true
+    }
   })
 </script>
