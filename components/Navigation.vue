@@ -17,9 +17,15 @@
     </button>
 
     <div class="navigation">
-      <button role="button" class="sans">
-        Menu
-        <svg width="12" height="12" fill="none">
+      <button role="button" class="sans" @click="menuOpen = !menuOpen">
+        <span v-if="menuOpen">Close Menu</span>
+        <span v-else>Menu</span>
+        <svg
+          width="12"
+          height="12"
+          fill="none"
+          :class="[menuOpen ? 'arrow-default' : 'arrow-flipped']"
+        >
           <path
             fill="#000"
             fill-rule="evenodd"
@@ -29,7 +35,7 @@
         </svg>
       </button>
 
-      <menu>Hello</menu>
+      <menu class="menu" :class="[menuOpen ? 'opened' : 'closed']">hello</menu>
     </div>
   </nav>
 </template>
@@ -56,17 +62,31 @@
     padding: 1.2rem;
     backdrop-filter: blur(6px);
     font-size: 1.6rem;
+    span {
+      cursor: pointer;
+    }
   }
 
   svg {
     cursor: pointer;
+    transition: 260ms ease transform;
+  }
+
+  svg.arrow-default {
+    transform: scaleY(1);
+    transform: rotate(-180deg);
+  }
+
+  svg.arrow-flipped {
+    transform: scaleY(-1);
+    transform: rotate(0);
   }
 
   .navigation {
     position: relative;
   }
 
-  menu {
+  .menu {
     --unit: 0.8rem;
     position: fixed;
     top: 0;
@@ -76,15 +96,32 @@
     margin: auto;
     border-radius: 11px;
     border: 0.5px solid rgba(76, 78, 81, 0.16);
-    width: 44vw;
+    width: 98vw;
     height: calc(100vh - calc(var(--unit) * 2));
+    opacity: 1;
+    transition: all 300ms ease;
     background: url("https://ik.imagekit.io/ohiosveryown/ovo--3.7/menu__bg@3x.webp?updatedAt=1716327160174")
       no-repeat center center;
     background-size: cover;
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25),
       0 24px 158px 0px rgba(0, 0, 0, 0.12), 0 6px 34px 0px rgba(0, 0, 0, 0.07),
       0 2px 10px 0px rgba(0, 0, 0, 0.05);
+
+    @include breakpoint(lg) {
+      width: 44vw;
+    }
+  }
+
+  .open {
+    opacity: 1;
+  }
+
+  .closed {
+    opacity: 0;
+    pointer-events: none;
   }
 </style>
 
-<script setup></script>
+<script setup>
+  let menuOpen = ref(false)
+</script>
