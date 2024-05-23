@@ -127,7 +127,7 @@
   const moveLabel = (e) => {
     label.value.setAttribute(
       "style",
-      `transform: translate(${e.pageX - 62}px, ${e.pageY + 12}px);`
+      `transform: translate(${e.clientX - 56}px, ${e.clientY - 72}px);`
     )
   }
 

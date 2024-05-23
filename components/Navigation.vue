@@ -8,7 +8,7 @@
         fill="none"
       >
         <path
-          fill="#000"
+          fill="#121214"
           fill-rule="evenodd"
           d="M19.968 10.802c-.264.02-.532.031-.801.031-5.523 0-10-4.477-10-10 0-.27.01-.537.031-.801C4.05.44 0 4.747 0 10c0 5.523 4.477 10 10 10 5.253 0 9.56-4.05 9.968-9.198Z"
           clip-rule="evenodd"
@@ -18,12 +18,13 @@
 
     <div class="navigation">
       <button role="button" class="sans" @click="menuOpen = !menuOpen">
-        <span v-if="menuOpen">Close Menu</span>
-        <span v-else>Menu</span>
+        <span v-if="menuOpen" class="cloud">Close Menu</span>
+        <span v-else class="gravity">Menu</span>
         <svg
           width="12"
           height="12"
           fill="none"
+          class="arrow"
           :class="[menuOpen ? 'arrow-default' : 'arrow-flipped']"
         >
           <path
@@ -35,13 +36,109 @@
         </svg>
       </button>
 
-      <menu class="menu" :class="[menuOpen ? 'opened' : 'closed']">hello</menu>
+      <menu ref="menu" class="menu" :class="[menuOpen ? 'opened' : 'closed']">
+        <BlurTop />
+        <p>
+          Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+          Exercitationem excepturi, doloremque totam labore aliquid quas
+          quibusdam! Eum alias unde ex dolores. Minus nihil maxime laudantium
+          aliquid eligendi! Unde, quod similique. Iste at labore, quia nisi
+          voluptates temporibus minus repudiandae dolor, qui, quae suscipit
+          facere? Suscipit asperiores facilis a iste quaerat, rerum eveniet
+          natus id minima assumenda adipisci quia similique aliquid? Ex,
+          accusamus repellendus dolore voluptas praesentium reiciendis iure
+          exercitationem, atque accusantium excepturi deserunt veniam dolor
+          voluptatibus! Quis molestiae repudiandae esse provident! Fugit
+          suscipit pariatur ratione, doloremque expedita reiciendis neque harum.
+          Vitae cupiditate nesciunt sed omnis et, sequi quia autem magni.
+          Cupiditate minus qui ex quae non placeat corporis, incidunt expedita
+          sapiente earum fugit aliquam in. Porro dolore inventore minima
+          doloribus. Doloribus pariatur unde exercitationem doloremque sint.
+          Necessitatibus cupiditate obcaecati maxime nam nemo minus placeat eius
+          aliquid vitae, eligendi, praesentium quis distinctio doloribus
+          deleniti, esse fugiat. Est corporis quas quia debitis. Ipsum, ipsam
+          iste! Sequi porro optio asperiores praesentium voluptate dolorem,
+          reprehenderit ipsum fugiat soluta, eius numquam molestiae quibusdam!
+          Tenetur modi sunt repudiandae officiis odit nostrum ut magnam beatae
+          amet illo. Reiciendis odit illum neque? Quidem quos aliquid, nobis
+          soluta reiciendis recusandae, rem aut quo fugiat incidunt culpa eos
+          eligendi dolorum dolores dolore! Eaque perspiciatis, nisi minima error
+          perferendis atque mollitia. Voluptate, magnam veritatis maxime, nemo
+          suscipit doloribus dolorem alias sit nostrum tenetur soluta omnis quis
+          officia! Quo odit adipisci voluptatibus est dolor recusandae autem
+          laborum, nisi animi, quidem, repellendus mollitia. Reiciendis officiis
+          perspiciatis minus nemo odit commodi magnam, cum, at consectetur
+          deleniti nesciunt temporibus consequatur sequi numquam. Eaque facilis
+          eius, laborum expedita repellendus cum dolore possimus molestias rem
+          ullam aliquid? Tempore nostrum pariatur similique. Repellat delectus,
+          natus quidem dolorem, enim provident hic nemo illo voluptates suscipit
+          totam repudiandae? Doloremque quos in consequatur rerum nihil possimus
+          aliquid ex? Sunt, veritatis doloribus! Sit ipsa hic dolore quas
+          placeat, ex temporibus blanditiis cumque. Sequi, vitae maiores!
+          Explicabo veniam quibusdam voluptatibus! A soluta illo ipsam eaque
+          illum, eos placeat deserunt hic similique magnam optio. Dolores nemo
+          ratione eaque eos officia. Quia reprehenderit sequi recusandae aperiam
+          blanditiis quibusdam? Optio, dicta. Voluptatem officia ab dicta totam,
+          earum assumenda corporis sunt aliquid illo nulla nihil? Assumenda,
+          quia. Corporis odit, cumque qui laudantium distinctio non libero hic
+          culpa nam, reiciendis, reprehenderit eius explicabo! Cumque voluptate
+          alias necessitatibus eos quis quo sequi corporis, facilis ab modi
+          quidem voluptatibus esse. Animi mollitia fugit harum veritatis.
+          Aliquid optio, corrupti dolorem placeat velit cum laborum provident
+          totam voluptates est voluptatem quibusdam accusantium, harum dolorum
+          nisi et? Voluptatem debitis consectetur dicta esse suscipit!
+          Cupiditate deserunt atque eligendi, nulla a quidem doloremque amet,
+          eos aspernatur maiores ullam obcaecati veniam hic suscipit dolorem
+          earum sequi repudiandae quia quas fugit optio facere aliquid rem!
+          Quibusdam, totam. Tenetur inventore ullam corporis recusandae quo sed
+          eaque natus aspernatur a in, laborum neque debitis. Cupiditate
+          molestias ipsam pariatur. Commodi iste ad unde dolorum laborum dolor
+          maiores iusto eaque hic! Quia laborum, totam dolor est sapiente
+          consectetur architecto a quo, eaque, fugit tempore eum quos neque ab
+          perspiciatis. Magni veritatis perspiciatis magnam, possimus ut minima
+          voluptatum dolor obcaecati. Neque, ab. Officiis exercitationem
+          voluptates ipsa vitae qui voluptatibus recusandae deserunt deleniti
+          alias adipisci. Sed, recusandae minus. At dolor consequuntur, atque
+          quo ipsa repudiandae eaque incidunt sapiente, cum dicta optio earum
+          architecto? Sed facere fugiat praesentium tempora a vero porro ab
+          exercitationem culpa reiciendis corrupti eos ipsa reprehenderit,
+          consequatur accusantium sequi ipsam illo officiis in molestiae
+          laboriosam ut voluptate tempore. Iusto, maiores? Placeat tenetur
+          architecto ipsa impedit ut quisquam libero tempora enim sit, maiores
+          praesentium eaque dicta inventore quasi soluta ex, corporis nemo minus
+          dolor sapiente nisi fugiat eum! Cumque, id ipsum?
+        </p>
+        <BlurBtm />
+      </menu>
     </div>
   </nav>
 </template>
 
 <style lang="scss" scoped>
   @import "/assets/style/grid.scss";
+  .blur {
+    border: 2px solid pink;
+    position: fixed;
+    z-index: 9999;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 100px;
+    background: rgba(255, 255, 255, 0.01);
+    filter: blur(10px);
+    backdrop-filter: blur(0.5px);
+    transform: translateY(-2rem);
+    /* backdrop-filter: blur(0.5px);
+    mask: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0) 0%,
+      rgba(0, 0, 0, 1) 12%,
+      rgba(0, 0, 0, 1) 24%,
+      rgba(0, 0, 0, 0) 36%
+    ); */
+  }
+
   nav {
     --unit: 4rem;
     display: flex;
@@ -75,11 +172,17 @@
   svg.arrow-default {
     transform: scaleY(1);
     transform: rotate(-180deg);
+    path {
+      fill: var(--cloud);
+    }
   }
 
   svg.arrow-flipped {
     transform: scaleY(-1);
     transform: rotate(0);
+    path {
+      fill: var(--gravity);
+    }
   }
 
   .navigation {
@@ -98,7 +201,9 @@
     border: 0.5px solid rgba(76, 78, 81, 0.16);
     width: 98vw;
     height: calc(100vh - calc(var(--unit) * 2));
+    color: var(--cloud);
     opacity: 1;
+    overflow-y: scroll;
     transition: all 300ms ease;
     background: url("https://ik.imagekit.io/ohiosveryown/ovo--3.7/menu__bg@3x.webp?updatedAt=1716327160174")
       no-repeat center center;
@@ -109,10 +214,15 @@
 
     @include breakpoint(lg) {
       width: 44vw;
+      padding: 11.2rem 6.4rem 8rem;
+    }
+
+    @include breakpoint(xl) {
+      /* right: 2vw; */
     }
   }
 
-  .open {
+  .opened {
     opacity: 1;
   }
 
@@ -122,6 +232,16 @@
   }
 </style>
 
-<script setup>
-  let menuOpen = ref(false)
+<script setup lang="ts">
+  let menuOpen = ref(true)
+  const menu = ref(null)
+
+  useHead({
+    htmlAttrs: {
+      class: computed(() => {
+        if (menuOpen.value) return "locked"
+        return ""
+      }),
+    },
+  })
 </script>

@@ -3,7 +3,7 @@
     "helvetica neue", helvetica, ubuntu, roboto, noto, "segoe ui", arial,
     sans-serif;
   --unit: 8px;
-  --max-width: 210rem;
+  --max-width: 2100rem;
   --ease: all 400ms ease;
   --zmax: 9999;
   --z5: 5;
@@ -235,6 +235,22 @@ ul {
   .thumbnail {
     display: none;
   }
+}
+
+.locked {
+  overflow: hidden !important;
+}
+
+.unlocked {
+  overflow: auto !important;
+}
+
+.gravity {
+  color: var(--gravity);
+}
+
+.cloud {
+  color: var(--cloud);
 }
 
 // a11y

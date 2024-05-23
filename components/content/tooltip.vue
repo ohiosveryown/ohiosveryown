@@ -68,7 +68,7 @@
   const moveLabel = (e) => {
     label.value.setAttribute(
       "style",
-      `transform: translate(${e.clientX - 62}px, ${e.clientY + 12}px);`
+      `transform: translate(${e.clientX - 56}px, ${e.clientY - 72}px);`
     )
   }
 
