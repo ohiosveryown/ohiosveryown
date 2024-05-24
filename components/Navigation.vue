@@ -15,9 +15,9 @@
         class="menu-trigger sans"
         @click="menuOpen = !menuOpen"
       >
-        <span v-if="menuOpen" class="cloud">Close Menu</span>
-        <span v-else class="gravity">Menu</span>
-        <svg
+        <span v-if="menuOpen" class="cloud">Close Menu ☻</span>
+        <span v-else class="gravity">Menu ☺</span>
+        <!-- <svg
           width="12"
           height="12"
           fill="none"
@@ -30,15 +30,10 @@
             d="M5.444 0h1.112v7.848c.159-.243.331-.478.515-.702C8.043 5.97 9.435 5 11 5v1.111c-1.102 0-2.21.698-3.071 1.743-.862 1.044-1.373 2.311-1.373 3.257H5.444c0-.946-.511-2.213-1.373-3.257C3.21 6.809 2.101 6.11 1 6.11V5c1.565 0 2.957.969 3.929 2.146.184.224.356.459.515.702V0Z"
             clip-rule="evenodd"
           />
-        </svg>
+        </svg> -->
       </button>
 
-      <menu
-        ref="menu"
-        class="menu"
-        :class="[menuOpen ? 'opened' : 'closed']"
-        :style="menuBackground"
-      >
+      <menu ref="menu" class="menu" :class="[menuOpen ? 'opened' : 'closed']">
         <div class="overlay-top" />
         <main>
           <ContentList>
@@ -65,10 +60,6 @@
 
 <style lang="scss" scoped>
   @import "/assets/style/grid.scss";
-
-  :root {
-    --menuBackground: v-bind(menuBackground);
-  }
 
   nav {
     --unit: 4rem;
@@ -140,7 +131,8 @@
     opacity: 1;
     overflow: hidden;
     transition: opacity 200ms ease, filter 260ms ease;
-    background: var(--menuBackground);
+    background: url("https://ik.imagekit.io/ohiosveryown/ovo--3.7/menu__bg5@3x.webp?updatedAt=1716564664543")
+      no-repeat center center;
     background-size: cover;
     will-change: opacity;
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25),
@@ -353,29 +345,16 @@
     queryContent().sort({ key: 1 }).find()
   )
 
-  const images = [
-    "https://ik.imagekit.io/ohiosveryown/ovo--3.7/menu__bg5@3x.webp?updatedAt=1716564664543",
-    "https://ik.imagekit.io/ohiosveryown/ovo--3.7/menu__bg1@3x.webp?updatedAt=1716580206411",
-    // add as many images as you like
-  ]
-  let imageIndex = ref(0)
-
-  watch(menuOpen, (newValue) => {
-    if (!newValue) {
-      imageIndex.value = (imageIndex.value + 1) % images.length // Cycle through the images
-    }
-  })
-
-  const menuBackground = computed(() => {
-    return {
-      background: `url(${images[imageIndex.value]}) no-repeat center center`,
-    }
-  })
-
   onMounted(() => {
     document.addEventListener("keydown", (e) => {
       if (e.keyCode == 27) {
         menuOpen.value = false
+      }
+    })
+
+    document.addEventListener("keydown", (e) => {
+      if (e.ctrlKey && e.altKey && e.metaKey) {
+        menuOpen.value = !menuOpen.value
       }
     })
   })
