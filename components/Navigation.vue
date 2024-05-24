@@ -39,7 +39,7 @@
       <menu ref="menu" class="menu" :class="[menuOpen ? 'opened' : 'closed']">
         <!-- <BlurTop /> -->
         <main>
-          <ContentList>
+          <!-- <ContentList>
             <ul v-for="post in posts" :key="post._path" :post="post">
               <li>
                 <nuxtLink :to="post._path">
@@ -48,8 +48,8 @@
                 </nuxtLink>
               </li>
             </ul>
-          </ContentList>
-          <!-- <p>
+          </ContentList> -->
+          <p>
             Lorem ipsum, dolor sit amet consectetur adipisicing elit.
             Exercitationem excepturi, doloremque totam labore aliquid quas
             quibusdam! Eum alias unde ex dolores. Minus nihil maxime laudantium
@@ -121,8 +121,9 @@
             tempora enim sit, maiores praesentium eaque dicta inventore quasi
             soluta ex, corporis nemo minus dolor sapiente nisi fugiat eum!
             Cumque, id ipsum?
-          </p> -->
+          </p>
         </main>
+        <div class="blr" />
         <!-- <BlurBtm /> -->
       </menu>
     </div>
@@ -138,6 +139,8 @@
 
   main {
     padding: 11.2rem 6.4rem 8rem;
+    height: 100%;
+    overflow-y: scroll;
   }
 
   nav {
@@ -206,17 +209,19 @@
     height: calc(100vh - calc(var(--unit) * 2));
     color: var(--cloud);
     opacity: 1;
-    overflow-y: scroll;
+    overflow: hidden;
     transition: opacity 200ms ease, filter 260ms ease;
     background: url("https://ik.imagekit.io/ohiosveryown/ovo--3.7/menu__bg@3x.webp?updatedAt=1716327160174")
       no-repeat center center;
     background-size: cover;
-    filter: blur(8px);
+    /* filter: blur(8px); */
+    will-change: opacity;
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25),
       0 24px 158px 0px rgba(0, 0, 0, 0.12), 0 6px 34px 0px rgba(0, 0, 0, 0.07),
       0 2px 10px 0px rgba(0, 0, 0, 0.05);
 
     @include breakpoint(lg) {
+      max-width: 100rem;
       width: 44vw;
     }
 
@@ -225,20 +230,34 @@
     }
   }
 
+  .blr {
+    position: sticky;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: 0 auto;
+    width: 100%;
+    height: 20%;
+    opacity: 1;
+    backdrop-filter: blur(10px);
+    mask: linear-gradient(transparent 0%, black 90%);
+    pointer-events: none;
+  }
+
   .opened {
     opacity: 1;
-    filter: blur(0px);
+    /* filter: blur(0px); */
   }
 
   .closed {
     opacity: 0;
-    filter: blur(8px);
+    /* filter: blur(8px); */
     pointer-events: none;
   }
 </style>
 
 <script setup lang="ts">
-  let menuOpen = ref(true)
+  let menuOpen = ref(false)
   const menu = ref(null)
 
   useHead({
