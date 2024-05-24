@@ -37,18 +37,19 @@
       </button>
 
       <menu ref="menu" class="menu" :class="[menuOpen ? 'opened' : 'closed']">
+        <div class="overlay-top" />
         <!-- <BlurTop /> -->
         <main>
           <!-- <ContentList>
-            <ul v-for="post in posts" :key="post._path" :post="post">
-              <li>
-                <nuxtLink :to="post._path">
-                  <header class="name sans">{{ post.name }}</header>
-                  <p class="caption sans">{{ post.caption }}</p>
-                </nuxtLink>
-              </li>
-            </ul>
-          </ContentList> -->
+						<ul v-for="post in posts" :key="post._path" :post="post">
+							<li>
+								<nuxtLink :to="post._path">
+									<header class="name sans">{{ post.name }}</header>
+									<p class="caption sans">{{ post.caption }}</p>
+								</nuxtLink>
+							</li>
+						</ul>
+					</ContentList> -->
           <p>
             Lorem ipsum, dolor sit amet consectetur adipisicing elit.
             Exercitationem excepturi, doloremque totam labore aliquid quas
@@ -123,7 +124,7 @@
             Cumque, id ipsum?
           </p>
         </main>
-        <div class="blr" />
+        <div class="overlay-btm" />
         <!-- <BlurBtm /> -->
       </menu>
     </div>
@@ -211,7 +212,7 @@
     opacity: 1;
     overflow: hidden;
     transition: opacity 200ms ease, filter 260ms ease;
-    background: url("https://ik.imagekit.io/ohiosveryown/ovo--3.7/menu__bg@3x.webp?updatedAt=1716327160174")
+    background: url("https://ik.imagekit.io/ohiosveryown/ovo--3.7/menu__bg3@3x.webp?updatedAt=1716564295174")
       no-repeat center center;
     background-size: cover;
     /* filter: blur(8px); */
@@ -230,17 +231,16 @@
     }
   }
 
-  .blr {
+  .overlay-btm {
     position: sticky;
-    left: 0;
-    right: 0;
     bottom: 0;
-    margin: 0 auto;
     width: 100%;
-    height: 20%;
-    opacity: 1;
-    backdrop-filter: blur(10px);
-    mask: linear-gradient(transparent 0%, black 90%);
+    height: 18%;
+    background: linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0) 0%,
+      rgba(0, 0, 0, 0.96) 100%
+    );
     pointer-events: none;
   }
 
@@ -257,7 +257,7 @@
 </style>
 
 <script setup lang="ts">
-  let menuOpen = ref(false)
+  let menuOpen = ref(true)
   const menu = ref(null)
 
   useHead({
