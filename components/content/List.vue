@@ -11,7 +11,7 @@
       background="#272328"
     />
     <ContentList>
-      <ListItem v-for="post in posts" :key="post._path" :post="post" />
+      <ListItem v-for="post in posts.slice(2)" :key="post._path" :post="post" />
     </ContentList>
   </ul>
 </template>
@@ -30,6 +30,6 @@
 <script setup>
   const show = ref(false)
   const { data: posts } = await useAsyncData("posts", () =>
-    queryContent("/work").sort({ key: 1 }).find()
+    queryContent().sort({ key: 1 }).find()
   )
 </script>
