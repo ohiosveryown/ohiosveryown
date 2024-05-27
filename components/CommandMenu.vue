@@ -1,49 +1,36 @@
 <template>
-  <nav ref="menu" :class="[menuOpen ? 'opened' : 'closed']">
-    <ul>
-      <li tabindex="0">Page 1</li>
-      <li tabindex="0">Page 2</li>
-      <li tabindex="0">Page 3</li>
-    </ul>
-  </nav>
+  <dialog :open="open">
+    <form method="dialog">
+      <slot />
+    </form>
+  </dialog>
 </template>
 
 <style lang="scss" scoped>
   @import "/assets/style/grid.scss";
 
-  nav {
-    display: grid;
-    place-items: center;
+  dialog {
+    /* display: grid;
+    place-items: center; */
     position: fixed;
+    inset: 0;
     z-index: var(--zmax);
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    border: 0.5px solid rgba(0, 0, 0, 0.06);
-    border-radius: 29px;
-    padding: 0.8rem 1.2rem;
-    background: rgba(0, 0, 0, 0.05);
-    backdrop-filter: blur(10px);
-    box-shadow: 0 92px 88px 0 rgba(0, 0, 0, 0.05),
-      0 20px 20px 0 rgba(0, 0, 0, 0.03), 0 6px 6px 0 rgba(0, 0, 0, 0.02);
-
-    width: 58.8rem;
-    height: 15.6rem;
   }
 
-  ul {
-    display: flex;
-    justify-content: space-around;
-    gap: 0.8rem;
-    width: 100%;
+  :modal {
+    background-color: beige;
+    border: 2px solid burlywood;
+    border-radius: 5px;
+    width: 100vw;
+    height: 100vh;
+
+    html:has(&[open]) {
+      overflow: hidden;
+      scrollbar-gutter: stable;
+    }
   }
 
-  li:focus,
-  li:active {
-    border: 2px solid red;
-  }
-
-  .open {
+  .opened {
     opacity: 1;
   }
 
@@ -53,17 +40,12 @@
 </style>
 
 <script setup lang="ts">
-  const menuOpen = ref(false)
-  const route = useRoute()
-
-  const { data: posts } = await useAsyncData("posts", () =>
-    queryContent().sort({ key: 1 }).find()
-  )
+  const dialog = ref<HTMLDialogElement>()
+  const open = ref("open")
 
   onMounted(() => {
     document.addEventListener("keydown", (e) => {
       if (e.keyCode == 27) {
-        menuOpen.value = false
       }
     })
 
@@ -73,15 +55,4 @@
       }
     })
   })
-
-  onBeforeUnmount(() => {
-    menuOpen = ref(false)
-  })
-
-  watch(
-    () => route.fullPath,
-    () => {
-      menuOpen.value = false
-    }
-  )
 </script>
