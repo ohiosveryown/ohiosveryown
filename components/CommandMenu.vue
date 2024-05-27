@@ -1,7 +1,9 @@
 <template>
-  <dialog :open="open">
+  <dialog role="dialog">
     <form method="dialog">
-      <slot />
+      <button tabindex="0">Button One</button>
+      <button tabindex="0">Button Two</button>
+      <button tabindex="0">Button Three</button>
     </form>
   </dialog>
 </template>
@@ -12,22 +14,28 @@
   dialog {
     /* display: grid;
     place-items: center; */
-    position: fixed;
-    inset: 0;
+    /* position: fixed;
+    inset: 0; */
     z-index: var(--zmax);
+  }
+
+  dialog::backdrop {
+    background: rgba(0, 0, 0, 0);
   }
 
   :modal {
     background-color: beige;
     border: 2px solid burlywood;
     border-radius: 5px;
-    width: 100vw;
-    height: 100vh;
 
     html:has(&[open]) {
       overflow: hidden;
       scrollbar-gutter: stable;
     }
+  }
+
+  button:focus {
+    border: 2px solid red;
   }
 
   .opened {
@@ -40,18 +48,20 @@
 </style>
 
 <script setup lang="ts">
-  const dialog = ref<HTMLDialogElement>()
-  const open = ref("open")
-
   onMounted(() => {
+    const dialog = document.querySelector("dialog")
+
     document.addEventListener("keydown", (e) => {
       if (e.keyCode == 27) {
+        dialog
+        console.log("hide")
       }
     })
 
     document.addEventListener("keydown", (e) => {
       if (e.ctrlKey && e.altKey && e.metaKey) {
-        menuOpen.value = !menuOpen.value
+        dialog.showModal()
+        console.log("showww")
       }
     })
   })
