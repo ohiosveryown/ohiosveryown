@@ -1,9 +1,22 @@
 <template>
   <dialog role="dialog">
     <form method="dialog">
-      <button tabindex="0">Button One</button>
+      <!-- <button tabindex="0">Button One</button>
       <button tabindex="0">Button Two</button>
-      <button tabindex="0">Button Three</button>
+      <button tabindex="0">Button Three</button> -->
+
+      <ul>
+        <ContentList>
+          <li v-for="post in posts" :key="post._path" :post="post">
+            <NuxtLink :to="post._path">
+              <!-- <figure class="poster">
+                <img :src="post.poster" alt="Static Image" />
+              </figure> -->
+              <header class="name sans">{{ post.name }}</header>
+            </NuxtLink>
+          </li>
+        </ContentList>
+      </ul>
     </form>
   </dialog>
 </template>
@@ -20,13 +33,20 @@
   }
 
   dialog::backdrop {
-    background: rgba(0, 0, 0, 0);
+    background: transparent;
   }
 
   :modal {
-    background-color: beige;
-    border: 2px solid burlywood;
-    border-radius: 5px;
+    position: fixed;
+    inset: 0;
+    z-index: var(--zmax);
+    border: 0.5px solid rgba(0, 0, 0, 0.06);
+    border-radius: 29px;
+    padding: 0.8rem 1.2rem;
+    background: rgba(0, 0, 0, 0.05);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 92px 88px 0 rgba(0, 0, 0, 0.05),
+      0 20px 20px 0 rgba(0, 0, 0, 0.03), 0 6px 6px 0 rgba(0, 0, 0, 0.02);
 
     html:has(&[open]) {
       overflow: hidden;
@@ -37,17 +57,13 @@
   button:focus {
     border: 2px solid red;
   }
-
-  .opened {
-    opacity: 1;
-  }
-
-  .closed {
-    opacity: 0;
-  }
 </style>
 
 <script setup lang="ts">
+  const { data: posts } = await useAsyncData("posts", () =>
+    queryContent().sort({ key: 1 }).find()
+  )
+
   onMounted(() => {
     const dialog = document.querySelector("dialog")
 
@@ -59,7 +75,7 @@
     })
 
     document.addEventListener("keydown", (e) => {
-      if (e.ctrlKey && e.altKey && e.metaKey) {
+      if (e.altKey && e.metaKey) {
         dialog.showModal()
         console.log("showww")
       }
