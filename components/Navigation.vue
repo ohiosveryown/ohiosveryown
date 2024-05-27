@@ -351,12 +351,6 @@
         menuOpen.value = false
       }
     })
-
-    document.addEventListener("keydown", (e) => {
-      if (e.ctrlKey && e.altKey && e.metaKey) {
-        menuOpen.value = !menuOpen.value
-      }
-    })
   })
 
   onBeforeUnmount(() => {
