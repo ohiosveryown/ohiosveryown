@@ -7,12 +7,12 @@
 
       <ul>
         <ContentList>
-          <li v-for="post in posts" :key="post._path" :post="post">
+          <li v-for="post in posts" :key="post._path">
             <NuxtLink :to="post._path">
-              <!-- <figure class="poster">
-                <img :src="post.poster" alt="Static Image" />
-              </figure> -->
-              <header class="name sans">{{ post.name }}</header>
+              <figure class="poster">
+                <img :src="post.poster" :alt="post.name" />
+              </figure>
+              <span class="name sans op-6">{{ post.name }}</span>
             </NuxtLink>
           </li>
         </ContentList>
@@ -23,14 +23,6 @@
 
 <style lang="scss" scoped>
   @import "/assets/style/grid.scss";
-
-  dialog {
-    /* display: grid;
-    place-items: center; */
-    /* position: fixed;
-    inset: 0; */
-    z-index: var(--zmax);
-  }
 
   dialog::backdrop {
     background: transparent;
@@ -54,26 +46,77 @@
     }
   }
 
+  ul {
+    display: flex;
+    gap: 0.8rem;
+  }
+
+  li,
+  a {
+    border-radius: 21px;
+  }
+
+  a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 0.8rem 1rem 0rem;
+  }
+
+  a:focus,
+  a:active {
+    border: none;
+    outline: none;
+    background: rgba(0, 0, 0, 0.08);
+
+    span {
+      opacity: 1;
+    }
+  }
+
+  figure {
+    border-radius: 13px;
+    width: 8rem;
+    height: 8rem;
+    overflow: hidden;
+  }
+
+  img {
+    min-width: 100%;
+    min-height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover;
+    object-position: left top;
+  }
+
+  span {
+    font-size: 1.4rem;
+    font-weight: 480;
+    padding-bottom: 0.4rem;
+  }
+
   button:focus {
     border: 2px solid red;
   }
 </style>
 
-<script setup lang="ts">
+<script setup>
+  const route = useRoute()
+
   const { data: posts } = await useAsyncData("posts", () =>
     queryContent().sort({ key: 1 }).find()
   )
 
   onMounted(() => {
     const dialog = document.querySelector("dialog")
-
     document.addEventListener("keydown", (e) => {
       if (e.keyCode == 27) {
-        dialog
+        dialog.close()
         console.log("hide")
       }
     })
-
     document.addEventListener("keydown", (e) => {
       if (e.altKey && e.metaKey) {
         dialog.showModal()
@@ -81,4 +124,17 @@
       }
     })
   })
+
+  onBeforeUnmount(() => {
+    const dialog = document.querySelector("dialog")
+    dialog.close()
+  })
+
+  watch(
+    () => route.fullPath,
+    () => {
+      const dialog = document.querySelector("dialog")
+      dialog.close()
+    }
+  )
 </script>
