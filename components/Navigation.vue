@@ -10,28 +10,19 @@
     </NuxtLink>
 
     <div @mouseleave="menuOpen = false" class="navigation">
-      <button
-        role="button"
-        class="menu-trigger sans"
-        @click="menuOpen = !menuOpen"
-      >
-        <span v-if="menuOpen" class="cloud">Close Menu ☻</span>
-        <span v-else class="gravity">Menu ☺</span>
-        <!-- <svg
-          width="12"
-          height="12"
-          fill="none"
-          class="arrow"
-          :class="[menuOpen ? 'arrow-default' : 'arrow-flipped']"
+      <div class="container-label">
+        <span class="command-menu-hint kicker thin"
+          >hint: press <span class="op-5">⌥⌘</span> for cmd menu</span
         >
-          <path
-            fill="#000"
-            fill-rule="evenodd"
-            d="M5.444 0h1.112v7.848c.159-.243.331-.478.515-.702C8.043 5.97 9.435 5 11 5v1.111c-1.102 0-2.21.698-3.071 1.743-.862 1.044-1.373 2.311-1.373 3.257H5.444c0-.946-.511-2.213-1.373-3.257C3.21 6.809 2.101 6.11 1 6.11V5c1.565 0 2.957.969 3.929 2.146.184.224.356.459.515.702V0Z"
-            clip-rule="evenodd"
-          />
-        </svg> -->
-      </button>
+        <button
+          role="button"
+          class="menu-trigger sans"
+          @click="menuOpen = !menuOpen"
+        >
+          <span v-if="menuOpen" class="cloud">Close Menu ☻</span>
+          <span v-else class="gravity">Menu ☺</span>
+        </button>
+      </div>
 
       <menu ref="menu" class="menu" :class="[menuOpen ? 'opened' : 'closed']">
         <div class="overlay-top" />
@@ -61,6 +52,30 @@
 <style lang="scss" scoped>
   @import "/assets/style/grid.scss";
 
+  .container-label {
+    width: max-content;
+  }
+
+  .container-label:hover {
+    .command-menu-hint {
+      opacity: 1;
+    }
+  }
+
+  .command-menu-hint {
+    position: absolute;
+    z-index: var(--zmin);
+    right: 8.8rem;
+    margin-top: -0.2rem;
+    border-radius: 100px;
+    padding: 0 1rem;
+    width: max-content;
+    opacity: 0;
+    backdrop-filter: blur(6px);
+    transition: opacity 200ms ease;
+    pointer-events: none;
+  }
+
   nav {
     --unit: 4rem;
     display: flex;
@@ -71,6 +86,11 @@
     margin: var(--unit) auto 0;
     max-width: var(--max-width);
     width: calc(90vw + 2rem);
+  }
+
+  .container-label {
+    display: flex;
+    align-items: center;
   }
 
   button,
@@ -281,7 +301,7 @@
   }
 
   .menu-trigger {
-    margin-top: 0.6rem;
+    margin-top: 0.4rem;
     @include breakpoint(lg) {
       margin-top: 0rem;
     }
@@ -318,13 +338,6 @@
       object-position: left top;
     }
   }
-
-  /* li,
-  a,
-  header,
-  p {
-    cursor: pointer;
-  } */
 </style>
 
 <script setup lang="ts">

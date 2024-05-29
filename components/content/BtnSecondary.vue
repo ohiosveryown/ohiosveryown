@@ -21,6 +21,7 @@
     </button>
 
     <img
+      ref="img"
       class="thumbnail"
       :class="{ showImg: show }"
       :src="skill.bg"
