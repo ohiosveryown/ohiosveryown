@@ -1,7 +1,3 @@
-<script setup lang="ts">
-import { NuxtLayout } from '#build/components';
-</script>
-
 <template>
   <NuxtLayout>
     <ContentDoc v-slot="{ doc }">
@@ -29,3 +25,6 @@ import { NuxtLayout } from '#build/components';
 <style lang="scss" scoped>
 @import "/assets/style/grid.scss";
 </style>
+
+<script setup lang="ts">
+</script>

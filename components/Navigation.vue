@@ -8,6 +8,8 @@
       </svg>
     </NuxtLink>
 
+    <ListRm />
+
     <span>Menu ☺</span>
   </nav>
 </template>
