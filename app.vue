@@ -1,7 +1,4 @@
 <template>
   <Navigation />
-  <CommandMenu />
-  <NuxtLayout>
-    <NuxtPage />
-  </NuxtLayout>
+  <NuxtPage />
 </template>

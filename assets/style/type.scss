@@ -5,6 +5,7 @@
   src: url("~/assets/type/sans.woff2") format("woff2");
   font-display: block;
   font-weight: 1 999;
+  font-variation-settings: 'slnt' 0;
 }
 
 @font-face {
@@ -21,27 +22,73 @@
 }
 
 @mixin sans {
-  font-family: "sans";
+  font-family: "sans", var(--system-font);
 }
 
 @mixin thin {
-  font-family: "thin";
+  font-family: "thin", Georgia, serif;
 }
 
 @mixin italic {
-  font-family: "italic";
+  font-family: "italic", Courier, monospace;
 }
 
 .sans {
-  font-family: "sans";
+  @include sans;
 }
 
 .thin {
-  font-family: "thin";
+  @include thin;
 }
 
 .italic {
-  font-family: "italic";
+  @include italic;
+}
+
+h1 {
+  @include sans;
+  font-size: clamp(1rem, -0.875rem + 12vw, 6rem);
+  font-weight: 360;
+  letter-spacing: -0.5px;
+  line-height: 114%;
+}
+
+h2 {
+  @include italic;
+  font-size: clamp(1rem, -0.875rem + 10vw, 4.2rem);
+  font-weight: 100;
+  line-height: 120%;
+}
+
+h3 {
+  @include thin;
+  font-size: clamp(3.2rem, -0.875rem + 4vw, 3.8rem);
+  line-height: 120%;
+}
+
+h4 {
+  @include sans;
+  font-size: clamp(2.4rem, 2.1vw, 3rem);
+  font-weight: 450;
+  line-height: 120%;
+}
+
+// do we need this?
+h5 {
+  font-size: clamp(2rem, 1.6vw, 3rem);
+  line-height: 120%;
+}
+
+h6 {
+  @include sans;
+  font-size: clamp(1.7rem, 1.1vw, 2.3rem);
+  font-weight: 360;
+  line-height: 132%;
+}
+
+small {
+  font-size: 1.3rem;
+  font-weight: 550;;
 }
 
 .uc {
@@ -55,25 +102,4 @@
 }
 .taj {
   text-align: justify;
-}
-
-h1 {
-  @include sans;
-  font-size: clamp(1rem, -0.875rem + 12vw, 6rem);
-  font-weight: 360;
-  letter-spacing: -0.5px;
-  line-height: 116%;
-}
-
-h2 {
-  @include italic;
-  font-size: clamp(1rem, -0.875rem + 10vw, 4.2rem);
-  font-weight: 100;
-  line-height: 144%;
-}
-
-h3 {
-  @include thin;
-  font-size: clamp(3.2rem, -0.875rem + 4vw, 4.2rem);
-  line-height: 132%;
 }

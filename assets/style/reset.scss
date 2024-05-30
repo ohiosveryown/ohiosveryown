@@ -1,10 +1,11 @@
 :root {
-  --system-ui: -apple-system, BlinkMacSystemFont, "avenir next",
+  --system-font: -apple-system, BlinkMacSystemFont, "avenir next",
     "helvetica neue", helvetica, ubuntu, roboto, noto, "segoe ui", arial,
     sans-serif;
   --unit: 8px;
   --max-width: 2100rem;
-  --ease: all 400ms ease;
+  --ease: 200ms ease;
+  // z-index
   --zmax: 9999;
   --z5: 5;
   --z4: 4;
@@ -13,20 +14,44 @@
   --z1: 1;
   --z0: -1;
   --zmin: -9999;
-
-  --cloud: #fff;
-  --night: #4d5558;
-  --gravity: #121214;
-
-  --elevation-00: 0 2px 22px rgba(0, 0, 0, 0.16);
-  --elevation-01: 0 4px 64px rgba(0, 0, 0, 0.16);
-  --elevation-02: 0 4px 64px rgba(0, 0, 0, 0.1);
-  --elevation-text: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.8));
-
-  --elevation-x0: 0 12px 20px 0 rgba(0, 0, 0, 0.08),
+  // colors
+  --primary-color: #121214;
+  --secondary-color: #4d5558;
+  --brand-color: red;
+  --bg-color: #fff;
+  // border
+  --border-radius--partial: 9px;
+  --border-radius--full: 1000px;
+  // blur
+  --blur--partial: blur(8px);
+  --blur--full: blur(20px);
+  // shadows
+  --shadow--partial:
+    0 4px 4px 0 rgba(0, 0, 0, 0.25),
+    0 24px 158px 0 rgba(0, 0, 0, 0.12),
+    0 6px 36px 0 rgba(0, 0, 0, 0.07),
+    0 2px 10px 0 rgba(0, 0, 0, 0.05);
+  --shadow--full:
+    0 12px 20px 0 rgba(0, 0, 0, 0.08),
     0 10px 8px 0 rgba(0, 0, 0, 0.07);
-  --elevation-x1: 0 100px 80px 0 rgba(0, 0, 0, 0.24),
-    0 22px 18px 0 rgba(0, 0, 0, 0.14), 0 6px 5px 0 rgba(0, 0, 0, 0.1);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    // colors
+    --primary-color: #fff;
+    --secondary-color: #ccc;
+    --brand-color: blue;
+    --bg-color: #121214;
+  }
+}
+
+.box {
+  margin-bottom: 4rem;
+  border-radius: var(--border-radius--partial);
+  width: 200px; height: 200px;
+  background: rebeccapurple;
+  box-shadow: var(--shadow--full);
 }
 
 *,
@@ -65,9 +90,14 @@ html:focus-within {
 
 body {
   min-height: 100vh;
-  font: normal 1.6rem/1.5 var(--system-ui);
-  color: var(--gravity);
+  font: normal 1.5rem/1.5 var(--system-font);
+  color: var(--primary-color);
   text-rendering: optimizeSpeed;
+  background: var(--bg-color);
+}
+
+h1,h2,h3,h4,h5,h6 {
+  color: var(--primary-color);
 }
 
 body,
@@ -119,7 +149,6 @@ button {
   border: none;
   cursor: pointer;
   background: none;
-  color: var(--gravity);
 }
 
 figure,
@@ -181,80 +210,6 @@ ul {
 }
 .op-9 {
   opacity: 0.9;
-}
-
-.label {
-  position: absolute;
-  z-index: var(--z2);
-  top: 0;
-  left: 0;
-  border-radius: 100px;
-  padding: 3px 10px 4px;
-  background: var(--gravity);
-  box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.32);
-  color: var(--cloud);
-  text-align: center;
-  font-family: var(--system-ui);
-  font-size: 1.3rem;
-  font-weight: 550;
-  letter-spacing: -0.15px;
-  line-height: 1.4;
-  opacity: 0;
-  transition: opacity 1ms ease;
-  will-change: transform, opacity;
-}
-
-.showLabel {
-  opacity: 1;
-  transition: opacity 400ms ease;
-}
-
-.thumbnail {
-  --unit: 92px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -132%) scale(0.96);
-  transform-origin: bottom;
-  margin: 0 auto;
-  border-radius: 15px;
-  width: var(--unit);
-  height: auto;
-  opacity: 0;
-  box-shadow: var(--elevation-x1);
-  pointer-events: none;
-  will-change: transform, opacity;
-}
-
-.showImg {
-  opacity: 1;
-  transform: translate(-50%, -136%) scale(1);
-  transition: opacity 300ms ease, transform 200ms ease;
-}
-
-@media (pointer: coarse) {
-  .label,
-  .thumbnail {
-    display: none;
-  }
-}
-
-.locked {
-  touch-action: none;
-  overflow: hidden !important;
-}
-
-.unlocked {
-  touch-action: initial;
-  overflow: auto !important;
-}
-
-.gravity {
-  color: var(--gravity);
-}
-
-.cloud {
-  color: var(--cloud);
 }
 
 // a11y
