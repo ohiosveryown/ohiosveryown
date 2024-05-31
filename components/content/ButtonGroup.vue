@@ -1,7 +1,7 @@
 <template>
   <menu class="container">
-    <ButtonPrimary buttonLabel="Adventure Time" />
-    <ButtonSecondary buttonLabel="Always Learning" />
+    <ButtonPrimary buttonLabel="Adventure time" />
+    <ButtonSecondary buttonLabel="Always learning" />
   </menu>
 </template>
 

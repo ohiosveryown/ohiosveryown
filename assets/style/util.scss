@@ -1,15 +1,5 @@
 @import "~/assets/style/grid.scss";
 
-// rm
-.box {
-  margin-bottom: 4rem;
-  border-radius: var(--border-radius--partial);
-  width: 200px;
-  height: 200px;
-  background: rebeccapurple;
-  box-shadow: var(--shadow--full);
-}
-
 // debug
 .debug {
   border: 2px solid hotpink;
@@ -26,6 +16,12 @@
   margin: 0 auto;
   max-width: var(--max-width);
   width: 90vw;
+}
+
+// scroll lock for modals
+.scroll-locked {
+  touch-action: none;
+  overflow: hidden !important;
 }
 
 // opacity
@@ -68,7 +64,7 @@
 // tooltip
 .tooltip--trigger {
   position: relative;
-  opacity: 0.56;
+  opacity: 0.64;
 }
 
 .tooltip--trigger:after {
@@ -83,7 +79,7 @@
 }
 
 .tooltip--trigger:hover:after {
-  background: rgba(0, 0, 0, 0);
+  background: transparent;
 }
 
 .tooltip--label {
@@ -94,7 +90,7 @@
   border-radius: 100px;
   padding: 3px 10px 4px;
   background: var(--color--primary);
-  box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.32);
+  box-shadow: var(--shadow--xs);
   color: var(--color--bg);
   text-align: center;
   font-family: var(--system-font);

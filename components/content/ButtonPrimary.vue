@@ -15,13 +15,13 @@
     position: relative;
     border-radius: var(--border-radius--full);
     background: var(--color--button-primary);
-    box-shadow: var(--shadow--large);
+    box-shadow: var(--shadow--lg);
     padding: 1.2rem 1.6rem 1.3rem;
     font-size: 1.4rem;
     font-weight: 600;
     line-height: 1;
     color: var(--color--primary);
-    text-shadow: var(--shadow-text);
+    text-shadow: var(--shadow--text);
     overflow: hidden;
   }
 
