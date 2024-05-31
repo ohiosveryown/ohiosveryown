@@ -15,10 +15,14 @@
   --z0: -1;
   --zmin: -9999;
   // colors
-  --primary-color: #121214;
-  --secondary-color: #4d5558;
-  --brand-color: red;
-  --bg-color: #fff;
+  --color--primary: #121214;
+  --color--secondary: #4d5558;
+  --color--tertiary: #f7f7f7;
+  --color--brand: red;
+  --color--bg: #fff;
+  //colors-button
+  --color--button-primary: linear-gradient(180deg, rgba(211, 211, 211, 0.8) 0%, #fff 100%);
+  --color--button-sheen: linear-gradient(rgba(255, 255, 255, 0.9) 0.42%, rgba(255, 255, 255, 0));
   // border
   --border-radius--partial: 9px;
   --border-radius--full: 1000px;
@@ -26,6 +30,7 @@
   --blur--partial: blur(8px);
   --blur--full: blur(20px);
   // shadows
+  --shadow-text: 0 1.3px 0 rgba(185, 224, 253, 0.4);
   --shadow--partial:
     0 4px 4px 0 rgba(0, 0, 0, 0.25),
     0 24px 158px 0 rgba(0, 0, 0, 0.12),
@@ -34,24 +39,30 @@
   --shadow--full:
     0 12px 20px 0 rgba(0, 0, 0, 0.08),
     0 10px 8px 0 rgba(0, 0, 0, 0.07);
+  --shadow--large:
+    0 -1px 1px 0 rgba(0, 0, 0, 0.12) inset,
+    0 1px 1px 0 rgba(0, 0, 0, 0.05) inset,
+    0 20px 18px 0px rgba(0, 0, 0, 0.05),
+    0 6px 5px 0px rgba(0, 0, 0, 0.03);
+  --shadow--xl:
+    0 100px 80px 0 rgba(0, 0, 0, 0.24),
+    0 22px 18px 0 rgba(0, 0, 0, 0.14),
+    0 6px 5px 0 rgba(0, 0, 0, 0.1)
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     // colors
-    --primary-color: #fff;
-    --secondary-color: #ccc;
-    --brand-color: blue;
-    --bg-color: #121214;
+    --color--primary: #fff;
+    --color--secondary: #ccc;
+    --color--tertiary: #f7f7f7;
+    --color--brand: blue;
+    --color--bg: #121214;
+    --color--button-primary: linear-gradient(180deg, #2e2d2d 0%, #2A2A2A 100%);
+    --color--button-sheen: linear-gradient(180deg, rgba(107, 102, 122, 0.6) 0%, rgba(113, 108, 128, 0.00) 100%);
+    //shadows
+    --shadow-text: none;
   }
-}
-
-.box {
-  margin-bottom: 4rem;
-  border-radius: var(--border-radius--partial);
-  width: 200px; height: 200px;
-  background: rebeccapurple;
-  box-shadow: var(--shadow--full);
 }
 
 *,
@@ -91,13 +102,13 @@ html:focus-within {
 body {
   min-height: 100vh;
   font: normal 1.5rem/1.5 var(--system-font);
-  color: var(--primary-color);
+  color: var(--color--primary);
   text-rendering: optimizeSpeed;
-  background: var(--bg-color);
+  background: var(--color--bg);
 }
 
 h1,h2,h3,h4,h5,h6 {
-  color: var(--primary-color);
+  color: var(--color--primary);
 }
 
 body,
@@ -154,6 +165,7 @@ button {
 figure,
 figcaption {
   display: initial;
+  position: relative;
 }
 
 video,
@@ -162,60 +174,15 @@ img {
   max-width: 100%;
   height: auto;
 }
+
 img {
   vertical-align: top;
 }
+
 ul {
   list-style-type: none;
   -webkit-margin-before: 0;
   -webkit-margin-after: 0;
-}
-
-// utilities
-
-.debug {
-  border: 2px solid hotpink;
-}
-
-.width {
-  position: relative;
-  margin: 0 auto;
-  max-width: var(--max-width);
-  width: 90vw;
-}
-
-.op-1 {
-  opacity: 0.1;
-}
-.op-2 {
-  opacity: 0.2;
-}
-.op-3 {
-  opacity: 0.3;
-}
-.op-4 {
-  opacity: 0.4;
-}
-.op-5 {
-  opacity: 0.5;
-}
-.op-6 {
-  opacity: 0.6;
-}
-.op-7 {
-  opacity: 0.7;
-}
-.op-8 {
-  opacity: 0.8;
-}
-.op-9 {
-  opacity: 0.9;
-}
-
-// a11y
-
-:focus {
-  outline: 1px solid rgba(0, 0, 0, 0.2);
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -1,0 +1,140 @@
+@import "~/assets/style/grid.scss";
+
+// rm
+.box {
+  margin-bottom: 4rem;
+  border-radius: var(--border-radius--partial);
+  width: 200px;
+  height: 200px;
+  background: rebeccapurple;
+  box-shadow: var(--shadow--full);
+}
+
+// debug
+.debug {
+  border: 2px solid hotpink;
+}
+
+// a11y
+:focus {
+  outline: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+// layout
+.width {
+  position: relative;
+  margin: 0 auto;
+  max-width: var(--max-width);
+  width: 90vw;
+}
+
+// opacity
+.op-1 {
+  opacity: 0.1;
+}
+
+.op-2 {
+  opacity: 0.2;
+}
+
+.op-3 {
+  opacity: 0.3;
+}
+
+.op-4 {
+  opacity: 0.4;
+}
+
+.op-5 {
+  opacity: 0.5;
+}
+
+.op-6 {
+  opacity: 0.6;
+}
+
+.op-7 {
+  opacity: 0.7;
+}
+
+.op-8 {
+  opacity: 0.8;
+}
+
+.op-9 {
+  opacity: 0.9;
+}
+
+// tooltip
+.tooltip--trigger {
+  position: relative;
+  opacity: 0.56;
+}
+
+.tooltip--trigger:after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 1px;
+  background: var(--color--primary);
+  transition: background var(--ease);
+}
+
+.tooltip--trigger:hover:after {
+  background: rgba(0, 0, 0, 0);
+}
+
+.tooltip--label {
+  position: absolute;
+  z-index: var(--z);
+  top: 0;
+  left: 0;
+  border-radius: 100px;
+  padding: 3px 10px 4px;
+  background: var(--color--primary);
+  box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.32);
+  color: var(--color--bg);
+  text-align: center;
+  font-family: var(--system-font);
+  letter-spacing: -0.15px;
+  line-height: 1.4;
+  opacity: 0;
+  transition: opacity 1ms ease;
+  will-change: transform, opacity;
+}
+
+.tooltip--thumbnail {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -130%) scale(0.96);
+  transform-origin: bottom;
+  margin: 0 auto;
+  border-radius: 15px;
+  width: 8.8rem;
+  height: auto;
+  opacity: 0;
+  box-shadow: var(--shadow--xl);
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+
+.tooltipShowImg {
+  opacity: 1;
+  transform: translate(-50%, -136%) scale(1);
+  transition: all var(--ease);
+}
+
+.tooltipShowLabel {
+  opacity: 1;
+  transition: opacity 400ms ease;
+}
+
+@media (pointer: coarse) {
+  .tooltip--label,
+  .tooltip--thumbnail {
+    display: none;
+  }
+}
