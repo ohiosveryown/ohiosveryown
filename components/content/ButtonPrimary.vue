@@ -1,6 +1,6 @@
 <template>
   <NuxtLink :to="`${randomPost}`">
-    <div>
+    <div class="button">
       <span class="sheen" />
       <span class="bg" />
       {{ buttonLabel }}
@@ -11,7 +11,7 @@
 <style lang="scss" scoped>
   @import "/assets/style/grid.scss";
 
-  div {
+  .button {
     position: relative;
     border-radius: var(--border-radius--full);
     background: var(--color--button-primary);
@@ -25,14 +25,17 @@
     overflow: hidden;
   }
 
-  div:hover {
+  .button:hover {
     background: none;
     .bg {
       opacity: 1;
       transform: scale(2);
       transition: opacity 300ms ease, transform 18s ease;
     }
-    @media (prefers-color-scheme: dark) {
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .button:hover {
       color: var(--color--bg);
       .sheen {
         opacity: 0;
@@ -40,7 +43,7 @@
     }
   }
 
-  div:active {
+  .button:active {
     transform: scale(0.98);
   }
 
