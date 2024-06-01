@@ -3,39 +3,39 @@
     <div class="overlay-top" />
     <ul>
       <li
-        v-for="{ _path: slug, name, caption, poster, url } in posts"
-        :key="slug"
+        v-for="post in posts"
+        :key="post._path"
       >
         <NuxtLink
-          v-if="!url"
-          :to="slug"
+          v-if="!post.url"
+          :to="post._path"
         >
           <figure class="poster">
             <img
-              :src="poster"
+              :src="post.poster"
               alt="Static Image"
             />
           </figure>
           <article>
-            <h5>{{ name }}</h5>
-            <h6>{{ caption }}</h6>
+            <h5>{{ post.name }}</h5>
+            <h6>{{ post.caption }}</h6>
           </article>
         </NuxtLink>
         <a
           v-else
-          :href="url"
+          :href="post.url"
           target="_blank"
           rel="noopener noreferrer"
         >
           <figure class="poster">
             <img
-              :src="poster"
+              :src="post.poster"
               alt="Static Image"
             />
           </figure>
           <article>
             <h5>
-              {{ name }}
+              {{ post.name }}
               <svg
                 class="op-7"
                 width="10"
@@ -50,7 +50,7 @@
                 />
               </svg>
             </h5>
-            <h6>{{ caption }}</h6>
+            <h6>{{ post.caption }}</h6>
           </article>
         </a>
       </li>

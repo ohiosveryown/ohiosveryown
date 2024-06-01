@@ -1,5 +1,5 @@
 ---
-key: 6
+key: 3
 kicker: "Design engineering"
 name: "proportional.design"
 caption: "A twitter thread on how I built the second iteration of my woodworking studio website."
