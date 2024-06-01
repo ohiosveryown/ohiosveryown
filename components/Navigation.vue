@@ -98,7 +98,7 @@
     button:hover {
       &:before {
         opacity: 1;
-        transform: translateY(-0.13rem);
+        transform: translateY(-0.15rem);
         transition: opacity var(--ease);
       }
     }

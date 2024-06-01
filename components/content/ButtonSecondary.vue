@@ -35,7 +35,6 @@
     </button>
 
     <img
-      ref="img"
       class="tooltip--thumbnail"
       :class="{ tooltipShowImg: showing }"
       :src="skill.bg"
@@ -84,6 +83,10 @@
     transform: scale(0.96);
   }
 
+  img {
+    object-fit: cover;
+  }
+
   .dot {
     margin-right: 0.2rem;
     border-radius: 100px;
@@ -91,7 +94,6 @@
     height: 8px;
     background: #4ed70e;
     filter: drop-shadow(0 3px 4px rgba(29, 167, 34, 0.3));
-    /* animation: pulse 2s ease alternate infinite; */
   }
 
   svg {
@@ -125,6 +127,10 @@
     {
       bg: "https://ik.imagekit.io/ohiosveryown/ovo--3.7/index/skills/vue.webp",
       tooltipLabel: "Vue 3",
+    },
+    {
+      bg: "https://ik.imagekit.io/ohiosveryown/ovo--3.7/index/skills/kobe.webp?updatedAt=1717213662416",
+      tooltipLabel: "3 level scoring",
     },
   ]
 

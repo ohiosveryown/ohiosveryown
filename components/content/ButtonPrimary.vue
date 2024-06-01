@@ -85,7 +85,8 @@
   const randomPost = ref(null)
 
   onMounted(async () => {
-    const posts = await queryContent("/work").find()
+    let posts = await queryContent("/work").find()
+    posts = posts.filter((post) => !post.isExternal)
     randomPost.value = posts[~~(Math.random() * posts.length)]._path
   })
 </script>
