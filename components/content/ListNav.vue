@@ -3,10 +3,13 @@
     <div class="overlay-top" />
     <ul>
       <li
-        v-for="{ _path: slug, name, caption, poster } in posts"
+        v-for="{ _path: slug, name, caption, poster, url } in posts"
         :key="slug"
       >
-        <NuxtLink :to="slug">
+        <NuxtLink
+          v-if="!url"
+          :to="slug"
+        >
           <figure class="poster">
             <img
               :src="poster"
@@ -18,8 +21,42 @@
             <h6>{{ caption }}</h6>
           </article>
         </NuxtLink>
+        <a
+          v-else
+          :href="url"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <figure class="poster">
+            <img
+              :src="poster"
+              alt="Static Image"
+            />
+          </figure>
+          <article>
+            <h5>
+              {{ name }}
+              <svg
+                class="op-7"
+                width="10"
+                height="10"
+                fill="none"
+              >
+                <path
+                  fill="#fff"
+                  fill-rule="evenodd"
+                  d="M.909 10 0 9.093 6.421 2.67c-.33.07-.662.12-.996.152-1.76.17-3.69-.178-4.97-1.458l.908-.909c.902.902 2.38 1.237 3.94 1.087C6.86 1.392 8.317.773 9.09 0L10 .909c-.773.773-1.392 2.23-1.541 3.789-.15 1.56.186 3.037 1.087 3.939l-.909.909c-1.28-1.28-1.627-3.211-1.458-4.97.032-.334.082-.667.151-.996L.91 10Z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+            </h5>
+            <h6>{{ caption }}</h6>
+          </article>
+        </a>
       </li>
-      <li class="colophon">All background images and art generated via AI.</li>
+      <li class="colophon">
+        Background art & images inspired by nature, generated with AI.
+      </li>
     </ul>
     <div class="overlay-btm" />
   </menu>
