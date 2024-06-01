@@ -1,5 +1,6 @@
 <template>
   <dialog ref="dialog">
+    <header class="sans">Press tab to cycle pages</header>
     <menu>
       <li
         v-for="post in posts"
@@ -29,14 +30,34 @@
     position: fixed;
     inset: 0;
     z-index: var(--zmax);
-    border-radius: 26px;
-    border: 0;
-    padding: 0.8rem;
+    border-radius: 29px;
+    border: none;
+    padding: 0.9rem;
     background: rgba(0, 0, 0, 0.04);
     color: var(--color--primary);
     backdrop-filter: blur(16px);
     box-shadow: 0 92px 88px 0 rgba(0, 0, 0, 0.05),
       0 20px 20px 0 rgba(0, 0, 0, 0.03), 0 6px 6px 0 rgba(0, 0, 0, 0.02);
+    @media (prefers-color-scheme: dark) {
+      background: rgba(255, 255, 255, 0.08);
+    }
+  }
+
+  header {
+    position: absolute;
+    bottom: -3.2rem;
+    left: 0;
+    right: 0;
+    border-radius: var(--border-radius--partial);
+    width: max-content;
+    margin: 0 auto;
+    padding: 0.2rem 0.8rem;
+    // margin-bottom: 0.6rem;
+    text-align: center;
+    color: var(--color--primary);
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(16px);
+    // opacity: 0.8;
   }
 
   menu {
@@ -47,7 +68,10 @@
   a:focus {
     display: flex;
     outline: none;
-    background: rgba(0, 0, 0, 0.08);
+    background: var(--color--quaternary);
+    p {
+      opacity: 1;
+    }
   }
 
   a {
@@ -55,15 +79,15 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 0.6rem;
+    gap: 0.4rem;
     border-radius: 21px;
-    padding: 1.2rem;
+    padding: 0.9rem 0.9rem 0.4rem;
   }
 
   figure {
     display: flex;
     position: relative;
-    border-radius: var(--border-radius--partial);
+    border-radius: 11px;
     width: 8rem;
     height: 8rem;
     overflow: hidden;
@@ -78,6 +102,8 @@
   }
 
   p {
+    opacity: 0;
+    color: var(--color--primary);
     text-align: center;
   }
 </style>
