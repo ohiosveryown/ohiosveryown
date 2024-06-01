@@ -1,5 +1,5 @@
 <template>
-  <menu>
+  <menu ref="menu">
     <div class="overlay-top" />
     <ul>
       <li
@@ -13,7 +13,7 @@
           <figure class="poster">
             <img
               :src="post.poster"
-              alt="Static Image"
+              :alt="post.name"
             />
           </figure>
           <article>
@@ -30,7 +30,7 @@
           <figure class="poster">
             <img
               :src="post.poster"
-              alt="Static Image"
+              :alt="post.name"
             />
           </figure>
           <article>
@@ -150,6 +150,7 @@
     width: 100%;
     box-shadow: var(--shadow--md);
     overflow: hidden;
+    pointer-events: none;
     @include breakpoint(lg) {
       display: flex;
       min-width: var(--unit);
@@ -202,8 +203,9 @@
       position: absolute;
       top: -0.5rem;
       right: -2.8rem;
-      font-size: 2.2rem;
       margin: 0.4rem 0 0 0.4rem;
+      font-size: 2.2rem;
+      color: var(--color--secondary);
       opacity: 0;
     }
   }
@@ -280,4 +282,35 @@
 
 <script setup>
   const posts = await queryContent("").sort({ key: 1 }).find()
+  const menu = ref(null)
+
+  const keydownHandler = (event) => {
+    if (event.key === "Tab" && menu.value.open) {
+      const focusableElements = menu.value.querySelectorAll(
+        '[href], [tabindex]:not([tabindex="-1"])'
+      )
+      const firstElement = focusableElements[0]
+      const lastElement = focusableElements[focusableElements.length - 1]
+
+      if (event.shiftKey) {
+        if (document.activeElement === firstElement) {
+          event.preventDefault()
+          lastElement.focus()
+        }
+      } else {
+        if (document.activeElement === lastElement) {
+          event.preventDefault()
+          firstElement.focus()
+        }
+      }
+    }
+  }
+
+  onMounted(() => {
+    window.addEventListener("keydown", keydownHandler)
+  })
+
+  onUnmounted(() => {
+    window.removeEventListener("keydown", keydownHandler)
+  })
 </script>
