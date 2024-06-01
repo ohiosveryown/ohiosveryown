@@ -9,5 +9,6 @@ node_modules
 .npmrc
 .DS_Store
 dist
+cd
 nova
 .nova

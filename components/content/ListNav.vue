@@ -77,7 +77,7 @@
     width: 98vw;
     transform: translateX(-50%);
     border-radius: var(--border-radius--partial);
-    background: url("https://ik.imagekit.io/ohiosveryown/ovo--3.7/menu__bg2@3x.webp")
+    background: url("https://ik.imagekit.io/ohiosveryown/ovo--3.7/menu--bg/menu--bg-light-sm.webp?updatedAt=1717209992015")
       center bottom / cover no-repeat;
     overflow: hidden;
     box-shadow: var(--shadow--sm);
@@ -85,7 +85,7 @@
     will-change: opacity;
 
     @media (prefers-color-scheme: dark) {
-      background: url("https://ik.imagekit.io/ohiosveryown/ovo--3.7/menu__nbg@2x.webp?updatedAt=1717187624609")
+      background: url("https://ik.imagekit.io/ohiosveryown/ovo--3.7/menu--bg/menu--bg-dark-sm.webp?updatedAt=1717210044746")
         center bottom / cover no-repeat;
     }
 
