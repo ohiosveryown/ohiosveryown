@@ -136,7 +136,7 @@
 
   .caption {
     font-size: clamp(1.7rem, 1.26vw, 2.1rem);
-    font-weight: 390;
+    font-weight: 400;
     letter-spacing: -0.15px;
     line-height: 148%;
   }

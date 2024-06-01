@@ -3,7 +3,7 @@
     <ContentDoc v-slot="{ doc }">
       <header>
         <h1>{{ doc.name }}</h1>
-        <h2>{{ doc.caption }}</h2>
+        <h2>{{ doc.subtitle }}</h2>
       </header>
 
       <ul class="meta">
@@ -23,8 +23,19 @@
 </template>
 
 <style lang="scss" scoped>
-@import "/assets/style/grid.scss";
-</style>
+  @import "/assets/style/grid.scss";
+  h2 {
+    margin: 0.8rem 0;
+    line-height: 112%;
+  }
 
-<script setup lang="ts">
-</script>
+  .meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    padding: 4rem 0;
+    @include breakpoint(lg) {
+      padding: 6.4rem 0;
+    }
+  }
+</style>
