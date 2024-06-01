@@ -31,7 +31,7 @@
     inset: 0;
     z-index: var(--zmax);
     border-radius: 29px;
-    border: none;
+    border: 0.5px solid rgba(0, 0, 0, 0.08);
     padding: 0.9rem;
     background: rgba(0, 0, 0, 0.04);
     color: var(--color--primary);

@@ -1,15 +1,36 @@
 <template>
-  <NuxtLink :to="`${randomPost}`">
-    <div class="button">
-      <span class="sheen" />
-      <span class="bg" />
-      {{ buttonLabel }}
-    </div>
-  </NuxtLink>
+  <div
+    class="container"
+    ref="container"
+  >
+    <NuxtLink :to="`${randomPost}`">
+      <div
+        class="button"
+        @mouseenter="showing = true"
+        @mouseleave="showing = false"
+      >
+        <span class="sheen" />
+        <span class="bg" />
+        {{ buttonLabel }}
+      </div>
+
+      <small
+        ref="label"
+        :class="{ tooltipShowLabel: showing }"
+        class="label tooltip--label"
+      >
+        Algorithms shape your destiny
+      </small>
+    </NuxtLink>
+  </div>
 </template>
 
 <style lang="scss" scoped>
   @import "/assets/style/grid.scss";
+
+  .container {
+    position: relative;
+  }
 
   .button {
     position: relative;
@@ -75,6 +96,10 @@
     transition: transform 1ms ease;
     pointer-events: none;
   }
+
+  .label {
+    width: max-content;
+  }
 </style>
 
 <script setup>
@@ -82,11 +107,36 @@
     buttonLabel: String,
   })
 
+  const showing = ref(false)
   const randomPost = ref(null)
+  const container = ref("")
+  const label = ref("")
+  const tracking = ref(false)
+
+  const moveLabel = (e) => {
+    if (tracking.value) {
+      const rect = container.value.getBoundingClientRect()
+      const x = e.clientX - rect.left
+      const y = e.clientY - rect.top
+      label.value.style.transform = `translate(${x + 18}px, ${y + 10}px)`
+    }
+  }
 
   onMounted(async () => {
     let posts = await queryContent("/work").find()
     posts = posts.filter((post) => !post.isExternal)
     randomPost.value = posts[~~(Math.random() * posts.length)]._path
+
+    container.value.addEventListener("pointermove", moveLabel)
+    container.value.addEventListener("pointerenter", () => {
+      tracking.value = true
+    })
+    container.value.addEventListener("pointerleave", () => {
+      tracking.value = false
+    })
+  })
+
+  onUnmounted(() => {
+    document.removeEventListener("pointermove", moveLabel)
   })
 </script>
