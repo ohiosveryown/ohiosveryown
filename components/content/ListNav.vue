@@ -205,7 +205,6 @@
       right: -2.8rem;
       margin: 0.4rem 0 0 0.4rem;
       font-size: 2.2rem;
-      color: var(--color--secondary);
       opacity: 0;
     }
   }

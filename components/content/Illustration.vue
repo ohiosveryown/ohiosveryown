@@ -1,10 +1,20 @@
 <template>
-  <figure :style="{ background: backgroundImageValue }">
+  <figure
+    :style="{
+      background: backgroundImageValue,
+      backgroundSize: 'cover',
+      backgroundPositionX: 'center',
+      backgroundPositionY: 'bottom',
+      backgroundRepeat: 'no-repeat',
+    }"
+  >
     <img
       :src="imgSrc"
-      alt=""
+      :alt="altText"
     />
-    <figcaption></figcaption>
+    <figcaption>
+      {{ caption }}
+    </figcaption>
   </figure>
 </template>
 
@@ -15,12 +25,41 @@
     display: grid;
     place-items: center;
     position: relative;
+    margin: 4.8rem 0 7.2rem;
     border-radius: var(--border-radius--partial);
     padding: 2.8rem;
-    background-position: center;
-    background-size: cover;
     @include breakpoint(lg) {
-      padding: 28rem;
+      margin: 8.8rem 0 11.2rem;
+      padding: 30rem;
+    }
+  }
+
+  figcaption {
+    position: absolute;
+    bottom: -3.2rem;
+    left: 0;
+    right: 0;
+    text-align: center;
+    margin: 0 auto;
+    @include breakpoint(lg) {
+      bottom: -3.4rem;
+      font-size: 1.8rem;
+      text-align: left;
+    }
+  }
+
+  .crop {
+    padding: 2.8rem 2.8rem 0;
+    @include breakpoint(lg) {
+      padding: 10rem 10rem 0;
+    }
+    img {
+      border-radius: 9px 9px 0 0;
+      mask-image: linear-gradient(
+        180deg,
+        #000 100%,
+        rgba(217, 217, 217, 0) 100%
+      );
     }
   }
 
@@ -28,22 +67,13 @@
     border-radius: var(--border-radius--partial);
     box-shadow: var(--shadow--md);
   }
-
-  .bg {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-    z-index: -1;
-  }
 </style>
 
 <script setup>
   const props = defineProps({
     imgSrc: String,
+    altText: String,
+    caption: String,
     backgroundUrl: String,
   })
 
