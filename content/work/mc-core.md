@@ -13,7 +13,7 @@ background: "linear-gradient(192deg, #FAE150 0%, #FFD900 90%)"
 
 ### Mailchimp helps marketers send over a billion emails per day, but as small businesses grow and evolve, the need to reach the right audience at the right touchpoint changes. Part of my time at Mailchimp has been spent working on how we'll support users as they mature into the product—using features and tools that complement and integrate with the core product offering, email.
 
-:Illustration{backgroundUrl="https://ik.imagekit.io/ohiosveryown/ovo--3.7/work/backgrounds/field-01.webp" altText="Mailchimp dashboard" imgSrc="https://ik.imagekit.io/ohiosveryown/ovo--3.7/work/mc-core/dashboard@2x.webp?updatedAt=1717369770205" caption="❶ Dashboard" secondImgSrc="https://ik.imagekit.io/ohiosveryown/tracking/img/readme@2x.jpg?updatedAt=1710440568672" captionTwo="❶ Fig Two"}
+:Illustration{backgroundUrl="https://ik.imagekit.io/ohiosveryown/ovo--3.7/work/backgrounds/field-01.webp" altText="Mailchimp dashboard" imgSrc="https://ik.imagekit.io/ohiosveryown/ovo--3.7/work/mc-core/dashboard@2x.webp?updatedAt=1717369770205" caption="❶ Dashboard" imgSrcSecondary="https://ik.imagekit.io/ohiosveryown/tracking/img/readme@2x.jpg?updatedAt=1710440568672" altTextSecondary="Mailchimp" captionSecondary="❶ Fig Two"}
 
 #### What prompted us to reimagine the core experience?
 
@@ -28,7 +28,7 @@ background: "linear-gradient(192deg, #FAE150 0%, #FFD900 90%)"
 ##### Change this. Mailchimp helps marketers send over a billion emails per day, but as small businesses grow and evolve, the need to reach the right audience at the right touchpoint changes.
 
 :Illustration{backgroundUrl="#FFEBFF" imgSrc="https://ik.imagekit.io/ohiosveryown/ovo--3.7/work/mc-core-01@2x.webp" caption="❸ 99 Problems"}
-:Illustration{.crop backgroundUrl="#FFEBFF" imgSrc="https://res.cloudinary.com/da32ufmnf/video/upload/v1632427858/ovo-3.6/mailchimp-xv/userflow_ze2o6v.mp4#t=0.1" caption="❸ 99 Problems"}
+d
 
 #### What did we do?
 

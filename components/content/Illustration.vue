@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <figure
-      :class="{ 'second-image-present': secondImgSrc }"
+      :class="{ grid: imgSrcSecondary }"
       :style="{
         background: backgroundImageValue,
         backgroundSize: 'cover',
@@ -18,10 +18,10 @@
         {{ caption }}
       </figcaption>
     </figure>
-
+    <!-- optional secondary image -->
     <figure
-      v-if="secondImgSrc"
-      :class="{ 'second-image-present': secondImgSrc }"
+      v-if="imgSrcSecondary"
+      :class="{ grid: imgSrcSecondary }"
       :style="{
         background: backgroundImageValue,
         backgroundSize: 'cover',
@@ -30,9 +30,12 @@
         backgroundRepeat: 'no-repeat',
       }"
     >
-      <img :src="secondImgSrc" />
+      <img
+        :src="imgSrcSecondary"
+        :alt="altTextSecondary"
+      />
       <figcaption>
-        {{ captionTwo }}
+        {{ captionSecondary }}
       </figcaption>
     </figure>
   </div>
@@ -43,15 +46,17 @@
 
   .container {
     display: flex;
+    flex-direction: column;
     gap: grid-width(0.32);
-  }
-
-  .second-image-present {
     @include breakpoint(lg) {
-      padding: 4rem;
+      flex-direction: row;
     }
-    @include breakpoint(xl) {
-      padding: 8rem;
+
+    figure:nth-of-type(2) {
+      margin-top: 0;
+      @include breakpoint(lg) {
+        margin-top: 8.8rem;
+      }
     }
   }
 
@@ -60,7 +65,7 @@
     place-items: center;
     flex: 1;
     position: relative;
-    margin: 4.8rem 0 7.2rem;
+    margin: 4rem 0 7.2rem;
     border-radius: var(--border-radius--partial);
     padding: 2.8rem;
     @include breakpoint(lg) {
@@ -81,8 +86,12 @@
       font-size: 1.8rem;
       text-align: left;
     }
-    @include breakpoint(xl) {
-    }
+  }
+
+  img {
+    pointer-events: none;
+    border-radius: var(--border-radius--partial);
+    box-shadow: var(--shadow--md);
   }
 
   .crop figure {
@@ -99,28 +108,32 @@
     }
   }
 
-  img {
-    border-radius: var(--border-radius--partial);
-    box-shadow: var(--shadow--md);
+  .grid {
+    @include breakpoint(lg) {
+      padding: 4rem;
+    }
+    @include breakpoint(xl) {
+      padding: 8rem;
+    }
   }
 </style>
 
 <script setup>
   const props = defineProps({
     imgSrc: String,
-    secondImgSrc: String,
     altText: String,
     caption: String,
-    captionTwo: String,
+    // secondary image
+    imgSrcSecondary: String,
+    altTextSecondary: String,
+    captionSecondary: String,
+    // fig bg
     backgroundUrl: String,
   })
 
-  const backgroundImageValue = computed(() => {
-    // Check if backgroundUrl is a hex color
-    if (/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/.test(props.backgroundUrl)) {
-      return props.backgroundUrl
-    } else {
-      return `url(${props.backgroundUrl})`
-    }
-  })
+  const backgroundImageValue = computed(() =>
+    /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/.test(props.backgroundUrl)
+      ? props.backgroundUrl
+      : `url(${props.backgroundUrl})`
+  )
 </script>
