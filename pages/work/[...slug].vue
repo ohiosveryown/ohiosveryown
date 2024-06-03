@@ -17,7 +17,7 @@
         </ul>
       </header>
 
-      <ContentRenderer :value="doc" />
+      <main><ContentRenderer :value="doc" /></main>
     </ContentDoc>
   </NuxtLayout>
 </template>
@@ -26,13 +26,21 @@
   @import "/assets/style/grid.scss";
   @import "/assets/style/type.scss";
 
+  main {
+    padding-bottom: 7.2rem;
+    @include breakpoint(lg) {
+      padding-bottom: 18rem;
+    }
+  }
+
   :deep(h2) {
     margin: 0.8rem 0 2rem;
     line-height: 112%;
   }
 
   :deep(h3),
-  :deep(h4) {
+  :deep(h4),
+  :deep(h5) {
     margin-bottom: 2rem;
   }
 
@@ -44,10 +52,13 @@
     line-height: 112%;
   }
 
-  header {
-    // margin-bottom: 3.2rem;
+  :deep(h5) {
+    @include thin;
+    font-size: 2.6rem;
+    line-height: 128%;
     @include breakpoint(lg) {
-      margin-bottom: 0rem;
+      font-size: 3.2rem;
+      line-height: 130%;
     }
   }
 

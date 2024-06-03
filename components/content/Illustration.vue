@@ -1,29 +1,64 @@
 <template>
-  <figure
-    :style="{
-      background: backgroundImageValue,
-      backgroundSize: 'cover',
-      backgroundPositionX: 'center',
-      backgroundPositionY: 'bottom',
-      backgroundRepeat: 'no-repeat',
-    }"
-  >
-    <img
-      :src="imgSrc"
-      :alt="altText"
-    />
-    <figcaption>
-      {{ caption }}
-    </figcaption>
-  </figure>
+  <div class="container">
+    <figure
+      :class="{ 'second-image-present': secondImgSrc }"
+      :style="{
+        background: backgroundImageValue,
+        backgroundSize: 'cover',
+        backgroundPositionX: 'center',
+        backgroundPositionY: 'bottom',
+        backgroundRepeat: 'no-repeat',
+      }"
+    >
+      <img
+        :src="imgSrc"
+        :alt="altText"
+      />
+      <figcaption>
+        {{ caption }}
+      </figcaption>
+    </figure>
+
+    <figure
+      v-if="secondImgSrc"
+      :class="{ 'second-image-present': secondImgSrc }"
+      :style="{
+        background: backgroundImageValue,
+        backgroundSize: 'cover',
+        backgroundPositionX: 'center',
+        backgroundPositionY: 'bottom',
+        backgroundRepeat: 'no-repeat',
+      }"
+    >
+      <img :src="secondImgSrc" />
+      <figcaption>
+        {{ captionTwo }}
+      </figcaption>
+    </figure>
+  </div>
 </template>
 
 <style lang="scss" scoped>
   @import "/assets/style/grid.scss";
 
+  .container {
+    display: flex;
+    gap: grid-width(0.32);
+  }
+
+  .second-image-present {
+    @include breakpoint(lg) {
+      padding: 4rem;
+    }
+    @include breakpoint(xl) {
+      padding: 8rem;
+    }
+  }
+
   figure {
     display: grid;
     place-items: center;
+    flex: 1;
     position: relative;
     margin: 4.8rem 0 7.2rem;
     border-radius: var(--border-radius--partial);
@@ -46,20 +81,21 @@
       font-size: 1.8rem;
       text-align: left;
     }
+    @include breakpoint(xl) {
+    }
   }
 
-  .crop {
+  .crop figure {
     padding: 2.8rem 2.8rem 0;
     @include breakpoint(lg) {
       padding: 10rem 10rem 0;
     }
+    @include breakpoint(xl) {
+      padding: 16rem 16rem 0rem;
+    }
     img {
       border-radius: 9px 9px 0 0;
-      mask-image: linear-gradient(
-        180deg,
-        #000 100%,
-        rgba(217, 217, 217, 0) 100%
-      );
+      box-shadow: var(--shadow--md-inverse);
     }
   }
 
@@ -72,8 +108,10 @@
 <script setup>
   const props = defineProps({
     imgSrc: String,
+    secondImgSrc: String,
     altText: String,
     caption: String,
+    captionTwo: String,
     backgroundUrl: String,
   })
 

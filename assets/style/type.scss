@@ -62,7 +62,7 @@ h2 {
 
 h3 {
   @include thin;
-  font-size: clamp(3.2rem, -0.875rem + 4vw, 3.8rem);
+  font-size: clamp(3.2rem, -0.875rem + 4vw, 4rem);
   line-height: 120%;
 }
 
@@ -102,6 +102,13 @@ p {
 p + p {
   margin-bottom: 1.5rem;
   // text-indent: 4ch;
+}
+
+h5 + h4 {
+  margin-top: 6.4rem;
+  @include breakpoint(lg) {
+    margin-top: 8rem;
+  }
 }
 
 .uc {
