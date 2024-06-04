@@ -51,13 +51,11 @@
     border-radius: var(--border-radius--partial);
     width: max-content;
     margin: 0 auto;
-    padding: 0.2rem 0.8rem;
-    // margin-bottom: 0.6rem;
+    padding: 0.2rem 0.8rem 0.1rem;
     text-align: center;
     color: var(--color--primary);
     background: rgba(255, 255, 255, 0.08);
     backdrop-filter: blur(16px);
-    // opacity: 0.8;
   }
 
   menu {
@@ -88,8 +86,8 @@
     display: flex;
     position: relative;
     border-radius: 11px;
-    width: 8rem;
-    height: 8rem;
+    width: 8.8rem;
+    height: 8.8rem;
     overflow: hidden;
   }
 
@@ -104,7 +102,12 @@
   p {
     opacity: 0;
     color: var(--color--primary);
+    font-size: 1.3rem;
     text-align: center;
+    max-width: 8.8rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 </style>
 

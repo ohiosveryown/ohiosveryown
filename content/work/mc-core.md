@@ -11,6 +11,9 @@ video: "https://res.cloudinary.com/da32ufmnf/video/upload/v1633631810/ovo-3.6/in
 background: "linear-gradient(192deg, #FAE150 0%, #FFD900 90%)"
 ---
 
+<!-- ❶ ❷ ❸ ❹ ❺ ❻ ❼ ❽ ❾ ⓿ -->
+<!-- ① ② ③ ④ ⑤ ⑥ ⑦ ⑧ ⑨ ⓪ -->
+
 ### Mailchimp helps marketers send over a billion emails per day, but as small businesses grow and evolve, the need to reach the right audience at the right touchpoint changes. Part of my time at Mailchimp has been spent working on how we'll support users as they mature into the product—using features and tools that complement and integrate with the core product offering, email.
 
 :Illustration{.crop backgroundUrl="https://ik.imagekit.io/ohiosveryown/ovo--3.7/work/backgrounds/field-01.webp" altText="Mailchimp dashboard" imgSrc="https://ik.imagekit.io/ohiosveryown/ovo--3.7/work/mc-core/dashboard@2x.webp?updatedAt=1717369770205" caption="❶ Dashboard"}
@@ -30,13 +33,12 @@ background: "linear-gradient(192deg, #FAE150 0%, #FFD900 90%)"
 ##### Change this. Mailchimp helps marketers send over a billion emails per day, but as small businesses grow and evolve, the need to reach the right audience at the right touchpoint changes.
 
 :Illustration{backgroundUrl="#FFEBFF" imgSrc="https://ik.imagekit.io/ohiosveryown/ovo--3.7/work/mc-core-01@2x.webp" caption="❸ 99 Problems"}
-d
 
 #### What did we do?
 
 ##### ③ Change this. The deliverables for these experience visions were first high-fidelity screens in Figma, with the ultimate artifact to be a React prototype for user testing. So in short: Words → Figma → React; then we’d synthesize our learnings for future work.
 
-:Illustration{.end backgroundUrl="https://ik.imagekit.io/ohiosveryown/ovo--3.7/work/backgrounds/field-03.webp?updatedAt=1717347265097" altText="Notion doc" imgSrc="https://ik.imagekit.io/ohiosveryown/ovo--3.7/work/mc-core/methodology@2x.webp?updatedAt=1717346721559" caption="❹ Placeholder"}
+:Illustration{backgroundUrl="https://ik.imagekit.io/ohiosveryown/ovo--3.7/work/backgrounds/field-03.webp?updatedAt=1717347265097" altText="Notion doc" imgSrc="https://ik.imagekit.io/ohiosveryown/ovo--3.7/work/mc-core/methodology@2x.webp?updatedAt=1717346721559" caption="❹ Placeholder"}
 
 #### What difference did we make?
 

@@ -70,7 +70,7 @@
     padding: 2.8rem;
     @include breakpoint(lg) {
       margin: 8.8rem 0 11.2rem;
-      padding: 30rem;
+      padding: 20rem;
     }
   }
 
