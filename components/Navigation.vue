@@ -95,6 +95,11 @@
   }
 
   @media (pointer: fine) {
+    .home:hover svg {
+      transform: rotate(-4deg);
+      transition: var(--ease) all;
+    }
+
     button:hover {
       &:before {
         opacity: 1;

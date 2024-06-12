@@ -6,6 +6,6 @@ caption: "I share more information about myself here. It's really gripping conte
 poster: "https://ik.imagekit.io/ohiosveryown/ovo--3.7/index/me@3x.webp"
 ---
 
-# About
-
-[Back home](/)
+:HeaderAbout
+:CalloutAbout
+:ArticleAbout

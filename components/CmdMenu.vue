@@ -53,7 +53,7 @@
     margin: 0 auto;
     padding: 0.2rem 0.8rem 0.1rem;
     text-align: center;
-    color: var(--color--primary);
+    color: var(--color--secondary);
     background: rgba(255, 255, 255, 0.08);
     backdrop-filter: blur(16px);
   }
