@@ -1,23 +1,205 @@
 <template>
-  <aside class="container">
+  <aside
+    class="container"
+    @mouseenter="hovering = true"
+    @mouseleave="hovering = false"
+  >
     <article>
-      <p>In a rush for time?</p>
-      <p>Use the AI prompt</p>
-      <p>↻ Describe Matt using emoji, surrounding his avatar.</p>
+      <small>In a rush for time?</small>
+      <h4>Use the AI prompt:</h4>
+      <h3>↬ Describe Matt using emoji and his photo.</h3>
     </article>
+    <figure>
+      <span :class="{ 'hovering--span-1': hovering }">🔥</span>
+      <span :class="{ 'hovering--span-2': hovering }">🏀</span>
+      <span :class="{ 'hovering--span-3': hovering }">👟</span>
+      <span :class="{ 'hovering--span-4': hovering }">🎨</span>
+      <span :class="{ 'hovering--span-5': hovering }">🍔</span>
+      <img
+        :class="{ 'hovering--img': hovering }"
+        src="https://ik.imagekit.io/ohiosveryown/ovo--3.7/about/fhd.webp?updatedAt=1718286602997"
+        alt="picture of me sitting on a retaining wall."
+      />
+    </figure>
   </aside>
 </template>
 
 <style lang="scss" scoped>
   @import "/assets/style/grid.scss";
+  @import "/assets/style/type.scss";
 
   .container {
-    border: 0.5px solid #e8e8e8;
-    background: linear-gradient(92deg, #f7f7f7 0%, #fafaf7 98.29%);
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem;
+    border-radius: var(--border-radius--partial);
+    border: 0.5px solid #dcdcdc;
+    padding: 2.4rem 1.6rem 1.2rem;
+    box-shadow: 0px 60px 105px 0px rgba(0, 0, 0, 0.03),
+      0px 13.402px 23.453px 0px rgba(0, 0, 0, 0.02),
+      0px 3.99px 6.983px 0px rgba(0, 0, 0, 0.01);
+    background: linear-gradient(
+      92deg,
+      rgba(255, 230, 253, 0.32) 0%,
+      rgba(255, 239, 237, 0.32) 98.29%
+    );
+
     @include breakpoint(lg) {
-      margin-bottom: 4rem;
+      gap: 0;
+      margin-bottom: 2.8rem;
+      padding: 3.2rem 2.8rem 2.4rem;
+      width: grid-width(6.4);
+      box-shadow: none;
     }
+
+    @include breakpoint(xl) {
+      width: grid-width(4);
+    }
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .container {
+      background: linear-gradient(92deg, #2a2a2c 0%, #3e3d47 44%);
+      border: 0.5px solid #2a2a2a;
+    }
+  }
+
+  article {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    transform: translateY(-0.8rem);
+  }
+
+  figure {
+    position: relative;
+    margin-top: -0.4rem;
+    width: 9.6rem;
+    height: 9.6rem;
+    img {
+      border-radius: var(--border-radius--partial);
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: rotate(2deg);
+      box-shadow: var(--shadow--md);
+      overflow: hidden;
+      transition: transform 500ms cubic-bezier(0.76, 0, 0.4, 2.4);
+    }
+    span:nth-of-type(1) {
+      position: absolute;
+      top: -0.6rem;
+      left: -2.4rem;
+      font-size: 3rem;
+      transform: rotate(-20deg);
+      filter: blur(1px);
+      transition: all 500ms cubic-bezier(0.76, 0, 0.4, 2.4) 50ms;
+    }
+    span:nth-of-type(2) {
+      position: absolute;
+      top: -2rem;
+      right: -2rem;
+      z-index: var(--z1);
+      font-size: 3.6rem;
+      filter: drop-shadow(0 0.8rem 0.6rem rgba(0, 0, 0, 0.4));
+      transition: all 500ms cubic-bezier(0.76, 0, 0.4, 2.4);
+    }
+    span:nth-of-type(3) {
+      position: absolute;
+      top: 3.6rem;
+      right: -0.8rem;
+      z-index: var(--z1);
+      font-size: 3rem;
+      transform: rotate(-20deg);
+      filter: drop-shadow(0 0.8rem 0.6rem rgba(0, 0, 0, 0.8));
+      transition: all 500ms cubic-bezier(0.76, 0, 0.4, 2.4) 65ms;
+    }
+    span:nth-of-type(4) {
+      position: absolute;
+      bottom: -2rem;
+      right: -1.8rem;
+      font-size: 2.6rem;
+      filter: blur(0.5px);
+      transition: all 500ms cubic-bezier(0.76, 0, 0.4, 2.4);
+    }
+    span:nth-of-type(5) {
+      position: absolute;
+      bottom: -1.6rem;
+      left: -1.8rem;
+      font-size: 2.8rem;
+      transform: rotate(-20deg);
+      filter: blur(0.75px);
+      transition: all 500ms cubic-bezier(0.76, 0, 0.4, 2.4) 65ms;
+    }
+  }
+
+  h3 {
+    @include sans;
+    position: relative;
+    font-size: clamp(1.6rem, 1.6vw, 2.1rem);
+    line-height: 120%;
+    // &:after {
+    //   content: "";
+    //   position: absolute;
+    //   left: 0;
+    //   bottom: -2px;
+    //   width: 100%;
+    //   height: 1px;
+    //   background: var(--color--primary);
+    //   opacity: 0.24;
+    //   transition: opacity var(--ease);
+    // }
+    // &:hover {
+    //   &:after {
+    //     opacity: 0;
+    //   }
+    // }
+  }
+
+  h4 {
+    @include italic;
+    font-size: clamp(1.8rem, 1.7vw, 2.2rem);
+    font-weight: 100;
+  }
+
+  small {
+    @include thin;
+    padding: 0 0 0.4rem;
+    font-size: clamp(1.7rem, 1.1vw, 1.9rem);
+    font-weight: 360;
+    line-height: 132%;
+  }
+
+  .hovering--img {
+    transform: rotate(-3deg) scale(1.14);
+  }
+
+  .hovering--span-1 {
+    transform: translate(-0.8rem, -1.2rem) rotate(-32deg) scale(1.3) !important;
+    opacity: 0;
+  }
+
+  .hovering--span-2 {
+    transform: translate(0.8rem, -1.2rem) scale(1.3) !important;
+    opacity: 0;
+  }
+
+  .hovering--span-3 {
+    transform: translate(0.8rem, -1.2rem) scale(1.3) !important;
+    opacity: 0;
+  }
+
+  .hovering--span-4 {
+    transform: translate(0.8rem, 1.2rem) scale(1.3) !important;
+    opacity: 0;
+  }
+
+  .hovering--span-5 {
+    transform: translate(-0.8rem, 1.2rem) scale(1.3) !important;
+    opacity: 0;
   }
 </style>
 
-<script setup></script>
+<script setup>
+  const hovering = ref(false)
+</script>
