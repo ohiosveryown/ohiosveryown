@@ -1,25 +1,27 @@
 <template>
-  <NuxtLayout>
-    <ContentDoc v-slot="{ doc }">
-      <header>
-        <h1>{{ doc.name }}</h1>
-        <h2>{{ doc.subtitle }}</h2>
+  <div>
+    <NuxtLayout>
+      <ContentDoc v-slot="{ doc }">
+        <header>
+          <h1>{{ doc.name }}</h1>
+          <h2>{{ doc.subtitle }}</h2>
 
-        <ul class="meta">
-          <li class="sans">
-            <span class="op-6">Contributions:</span>
-            {{ doc.kicker }}
-          </li>
-          <li class="sans">
-            <span class="op-6">Timeline:</span>
-            {{ doc.date }}
-          </li>
-        </ul>
-      </header>
+          <ul class="meta">
+            <li class="sans">
+              <span class="op-6">Contributions:</span>
+              {{ doc.kicker }}
+            </li>
+            <li class="sans">
+              <span class="op-6">Timeline:</span>
+              {{ doc.date }}
+            </li>
+          </ul>
+        </header>
 
-      <main><ContentRenderer :value="doc" /></main>
-    </ContentDoc>
-  </NuxtLayout>
+        <article><ContentRenderer :value="doc" /></article>
+      </ContentDoc>
+    </NuxtLayout>
+  </div>
 </template>
 
 <style lang="scss" scoped>
@@ -40,7 +42,8 @@
 
   :deep(h3),
   :deep(h4),
-  :deep(h5) {
+  :deep(h5),
+  :deep(p) {
     margin-bottom: 2rem;
   }
 
@@ -52,7 +55,7 @@
     line-height: 112%;
   }
 
-  :deep(h5) {
+  :deep(p) {
     @include thin;
     font-size: 2.6rem;
     line-height: 128%;

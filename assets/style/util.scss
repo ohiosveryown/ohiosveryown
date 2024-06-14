@@ -64,10 +64,14 @@
 // tooltip
 .tooltip--trigger {
   position: relative;
-  opacity: 0.64;
+  opacity: 1;
+  @include breakpoint(lg) {
+opacity: 0.64;
+  }
 }
 
 .tooltip--trigger:after {
+  display: none;
   content: "";
   position: absolute;
   left: 0;
@@ -76,6 +80,9 @@
   height: 1px;
   background: var(--color--primary);
   transition: background var(--ease);
+  @include breakpoint(lg) {
+    display: initial
+  }
 }
 
 .tooltip--trigger:hover:after {

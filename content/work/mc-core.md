@@ -22,28 +22,28 @@ background: "linear-gradient(192deg, #FAE150 0%, #FFD900 90%)"
 
 #### ↬ What prompted us to reimagine the core experience?
 
-##### ① Change this. The deliverables for these experience visions were first high-fidelity screens in Figma, with the ultimate artifact to be a React prototype for user testing. So in short: Words → Figma → React; then we’d synthesize our learnings for future work.
+① Change this. The deliverables for these experience visions were first high-fidelity screens in Figma, with the ultimate artifact to be a React prototype for user testing. So in short: Words → Figma → React; then we’d synthesize our learnings for future work.
 
 :Illustration{backgroundUrl="https://ik.imagekit.io/ohiosveryown/ovo--3.7/work/backgrounds/field-02.webp" altText="Notion doc" imgSrc="https://ik.imagekit.io/ohiosveryown/ovo--3.7/work/mc-core/vision@2x.webp?updatedAt=1717346721352" caption="❷ Challenges"}
 
 #### ↬ Where did we start?
 
-##### ② Change this. The deliverables for these experience visions were first high-fidelity screens in Figma, with the ultimate artifact to be a React prototype for user testing. So in short: Words → Figma → React; then we’d synthesize our learnings for future work.
+② Change this. The deliverables for these experience visions were first high-fidelity screens in Figma, with the ultimate artifact to be a React prototype for user testing. So in short: Words → Figma → React; then we’d synthesize our learnings for future work.
 
-##### Change this. Mailchimp helps marketers send over a billion emails per day, but as small businesses grow and evolve, the need to reach the right audience at the right touchpoint changes.
+Change this. Mailchimp helps marketers send over a billion emails per day, but as small businesses grow and evolve, the need to reach the right audience at the right touchpoint changes.
 
 :Illustration{backgroundUrl="#FFEBFF" imgSrc="https://ik.imagekit.io/ohiosveryown/ovo--3.7/work/mc-core-01@2x.webp" caption="❸ 99 Problems"}
 
 #### What did we do?
 
-##### ③ Change this. The deliverables for these experience visions were first high-fidelity screens in Figma, with the ultimate artifact to be a React prototype for user testing. So in short: Words → Figma → React; then we’d synthesize our learnings for future work.
+③ Change this. The deliverables for these experience visions were first high-fidelity screens in Figma, with the ultimate artifact to be a React prototype for user testing. So in short: Words → Figma → React; then we’d synthesize our learnings for future work.
 
 :Illustration{backgroundUrl="https://ik.imagekit.io/ohiosveryown/ovo--3.7/work/backgrounds/field-03.webp?updatedAt=1717347265097" altText="Notion doc" imgSrc="https://ik.imagekit.io/ohiosveryown/ovo--3.7/work/mc-core/methodology@2x.webp?updatedAt=1717346721559" caption="❹ Placeholder"}
 
 #### What difference did we make?
 
-##### ④ Change this. Part of my time at Mailchimp has been spent working on how we'll support users as they mature into the product—using features and tools that complement and integrate with the core product offering, email. Mailchimp helps marketers send over a billion emails per day, but as small businesses grow and evolve, the need to reach the right audience at the right touchpoint changes.
+④ Change this. Part of my time at Mailchimp has been spent working on how we'll support users as they mature into the product—using features and tools that complement and integrate with the core product offering, email. Mailchimp helps marketers send over a billion emails per day, but as small businesses grow and evolve, the need to reach the right audience at the right touchpoint changes.
 
-##### Part of my time at Mailchimp has been spent working on how we'll support users as they mature into the product—using features and tools that complement and integrate with the core product offering, email.
+Part of my time at Mailchimp has been spent working on how we'll support users as they mature into the product—using features and tools that complement and integrate with the core product offering, email.
 
 :Illustration{backgroundUrl="https://ik.imagekit.io/ohiosveryown/ovo--3.7/work/backgrounds/field-01.webp" altText="Mailchimp dashboard" imgSrc="https://ik.imagekit.io/ohiosveryown/ovo--3.7/work/mc-core/dashboard@2x.webp?updatedAt=1717369770205" caption="❶ Dashboard" imgSrcSecondary="https://ik.imagekit.io/ohiosveryown/tracking/img/readme@2x.jpg?updatedAt=1710440568672" altTextSecondary="Mailchimp" captionSecondary="❶ Fig Two"}

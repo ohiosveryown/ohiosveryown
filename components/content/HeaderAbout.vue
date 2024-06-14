@@ -2,7 +2,7 @@
   <header class="container">
     <h1>Travel guide.</h1>
     <h2>
-      ⌨ or 👋's can be sent to:
+      👋 can be sent to:
       <Tooltip
         @click="copyEmail"
         trigger="matt@ohiosveryown.co"
@@ -38,6 +38,27 @@
 <style lang="scss" scoped>
   @import "/assets/style/grid.scss";
 
+  .container {
+    margin-bottom: 4rem;
+    @include breakpoint(lg) {
+      margin-bottom: 7.2rem;
+    }
+  }
+
+  h1 {
+    margin-bottom: 1.6rem;
+    @include breakpoint(md) {
+      margin-bottom: 2rem;
+    }
+  }
+
+  br {
+    display: none;
+    @include breakpoint(md) {
+      display: initial;
+    }
+  }
+
   .toast {
     display: flex;
     flex-direction: row;
@@ -45,8 +66,11 @@
     gap: 0.7rem;
     position: fixed;
     z-index: var(--z1);
-    right: 2.2rem;
+    left: 0;
+    right: 0;
     bottom: 2rem;
+    margin: auto;
+    width: max-content;
     border-radius: var(--border-radius--full);
     padding: 1rem 1.6rem 0.9rem 1.4rem;
     background: var(--color--primary);
@@ -56,6 +80,12 @@
       font-size: 1.6rem;
       font-weight: 500;
       line-height: 1;
+    }
+    @include breakpoint(lg) {
+      left: auto;
+      right: 2.2rem;
+      bottom: 2rem;
+      width: initial;
     }
   }
 
@@ -85,25 +115,13 @@
     transition: all 300ms ease;
   }
 
-  .container {
-    margin-bottom: 4rem;
-    @include breakpoint(lg) {
-      margin-bottom: 6.4rem;
-    }
-  }
-
-  h1 {
-    margin-bottom: 1.6rem;
-    @include breakpoint(md) {
-      margin-bottom: 2rem;
-    }
-  }
-
-  br {
-    display: none;
-    @include breakpoint(md) {
-      display: initial;
-    }
+  input {
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    height: 0px !important;
+    max-height: 0px !important;
   }
 </style>
 
@@ -121,7 +139,6 @@
     document.body.removeChild(tempInput)
 
     // toast
-    // alert("Email copied to clipboard: " + email)
     isToastVisible.value = true
     setTimeout(() => {
       isToastVisible.value = false

@@ -5,9 +5,9 @@
     @mouseleave="hovering = false"
   >
     <article>
-      <small>In a rush for time?</small>
+      <small>In a rush?</small>
       <h4>Use the AI prompt:</h4>
-      <h3>↬ Describe Matt using emoji and his photo.</h3>
+      <h3>Describe Matt using emoji and his photo.</h3>
     </article>
     <figure>
       <span :class="{ 'hovering--span-1': hovering }">🔥</span>
@@ -46,7 +46,7 @@
 
     @include breakpoint(lg) {
       gap: 0;
-      margin-bottom: 2.8rem;
+      margin-bottom: 3.8rem;
       padding: 3.2rem 2.8rem 2.4rem;
       width: grid-width(6.4);
       box-shadow: none;
@@ -59,7 +59,7 @@
 
   @media (prefers-color-scheme: dark) {
     .container {
-      background: linear-gradient(92deg, #2a2a2c 0%, #3e3d47 44%);
+      background: linear-gradient(75deg, #232029 0%, #48314c 98%);
       border: 0.5px solid #2a2a2a;
     }
   }
@@ -92,8 +92,11 @@
       left: -2.4rem;
       font-size: 3rem;
       transform: rotate(-20deg);
-      filter: blur(1px);
+      filter: blur(0.75px);
       transition: all 500ms cubic-bezier(0.76, 0, 0.4, 2.4) 50ms;
+      @include breakpoint(lg) {
+        filter: blur(1px);
+      }
     }
     span:nth-of-type(2) {
       position: absolute;
@@ -119,7 +122,7 @@
       bottom: -2rem;
       right: -1.8rem;
       font-size: 2.6rem;
-      filter: blur(0.5px);
+      filter: blur(0.75px);
       transition: all 500ms cubic-bezier(0.76, 0, 0.4, 2.4);
     }
     span:nth-of-type(5) {

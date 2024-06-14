@@ -183,11 +183,10 @@
   // project name
   h5 {
     position: relative;
-    margin-bottom: 0.4rem;
+    margin-bottom: 1.2rem;
     border-radius: 3px;
     width: max-content;
     text-shadow: 0 3px 3px rgba(0, 0, 0, 0.1);
-    text-decoration: underline;
     @include breakpoint(md) {
       text-decoration: none;
       margin: 1rem 0 0.4rem;
@@ -198,12 +197,23 @@
   }
 
   h5:after {
+    content: "";
+    position: absolute;
+    right: 0;
+    bottom: -0.1rem;
+    width: 100%;
+    height: 1px;
+    background: var(--color--primary);
+    opacity: 0.5;
     @include breakpoint(lg) {
       content: "☼";
       position: absolute;
       top: -0.5rem;
       right: -2.8rem;
       margin: 0.4rem 0 0 0.4rem;
+      width: initial;
+      height: initial;
+      background: none;
       font-size: 2.2rem;
       opacity: 0;
     }
