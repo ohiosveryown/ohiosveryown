@@ -4,7 +4,12 @@ export default defineNuxtConfig({
   modules: ["@nuxt/content", "@nuxt/image"],
 
   app: {
-    pageTransition: { name: 'pagee', mode: 'out-in' }
+    head: {
+      htmlAttrs: {
+        lang: "en",
+      }
+    },
+    pageTransition: { name: 'blur', mode: 'out-in' }
   },
 
   // global styles

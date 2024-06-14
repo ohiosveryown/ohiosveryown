@@ -41,7 +41,8 @@
     display: flex;
     justify-content: space-between;
     position: sticky;
-    top: calc(var(--unit) / 2);
+    // top: calc(var(--unit) / 2);
+    top: var(--unit);
     z-index: var(--zmax);
     margin: var(--unit) auto 0;
     max-width: var(--max-width);

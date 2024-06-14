@@ -4,24 +4,27 @@
   <NuxtPage />
 </template>
 
-<style>
-  /* Enter and leave-active classes */
-  .pagee-enter-active,
-  .pagee-leave-active {
-    transition: opacity 1.75s, filter 1.75s;
-  }
+<script setup lang="ts">
+  useSeoMeta({
+    description:
+      "ohiosveryown is the web presence and portfolio of work for Matthew Pence – a designer living in Atlanta, Ga.",
 
-  /* Enter-from and leave-to classes */
-  .pagee-enter-from,
-  .pagee-leave-to {
-    opacity: 0;
-    filter: blur(2px);
-  }
+    // open graph
+    ogType: "website",
+    ogTitle: "ohiosveryown",
+    ogDescription:
+      "ohiosveryown is the web presence and portfolio of work for Matthew Pence – a designer living in Atlanta, Ga.",
+    ogUrl: "https://ohiosveryown.com",
+    ogImage:
+      "https://ik.imagekit.io/ohiosveryown/ovo--3.7/readme.webp?updatedAt=1718396304149",
 
-  /* Enter-to and leave-from classes (optional if you need specific styles) */
-  .pagee-enter-to,
-  .pagee-leave-from {
-    opacity: 1;
-    filter: blur(0);
-  }
-</style>
+    // twitter
+    twitterCard: "summary_large_image",
+    twitterTitle: "ohiosveryown",
+    twitterUrl: "https://ohiosveryown.com",
+    twitterDescription:
+      "ohiosveryown is the web presence and portfolio of work for Matthew Pence – a designer living in Atlanta, Ga.",
+    twitterImage:
+      "https://ik.imagekit.io/ohiosveryown/ovo--3.7/readme.webp?updatedAt=1718396304149",
+  })
+</script>
