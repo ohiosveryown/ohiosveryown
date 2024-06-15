@@ -6,19 +6,29 @@
     @mouseleave="hovering = false"
   >
     <span
-      :class="{ 'reveal-fire': fireActive }"
+      :class="{ 'reveal-fire': revealEmoji.fire }"
       class="fire"
       >🔥</span
     >
     <span
-      :class="{ 'reveal-bball': bballActive }"
+      :class="{ 'reveal-bball': revealEmoji.bball }"
       class="bball"
       >🏀</span
     >
     <span
-      :class="{ 'reveal-shoe': shoeActive }"
+      :class="{ 'reveal-shoe': revealEmoji.shoe }"
       class="shoe"
       >👟</span
+    >
+    <span
+      :class="{ 'reveal-burger': revealEmoji.burger }"
+      class="burger"
+      >🍔</span
+    >
+    <span
+      :class="{ 'reveal-art': revealEmoji.art }"
+      class="art"
+      >🎨</span
     >
 
     <article>
@@ -206,29 +216,72 @@
 
   .fire {
     position: absolute;
-    top: 2rem;
-    right: 8.8rem;
+    top: 2.2rem;
+    right: 5.2rem;
     font-size: 3rem;
+    filter: blur(0.75px);
     transform: rotate(-20deg);
     transition: all 1ms ease;
+    @include breakpoint(lg) {
+      top: 2.2rem;
+      right: 8.8rem;
+    }
   }
 
   .bball {
     position: absolute;
     top: 4rem;
-    right: 2.4rem;
-    font-size: 3rem;
+    right: 1rem;
+    font-size: 2.8rem;
+    filter: blur(0.75px);
     transform: rotate(-20deg);
     transition: all 1ms ease;
+    @include breakpoint(lg) {
+      top: 4rem;
+      right: 2.6rem;
+    }
   }
 
   .shoe {
     position: absolute;
-    top: 1.64rem;
-    right: 5.2rem;
+    top: 1.8rem;
+    right: 2rem;
     font-size: 3rem;
+    filter: blur(0.75px);
     transform: rotate(-20deg);
     transition: all 1ms ease;
+    @include breakpoint(lg) {
+      top: 1.8rem;
+      right: 5.2rem;
+    }
+  }
+
+  .burger {
+    position: absolute;
+    top: 2.32rem;
+    right: 6.4rem;
+    font-size: 2.5rem;
+    filter: blur(0.75px);
+    transform: rotate(-20deg);
+    transition: all 1ms ease;
+    @include breakpoint(lg) {
+      top: 2.32rem;
+      right: 7.2rem;
+    }
+  }
+
+  .art {
+    position: absolute;
+    top: 4rem;
+    right: 4rem;
+    font-size: 2.4rem;
+    filter: blur(0.75px);
+    transform: rotate(-20deg);
+    transition: all 1ms ease;
+    @include breakpoint(lg) {
+      top: 4rem;
+      right: 5.6rem;
+    }
   }
 
   .reveal-fire {
@@ -240,7 +293,7 @@
   .reveal-bball {
     transform: translateY(-8rem) !important;
     opacity: 0;
-    transition: transform 600ms ease 100ms, opacity 550ms ease 100ms;
+    transition: transform 600ms ease 50ms, opacity 550ms ease 50ms;
   }
 
   .reveal-shoe {
@@ -248,23 +301,35 @@
     opacity: 0;
     transition: transform 600ms ease, opacity 550ms ease;
   }
+
+  .reveal-burger {
+    transform: translateY(-8rem) !important;
+    opacity: 0;
+    transition: transform 600ms ease 150ms, opacity 550ms ease 150ms;
+  }
+
+  .reveal-art {
+    transform: translateY(-7rem) !important;
+    opacity: 0;
+    transition: transform 600ms ease 200ms, opacity 550ms ease 200ms;
+  }
 </style>
 
 <script setup>
   const hovering = ref(false)
-  const fireActive = ref(false)
-  const bballActive = ref(false)
-  const shoeActive = ref(false)
+
+  const revealEmoji = reactive({
+    fire: false,
+    bball: false,
+    shoe: false,
+    burger: false,
+    art: false,
+  })
 
   const handleClick = () => {
-    // Activate classes
-    fireActive.value = true
-    bballActive.value = true
-    shoeActive.value = true
-
-    // Schedule deactivation
-    setTimeout(() => (fireActive.value = false), 601)
-    setTimeout(() => (bballActive.value = false), 701)
-    setTimeout(() => (shoeActive.value = false), 701)
+    Object.keys(revealEmoji).forEach((key) => {
+      revealEmoji[key] = true
+      setTimeout(() => (revealEmoji[key] = false), key === "fire" ? 601 : 701)
+    })
   }
 </script>
