@@ -84,7 +84,7 @@
   position: relative;
   opacity: 1;
   @include breakpoint(lg) {
-opacity: 0.64;
+    opacity: 0.64;
   }
 }
 
@@ -156,5 +156,22 @@ opacity: 0.64;
   .tooltip--label,
   .tooltip--thumbnail {
     display: none;
+  }
+
+  .blur-enter-active,
+  .blur-leave-active {
+    transition: all 1ms;
+  }
+
+  .blur-enter-from,
+  .blur-leave-to {
+    opacity: 1;
+    filter: blur(0px);
+  }
+
+  .blur-enter-to,
+  .blur-leave-from {
+    opacity: 1;
+    filter: blur(0);
   }
 }
