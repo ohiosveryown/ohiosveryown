@@ -27,37 +27,19 @@
 // page transition
 .blur-enter-active,
 .blur-leave-active {
-  transition: opacity 300ms, filter 300ms;
+  transition: all 100ms;
 }
 
 .blur-enter-from,
 .blur-leave-to {
   opacity: 0;
-  filter: blur(2px);
+  filter: blur(6px);
 }
 
 .blur-enter-to,
 .blur-leave-from {
   opacity: 1;
   filter: blur(0);
-}
-
-
-.blur-enter-from {
-  opacity: 0;
-  filter: blur(6px);
-}
-
-.blur-enter-to {
-  opacity: 1;
-  filter: blur(0);
-  transition: opacity 150ms, filter 150ms;
-}
-
-.blur-leave-to {
-  opacity: 0;
-  filter: blur(6px);
-  transition: opacity 200ms, filter 200ms;
 }
 
 // opacity

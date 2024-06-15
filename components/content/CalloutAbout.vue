@@ -1,9 +1,26 @@
 <template>
   <aside
     class="container"
+    @click="handleClick"
     @mouseenter="hovering = true"
     @mouseleave="hovering = false"
   >
+    <span
+      :class="{ 'reveal-fire': fireActive }"
+      class="fire"
+      >🔥</span
+    >
+    <span
+      :class="{ 'reveal-bball': bballActive }"
+      class="bball"
+      >🏀</span
+    >
+    <span
+      :class="{ 'reveal-shoe': shoeActive }"
+      class="shoe"
+      >👟</span
+    >
+
     <article>
       <small>In a rush?</small>
       <h4>Use the AI prompt:</h4>
@@ -32,6 +49,7 @@
     display: flex;
     justify-content: space-between;
     gap: 2rem;
+    position: relative;
     border-radius: var(--border-radius--partial);
     border: 0.5px solid #dcdcdc;
     padding: 2.4rem 1.6rem 1.2rem;
@@ -141,22 +159,6 @@
     position: relative;
     font-size: clamp(1.6rem, 1.6vw, 2.1rem);
     line-height: 120%;
-    // &:after {
-    //   content: "";
-    //   position: absolute;
-    //   left: 0;
-    //   bottom: -2px;
-    //   width: 100%;
-    //   height: 1px;
-    //   background: var(--color--primary);
-    //   opacity: 0.24;
-    //   transition: opacity var(--ease);
-    // }
-    // &:hover {
-    //   &:after {
-    //     opacity: 0;
-    //   }
-    // }
   }
 
   h4 {
@@ -201,8 +203,68 @@
     transform: translate(-0.8rem, 1.2rem) scale(1.3) !important;
     opacity: 0;
   }
+
+  .fire {
+    position: absolute;
+    top: 2rem;
+    right: 8.8rem;
+    font-size: 3rem;
+    transform: rotate(-20deg);
+    transition: all 1ms ease;
+  }
+
+  .bball {
+    position: absolute;
+    top: 4rem;
+    right: 2.4rem;
+    font-size: 3rem;
+    transform: rotate(-20deg);
+    transition: all 1ms ease;
+  }
+
+  .shoe {
+    position: absolute;
+    top: 1.64rem;
+    right: 5.2rem;
+    font-size: 3rem;
+    transform: rotate(-20deg);
+    transition: all 1ms ease;
+  }
+
+  .reveal-fire {
+    transform: translateY(-8rem) !important;
+    opacity: 0;
+    transition: transform 600ms ease, opacity 550ms ease;
+  }
+
+  .reveal-bball {
+    transform: translateY(-8rem) !important;
+    opacity: 0;
+    transition: transform 600ms ease 100ms, opacity 550ms ease 100ms;
+  }
+
+  .reveal-shoe {
+    transform: translateY(-8rem) !important;
+    opacity: 0;
+    transition: transform 600ms ease, opacity 550ms ease;
+  }
 </style>
 
 <script setup>
   const hovering = ref(false)
+  const fireActive = ref(false)
+  const bballActive = ref(false)
+  const shoeActive = ref(false)
+
+  const handleClick = () => {
+    // Activate classes
+    fireActive.value = true
+    bballActive.value = true
+    shoeActive.value = true
+
+    // Schedule deactivation
+    setTimeout(() => (fireActive.value = false), 601)
+    setTimeout(() => (bballActive.value = false), 701)
+    setTimeout(() => (shoeActive.value = false), 701)
+  }
 </script>
