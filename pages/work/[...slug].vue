@@ -1,10 +1,14 @@
 <template>
-  <div>
+  <div ref="articleRef">
     <NuxtLayout>
       <ContentDoc v-slot="{ doc }">
         <header>
-          <h1>{{ doc.name }}</h1>
-          <h2>{{ doc.subtitle }}</h2>
+          <h1>
+            {{ doc.name }}
+          </h1>
+          <h2>
+            {{ doc.subtitle }}
+          </h2>
 
           <ul class="meta">
             <li class="sans">
@@ -18,7 +22,9 @@
           </ul>
         </header>
 
-        <article><ContentRenderer :value="doc" /></article>
+        <article>
+          <ContentRenderer :value="doc" />
+        </article>
       </ContentDoc>
     </NuxtLayout>
   </div>
@@ -71,7 +77,7 @@
     gap: 0.2rem;
     padding: 4rem 0 5.6rem;
     @include breakpoint(lg) {
-      padding: 4.4rem 0;
+      padding: 4.4rem 0 5.6rem;
     }
   }
 </style>

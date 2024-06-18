@@ -28,13 +28,31 @@
       <span v-else>Menu ☺</span>
     </button>
 
-    <ListNav :class="[menuOpen ? 'menu-opened' : 'menu-closed']" />
+    <ListNav
+      class="mu"
+      :class="[menuOpen ? 'menu-opened' : 'menu-closed']"
+    />
   </nav>
 </template>
 
 <style lang="scss" scoped>
   @import "/assets/style/grid.scss";
   @import "/assets/style/type.scss";
+
+  .mu > * {
+    opacity: 0;
+    transform: translateY(2rem);
+    filter: blur(6px);
+    transition: all 0ms ease;
+  }
+
+  .mu.menu-opened > * {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+    transition: opacity 300ms ease 50ms, transform 400ms ease,
+      filter 300ms ease 100ms;
+  }
 
   nav {
     --unit: 4rem;
@@ -60,7 +78,10 @@
   }
 
   svg {
-    margin-top: -0.2rem;
+    margin-top: -1rem;
+    @include breakpoint(lg) {
+      margin-top: -0.2rem;
+    }
   }
 
   a,

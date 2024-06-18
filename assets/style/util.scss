@@ -25,13 +25,11 @@
 }
 
 // page transition
-.blur-enter-active,
-.blur-leave-active {
-  transition: all 100ms;
+.blur-enter-active {
+  transition: all 500ms;
 }
 
-.blur-enter-from,
-.blur-leave-to {
+.blur-enter-from {
   opacity: 0;
   filter: blur(6px);
 }

@@ -101,10 +101,6 @@ html {
   // overscroll-behavior: none;
 }
 
-html:focus-within {
-  scroll-behavior: smooth;
-}
-
 body {
   min-height: 100vh;
   font: normal 1.5rem/1.5 var(--system-font);
