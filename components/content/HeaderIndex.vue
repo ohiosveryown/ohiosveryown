@@ -32,6 +32,12 @@
 <style lang="scss" scoped>
   @import "/assets/style/grid.scss";
 
+  .box {
+    width: 50px;
+    height: 50px;
+    background: red;
+  }
+
   .container {
     @include breakpoint(lg) {
       margin-bottom: 4rem;
@@ -52,5 +58,3 @@
     }
   }
 </style>
-
-<script setup></script>

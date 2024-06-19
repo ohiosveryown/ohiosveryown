@@ -29,6 +29,7 @@
     </button>
 
     <ListNav
+      :menu-open="menuOpen"
       class="mu"
       :class="[menuOpen ? 'menu-opened' : 'menu-closed']"
     />
@@ -39,20 +40,18 @@
   @import "/assets/style/grid.scss";
   @import "/assets/style/type.scss";
 
-  .mu > * {
-    opacity: 0;
-    transform: translateY(2rem);
-    filter: blur(6px);
-    transition: all 0ms ease;
-  }
+  // .mu > * {
+  //   opacity: 0;
+  //   filter: blur(6px);
+  //   transition: all 0;
+  //   will-change: opacity, filter;
+  // }
 
-  .mu.menu-opened > * {
-    opacity: 1;
-    transform: translateY(0);
-    filter: blur(0);
-    transition: opacity 300ms ease 50ms, transform 400ms ease,
-      filter 300ms ease 100ms;
-  }
+  // .mu.menu-opened > * {
+  //   opacity: 1;
+  //   filter: blur(0);
+  //   transition: opacity 300ms ease, filter 300ms ease 150ms;
+  // }
 
   nav {
     --unit: 4rem;

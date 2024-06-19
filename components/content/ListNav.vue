@@ -3,10 +3,18 @@
     <div class="overlay-top" />
     <ul>
       <li
-        v-for="post in posts"
+        v-for="(post, index) in posts"
         :key="post._path"
       >
         <NuxtLink
+          :class="{
+            'menu-openedd': props.menuOpen,
+            'menu-closedd': !props.menuOpen,
+          }"
+          :style="{
+            animationDuration: '0.5s',
+            animationDelay: `${index * 75}ms`,
+          }"
           v-if="!post.url"
           :to="post._path"
         >
@@ -22,6 +30,14 @@
           </article>
         </NuxtLink>
         <a
+          :class="{
+            'menu-openedd': props.menuOpen,
+            'menu-closedd': !props.menuOpen,
+          }"
+          :style="{
+            animationDuration: '300ms',
+            animationDelay: `${index * 100}ms`,
+          }"
           v-else
           :href="post.url"
           target="_blank"
@@ -65,6 +81,33 @@
 <style lang="scss" scoped>
   @import "/assets/style/grid.scss";
   @import "/assets/style/type.scss";
+
+  @keyframes fadeIn {
+    from {
+      filter: blur(6px);
+      opacity: 0;
+      transform: translateY(3.2rem);
+    }
+    to {
+      filter: blur(0px);
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .menu-openedd {
+    animation-name: fadeIn;
+    animation-fill-mode: both;
+    // opacity: 1;
+    // filter: blur(0);
+    // transition: opacity 300ms ease, filter 300ms ease 150ms;
+  }
+
+  .menu-closedd {
+    // opacity: 0;
+    // filter: blur(6px);
+    // transition: all 0;
+  }
 
   menu {
     --unit: 0.8rem;
@@ -292,6 +335,9 @@
 <script setup>
   const posts = await queryContent("").sort({ key: 1 }).find()
   const menu = ref(null)
+  const props = defineProps({
+    menuOpen: Boolean,
+  })
 
   const keydownHandler = (event) => {
     if (event.key === "Tab" && menu.value.open) {
