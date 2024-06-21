@@ -2,6 +2,7 @@
   <CmdMenu />
   <Navigation />
   <NuxtPage />
+  <GuideAbout />
 </template>
 
 <script setup lang="ts">

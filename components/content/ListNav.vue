@@ -3,17 +3,13 @@
     <div class="overlay-top" />
     <ul>
       <li
-        v-for="(post, index) in posts"
+        v-for="post in posts"
         :key="post._path"
       >
         <NuxtLink
           :class="{
             'menu-openedd': props.menuOpen,
             'menu-closedd': !props.menuOpen,
-          }"
-          :style="{
-            animationDuration: '0.5s',
-            animationDelay: `${index * 75}ms`,
           }"
           v-if="!post.url"
           :to="post._path"
@@ -33,10 +29,6 @@
           :class="{
             'menu-openedd': props.menuOpen,
             'menu-closedd': !props.menuOpen,
-          }"
-          :style="{
-            animationDuration: '300ms',
-            animationDelay: `${index * 100}ms`,
           }"
           v-else
           :href="post.url"
@@ -82,31 +74,16 @@
   @import "/assets/style/grid.scss";
   @import "/assets/style/type.scss";
 
-  @keyframes fadeIn {
-    from {
-      filter: blur(6px);
-      opacity: 0;
-      transform: translateY(3.2rem);
-    }
-    to {
-      filter: blur(0px);
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
   .menu-openedd {
-    animation-name: fadeIn;
-    animation-fill-mode: both;
-    // opacity: 1;
-    // filter: blur(0);
-    // transition: opacity 300ms ease, filter 300ms ease 150ms;
+    opacity: 1;
+    filter: blur(0);
+    transition: opacity 250ms ease, filter 250ms ease 150ms;
   }
 
   .menu-closedd {
-    // opacity: 0;
-    // filter: blur(6px);
-    // transition: all 0;
+    opacity: 0;
+    filter: blur(6px);
+    transition: all 0;
   }
 
   menu {

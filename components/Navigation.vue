@@ -40,19 +40,6 @@
   @import "/assets/style/grid.scss";
   @import "/assets/style/type.scss";
 
-  // .mu > * {
-  //   opacity: 0;
-  //   filter: blur(6px);
-  //   transition: all 0;
-  //   will-change: opacity, filter;
-  // }
-
-  // .mu.menu-opened > * {
-  //   opacity: 1;
-  //   filter: blur(0);
-  //   transition: opacity 300ms ease, filter 300ms ease 150ms;
-  // }
-
   nav {
     --unit: 4rem;
     display: flex;
