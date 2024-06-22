@@ -1,8 +1,16 @@
 <template>
   <div
+    ref="containerRef"
     :class="{ 'at-bottom': isAtBottom }"
     class="container"
   >
+    <button
+      @click="addDissolveClass"
+      class="sans"
+    >
+      Dismiss guide ↴
+    </button>
+
     <header
       v-show="showImg"
       class="thin"
@@ -15,8 +23,8 @@
       class="img"
     >
       <img
-        src="https://ik.imagekit.io/ohiosveryown/ovo--3.7/about/guide@2x.webp?updatedAt=1718985979093"
-        alt=""
+        src="https://ik.imagekit.io/ohiosveryown/ovo--3.7/about/guide@2x.webp?updatedAt=1719082771446"
+        alt="ohiosveryown site guide book illustration"
       />
     </figure>
 
@@ -28,6 +36,7 @@
       class="video"
     >
       <video
+        ref="videoRef"
         playsinline="true"
         src="https://ik.imagekit.io/ohiosveryown/ovo--3.7/about/walkthru--rm.mp4"
       ></video>
@@ -46,10 +55,28 @@
       gap: 2rem;
       position: fixed;
       z-index: var(--z1);
-      bottom: 2rem;
-      right: 2rem;
+      bottom: 1.8rem;
+      right: 1.8rem;
+      transition: all 300ms ease;
 
       opacity: 1;
+    }
+  }
+
+  button {
+    position: fixed;
+    bottom: 38.8rem;
+    right: 0;
+    width: 64rem;
+    padding: 4rem 2.6rem 4rem 0;
+    text-align: right;
+    font-size: 1.3rem;
+    opacity: 0;
+    transform: translateY(2rem);
+    transition: all var(--ease);
+    pointer-events: none;
+    &:focus {
+      outline: none;
     }
   }
 
@@ -91,19 +118,31 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
+      // object-position: center bottom;
+      // transform: translateY(-6%);
     }
   }
 
   .container:hover {
+    right: 1.2rem;
+    bottom: 1.2rem;
+
+    button {
+      color: var(--color--primary);
+      opacity: 1;
+      pointer-events: inherit;
+      transform: translateY(0);
+      transition: opacity 300ms ease 600ms, transform 300ms ease 600ms;
+    }
+
     header,
     figure.img {
       opacity: 0;
     }
 
     figure.video {
-      vertical-align: top;
       width: 64rem;
-      height: 36rem;
+      height: 40rem;
       transform: rotate(0deg);
       transition: all 700ms cubic-bezier(0.8, 0, 0.16, 1);
       overflow: hidden;
@@ -111,17 +150,27 @@
 
     .resize-video {
       width: 64rem !important;
-      height: 36rem !important;
+      height: 40rem !important;
     }
   }
 
   .resize-video {
     width: 21rem !important;
-    height: 11.8rem !important;
+    height: 13.6rem !important;
   }
 
   .at-bottom {
     opacity: 1;
+  }
+
+  .dissolve {
+    opacity: 0;
+    filter: blur(6px);
+    transform: translateY(400%) scaleX(0.75) scaleY(1.5);
+    transform-origin: top left;
+    transition: opacity 700ms ease 100ms, filter 500ms ease,
+      transform 600ms cubic-bezier(0.8, 0, 0.16, 1);
+    pointer-events: none;
   }
 
   video {
@@ -132,10 +181,19 @@
 
 <script setup>
   const route = useRoute()
+  const containerRef = ref(null)
   const isAtBottom = ref(false)
   let showControlsTimeout = null
   const showImg = ref(true)
-  const reel = ref("")
+  const reel = ref(null)
+  const videoRef = ref(null)
+
+  const addDissolveClass = () => {
+    containerRef.value.classList.add("dissolve")
+    if (videoRef.value) {
+      videoRef.value.pause()
+    }
+  }
 
   const hideImg = () => {
     showImg.value = false
