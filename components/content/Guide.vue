@@ -1,5 +1,5 @@
 <template>
-  <div
+  <container
     ref="containerRef"
     :class="{ 'at-bottom': isAtBottom }"
     class="container"
@@ -41,7 +41,7 @@
         src="https://ik.imagekit.io/ohiosveryown/ovo--3.7/about/walkthru--rm.mp4"
       ></video>
     </figure>
-  </div>
+  </container>
 </template>
 
 <style lang="scss" scoped>
@@ -144,7 +144,7 @@
       width: 64rem;
       height: 40rem;
       transform: rotate(0deg);
-      transition: all 700ms cubic-bezier(0.8, 0, 0.16, 1);
+      transition: all 700ms cubic-bezier(0.8, 0, 0.16, 1) 100ms;
       overflow: hidden;
     }
 
@@ -164,13 +164,20 @@
   }
 
   .dissolve {
+    right: 1.2rem;
+    bottom: 1.2rem;
     opacity: 0;
     filter: blur(6px);
-    transform: translateY(400%) scaleX(0.75) scaleY(1.5);
-    transform-origin: top left;
+    transform: translateX(-12rem) translateY(600vh) scaleX(0.5) scaleY(2.25) !important;
+    transform-origin: top right;
     transition: opacity 700ms ease 100ms, filter 500ms ease,
       transform 600ms cubic-bezier(0.8, 0, 0.16, 1);
     pointer-events: none;
+    figure.video {
+      width: 64rem !important;
+      height: 40rem !important;
+      transform: rotate(0deg) !important;
+    }
   }
 
   video {
