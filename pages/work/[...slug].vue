@@ -56,7 +56,7 @@
   :deep(h4) {
     @include italic;
     margin-left: -0.2rem;
-    font-size: clamp(1rem, -0.875rem + 10vw, 3.6rem);
+    font-size: clamp(1rem, -0.875rem + 10vw, 3.8rem);
     font-weight: 100;
     line-height: 112%;
   }

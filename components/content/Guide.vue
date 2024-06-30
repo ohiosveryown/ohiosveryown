@@ -1,257 +1,167 @@
 <template>
-  <container
-    ref="containerRef"
-    :class="{ 'at-bottom': isAtBottom }"
+  <div
     class="container"
+    @mouseover="ContainerMouseEnter"
+    @mouseout="ContainerMouseLeave"
   >
-    <button
-      @click="addDissolveClass"
-      class="sans"
-    >
-      Dismiss guide ↴
-    </button>
-
-    <header
-      v-show="showImg"
-      class="thin"
-    >
-      Your personal guide
+    <header class="">
+      <div class="header-label--default">
+        <span class="thin">Your personal guide</span>
+      </div>
+      <div class="header-label--hover">
+        <button class="thin">Dismiss</button>
+      </div>
     </header>
-
-    <figure
-      v-show="showImg"
-      class="img"
-    >
+    <div class="assets">
       <img
         src="https://ik.imagekit.io/ohiosveryown/ovo--3.7/about/guide@2x.webp?updatedAt=1719082771446"
-        alt="ohiosveryown site guide book illustration"
+        alt="guidebook illustration"
+        class="guidebook"
       />
-    </figure>
-
-    <figure
-      ref="reel"
-      @click="hideImg"
-      @mouseenter="showControls"
-      @mouseleave="hideControls"
-      class="video"
-    >
       <video
-        ref="videoRef"
-        playsinline="true"
-        src="https://ik.imagekit.io/ohiosveryown/ovo--3.7/about/walkthru--rm.mp4"
-      ></video>
-    </figure>
-  </container>
+        src="https://ik.imagekit.io/ohiosveryown/ovo--3.7/about/os.mp4"
+        :controls="showControls"
+        preload="auto"
+        @mouseover="videoMouseEnter"
+        @mouseout="videoMouseLeave"
+        @click="toggleVideoClick"
+        :class="{ 'clicked-class': videoClicked }"
+      >
+        Your browser does not support the video tag.
+      </video>
+    </div>
+  </div>
 </template>
 
 <style lang="scss" scoped>
   @import "/assets/style/grid.scss";
-
   .container {
-    display: none;
-    @include breakpoint(lg) {
-      display: flex;
-      flex-direction: column;
-      gap: 2rem;
-      position: fixed;
-      z-index: var(--z1);
-      bottom: 1.8rem;
-      right: 1.8rem;
-      transition: all 300ms ease;
-
-      opacity: 1;
-    }
+    position: fixed;
+    bottom: 1.4rem;
+    right: 1.4rem;
   }
 
-  button {
-    position: fixed;
-    bottom: 38.8rem;
-    right: 0;
-    width: 64rem;
-    padding: 4rem 2.6rem 4rem 0;
-    text-align: right;
-    font-size: 1.3rem;
+  .container:hover img {
     opacity: 0;
-    transform: translateY(2rem);
-    transition: all var(--ease);
-    pointer-events: none;
+    transition: opacity var(--ease) 200ms;
+  }
+
+  .container:hover video {
+    width: 64rem;
+    height: 40rem;
+    transform: rotate(0deg);
+    transition: all 700ms cubic-bezier(0.8, 0, 0.16, 1) 100ms;
+  }
+
+  .container:hover .header-label--default {
+    opacity: 0;
+    transition: opacity var(--ease) 200ms;
+  }
+
+  .container:hover .header-label--hover {
+    opacity: 1;
+    transition: opacity var(--ease) 400ms;
+  }
+
+  .header-label--default {
+    transform: translateY(0.8rem);
+    text-align: center;
+    transition: opacity var(--ease) 400ms;
+  }
+
+  .header-label--hover {
+    transform: translateX(-1.2rem);
+    text-align: right;
+    opacity: 0;
+    transition: opacity var(--ease) 100ms;
+  }
+
+  .assets {
+    display: flex;
+  }
+
+  img,
+  video {
+    border-radius: var(--border-radius--partial);
+    width: 7.6rem;
+    height: 12rem;
+    object-fit: cover;
+    overflow: hidden;
+  }
+
+  video {
+    transform: rotate(8deg);
+    transition: all 400ms ease;
+    box-shadow: var(--shadow--sm);
+    will-change: transform, width, height;
     &:focus {
       outline: none;
     }
   }
 
-  header,
-  figure.img {
-    transition: opacity var(--ease);
-  }
-
-  figure.img {
-    display: block;
-    width: 7.6rem;
-    height: auto;
-    border-radius: var(--border-radius--partial);
+  img {
+    margin-left: 1.2rem;
+    margin-right: -3.8rem;
+    transform: rotate(-8deg) translateY(-0.8rem);
     box-shadow: var(--shadow--xs);
-    transform: rotate(-8deg) translateY(-0.6rem);
-    overflow: hidden;
-    transition: all 300ms ease;
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
+    transition: opacity var(--ease) 200ms;
   }
 
-  figure.video {
-    display: block;
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    border-radius: var(--border-radius--partial);
-    width: 7.6rem;
-    height: 11.8rem;
-    overflow: hidden;
-    box-shadow: var(--shadow--sm);
-    transform: rotate(8deg);
-    transition: all 400ms ease;
-    will-change: transform, width, height;
-    video {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      // object-position: center bottom;
-      // transform: translateY(-6%);
-    }
+  button {
+    padding-bottom: 0.8rem;
+    font-size: 1.5rem;
   }
 
-  .container:hover {
-    right: 1.2rem;
-    bottom: 1.2rem;
-
-    button {
-      color: var(--color--primary);
-      opacity: 1;
-      pointer-events: inherit;
-      transform: translateY(0);
-      transition: opacity 300ms ease 600ms, transform 300ms ease 600ms;
-    }
-
-    header,
-    figure.img {
-      opacity: 0;
-    }
-
-    figure.video {
-      width: 64rem;
-      height: 40rem;
-      transform: rotate(0deg);
-      transition: all 700ms cubic-bezier(0.8, 0, 0.16, 1) 100ms;
-      overflow: hidden;
-    }
-
-    .resize-video {
-      width: 64rem !important;
-      height: 40rem !important;
-    }
+  .thin {
+    padding-left: 0.5rem;
   }
 
-  .resize-video {
-    width: 21rem !important;
-    height: 13.6rem !important;
-  }
-
-  .at-bottom {
-    opacity: 1;
-  }
-
-  .dissolve {
-    right: 1.2rem;
-    bottom: 1.2rem;
-    opacity: 0;
-    filter: blur(6px);
-    transform: translateX(-12rem) translateY(600vh) scaleX(0.5) scaleY(2.25) !important;
-    transform-origin: top right;
-    transition: opacity 700ms ease 100ms, filter 500ms ease,
-      transform 600ms cubic-bezier(0.8, 0, 0.16, 1);
-    pointer-events: none;
-    figure.video {
-      width: 64rem !important;
-      height: 40rem !important;
-      transform: rotate(0deg) !important;
-    }
-  }
-
-  video {
-    transform: translateZ(0);
-    background-color: rgba(0, 0, 0, 0.1);
+  .clicked-class {
+    width: 21rem;
+    height: 13.6rem;
+    transform: rotate(0deg);
   }
 </style>
 
 <script setup>
-  const route = useRoute()
-  const containerRef = ref(null)
-  const isAtBottom = ref(false)
-  let showControlsTimeout = null
-  const showImg = ref(true)
-  const reel = ref(null)
-  const videoRef = ref(null)
+  // Reactive states related to hover functionality
+  const isHovered = ref(false)
+  let containerHoverTimeoutId = null
 
-  const addDissolveClass = () => {
-    containerRef.value.classList.add("dissolve")
-    if (videoRef.value) {
-      videoRef.value.pause()
-    }
+  // Reactive state and timeout ID for video controls visibility
+  const showControls = ref(false)
+  let hoverTimeoutId = null
+
+  // Functions related to container hover events
+  const ContainerMouseEnter = () => {
+    clearTimeout(containerHoverTimeoutId)
+    containerHoverTimeoutId = setTimeout(() => {
+      isHovered.value = true
+    }, 300)
   }
 
-  const hideImg = () => {
-    showImg.value = false
-    if (reel.value) {
-      reel.value.style.transform = "rotate(0deg)"
-      reel.value.classList.add("resize-video")
-    }
+  const ContainerMouseLeave = () => {
+    clearTimeout(containerHoverTimeoutId)
+    containerHoverTimeoutId = setTimeout(() => {
+      isHovered.value = false
+    }, 100)
   }
 
-  const checkScroll = () => {
-    if (route.path === "/" || route.path === "/about") {
-      const scrollPosition = window.scrollY + window.innerHeight
-      const bottomPosition = document.documentElement.scrollHeight
-      if (scrollPosition >= bottomPosition) {
-        isAtBottom.value = true
-      }
-    }
-  }
-
-  const addScrollListener = () => {
-    window.addEventListener("scroll", checkScroll)
-  }
-
-  const removeScrollListener = () => {
-    window.removeEventListener("scroll", checkScroll)
-  }
-
-  const showControls = (event) => {
-    clearTimeout(showControlsTimeout)
-    showControlsTimeout = setTimeout(() => {
-      const video = event.target.querySelector("video")
-      if (video) {
-        video.controls = true
-      }
+  // Functions related to video hover events
+  const videoMouseEnter = () => {
+    hoverTimeoutId = setTimeout(() => {
+      showControls.value = true
     }, 400)
   }
 
-  // Method to hide video controls
-  const hideControls = (event) => {
-    clearTimeout(showControlsTimeout)
-    const video = event.target.querySelector("video")
-    if (video) {
-      video.controls = false
-    }
+  const videoMouseLeave = () => {
+    showControls.value = false
+    clearTimeout(hoverTimeoutId)
   }
 
-  onMounted(() => {
-    addScrollListener()
-  })
+  const videoClicked = ref(false)
 
-  onUnmounted(() => {
-    removeScrollListener()
-  })
+  const toggleVideoClick = () => {
+    videoClicked.value = !videoClicked.value
+  }
 </script>
