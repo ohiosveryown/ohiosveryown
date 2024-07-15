@@ -1,5 +1,6 @@
 <template>
   <div
+    ref="containerRef"
     class="container"
     @mouseover="ContainerMouseEnter"
     @mouseout="ContainerMouseLeave"
@@ -9,7 +10,12 @@
         <span class="thin">Your personal guide</span>
       </div>
       <div class="header-label--hover">
-        <button class="thin">Dismiss</button>
+        <button
+          class="thin"
+          @click="addDissolveClass"
+        >
+          Dismiss
+        </button>
       </div>
     </header>
     <div class="assets">
@@ -19,13 +25,14 @@
         class="guidebook"
       />
       <video
+        ref="videoRef"
         src="https://ik.imagekit.io/ohiosveryown/ovo--3.7/about/os.mp4"
-        :controls="showControls"
         preload="auto"
+        :controls="showControls"
+        :class="{ 'clicked-class': videoClicked }"
         @mouseover="videoMouseEnter"
         @mouseout="videoMouseLeave"
         @click="toggleVideoClick"
-        :class="{ 'clicked-class': videoClicked }"
       >
         Your browser does not support the video tag.
       </video>
@@ -110,6 +117,7 @@
   button {
     padding-bottom: 0.8rem;
     font-size: 1.5rem;
+    color: var(--color--primary);
   }
 
   .thin {
@@ -120,6 +128,23 @@
     width: 21rem;
     height: 13.6rem;
     transform: rotate(0deg);
+  }
+
+  .dissolve {
+    right: 1.2rem;
+    bottom: 1.2rem;
+    opacity: 0;
+    filter: blur(6px);
+    transform: translateX(-12rem) translateY(600vh) scaleX(0.35) scaleY(2.25) !important;
+    transform-origin: top right;
+    transition: opacity 700ms ease 100ms, filter 500ms ease,
+      transform 600ms cubic-bezier(0.8, 0, 0.16, 1);
+    pointer-events: none;
+    figure.video {
+      width: 64rem !important;
+      height: 40rem !important;
+      transform: rotate(0deg) !important;
+    }
   }
 </style>
 
@@ -147,7 +172,7 @@
     }, 100)
   }
 
-  // Functions related to video hover events
+  // Video controls visibility functions
   const videoMouseEnter = () => {
     hoverTimeoutId = setTimeout(() => {
       showControls.value = true
@@ -163,5 +188,14 @@
 
   const toggleVideoClick = () => {
     videoClicked.value = !videoClicked.value
+  }
+
+  const containerRef = ref(null)
+  const videoRef = ref(null)
+  const addDissolveClass = () => {
+    containerRef.value.classList.add("dissolve")
+    if (videoRef.value) {
+      videoRef.value.pause()
+    }
   }
 </script>
