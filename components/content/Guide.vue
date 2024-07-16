@@ -3,7 +3,7 @@
     ref="containerRef"
     class="container"
     :class="{ 'at-bottom': isAtBottom }"
-    @mouseover="handleMouseEnter"
+    @mouseenter="handleMouseEnter"
     @mouseleave="handleMouseLeave"
   >
     <header
