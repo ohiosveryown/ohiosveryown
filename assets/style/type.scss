@@ -49,7 +49,7 @@ h1 {
   @include sans;
   font-size: clamp(1rem, -0.875rem + 12vw, 6rem);
   font-weight: 360;
-  letter-spacing: -0.5px;
+  letter-spacing: -0.64px;
   line-height: 114%;
 }
 
@@ -70,6 +70,7 @@ h4 {
   @include sans;
   font-size: clamp(2.4rem, 2.1vw, 3rem);
   font-weight: 450;
+  letter-spacing: -0.5px;
   line-height: 120%;
 }
 
