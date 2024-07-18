@@ -67,8 +67,8 @@
     right: 1.2rem;
     bottom: 1.2rem;
     border-radius: 18px;
-    border: 1px solid rgba(0, 0, 0, 0.08);
-    width: 36rem;
+    border: 0.5px solid rgba(255, 255, 255, 0.04);
+    width: 38rem;
     padding: 0.8rem;
     height: auto;
     color: #fff;
@@ -96,8 +96,9 @@
   }
 
   menu:hover video {
+    transform: translateY(0);
     opacity: 1;
-    transition: opacity 500ms ease 200ms;
+    transition: all 500ms ease 200ms;
   }
 
   menu:hover .thumbnail--cover {
@@ -111,14 +112,16 @@
   menu:hover section .title,
   menu:hover section .description {
     opacity: 1;
+    transform: translateY(0);
   }
 
   video {
     border-radius: 10px;
     border: 1px solid rgba(255, 255, 255, 0.12);
-    box-shadow: var(--shadow--md);
-    opacity: 0;
-    transition: opacity 200ms ease 600ms;
+    box-shadow: var(--shadow--lg);
+    opacity: 1;
+    transform: translateY(4rem);
+    transition: all 200ms ease 600ms;
     will-change: opacity;
     overflow: hidden;
   }
@@ -139,7 +142,8 @@
     -webkit-backdrop-filter: blur(5px);
     backdrop-filter: blur(5px);
     opacity: 0;
-    transition: opacity 500ms ease 350ms;
+    transform: translateY(4rem);
+    transition: all 500ms ease 350ms;
     will-change: opacity;
   }
 
@@ -151,7 +155,8 @@
     -webkit-backdrop-filter: blur(5px);
     backdrop-filter: blur(5px);
     opacity: 0;
-    transition: opacity 500ms ease 450ms;
+    transform: translateY(4rem);
+    transition: all 500ms ease 450ms;
     will-change: opacity;
   }
 
