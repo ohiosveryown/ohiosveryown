@@ -1,6 +1,6 @@
 <template>
   <div
-    ref="container"
+    ref="containerBtnSecondary"
     class="container"
   >
     <button
@@ -134,7 +134,7 @@
     },
   ]
 
-  const container = ref("")
+  const containerBtnSecondary = ref("")
   const skill = ref("")
   const label = ref("")
   const tracking = ref(false)
@@ -145,7 +145,7 @@
 
   const moveLabel = (e) => {
     if (tracking.value) {
-      const rect = container.value.getBoundingClientRect()
+      const rect = containerBtnSecondary.value.getBoundingClientRect()
       const x = e.clientX - rect.left
       const y = e.clientY - rect.top
       label.value.style.transform = `translate(${x + 18}px, ${y + 10}px)`
@@ -154,11 +154,11 @@
 
   onMounted(() => {
     randomSkill()
-    container.value.addEventListener("pointermove", moveLabel)
-    container.value.addEventListener("pointerenter", () => {
+    containerBtnSecondary.value.addEventListener("pointermove", moveLabel)
+    containerBtnSecondary.value.addEventListener("pointerenter", () => {
       tracking.value = true
     })
-    container.value.addEventListener("pointerleave", () => {
+    containerBtnSecondary.value.addEventListener("pointerleave", () => {
       tracking.value = false
     })
   })

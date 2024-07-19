@@ -97,6 +97,10 @@
     }
   }
 
+  figcaption {
+    pointer-events: none;
+  }
+
   .label {
     position: absolute;
     top: -3.8rem;

@@ -124,13 +124,19 @@
 
   .name:after {
     @include breakpoint(lg) {
-      content: "☼";
+      content: "";
       position: absolute;
-      top: 0rem;
-      left: -3.2rem;
+      top: -0.1rem;
+      left: -4rem;
+      width: 3rem;
+      height: 2.7rem;
       font-size: 2.2rem;
       color: var(--color--secondary);
+      background: url("https://res.cloudinary.com/dn1q8h2ga/image/upload/v1721428544/ovo-3.7/index/folder--open-1_3x_tdyccd.webp")
+        no-repeat center center;
+      background-size: cover;
       opacity: 0;
+      pointer-events: none;
     }
   }
 

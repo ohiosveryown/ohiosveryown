@@ -4,7 +4,7 @@
     ref="container"
   >
     <NuxtLink :to="`${randomPost}`">
-      <div
+      <button
         class="button"
         @mouseenter="showing = true"
         @mouseleave="showing = false"
@@ -12,7 +12,7 @@
         <span class="sheen" />
         <span class="bg" />
         {{ buttonLabel }}
-      </div>
+      </button>
 
       <small
         ref="label"
@@ -21,6 +21,24 @@
       >
         Algorithms shape your destiny
       </small>
+
+      <img
+        class="folder"
+        src="https://res.cloudinary.com/dn1q8h2ga/image/upload/v1721428780/ovo-3.7/index/folder_3x_sbimem.webp"
+        alt="folder closed icon"
+      /><img
+        class="folder"
+        src="https://res.cloudinary.com/dn1q8h2ga/image/upload/v1721429356/ovo-3.7/index/folder--open-2_3x_rkqm5b.webp"
+        alt="folder open with image icon"
+      /><img
+        class="folder"
+        src="https://res.cloudinary.com/dn1q8h2ga/image/upload/v1721428550/ovo-3.7/index/folder--open-3_3x_smzosn.webp"
+        alt="folder open with images icon"
+      /><img
+        class="folder"
+        src="https://res.cloudinary.com/dn1q8h2ga/image/upload/v1721428780/ovo-3.7/index/folder_3x_sbimem.webp"
+        alt="folder closed icon"
+      />
     </NuxtLink>
   </div>
 </template>
@@ -98,7 +116,69 @@
   }
 
   .label {
+    z-index: var(--z1);
     width: max-content;
+  }
+
+  .folder {
+    position: absolute;
+    z-index: var(--z0);
+    inset: 0;
+    margin: auto;
+    width: 4.8rem;
+    height: auto;
+    opacity: 0;
+    pointer-events: none;
+    // transform: translate(0) scale(0.5);
+    transition: opacity 200ms ease, transform 1ms ease 200ms;
+    will-change: transform, opacity;
+    filter: drop-shadow(0 6px 4px rgba(0, 0, 0, 0.05))
+      drop-shadow(0 19px 16px rgba(0, 0, 0, 0.07))
+      drop-shadow(0 84px 68px rgba(0, 0, 0, 0.12));
+  }
+
+  .folder:nth-of-type(1) {
+    transform: translate(-6rem, -2.2rem) rotate(0) scale(0.5);
+  }
+
+  .button:hover ~ .folder:nth-of-type(1) {
+    opacity: 1;
+    transform: translate(-8rem, -3.6rem) rotate(-15deg);
+    transition: opacity 400ms ease 150ms,
+      transform 600ms cubic-bezier(0.8, 0, 0.16, 1);
+  }
+
+  .folder:nth-of-type(2) {
+    transform: translate(4rem, -1.8rem) rotate(0) scale(0.5);
+  }
+
+  .button:hover ~ .folder:nth-of-type(2) {
+    opacity: 1;
+    transform: translate(7.2rem, -3.6rem) rotate(24deg) scale(0.76);
+    transition: opacity 400ms ease 250ms,
+      transform 600ms cubic-bezier(0.8, 0, 0.16, 1);
+  }
+
+  .folder:nth-of-type(3) {
+    transform: translate(-3.2rem, 2.4rem) rotate(0) scale(0.5);
+  }
+
+  .button:hover ~ .folder:nth-of-type(3) {
+    opacity: 1;
+    transform: translate(-5.6rem, 4.8rem) rotate(16deg) scale(0.92);
+    transition: opacity 400ms ease 200ms,
+      transform 600ms cubic-bezier(0.8, 0, 0.16, 1);
+  }
+
+  .folder:nth-of-type(4) {
+    transform: translate(3.6rem, 2.6rem) rotate(0) scale(0.5);
+  }
+
+  .button:hover ~ .folder:nth-of-type(4) {
+    opacity: 1;
+    transform: translate(5.6rem, 4.4rem) rotate(-10deg) scale(0.8);
+    transition: opacity 400ms ease 300ms,
+      transform 600ms cubic-bezier(0.8, 0, 0.16, 1);
   }
 </style>
 
