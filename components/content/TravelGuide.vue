@@ -82,7 +82,6 @@
     background-size: 110%;
     box-shadow: var(--shadow--md);
     transition: background-size 700ms ease;
-    transition: all var(--ease--qubic);
     overflow: hidden;
   }
 
@@ -90,7 +89,8 @@
     border-radius: 10px;
     border: 1px solid rgba(255, 255, 255, 0.12);
     box-shadow: var(--shadow--lg);
-    opacity: 1;
+    transform: translateY(4rem);
+    transition: all 500ms ease 350ms;
     will-change: opacity;
     overflow: hidden;
   }
@@ -100,12 +100,19 @@
     display: grid;
     grid-template-rows: 0fr;
     overflow: hidden;
+    transition: all var(--ease--qubic);
   }
 
   .header--container,
   .section--container,
   .footer--container {
     min-height: 0;
+  }
+
+  // header styles
+  .header--content {
+    transform: translateY(4rem);
+    transition: all 200ms ease 600ms;
   }
 
   // section styles
@@ -200,36 +207,47 @@
   }
 
   // hover styles
-  menu:hover {
-    background: linear-gradient(rgba(0, 0, 0, 0.1) 76%, rgba(0, 0, 0, 0.9)) 6%,
-      url("https://res.cloudinary.com/dn1q8h2ga/image/upload/v1721321971/ovo-3.7/global/guide-bg-1_3x_mddlit.webp")
-        no-repeat center center;
-    background-size: 120%;
-  }
+  // menu:hover {
+  //   background: linear-gradient(rgba(0, 0, 0, 0.1) 76%, rgba(0, 0, 0, 0.9)) 6%,
+  //     url("https://res.cloudinary.com/dn1q8h2ga/image/upload/v1721321971/ovo-3.7/global/guide-bg-1_3x_mddlit.webp")
+  //       no-repeat center center;
+  //   background-size: 120%;
+  // }
 
   menu:hover header,
   menu:hover section {
     grid-template-rows: 1fr;
   }
 
-  menu:hover header,
+  menu:hover video {
+    opacity: 1;
+    transform: translateY(0);
+    transition: transform 500ms ease 200ms, opacity 500ms ease 300ms;
+  }
+
   menu:hover .section--title,
   menu:hover .section--description {
     opacity: 1;
     transform: translateY(0);
   }
 
+  menu.hover .header--content {
+    // transform: translateY(0);
+    opacity: 1;
+    transition: all 500ms ease 200ms;
+  }
+
   menu:hover .footer--article {
     transform: translateX(0.4rem);
   }
 
-  menu:hover .footer--thumbnail-cover {
-    transform: rotate(-15deg) translateX(-0.25rem);
-  }
+  // menu:hover .footer--thumbnail-cover {
+  //   transform: rotate(-15deg) translateX(-0.25rem);
+  // }
 
-  menu:hover .footer--thumbnail-interior {
-    transform: rotate(15deg) translateX(-0.5rem);
-  }
+  // menu:hover .footer--thumbnail-interior {
+  //   transform: rotate(15deg) translateX(-0.5rem);
+  // }
 </style>
 
 <script setup></script>
