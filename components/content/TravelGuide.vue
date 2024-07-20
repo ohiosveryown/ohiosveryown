@@ -1,5 +1,16 @@
 <template>
-  <menu ref="menuRef">
+  <menu
+    ref="menuRef"
+    v-if="showMenu"
+  >
+    <button
+      ref="buttonRef"
+      class="dismiss thin"
+      @click="dismissPlayer"
+    >
+      Dismiss
+    </button>
+
     <header ref="headerRef">
       <div class="collapsable">
         <video
@@ -83,6 +94,21 @@
     box-shadow: 0 100px 80px 0 rgba(0, 0, 0, 0.08),
       0 22px 16px 0 rgba(0, 0, 0, 0.06), 0 8px 5px 0 rgba(0, 0, 0, 0.05);
     transition: all var(--ease--qubic);
+  }
+
+  button.dismiss {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin-top: -3.6rem;
+    width: 100%;
+    padding: 1.2rem 2rem;
+    text-align: right;
+    font-size: 1.6rem;
+    color: var(--color--primary);
+    opacity: 0;
+    transform: translateY(2rem);
+    will-change: opacity, transform;
   }
 
   header,
@@ -217,6 +243,12 @@
     }
   }
 
+  menu:hover .dismiss {
+    transform: translateY(0);
+    opacity: 1;
+    transition: transform 400ms ease 600ms, opacity 400ms ease 600ms;
+  }
+
   menu:hover video {
     opacity: 1;
     transform: translateY(0) scale(1);
@@ -263,14 +295,24 @@
   *:hover .collapsed {
     grid-template-rows: 0fr !important;
   }
+
+  // dismiss styles
+  .dismiss-player {
+    filter: blur(6px);
+    transform: translateY(175vh) scaleX(0.45) scaleY(4.5);
+    transition: opacity 700ms ease 100ms, filter 500ms ease,
+      transform 600ms cubic-bezier(0.8, 0, 0.16, 1);
+  }
 </style>
 
 <script setup>
   const menuRef = ref(null)
+  const buttonRef = ref(null)
   const headerRef = ref(null)
   const videoRef = ref(null)
   const sectionRef = ref(null)
   const footerRef = ref(null)
+  const showMenu = ref(true)
 
   const state = reactive({
     isPlaying: false,
@@ -284,6 +326,16 @@
     footerRef.value.classList.add("collapsed")
     videoRef.value.classList.add("mini-player")
     console.log("video clicked")
+  }
+
+  const dismissPlayer = () => {
+    menuRef.value.classList.add("dismiss-player")
+    setTimeout(() => {
+      if (videoRef.value) {
+        videoRef.value.remove()
+        showMenu.value = false
+      }
+    }, 400)
   }
 
   onMounted(() => {
