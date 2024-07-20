@@ -136,6 +136,11 @@
     transition: transform 1ms ease 700ms, opacity 500ms ease;
   }
 
+  // video {
+  //   transform: translateY(3.2rem) scaleY(0);
+  //   transform-origin: bottom;
+  // }
+
   .padding {
     padding: 32px;
   }
