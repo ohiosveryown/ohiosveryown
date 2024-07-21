@@ -15,10 +15,10 @@
           <video
             v-show="!isReducedMotion"
             :poster="post.poster"
-            autoplay="autoplay"
-            playsinline=""
-            loop="loop"
-            muted="muted"
+            autoplay
+            playsinline
+            muted
+            loop
           >
             <source :src="post.video" />
           </video>
