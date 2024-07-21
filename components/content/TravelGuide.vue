@@ -81,8 +81,8 @@
   // default
   menu {
     position: fixed;
-    bottom: 12px;
-    right: 12px;
+    bottom: 1.2rem;
+    right: 1.2rem;
     margin: 0;
     border-radius: 21px;
     padding: 0.8rem;
@@ -134,6 +134,7 @@
   video {
     border-radius: 13px;
     border: 1px solid rgba(255, 255, 255, 0.12);
+    background: #000;
     box-shadow: var(--shadow--sm);
     opacity: 0;
     transform: translateY(6.4rem) scale(1);
@@ -276,7 +277,7 @@
 
   // onPlay styles
   .mini-player:hover {
-    width: 62rem;
+    width: 70rem;
   }
 
   .mini-player video {
@@ -313,7 +314,6 @@
   const sectionRef = ref(null)
   const footerRef = ref(null)
   const showMenu = ref(true)
-
   const state = reactive({
     isPlaying: false,
   })
@@ -325,7 +325,6 @@
     sectionRef.value.classList.add("collapsed")
     footerRef.value.classList.add("collapsed")
     videoRef.value.classList.add("mini-player")
-    console.log("video clicked")
   }
 
   const dismissPlayer = () => {

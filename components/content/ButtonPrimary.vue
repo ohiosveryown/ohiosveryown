@@ -69,7 +69,7 @@
     .bg {
       opacity: 1;
       transform: scale(2);
-      transition: opacity 300ms ease, transform 18s ease;
+      transition: opacity 300ms ease, transform 16s ease;
     }
   }
 
@@ -107,7 +107,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: url("https://ik.imagekit.io/ohiosveryown/ovo--3.7/index/button-bg@3x.webp?updatedAt=1715451138367")
+    background: url("https://res.cloudinary.com/dn1q8h2ga/image/upload/v1721581090/ovo-3.7/global/prim-button-bg_2x_invutl.webp")
       no-repeat center center;
     background-size: cover;
     opacity: 0;
