@@ -2,7 +2,6 @@
   <CmdMenu />
   <Navigation />
   <NuxtPage />
-  <!-- <Guide /> -->
   <TravelGuide />
 </template>
 

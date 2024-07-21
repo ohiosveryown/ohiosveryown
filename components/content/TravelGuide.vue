@@ -277,7 +277,7 @@
 
   // onPlay styles
   .mini-player:hover {
-    width: 70rem;
+    width: 65rem;
   }
 
   .mini-player video {

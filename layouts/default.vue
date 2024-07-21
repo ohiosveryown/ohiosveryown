@@ -1,5 +1,4 @@
 <template>
-  <SpeedInsights />
   <main class="view width">
     <slot />
   </main>
@@ -40,7 +39,3 @@
     }
   }
 </style>
-
-<script setup>
-  import { SpeedInsights } from "@vercel/speed-insights/nuxt"
-</script>
