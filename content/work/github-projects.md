@@ -1,13 +1,14 @@
 ---
 key: 4
-title: "ovo – GitHub Projects"
 kicker: "Product strategy, Human interface design"
 name: "GitHub Projects"
 caption: "Flexible project planning for developers – and everyone else."
-date: "2022"
 poster: "https://ik.imagekit.io/ohiosveryown/ovo--3.7/index/covers/poster__ghp3@3x.webp?updatedAt=1716577827769"
-video: "https://res.cloudinary.com/da32ufmnf/video/upload/v1633631810/ovo-3.6/index/mc-core_ph7qd4.mp4"
-background: "linear-gradient(164deg, #4730BB 1%, #7D0863 99%)"
+video: "https://res.cloudinary.com/dn1q8h2ga/video/upload/v1721680537/ovo-3.7/gh-projects/gh-projects_llnfmf.mp4"
+background: "linear-gradient(180deg, #2C1D70 0%, #4B053D 100%)"
+
+url: "https://github.com/features/issues"
+isExternal: true
 ---
 
 ### A general braindump of previous work that focuses on GitHub Projects. In a later date in the near future I'll organize and structure the content, but for now it's a lot of artifacts scattered across Projects.

@@ -7,7 +7,7 @@ caption: "Exploring the challenges in creating an accessible sortable list (drag
 subtitle: "Creating an accessible sortable list (drag-and-drop) for GitHub."
 date: "2023"
 poster: "https://res.cloudinary.com/dn1q8h2ga/image/upload/v1721673338/ovo-3.7/gh-dnd/poster_2x_viczpd.webp"
-video: "https://res.cloudinary.com/dn1q8h2ga/video/upload/v1721678727/ovo-3.7/gh-dnd/gh-dnd-hd_tr6wuv.mp4"
+video: "https://res.cloudinary.com/dn1q8h2ga/video/upload/v1721680768/ovo-3.7/gh-dnd/gh-dnd_oo31jo.mp4"
 background: "linear-gradient(180deg, #24292F 0%, #0C0C0C 100%)"
 ---
 
@@ -50,6 +50,6 @@ In addition, we also began drafted documentation to be included in WCAG as a web
 
 #### Teamwork makes the dream work
 
-④ A huge shoutout to my peers on the team that were invaluable in developing this experience. If you’d like to learn more about the technical implementation, my colleague Kendall [published a post](https://github.blog/2024-07-09-exploring-the-challenges-in-creating-an-accessible-sortable-list-drag-and-drop/) on the GitHub blog (where a lot of this information was referenced from).
+④ A huge shoutout to my peers ([Alexis](https://github.com/alexislucio), [Kendall](https://github.com/kendallgassner), [Hussam](https://github.com/hussam-i-am), and [Aarya](https://github.com/ayy-bc)) on the team that were invaluable in developing this experience. If you’d like to learn more about the technical implementation, my colleague Kendall [published a post](https://github.blog/2024-07-09-exploring-the-challenges-in-creating-an-accessible-sortable-list-drag-and-drop/) on the GitHub blog (where a lot of this information was referenced from).
 
 :ArticleSpacer
