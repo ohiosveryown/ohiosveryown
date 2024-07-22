@@ -71,6 +71,10 @@
     }
   }
 
+  :deep(a) {
+    text-decoration: underline;
+  }
+
   .meta {
     display: flex;
     flex-direction: column;

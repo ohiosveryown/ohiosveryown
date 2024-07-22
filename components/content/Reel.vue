@@ -12,7 +12,6 @@
       controls
       playsinline=""
       loop="loop"
-      muted="true"
       :src="videoSrc"
     ></video>
     <figcaption>{{ caption }}</figcaption>

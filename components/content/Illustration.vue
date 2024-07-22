@@ -74,6 +74,13 @@
     }
   }
 
+  .tight figure {
+    @include breakpoint(lg) {
+      margin: 8.8rem 0 11.2rem;
+      padding: 10rem;
+    }
+  }
+
   figcaption {
     position: absolute;
     bottom: -3.2rem;
