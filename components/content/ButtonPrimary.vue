@@ -75,9 +75,13 @@
 
   @media (prefers-color-scheme: dark) {
     .button:hover {
-      color: var(--color--bg);
       .sheen {
         opacity: 0;
+      }
+      .bg {
+        background: url("https://res.cloudinary.com/dn1q8h2ga/image/upload/v1721610830/ovo-3.7/global/prim-button-bg--night_2x_r1hnfb.webp")
+          no-repeat center center;
+        background-size: cover;
       }
     }
   }

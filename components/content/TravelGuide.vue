@@ -79,6 +79,11 @@
   @import "/assets/style/grid.scss";
 
   // default
+  .show-guide {
+    opacity: 1;
+    transform: translateY(0rem);
+  }
+
   menu {
     position: fixed;
     bottom: 1.2rem;
@@ -88,11 +93,13 @@
     padding: 0.8rem;
     width: 40rem;
     color: #fff;
+    opacity: 0;
     background: url("https://res.cloudinary.com/dn1q8h2ga/image/upload/v1721321971/ovo-3.7/global/guide-bg-1_3x_mddlit.webp")
       no-repeat center center;
     background-size: cover;
     box-shadow: 0 100px 80px 0 rgba(0, 0, 0, 0.08),
       0 22px 16px 0 rgba(0, 0, 0, 0.06), 0 8px 5px 0 rgba(0, 0, 0, 0.05);
+    transform: translateY(8rem);
     transition: all var(--ease--qubic);
   }
 
@@ -139,7 +146,7 @@
     opacity: 0;
     transform: translateY(6.4rem) scale(1);
     transform-origin: top;
-    transition: transform 200ms ease 600ms, opacity 320ms ease 300ms;
+    transition: transform 200ms ease 600ms, opacity 300ms ease 300ms;
     will-change: opacity, transform;
     overflow: hidden;
   }
@@ -254,7 +261,7 @@
     opacity: 1;
     transform: translateY(0) scale(1);
     transform-origin: top;
-    transition: transform 500ms ease 260ms, opacity 300ms ease 200ms;
+    transition: transform 500ms ease 260ms, opacity 300ms ease 300ms;
   }
 
   menu:hover .title {
@@ -304,6 +311,13 @@
     transition: opacity 700ms ease 100ms, filter 500ms ease,
       transform 600ms cubic-bezier(0.8, 0, 0.16, 1);
   }
+
+  // touch styles
+  @media (pointer: coarse) {
+    menu {
+      display: none;
+    }
+  }
 </style>
 
 <script setup>
@@ -317,6 +331,35 @@
   const state = reactive({
     isPlaying: false,
   })
+
+  function throttle(func, limit) {
+    let inThrottle
+    return function () {
+      const args = arguments
+      const context = this
+      if (!inThrottle) {
+        func.apply(context, args)
+        inThrottle = true
+        setTimeout(() => (inThrottle = false), limit)
+      }
+    }
+  }
+
+  const handleScroll = () => {
+    const scrollPosition = window.scrollY
+    const windowHeight =
+      document.documentElement.scrollHeight - window.innerHeight
+    const scrollPercentage = (scrollPosition / windowHeight) * 100
+
+    if (scrollPercentage > 72) {
+      menuRef.value.classList.add("show-guide")
+      console.log("showing")
+    } else {
+      // Consider adding logic to remove the class if needed
+    }
+  }
+
+  const throttledHandleScroll = throttle(handleScroll, 300)
 
   const onPlay = () => {
     state.isPlaying = true
@@ -338,8 +381,13 @@
   }
 
   onMounted(() => {
+    window.addEventListener("scroll", throttledHandleScroll)
     if (videoRef.value) {
       videoRef.value.addEventListener("play", onPlay)
     }
+  })
+
+  onUnmounted(() => {
+    window.removeEventListener("scroll", throttledHandleScroll)
   })
 </script>
