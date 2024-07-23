@@ -323,6 +323,7 @@
 </style>
 
 <script setup>
+  const route = useRoute()
   const menuRef = ref(null)
   const buttonRef = ref(null)
   const headerRef = ref(null)
@@ -346,16 +347,23 @@
       }
     }
   }
-
   const handleScroll = () => {
+    if (!menuRef.value) return
+
     const scrollPosition = window.scrollY
     const windowHeight =
       document.documentElement.scrollHeight - window.innerHeight
     const scrollPercentage = (scrollPosition / windowHeight) * 100
-    scrollPercentage > 72 ? menuRef.value.classList.add("show-guide") : null
+
+    if (
+      scrollPercentage > 72 &&
+      (route.path === "/" || route.path === "/about")
+    ) {
+      menuRef.value.classList.add("show-guide")
+    }
   }
 
-  const throttledHandleScroll = throttle(handleScroll, 300)
+  const throttledHandleScroll = throttle(handleScroll, 500)
 
   const onPlay = () => {
     state.isPlaying = true
