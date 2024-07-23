@@ -226,11 +226,13 @@
   .thumbnail--cover {
     z-index: var(--z1);
     transform: rotate(-10deg);
+    pointer-events: none;
   }
 
   .thumbnail--interior {
     margin-left: -3.2rem;
     transform: rotate(10deg) translateX(-1rem) translateY(0.1rem);
+    pointer-events: none;
   }
 
   .footer-content .icon {
