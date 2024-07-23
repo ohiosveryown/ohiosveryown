@@ -19,7 +19,7 @@
         :class="{ tooltipShowLabel: showing }"
         class="label tooltip--label"
       >
-        Algorithms shape your destiny
+        Let algorithms shape your destiny
       </small>
 
       <img

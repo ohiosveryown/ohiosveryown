@@ -6,7 +6,6 @@ caption: "Flexible project planning for developers – and everyone else."
 poster: "https://ik.imagekit.io/ohiosveryown/ovo--3.7/index/covers/poster__ghp3@3x.webp?updatedAt=1716577827769"
 video: "https://res.cloudinary.com/dn1q8h2ga/video/upload/v1721680537/ovo-3.7/gh-projects/gh-projects_llnfmf.mp4"
 background: "linear-gradient(180deg, #2C1D70 0%, #4B053D 100%)"
-
 url: "https://github.com/features/issues"
 isExternal: true
 ---

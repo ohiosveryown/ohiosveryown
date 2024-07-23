@@ -350,13 +350,7 @@
     const windowHeight =
       document.documentElement.scrollHeight - window.innerHeight
     const scrollPercentage = (scrollPosition / windowHeight) * 100
-
-    if (scrollPercentage > 72) {
-      menuRef.value.classList.add("show-guide")
-      console.log("showing")
-    } else {
-      // Consider adding logic to remove the class if needed
-    }
+    scrollPercentage > 72 ? menuRef.value.classList.add("show-guide") : null
   }
 
   const throttledHandleScroll = throttle(handleScroll, 300)
@@ -373,10 +367,9 @@
   const dismissPlayer = () => {
     menuRef.value.classList.add("dismiss-player")
     setTimeout(() => {
-      if (videoRef.value) {
-        videoRef.value.remove()
-        showMenu.value = false
-      }
+      videoRef.value
+        ? (videoRef.value.remove(), (showMenu.value = false))
+        : null
     }, 400)
   }
 

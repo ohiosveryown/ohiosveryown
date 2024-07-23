@@ -93,7 +93,7 @@
     width: 8px;
     height: 8px;
     background: #4ed70e;
-    filter: drop-shadow(0 3px 4px rgba(29, 167, 34, 0.3));
+    filter: drop-shadow(0 3px 4px rgba(29, 167, 34, 0.5));
   }
 
   svg {
