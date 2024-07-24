@@ -3,6 +3,7 @@ key: 5
 title: "ovo – blush"
 name: "Blush"
 caption: "Capturing the essence of cosmic geometries through a geometric typeface ✨."
+subtitle: "Why is it called grotesque?"
 kicker: "Typeface design"
 date: "2020"
 poster: "https://res.cloudinary.com/da32ufmnf/image/upload/v1597077102/blush/blush-01_2x_ndkg4j.png"
