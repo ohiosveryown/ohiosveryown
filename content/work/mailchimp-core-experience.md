@@ -1,7 +1,7 @@
 ---
 key: 6
 title: "ovo – Mailchimp Core Experience"
-kicker: "Product strategy, Human interface design"
+kicker: "Human interface design, Product strategy"
 name: "Mailchimp Core Experience"
 caption: "Re-architecting the highest revenue journey to help users find and reach the right audience."
 subtitle: "Email is dead; long live email"
