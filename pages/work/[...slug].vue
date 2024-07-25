@@ -27,6 +27,27 @@
         </article>
       </ContentDoc>
     </NuxtLayout>
+
+    <footer>
+      <h4>You also might be interested in:</h4>
+      <ul>
+        <li
+          v-for="post in posts"
+          :key="post._path"
+        >
+          <NuxtLink
+            v-if="!post.url"
+            :to="post._path"
+          >
+            <img
+              :src="post.poster"
+              :alt="post.name"
+            />
+            <p>{{ post.caption }}</p>
+          </NuxtLink>
+        </li>
+      </ul>
+    </footer>
   </div>
 </template>
 
@@ -39,6 +60,67 @@
     @include breakpoint(lg) {
       padding-bottom: 18rem;
     }
+  }
+
+  footer {
+    margin-top: 8rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 6.4rem 2rem;
+    @include breakpoint(md) {
+      padding: 12rem;
+    }
+  }
+
+  footer h4 {
+    font-size: 2.6rem;
+    @include breakpoint(md) {
+      font-size: 3.8rem;
+    }
+  }
+
+  footer ul {
+    padding-top: 0rem;
+    @include breakpoint(md) {
+      padding-top: 2rem;
+    }
+  }
+
+  footer a {
+    display: flex;
+    align-items: center;
+    gap: 1.6rem;
+    margin: 1.6rem 0;
+    text-decoration: none;
+    cursor: inherit;
+    @include breakpoint(md) {
+      gap: 2.4rem;
+      text-decoration: underline;
+    }
+  }
+
+  footer a:hover {
+    text-decoration: none;
+  }
+
+  footer li {
+    display: flex;
+    flex-direction: column;
+  }
+
+  footer p {
+    font-size: 1.7rem;
+    transform: translateY(1rem);
+    @include breakpoint(md) {
+      font-size: 3.2rem;
+    }
+  }
+
+  footer img {
+    border-radius: var(--border-radius--partial);
+    width: 6.4rem;
+    height: 6.4rem;
+    box-shadow: var(--shadow--lg);
+    object-fit: cover;
   }
 
   :deep(h2) {
@@ -84,4 +166,22 @@
       padding: 4.4rem 0 5.6rem;
     }
   }
+
+  @media (prefers-color-scheme: dark) {
+    footer {
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
+    }
+  }
 </style>
+
+<script setup>
+  const route = useRoute()
+  const currentSlug = route.params.slug
+  const currentPostPath = route.path
+
+  const posts = await queryContent("")
+    .sort({ key: 1 })
+    .skip(2)
+    .where({ _path: { $ne: currentPostPath } }) // $ne stands for "not equal"
+    .find()
+</script>
