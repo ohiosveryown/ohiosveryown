@@ -3,10 +3,14 @@
     <NuxtLayout>
       <ContentDoc>
         <template #not-found>
-          <h1>
-            Looks like you've lost your way. Trying heading
-            <NuxtLink to="/">home.</NuxtLink>
-          </h1>
+          <h2 class="tac">
+            Looks like you've lost your way. <br />Trying heading back
+            <NuxtLink
+              class="underline"
+              to="/"
+              >home</NuxtLink
+            >.
+          </h2>
         </template>
       </ContentDoc>
     </NuxtLayout>
