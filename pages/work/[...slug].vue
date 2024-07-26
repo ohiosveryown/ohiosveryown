@@ -173,14 +173,16 @@
   }
 </style>
 
+//
 <script setup>
-  const route = useRoute()
-  const currentSlug = route.params.slug
-  const currentPostPath = route.path
+  //   const route = useRoute()
+  //   const currentSlug = route.params.slug
+  //   const currentPostPath = route.path
 
-  const posts = await queryContent("")
-    .sort({ key: 1 })
-    .skip(2)
-    .where({ _path: { $ne: currentPostPath } }) // $ne stands for "not equal"
-    .find()
+  //   const posts = await queryContent("")
+  //     .sort({ key: 1 })
+  //     .skip(2)
+  //     .where({ _path: { $ne: currentPostPath } }) // $ne stands for "not equal"
+  //     .find()
+  //
 </script>
