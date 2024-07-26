@@ -28,7 +28,7 @@
     position: relative;
     margin: 4rem 0 7.2rem;
     border-radius: var(--border-radius--partial);
-    padding: 2.8rem;
+    padding: 1.8rem;
     @include breakpoint(lg) {
       margin: 8.8rem 0 11.2rem;
       padding: 8rem;
@@ -55,7 +55,7 @@
   }
 
   .crop {
-    padding: 2.8rem 2.8rem 0;
+    padding: 1.8rem 1.8rem 0;
     @include breakpoint(lg) {
       padding: 10rem 10rem 0;
     }

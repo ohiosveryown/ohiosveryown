@@ -51,5 +51,3 @@ In addition, we also began drafted documentation to be included in WCAG as a web
 #### Teamwork makes the dream work
 
 ④ A huge shoutout to my peers ([Alexis](https://github.com/alexislucio), [Kendall](https://github.com/kendallgassner), [Hussam](https://github.com/hussam-i-am), and [Aarya](https://github.com/ayy-bc)) on the team that were invaluable in developing this experience. If you’d like to learn more about the technical implementation, my colleague Kendall [published a post](https://github.blog/2024-07-09-exploring-the-challenges-in-creating-an-accessible-sortable-list-drag-and-drop/) on the GitHub blog (where a lot of this information was referenced from).
-
-:ArticleSpacer
