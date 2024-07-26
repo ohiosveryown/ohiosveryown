@@ -37,7 +37,7 @@
     </NuxtLayout>
 
     <footer>
-      <h4>You also might be interested in:</h4>
+      <h4>↬ You also might be interested in:</h4>
       <ul>
         <li
           v-for="post in posts"

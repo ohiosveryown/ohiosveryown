@@ -7,7 +7,7 @@ caption: "Exploring the challenges in creating an accessible sortable list (drag
 subtitle: "Creating an accessible sortable list (drag-and-drop) for GitHub"
 date: "2023"
 poster: "https://res.cloudinary.com/dn1q8h2ga/image/upload/v1721673338/ovo-3.7/gh-dnd/poster_2x_viczpd.webp"
-video: "https://res.cloudinary.com/dn1q8h2ga/video/upload/v1721678727/ovo-3.7/gh-dnd/gh-dnd-hd_tr6wuv.mp4"
+video: "https://res.cloudinary.com/dn1q8h2ga/video/upload/v1722015849/ovo-3.7/gh-dnd/gh-dnd-01_iyentd.mp4"
 background: "linear-gradient(180deg, #24292F 0%, #0C0C0C 100%)"
 ---
 
@@ -38,7 +38,7 @@ Following that definition, one of the very first challenges we faced involved se
 
 :Reel{ backgroundUrl="https://ik.imagekit.io/ohiosveryown/ovo--3.7/work/backgrounds/field-03.webp?updatedAt=1717347265097" videoSrc="https://res.cloudinary.com/dn1q8h2ga/video/upload/v1721671170/ovo-3.7/gh-dnd/specificity_yufadd.mp4#t=0.1" caption="❻ Peek behing the curtain – async discussion video"}
 
-#### What difference did we make?
+#### ↬ What difference did we make?
 
 ③ At the conclusion of our epic, we designed, developed, and documented our accessible drag and drop package for different product teams to leverage. We also shipped the first implementation of the package as a team in the field settings feature in GitHub projects.
 
@@ -48,6 +48,6 @@ In addition, we also began drafted documentation to be included in WCAG as a web
 
 :Illustration{.tight backgroundUrl="https://ik.imagekit.io/ohiosveryown/ovo--3.7/work/backgrounds/field-02.webp" altText="Decision tree illustration" imgSrc="https://res.cloudinary.com/dn1q8h2ga/image/upload/v1721670510/ovo-3.7/gh-dnd/gh-dnd-04_2x_srvqfg.webp" caption="❽ Package Readme"}
 
-#### Teamwork makes the dream work
+#### ↬ Teamwork makes the dream work
 
 ④ A huge shoutout to my peers ([Alexis](https://github.com/alexislucio), [Kendall](https://github.com/kendallgassner), [Hussam](https://github.com/hussam-i-am), and [Aarya](https://github.com/ayy-bc)) on the team that were invaluable in developing this experience. If you’d like to learn more about the technical implementation, my colleague Kendall [published a post](https://github.blog/2024-07-09-exploring-the-challenges-in-creating-an-accessible-sortable-list-drag-and-drop/) on the GitHub blog (where a lot of this information was referenced from).
