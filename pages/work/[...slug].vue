@@ -1,34 +1,42 @@
 <template>
   <div ref="articleRef">
     <NuxtLayout>
-      <ContentDoc v-slot="{ doc }">
-        <header>
-          <h1>
-            {{ doc.name }}
-          </h1>
-          <h2>
-            {{ doc.subtitle }}
+      <ContentDoc>
+        <template v-slot="{ doc }">
+          <header>
+            <h1>
+              {{ doc.name }}
+            </h1>
+            <h2>
+              {{ doc.subtitle }}
+            </h2>
+
+            <ul class="meta">
+              <li class="sans">
+                <span class="op-6">Contributions:</span>
+                {{ doc.kicker }}
+              </li>
+              <li class="sans">
+                <span class="op-6">Timeline:</span>
+                {{ doc.date }}
+              </li>
+            </ul>
+          </header>
+
+          <article>
+            <ContentRenderer :value="doc" />
+          </article>
+        </template>
+
+        <template #not-found>
+          <h2 class="tac">
+            Looks like you lost your way. <br />Try one of the links below.
           </h2>
-
-          <ul class="meta">
-            <li class="sans">
-              <span class="op-6">Contributions:</span>
-              {{ doc.kicker }}
-            </li>
-            <li class="sans">
-              <span class="op-6">Timeline:</span>
-              {{ doc.date }}
-            </li>
-          </ul>
-        </header>
-
-        <article>
-          <ContentRenderer :value="doc" />
-        </article>
+        </template>
       </ContentDoc>
     </NuxtLayout>
 
-    <!-- <footer>
+    <footer>
       <h4>You also might be interested in:</h4>
       <ul>
         <li
@@ -47,7 +55,7 @@
           </NuxtLink>
         </li>
       </ul>
-    </footer> -->
+    </footer>
   </div>
 </template>
 
@@ -79,6 +87,7 @@
   }
 
   footer ul {
+    padding-top: 0;
     @include breakpoint(md) {
       padding-top: 2rem;
     }
@@ -173,16 +182,14 @@
   }
 </style>
 
-//
 <script setup>
-  //   const route = useRoute()
-  //   const currentSlug = route.params.slug
-  //   const currentPostPath = route.path
+  const route = useRoute()
+  const currentSlug = route.params.slug
+  const currentPostPath = route.path
 
-  //   const posts = await queryContent("")
-  //     .sort({ key: 1 })
-  //     .skip(2)
-  //     .where({ _path: { $ne: currentPostPath } }) // $ne stands for "not equal"
-  //     .find()
-  //
+  const posts = await queryContent("")
+    .sort({ key: 1 })
+    .skip(2)
+    .where({ _path: { $ne: currentPostPath } }) // $ne stands for "not equal"
+    .find()
 </script>
