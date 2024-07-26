@@ -28,7 +28,7 @@
       </ContentDoc>
     </NuxtLayout>
 
-    <footer>
+    <!-- <footer>
       <h4>You also might be interested in:</h4>
       <ul>
         <li
@@ -47,7 +47,7 @@
           </NuxtLink>
         </li>
       </ul>
-    </footer>
+    </footer> -->
   </div>
 </template>
 
