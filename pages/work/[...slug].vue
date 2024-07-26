@@ -79,7 +79,6 @@
   }
 
   footer ul {
-    padding-top: 0;
     @include breakpoint(md) {
       padding-top: 2rem;
     }
