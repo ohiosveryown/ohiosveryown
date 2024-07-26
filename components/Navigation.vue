@@ -45,7 +45,6 @@
     display: flex;
     justify-content: space-between;
     position: sticky;
-    // top: calc(var(--unit) / 2);
     top: var(--unit);
     z-index: var(--zmax);
     margin: var(--unit) auto 0;
@@ -64,7 +63,7 @@
   }
 
   svg {
-    margin-top: -1rem;
+    margin-top: -0.5rem;
     @include breakpoint(lg) {
       margin-top: -0.2rem;
     }
