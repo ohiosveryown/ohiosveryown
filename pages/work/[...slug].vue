@@ -187,14 +187,9 @@
   const currentSlug = route.params.slug
   const currentPostPath = route.path
 
-  // const { data } = await useAsyncData("", () => queryContent("").skip(2).find())
-
-  const posts = useAsyncData(async () => {
-    const { data } = await queryContent("")
-      .sort({ key: 1 })
-      .skip(2)
-      .where({ _path: { $ne: currentPostPath } }) // $ne stands for "not equal"
-      .find()
-    return data
-  })
+  const posts = await queryContent("")
+    .sort({ key: 1 })
+    .skip(2)
+    .where({ _path: { $ne: currentPostPath } })
+    .find()
 </script>
