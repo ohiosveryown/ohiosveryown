@@ -85,67 +85,16 @@
         </article>
       </a>
     </li>
-
-    <li class="scrolling">
-      <article>
-        <h6 class="thin">🤔 looking for something specific</h6>
-        <h4 class="name">Keep scrolling... 🔮</h4>
-        <p class="sans caption">You might find something on your travels...</p>
-      </article>
-    </li>
-
-    <li class="scrolling">
-      <article>
-        <h4 class="name">Almost there...</h4>
-      </article>
-    </li>
-
-    <li class="scrolling-end">
-      <article>
-        <h4 class="name">Check it out over there 👉</h4>
-      </article>
-    </li>
   </ul>
 </template>
 
 <style lang="scss" scoped>
   @import "/assets/style/grid.scss";
 
-  .scrolling {
-    display: none;
-    @include breakpoint(lg) {
-      display: inherit;
-      margin: 200vh 0;
-    }
-  }
-
-  .scrolling-end {
-    display: none;
-    @include breakpoint(lg) {
-      display: inherit;
-    }
-  }
-
-  .scrolling:hover .name {
-    background: none;
-  }
-
-  .scrolling:hover h4:after {
-    display: none;
-  }
-
-  .scrolling-end:hover .name {
-    background: none;
-  }
-
-  .scrolling-end:hover h4:after {
-    display: none;
-  }
-
   ul {
     padding-bottom: 8rem;
     @include breakpoint(lg) {
-      padding: 2rem 0 2.4rem;
+      padding: 2rem 0 12.4rem;
     }
   }
 

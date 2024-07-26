@@ -356,7 +356,7 @@
     const scrollPercentage = (scrollPosition / windowHeight) * 100
 
     if (
-      scrollPercentage > 99 &&
+      scrollPercentage > 90 &&
       (route.path === "/" || route.path === "/about")
     ) {
       menuRef.value.classList.add("show-guide")
