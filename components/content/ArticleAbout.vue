@@ -46,12 +46,52 @@
       </span>
       🥚.
     </p>
+    <hr />
+
+    <button>
+      <a
+        class="cv sans"
+        target="_blank"
+        href="/pence-cv.pdf"
+        >View curriculum vitae</a
+      >
+    </button>
   </article>
 </template>
 
 <style lang="scss" scoped>
   @import "/assets/style/grid.scss";
   @import "/assets/style/type.scss";
+
+  hr {
+    margin: 4rem 0;
+    border: none;
+    height: 1px;
+    background: var(--color--secondary);
+    opacity: 0.24;
+  }
+
+  button {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    position: relative;
+    border-radius: var(--border-radius--full);
+    padding: 1.2rem 1.6rem;
+    font-size: 1.5rem;
+    font-weight: 500;
+    letter-spacing: 0.15px;
+    line-height: 1;
+    color: var(--color--primay);
+    background: var(--color--tertiary);
+    cursor: inherit;
+    overflow: hidden;
+    transition: background 200ms ease;
+  }
+
+  button:hover {
+    background: var(--color--tertiary);
+  }
 
   .container {
     padding-bottom: 6.4rem;

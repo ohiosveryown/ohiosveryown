@@ -101,6 +101,10 @@
     box-shadow: var(--shadow--md);
   }
 
+  .no-shadow img {
+    box-shadow: none;
+  }
+
   .crop figure {
     padding: 1.8rem 2rem 0;
     @include breakpoint(lg) {

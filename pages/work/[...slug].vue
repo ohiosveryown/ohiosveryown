@@ -37,7 +37,7 @@
     </NuxtLayout>
 
     <footer>
-      <h4>↬ You also might be interested in:</h4>
+      <h4>↬ You may also be interested in:</h4>
       <ul>
         <li
           v-for="post in posts"
@@ -190,6 +190,7 @@
   const posts = await queryContent("")
     .sort({ key: 1 })
     .skip(2)
+    .limit(5)
     .where({ _path: { $ne: currentPostPath } })
     .find()
 </script>

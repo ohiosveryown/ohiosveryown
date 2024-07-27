@@ -1,7 +1,7 @@
 ---
 key: 7
 title: "ovo – Mailchimp experience vision"
-kicker: "Design Engineering, Service design, Strategy"
+kicker: "Design engineering, Service design, Strategy"
 name: "Mailchimp Experience Vision"
 caption: "Designing end-to-end experiences across domains; bolstering Mailchimp's strategic direction."
 subtitle: "Core journeys, end-to-end experiences, and more buzzwords"
