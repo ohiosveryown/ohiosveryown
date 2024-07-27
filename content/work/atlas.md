@@ -6,7 +6,7 @@ name: "Atlas"
 caption: "Designing 0 → 1 in the customer experience space. Shipping fast without comprimising quality."
 subtitle: "Designing a platfrom to give customers superhuman support"
 date: "2022 – 2023"
-poster: "https://res.cloudinary.com/dn1q8h2ga/image/upload/v1722091814/ovo-3.7/atlas/IMG_3375_m5nqex.webp"
+poster: "https://res.cloudinary.com/dn1q8h2ga/image/upload/v1722103982/ovo-3.7/atlas/IMG_3375_eubdg9.webp"
 video: "https://res.cloudinary.com/dn1q8h2ga/video/upload/v1722092737/ovo-3.7/atlas/hero-scroll-speed_frdmrc.mp4"
 background: "linear-gradient(180deg, #24292F 0%, #0C0C0C 100%)"
 ---
