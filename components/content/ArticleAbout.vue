@@ -53,7 +53,7 @@
         class="cv sans"
         target="_blank"
         href="/pence-cv.pdf"
-        >View curriculum vitae</a
+        >Curriculum vitae</a
       >
     </button>
   </article>
@@ -77,7 +77,7 @@
     gap: 5px;
     position: relative;
     border-radius: var(--border-radius--full);
-    padding: 1.2rem 1.6rem;
+    padding: 1.6rem 2rem;
     font-size: 1.5rem;
     font-weight: 500;
     letter-spacing: 0.15px;

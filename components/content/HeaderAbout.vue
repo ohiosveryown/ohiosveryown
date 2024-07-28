@@ -1,6 +1,6 @@
 <template>
   <header class="container">
-    <h1>Travel guide.</h1>
+    <h1>About me</h1>
     <h2>
       👋 can be sent to:
       <Tooltip
