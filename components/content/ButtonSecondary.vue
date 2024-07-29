@@ -38,7 +38,7 @@
       class="tooltip--thumbnail"
       :class="{ tooltipShowImg: showing }"
       :src="skill.bg"
-      :alt="skill.label"
+      :alt="skill.tooltipLabel"
     />
 
     <small
