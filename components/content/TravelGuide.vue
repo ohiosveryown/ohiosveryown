@@ -85,6 +85,15 @@
   }
 
   menu {
+    // hide menu until video is recorded //
+    //
+    //
+    //
+    display: none;
+    //
+    //
+    //
+    // hide menu until video is recorded //
     position: fixed;
     bottom: 1.2rem;
     right: 1.2rem;

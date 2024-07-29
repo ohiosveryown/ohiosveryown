@@ -53,7 +53,6 @@
     }
 
     figure:nth-of-type(2) {
-      margin-top: 0;
       @include breakpoint(lg) {
         margin-top: 8.8rem;
       }
@@ -65,7 +64,7 @@
     place-items: center;
     flex: 1;
     position: relative;
-    margin: 4rem 0 7.2rem;
+    margin: 3.2rem 0 6.4rem;
     border-radius: var(--border-radius--partial);
     padding: 1.8rem;
     @include breakpoint(lg) {
@@ -79,6 +78,10 @@
       margin: 8.8rem 0 11.2rem;
       padding: 10rem;
     }
+  }
+
+  .no-padding figure {
+    padding: 0;
   }
 
   figcaption {

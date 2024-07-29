@@ -30,12 +30,14 @@
     position: fixed;
     inset: 0;
     z-index: var(--zmax);
+    max-width: 90vw;
     border-radius: 29px;
     border: 0.5px solid rgba(0, 0, 0, 0.08);
     padding: 0.9rem;
     background: rgba(0, 0, 0, 0.04);
     color: var(--color--primary);
     backdrop-filter: blur(16px);
+    overflow-x: scroll;
     box-shadow: 0 92px 88px 0 rgba(0, 0, 0, 0.05),
       0 20px 20px 0 rgba(0, 0, 0, 0.03), 0 6px 6px 0 rgba(0, 0, 0, 0.02);
     @media (prefers-color-scheme: dark) {
@@ -114,7 +116,12 @@
 <script setup>
   const dialog = ref(null)
   const route = useRoute()
-  const posts = await queryContent("").sort({ key: 1 }).find()
+  const currentSlug = route.params.slug
+  const currentPostPath = route.path
+  const posts = await queryContent("")
+    .sort({ key: 1 })
+    .where({ name: { $ne: "000" } })
+    .find()
 
   const clickHandler = (event) => {
     if (

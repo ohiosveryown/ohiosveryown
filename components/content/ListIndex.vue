@@ -161,7 +161,7 @@
     opacity: 0;
     pointer-events: none;
     transition: opacity 400ms ease 200ms;
-    @include breakpoint(md) {
+    @include breakpoint(lg) {
       display: flex;
     }
   }

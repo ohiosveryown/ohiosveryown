@@ -151,6 +151,12 @@
     line-height: 112%;
   }
 
+  :deep(h4 span) {
+    @include thin;
+    margin-left: 0.6rem;
+    font-size: 2.2rem;
+  }
+
   :deep(p) {
     @include thin;
     font-size: 2.6rem;
