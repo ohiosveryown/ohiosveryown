@@ -48,14 +48,13 @@
     </p>
     <hr />
 
-    <button>
-      <a
-        class="cv sans"
-        target="_blank"
-        href="/pence-cv.pdf"
-        >Curriculum vitae</a
-      >
-    </button>
+    <a
+      class="cv sans"
+      target="_blank"
+      href="/pence-cv.pdf"
+    >
+      <button>Curriculum vitae</button>
+    </a>
   </article>
 </template>
 

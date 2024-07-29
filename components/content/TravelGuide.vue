@@ -18,7 +18,7 @@
           ref="videoRef"
           playsinline
           controls
-          src="https://ik.imagekit.io/ohiosveryown/ovo--3.7/about/os.mp4"
+          src="https://res.cloudinary.com/dn1q8h2ga/video/upload/v1722278376/ovo-3.7/global/guide-intro-sm_xujrcn.mp4"
           @play="onPlay"
         />
       </div>
@@ -89,7 +89,7 @@
     //
     //
     //
-    display: none;
+    // display: none;
     //
     //
     //
