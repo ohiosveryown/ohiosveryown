@@ -103,7 +103,7 @@
     width: 40rem;
     color: #fff;
     opacity: 0;
-    background: url("https://res.cloudinary.com/dn1q8h2ga/image/upload/v1722280794/ovo-3.7/global/guide-bg-0_3x_eole5p.png")
+    background: url("https://res.cloudinary.com/dn1q8h2ga/image/upload/v1722283127/ovo-3.7/global/guide-bg-03_3x_ldaado.webp")
       no-repeat center center;
     // background: url("https://res.cloudinary.com/dn1q8h2ga/image/upload/v1722280045/ovo-3.7/global/tg-bg-02_2x_riwsd5.webp")
     //   no-repeat top center;

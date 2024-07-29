@@ -3,6 +3,7 @@
     <NuxtLink
       class="home"
       to="/"
+      aria-label="Home page"
     >
       <svg
         width="20"

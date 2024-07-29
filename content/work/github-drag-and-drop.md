@@ -6,7 +6,7 @@ name: "Accessible drag and drop"
 caption: "Exploring the challenges in creating an accessible sortable list (drag-and-drop) for GitHub."
 subtitle: "Creating an accessible sortable list (drag-and-drop) for GitHub"
 date: "2023"
-poster: "https://res.cloudinary.com/dn1q8h2ga/image/upload/v1721673338/ovo-3.7/gh-dnd/poster_2x_viczpd.webp"
+poster: "https://res.cloudinary.com/dn1q8h2ga/image/upload/v1722284202/ovo-3.7/gh-dnd/poster_2x_y0zlzs.webp"
 video: "https://res.cloudinary.com/dn1q8h2ga/video/upload/v1722015849/ovo-3.7/gh-dnd/gh-dnd-01_iyentd.mp4"
 background: "linear-gradient(180deg, #24292F 0%, #0C0C0C 100%)"
 ---

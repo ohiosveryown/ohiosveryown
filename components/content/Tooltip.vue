@@ -4,13 +4,23 @@
     class="container"
   >
     <figure>
-      <img
+      <!-- <img
         v-if="img"
         class="tooltip--thumbnail"
         :class="{ tooltipShowImg: showing }"
         :src="img"
         :alt="alt"
+      /> -->
+
+      <NuxtImg
+        v-if="img"
+        loading="lazy"
+        class="tooltip--thumbnail"
+        :class="{ tooltipShowImg: showing }"
+        :src="img"
+        :alt="alt"
       />
+
       <figcaption
         @mouseenter="showing = true"
         @mouseleave="showing = false"

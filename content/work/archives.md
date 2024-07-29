@@ -75,7 +75,7 @@ background: "linear-gradient(180deg, #24292F 0%, #0C0C0C 100%)"
 
 ③ “Here men from the planet Earth first set foot upon the Moon July 1969, A.D. We came in peace for all mankind.” I remember the first time I really became cognizant of the design of a typeface: it was when I saw the Lunar Plaque that accompanied Apollo 11 to the moon. The font used was Futura. While I never formally studied type design, creating a typeface has been something I've wanted to do for awhile now. The current design for Blush is still a work in progress. I’m refining the book weight and concurrently working on medium and bold weights.
 
-:Illustration{.tight backgroundUrl="https://res.cloudinary.com/dn1q8h2ga/image/upload/v1722272948/ovo-3.7/misc/blush/bg3_2x_yos8hc.webp" altText="Nameplate" imgSrc="https://res.cloudinary.com/dn1q8h2ga/image/upload/v1722273216/ovo-3.7/misc/blush/plate_2x_qvs3g3.png" caption="● Nameplate"}
+:Illustration{.tight backgroundUrl="https://res.cloudinary.com/dn1q8h2ga/image/upload/v1722272948/ovo-3.7/misc/blush/bg3_2x_yos8hc.webp" altText="Nameplate" imgSrc="https://res.cloudinary.com/dn1q8h2ga/image/upload/v1722283807/ovo-3.7/misc/blush/plate_2x_dmefxk.webp" caption="● Nameplate"}
 
 :Illustration{.no-padding backgroundUrl="#1E1E1E" altText="GQ gylphs" imgSrc="https://res.cloudinary.com/dn1q8h2ga/image/upload/v1722273514/ovo-3.7/misc/blush/gq_cts9xj.webp" caption="● GQ gylphs" imgSrcSecondary="https://res.cloudinary.com/dn1q8h2ga/image/upload/v1722273513/ovo-3.7/misc/blush/fi_jmrawc.webp" altTextSecondary="project card" captionSecondary="● Ligature"}
 
