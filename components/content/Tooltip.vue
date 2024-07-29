@@ -6,7 +6,6 @@
     <figure>
       <NuxtImg
         v-if="img"
-        loading="lazy"
         class="tooltip--thumbnail"
         :class="{ tooltipShowImg: showing }"
         :src="img"

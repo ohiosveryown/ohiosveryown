@@ -23,28 +23,24 @@
       </small>
 
       <NuxtImg
-        loading="lazy"
         class="folder"
         src="https://res.cloudinary.com/dn1q8h2ga/image/upload/v1721428780/ovo-3.7/index/folder_3x_sbimem.webp"
         alt="folder closed icon"
       />
 
       <NuxtImg
-        loading="lazy"
         class="folder"
         src="https://res.cloudinary.com/dn1q8h2ga/image/upload/v1721429356/ovo-3.7/index/folder--open-2_3x_rkqm5b.webp"
         alt="folder open with image icon"
       />
 
       <NuxtImg
-        loading="lazy"
         class="folder"
         src="https://res.cloudinary.com/dn1q8h2ga/image/upload/v1721428550/ovo-3.7/index/folder--open-3_3x_smzosn.webp"
         alt="folder open with images icon"
       />
 
       <NuxtImg
-        loading="lazy"
         class="folder"
         src="https://res.cloudinary.com/dn1q8h2ga/image/upload/v1721428780/ovo-3.7/index/folder_3x_sbimem.webp"
         alt="folder closed icon"
