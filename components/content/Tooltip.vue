@@ -4,14 +4,6 @@
     class="container"
   >
     <figure>
-      <!-- <img
-        v-if="img"
-        class="tooltip--thumbnail"
-        :class="{ tooltipShowImg: showing }"
-        :src="img"
-        :alt="alt"
-      /> -->
-
       <NuxtImg
         v-if="img"
         loading="lazy"

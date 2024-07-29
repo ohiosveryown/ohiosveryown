@@ -20,7 +20,7 @@
       living in always peachy,
       <Tooltip
         trigger="Atlanta, Ga"
-        img="https://ik.imagekit.io/ohiosveryown/ovo--3.7/index/atlanta@3x.webp"
+        img="https://res.cloudinary.com/dn1q8h2ga/image/upload/v1722282588/ovo-3.7/global/atlanta_3x_owytvw.webp"
         alt="Atlanta illustration"
         tooltipLabel="The city in a forest"
       />

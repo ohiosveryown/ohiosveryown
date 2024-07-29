@@ -109,27 +109,27 @@
   const showing = ref(false)
   const skills = [
     {
-      bg: "https://ik.imagekit.io/ohiosveryown/ovo--3.7/index/skills/shade.webp",
+      bg: "https://res.cloudinary.com/dn1q8h2ga/image/upload/v1722286749/ovo-3.7/skills/shade_pl6hcw.webp",
       tooltipLabel: "GLSL",
     },
     {
-      bg: "https://ik.imagekit.io/ohiosveryown/ovo--3.7/index/skills/design-systems.webp",
+      bg: "https://res.cloudinary.com/dn1q8h2ga/image/upload/v1722286740/ovo-3.7/skills/design-systems_wlwn7l.webp",
       tooltipLabel: "Design systems",
     },
     {
-      bg: "https://ik.imagekit.io/ohiosveryown/ovo--3.7/index/skills/machine-learning.webp",
+      bg: "https://res.cloudinary.com/dn1q8h2ga/image/upload/v1722286746/ovo-3.7/skills/machine-learning_xtcsod.webp",
       tooltipLabel: "Machine learning",
     },
     {
-      bg: "https://ik.imagekit.io/ohiosveryown/ovo--3.7/index/skills/chairmaking.webp",
+      bg: "https://res.cloudinary.com/dn1q8h2ga/image/upload/v1722286736/ovo-3.7/skills/chairmaking_qlkr2n.webp",
       tooltipLabel: "Chairmaking",
     },
     {
-      bg: "https://ik.imagekit.io/ohiosveryown/ovo--3.7/index/skills/vue.webp",
+      bg: "https://res.cloudinary.com/dn1q8h2ga/image/upload/v1722286752/ovo-3.7/skills/vue_xchvhk.webp",
       tooltipLabel: "Vue 3",
     },
     {
-      bg: "https://ik.imagekit.io/ohiosveryown/ovo--3.7/index/skills/kobe.webp?updatedAt=1717213662416",
+      bg: "https://res.cloudinary.com/dn1q8h2ga/image/upload/v1722286743/ovo-3.7/skills/kobe_ae3dkp.webp",
       tooltipLabel: "3 level scoring",
     },
   ]

@@ -22,11 +22,4 @@ export default defineNuxtConfig({
       anchorLinks: false,
     },
   },
-
-  //imagekit
-  image: {
-    imagekit: {
-      baseURL: "https://ik.imagekit.io/ohiosveryown/",
-    },
-  },
 })
