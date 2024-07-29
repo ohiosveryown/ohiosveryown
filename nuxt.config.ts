@@ -7,7 +7,14 @@ export default defineNuxtConfig({
     head: {
       htmlAttrs: {
         lang: "en",
-      }
+      },
+        script: [
+        {
+          defer: true,
+          'data-domain': "ohiosveryown.co",
+          src: "https://plausible.io/js/script.js"
+        }
+      ]
     },
     pageTransition: { name: 'blur', mode: 'out-in' }
   },
