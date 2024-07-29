@@ -103,8 +103,10 @@
     width: 40rem;
     color: #fff;
     opacity: 0;
-    background: url("https://res.cloudinary.com/dn1q8h2ga/image/upload/v1721321971/ovo-3.7/global/guide-bg-1_3x_mddlit.webp")
+    background: url("https://res.cloudinary.com/dn1q8h2ga/image/upload/v1722280794/ovo-3.7/global/guide-bg-0_3x_eole5p.png")
       no-repeat center center;
+    // background: url("https://res.cloudinary.com/dn1q8h2ga/image/upload/v1722280045/ovo-3.7/global/tg-bg-02_2x_riwsd5.webp")
+    //   no-repeat top center;
     background-size: cover;
     box-shadow: 0 100px 80px 0 rgba(0, 0, 0, 0.08),
       0 22px 16px 0 rgba(0, 0, 0, 0.06), 0 8px 5px 0 rgba(0, 0, 0, 0.05);
@@ -149,7 +151,6 @@
 
   video {
     border-radius: 13px;
-    border: 1px solid rgba(255, 255, 255, 0.12);
     background: #000;
     box-shadow: var(--shadow--sm);
     opacity: 0;
@@ -178,7 +179,7 @@
     font-size: 2.8rem;
     line-height: 1.05;
     text-shadow: 0 2px 3px rgba(0, 0, 0, 0.16);
-    transform: translateY(7.2rem);
+    transform: translateY(8rem);
     transition: all 500ms ease 350ms;
     will-change: opacity, transform;
   }
@@ -188,7 +189,7 @@
     font-size: 2.2rem;
     line-height: 1.32;
     text-shadow: 0 2px 3px rgba(0, 0, 0, 0.8);
-    transform: translateY(6.4rem);
+    transform: translateY(8rem);
     transition: all 500ms ease 450ms;
     will-change: opacity, transform;
   }
