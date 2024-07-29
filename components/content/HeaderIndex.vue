@@ -5,13 +5,13 @@
       I'm
       <Tooltip
         trigger="Matt"
-        img="https://ik.imagekit.io/ohiosveryown/ovo--3.7/index/me@3x.webp"
+        img="https://res.cloudinary.com/dn1q8h2ga/image/upload/v1722282626/ovo-3.7/global/me_3x_flmgnn.webp"
         alt="Illustration of me"
         tooltipLabel="Hey there 👋"
       />, a staff designer at
       <Tooltip
         trigger="Github"
-        img="https://ik.imagekit.io/ohiosveryown/ovo--3.7/index/gh@3x.webp"
+        img="https://res.cloudinary.com/dn1q8h2ga/image/upload/v1722282621/ovo-3.7/global/gh_3x_uswjpl.webp"
         alt="GitHub illustration"
         tooltipLabel="Copilot"
       />

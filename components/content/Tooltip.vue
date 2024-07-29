@@ -10,8 +10,6 @@
         :class="{ tooltipShowImg: showing }"
         :src="img"
         :alt="alt"
-        fetchpriority="high"
-        as="image"
       />
       <figcaption
         @mouseenter="showing = true"
