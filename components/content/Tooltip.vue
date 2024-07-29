@@ -4,7 +4,7 @@
     class="container"
   >
     <figure>
-      <NuxtImg
+      <img
         v-if="img"
         class="tooltip--thumbnail"
         :class="{ tooltipShowImg: showing }"
