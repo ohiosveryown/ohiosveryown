@@ -1,22 +1,16 @@
 {
-  "name": "ohiosveryown",
-  "version": "3.6.0",
-  "description": "ohiosveryown is the web presence and portfolio of work for Matthew Pence – a designer living in Atlanta, Ga.",
-  "author": "Matthew Pence",
   "private": true,
+  "type": "module",
   "scripts": {
-    "dev": "nuxt",
     "build": "nuxt build",
-    "start": "nuxt start",
-    "generate": "nuxt generate"
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview"
   },
   "dependencies": {
-    "@nuxtjs/google-analytics": "^2.4.0",
-    "@nuxtjs/pwa": "^3.0.0-0",
-    "node-sass": "^6.0.1",
-    "nuxt": "^2.0.0"
-  },
-  "devDependencies": {
-    "sass-loader": "^10.2.0"
+    "@nuxt/content": "^2.12.1",
+    "@nuxt/image": "^1.7.0",
+    "nuxt": "^3.11.2",
+    "sass": "^1.77.0"
   }
 }

@@ -1,0 +1,202 @@
+:root {
+  --system-font: -apple-system, BlinkMacSystemFont, "avenir next",
+    "helvetica neue", helvetica, ubuntu, roboto, noto, "segoe ui", arial,
+    sans-serif;
+  --unit: 8px;
+  --max-width: 2100rem;
+  --ease: 200ms ease;
+  --ease--qubic: 700ms cubic-bezier(0.8, 0, 0.16, 1);
+  // z-index
+  --zmax: 9999;
+  --z5: 5;
+  --z4: 4;
+  --z3: 3;
+  --z2: 2;
+  --z1: 1;
+  --z0: -1;
+  --zmin: -9999;
+  // colors
+  --color--primary: #121214;
+  --color--secondary: #4d5558;
+  --color--tertiary: #f7f7f7;
+  --color--quaternary: rgba(16, 15, 15,.08);
+  --color--brand: red;
+  --color--bg: #fff;
+  //colors-button
+  --color--button-primary: linear-gradient(180deg, rgba(211, 211, 211, 0.8) 0%, #fff 100%);
+  --color--button-sheen: linear-gradient(rgba(255, 255, 255, 0.9) 0.42%, rgba(255, 255, 255, 0));
+  // border
+  --border-radius--partial: 9px;
+  --border-radius--full: 1000px;
+  // blur
+  --blur--partial: blur(8px);
+  --blur--full: blur(20px);
+  // shadows
+  --shadow--text: 0 1.3px 0 rgba(185, 224, 253, 0.4);
+  --shadow--xs: 0 2px 3px 0 rgba(0, 0, 0, 0.32);
+  --shadow--sm:
+    0 4px 4px 0 rgba(0, 0, 0, 0.25),
+    0 24px 158px 0 rgba(0, 0, 0, 0.12),
+    0 6px 36px 0 rgba(0, 0, 0, 0.07),
+    0 2px 10px 0 rgba(0, 0, 0, 0.05);
+  --shadow--md:
+    0 12px 20px 0 rgba(0, 0, 0, 0.08),
+    0 10px 8px 0 rgba(0, 0, 0, 0.07);
+  --shadow--md-inverse:
+    0 -12px 20px 0px rgba(0, 0, 0, 0.06),
+    0 -10px 8px 0 rgba(0, 0, 0, 0.07);
+  --shadow--lg:
+    0 -1px 1px 0 rgba(0, 0, 0, 0.12) inset,
+    0 1px 1px 0 rgba(0, 0, 0, 0.05) inset,
+    0 20px 18px 0px rgba(0, 0, 0, 0.05),
+    0 6px 5px 0px rgba(0, 0, 0, 0.03);
+  --shadow--xl:
+    0 100px 80px 0 rgba(0, 0, 0, 0.24),
+    0 22px 18px 0 rgba(0, 0, 0, 0.14),
+    0 6px 5px 0 rgba(0, 0, 0, 0.1)
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    // colors
+    --color--primary: #fff;
+    --color--secondary: #ccc;
+    --color--tertiary: #2f2f2f;
+    --color--quaternary: rgba(255, 255, 255, 0.1);
+    --color--brand: blue;
+    --color--bg: #121214;
+    --color--button-primary: linear-gradient(180deg, #2e2d2d 0%, #2A2A2A 100%);
+    --color--button-sheen: linear-gradient(180deg, rgba(107, 102, 122, 0.6) 0%, rgba(113, 108, 128, 0.00) 100%);
+    //shadows
+    --shadow--text: none;
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  cursor: url("https://ik.imagekit.io/ohiosveryown/ovo--3.7/cursor/cursor.png"),
+    auto;
+  cursor: -webkit-image-set(
+      url("https://ik.imagekit.io/ohiosveryown/ovo--3.7/cursor/cursor.png") 1x,
+      url("https://ik.imagekit.io/ohiosveryown/ovo--3.7/cursor/cursor@2x.png")
+        2x,
+      url("https://ik.imagekit.io/ohiosveryown/ovo--3.7/cursor/cursor@3x.png")
+        3x
+    ),
+    auto;
+}
+
+html {
+  overflow-x: hidden;
+  box-sizing: border-box;
+  font-size: 62.5% !important;
+  -webkit-font-smoothing: antialiased !important;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility !important;
+  height: 100vh;
+  // overscroll-behavior: none;
+}
+
+body {
+  min-height: 100vh;
+  font: normal 1.5rem/1.5 var(--system-font);
+  color: var(--color--primary);
+  text-rendering: optimizeSpeed;
+  background: var(--color--bg);
+}
+
+h1,h2,h3,h4,h5,h6 {
+  color: var(--color--primary);
+}
+
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+a,
+span,
+blockquote,
+caption,
+ul,
+li,
+img,
+button,
+section,
+article,
+figure,
+main,
+menu,
+footer {
+  margin: 0;
+  padding: 0;
+}
+
+li {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: normal;
+}
+
+button {
+  border: none;
+  background: none;
+}
+
+figure,
+figcaption {
+  display: initial;
+  position: relative;
+}
+
+video,
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+img {
+  vertical-align: top;
+}
+
+ul {
+  list-style-type: none;
+  -webkit-margin-before: 0;
+  -webkit-margin-after: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html:focus-within {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
