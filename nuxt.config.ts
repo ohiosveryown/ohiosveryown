@@ -19,13 +19,19 @@ export default defineNuxtConfig({
         { property: "og:url", content: "https://ohiosveryown.co" },
         { property: "og:type", content: "website" },
         { property: "og:site_name", content: "ohiosveryown" },
+        { property: "og:locale", content: "en_US" },
         { name: "twitter:card", content: "summary_large_image" },
         { name: "twitter:site", content: "@cmykw_" },
         { name: "twitter:title", content: "ohiosveryown" },
         { name: "twitter:description", content: "ohiosveryown is the web presence and portfolio of work for Matthew Pence – a designer living in Atlanta, Ga" },
-        { name: "twitter:image", content: "https://res.cloudinary.com/dn1q8h2ga/image/upload/v1722309441/ovo-3.7/readme__sm_xqkrgi.webp" }
+        { name: "twitter:image", content: "https://res.cloudinary.com/dn1q8h2ga/image/upload/v1722309441/ovo-3.7/readme__sm_xqkrgi.webp" },
+        { name: "twitter:creator", content: "@cmykw_" },
+        { name: "robots", content: "index, follow" },
       ],
-        script: [
+      link: [
+        { rel: "canonical", href: "https://ohiosveryown.co" },
+      ],
+      script: [
         {
           defer: true,
           'data-domain': "ohiosveryown.co",

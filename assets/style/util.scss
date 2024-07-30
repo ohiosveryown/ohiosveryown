@@ -132,7 +132,9 @@
   transform-origin: bottom;
   margin: 0 auto;
   border-radius: 15px;
+  max-width: 8.8rem; max-height: 8.8rem;
   width: 8.8rem; height: 8.8rem;
+  object-fit: cover;
   opacity: 0;
   box-shadow: var(--shadow--xl);
   pointer-events: none;
