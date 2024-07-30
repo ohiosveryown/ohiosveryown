@@ -1,7 +1,5 @@
 <template>
-  <h4>Hello Worldz</h4>
-
-  <!-- <ul>
+  <ul>
     <li
       v-for="post in posts"
       :key="post._path"
@@ -87,7 +85,7 @@
         </article>
       </a>
     </li>
-  </ul> -->
+  </ul>
 </template>
 
 <style lang="scss" scoped>

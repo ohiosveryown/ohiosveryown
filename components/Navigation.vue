@@ -1,6 +1,5 @@
 <template>
-  <nav>Nav</nav>
-  <!-- <nav @mouseleave="menuOpen = false">
+  <nav @mouseleave="menuOpen = false">
     <NuxtLink
       class="home"
       to="/"
@@ -39,7 +38,7 @@
       class="mu"
       :class="[menuOpen ? 'menu-opened' : 'menu-closed']"
     />
-  </nav> -->
+  </nav>
 </template>
 
 <style lang="scss" scoped>
