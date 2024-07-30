@@ -12,9 +12,9 @@
     </button>
 
     <header ref="headerRef">
-      <div class="collapsable">
+      <div class="collapsable plausible-event-name=PlayGuide">
         <video
-          class="collapsable plausible-event-name=PlayGuide"
+          class="collapsable"
           ref="videoRef"
           playsinline
           controls

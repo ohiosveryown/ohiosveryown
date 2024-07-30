@@ -19,14 +19,18 @@
     <button
       @click="menuOpen = !menuOpen"
       :class="[menuOpen ? '' : 'show-hint']"
-      class="sans plausible-event-name=NavMenu"
+      class="sans"
     >
       <span
         v-if="menuOpen"
         :style="{ color: '#fff' }"
         >Close Menu ☻</span
       >
-      <span v-else>Menu ☺</span>
+      <span
+        v-else
+        class="plausible-event-name=NavMenu"
+        >Menu ☺</span
+      >
     </button>
 
     <ListNav
