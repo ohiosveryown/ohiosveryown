@@ -2,7 +2,7 @@
   <dialog ref="dialog">
     <header class="sans">Press tab to cycle pages</header>
     <menu>
-      <!-- <li
+      <li
         v-for="post in posts"
         :key="post._path"
       >
@@ -18,7 +18,7 @@
           </figure>
           <p>{{ post.name }}</p>
         </NuxtLink>
-      </li> -->
+      </li>
     </menu>
   </dialog>
 </template>

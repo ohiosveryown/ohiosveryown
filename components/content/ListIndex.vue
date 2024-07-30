@@ -210,7 +210,9 @@
 </style>
 
 <script setup>
-  const posts = await queryContent("/work").sort({ key: 1 }).find()
+  const { data: posts } = await useAsyncData("posts", () =>
+    queryContent("/work").sort({ key: 1 }).find()
+  )
   const showing = ref(false)
   const isReducedMotion = ref(false)
 
