@@ -212,10 +212,15 @@
     }
   }
 
-  onMounted(async () => {
-    let posts = await queryContent("/work").find()
-    posts = posts.filter((post) => !post.isExternal)
-    randomPost.value = posts[~~(Math.random() * posts.length)]._path
+  const { data: posts } = await useAsyncData("posts", () =>
+    queryContent("/work").find()
+  )
+
+  onMounted(() => {
+    if (posts.value && posts.value.length > 0) {
+      const randomIndex = ~~(Math.random() * posts.value.length)
+      randomPost.value = posts.value[randomIndex]._path
+    }
 
     container.value.addEventListener("pointermove", moveLabel)
     container.value.addEventListener("pointerenter", () => {

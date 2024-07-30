@@ -214,7 +214,7 @@
   const showing = ref(false)
   const isReducedMotion = ref(false)
 
-  onMounted(async () => {
+  onMounted(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       isReducedMotion.value = true
     }

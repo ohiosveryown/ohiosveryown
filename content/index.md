@@ -7,8 +7,6 @@ poster: "https://ik.imagekit.io/ohiosveryown/ovo--3.7/index/covers/poster__home@
 ---
 
 :HeaderIndex
-
-<!-- :ButtonGroup -->
-
+:ButtonGroup
 :HeaderLogos
 :ListIndex
