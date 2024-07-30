@@ -26,7 +26,7 @@
       {
         property: "og:image",
         content:
-          "https://ik.imagekit.io/ohiosveryown/ovo--3.7/readme__sm.webp?updatedAt=1718396522129",
+          "https://res.cloudinary.com/dn1q8h2ga/image/upload/v1722309441/ovo-3.7/readme__sm_xqkrgi.webp",
       },
       // Twitter
       { name: "twitter:card", content: "summary_large_image" },
@@ -40,7 +40,7 @@
       {
         name: "twitter:image",
         content:
-          "https://ik.imagekit.io/ohiosveryown/ovo--3.7/readme__sm.webp?updatedAt=1718396522129",
+          "https://res.cloudinary.com/dn1q8h2ga/image/upload/v1722309441/ovo-3.7/readme__sm_xqkrgi.webp",
       },
       // Robots
       { name: "robots", content: "index,follow" },
