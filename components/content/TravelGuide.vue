@@ -11,7 +11,10 @@
       Dismiss
     </button>
 
-    <header ref="headerRef">
+    <header
+      ref="headerRef"
+      class="plausible-event-name=GuideHeader"
+    >
       <div class="collapsable plausible-event-name=PlayGuide">
         <video
           class="collapsable"
