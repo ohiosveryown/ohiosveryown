@@ -210,11 +210,13 @@
 </style>
 
 <script setup>
-  const posts = await queryContent("/work").sort({ key: 1 }).find()
   const showing = ref(false)
   const isReducedMotion = ref(false)
+  const { data: posts } = await useAsyncData("posts", () =>
+    queryContent("/work").sort({ key: 1 }).find()
+  )
 
-  onMounted(() => {
+  onMounted(async () => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       isReducedMotion.value = true
     }
