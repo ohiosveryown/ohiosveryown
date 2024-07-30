@@ -38,7 +38,7 @@
 
     <footer>
       <h4>↬ You may also be interested in:</h4>
-      <ul>
+      <!-- <ul>
         <li
           v-for="post in posts"
           :key="post._path"
@@ -54,7 +54,7 @@
             <p>{{ post.caption }}</p>
           </NuxtLink>
         </li>
-      </ul>
+      </ul> -->
     </footer>
   </div>
 </template>
