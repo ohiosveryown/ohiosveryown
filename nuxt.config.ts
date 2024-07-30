@@ -18,6 +18,7 @@ export default defineNuxtConfig({
         { property: "og:image", content: "https://res.cloudinary.com/dn1q8h2ga/image/upload/v1722309441/ovo-3.7/readme__sm_xqkrgi.webp" },
         { property: "og:url", content: "https://ohiosveryown.co" },
         { property: "og:type", content: "website" },
+        { property: "og:site_name", content: "ohiosveryown" },
         { name: "twitter:card", content: "summary_large_image" },
         { name: "twitter:site", content: "@cmykw_" },
         { name: "twitter:title", content: "ohiosveryown" },
