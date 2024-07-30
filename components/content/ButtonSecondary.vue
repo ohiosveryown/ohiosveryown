@@ -4,7 +4,7 @@
     class="container"
   >
     <button
-      class="sans"
+      class="sans plausible-event-name=RandomSkill"
       role="button"
       @click="randomSkill()"
       @mouseenter="showing = true"

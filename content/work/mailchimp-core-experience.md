@@ -7,7 +7,7 @@ caption: "Re-architecting the highest revenue journey to help users find and rea
 subtitle: "Email is dead; long live email"
 date: "2021"
 poster: "https://res.cloudinary.com/dn1q8h2ga/image/upload/v1722284009/ovo-3.7/mc-core/poster_2x_hjdrce.webp"
-video: "https://res.cloudinary.com/da32ufmnf/video/upload/v1633631810/ovo-3.6/index/mc-core_ph7qd4.mp4"
+video: "https://res.cloudinary.com/dn1q8h2ga/video/upload/v1722354186/ovo-3.7/mc-core/send-2_rgjytd.mp4"
 background: "linear-gradient(192deg, #FAE150 0%, #FFD900 90%)"
 ---
 

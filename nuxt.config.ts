@@ -35,7 +35,7 @@ export default defineNuxtConfig({
         {
           defer: true,
           'data-domain': "ohiosveryown.co",
-          src: "https://plausible.io/js/script.js"
+          src: "https://plausible.io/js/script.tagged-events.js"
         }
       ]
     },

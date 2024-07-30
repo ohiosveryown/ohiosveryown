@@ -5,7 +5,7 @@
   >
     <NuxtLink :to="`${randomPost}`">
       <button
-        class="button"
+        class="button plausible-event-name=AdventureTime"
         @mouseenter="showing = true"
         @mouseleave="showing = false"
       >

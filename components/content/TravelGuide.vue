@@ -5,7 +5,7 @@
   >
     <button
       ref="buttonRef"
-      class="dismiss thin"
+      class="dismiss thin plausible-event-name=DismissGuide"
       @click="dismissPlayer"
     >
       Dismiss
@@ -14,7 +14,7 @@
     <header ref="headerRef">
       <div class="collapsable">
         <video
-          class="collapsable"
+          class="collapsable plausible-event-name=PlayGuide"
           ref="videoRef"
           playsinline
           controls

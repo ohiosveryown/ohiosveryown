@@ -19,7 +19,7 @@
     <button
       @click="menuOpen = !menuOpen"
       :class="[menuOpen ? '' : 'show-hint']"
-      class="sans"
+      class="sans plausible-event-name=NavMenu"
     >
       <span
         v-if="menuOpen"
