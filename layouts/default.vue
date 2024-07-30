@@ -1,7 +1,6 @@
 <template>
   <main class="view width">
-    <!-- <slot /> -->
-    Hello world
+    <slot />
   </main>
 
   <picture>
