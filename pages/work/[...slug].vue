@@ -193,19 +193,10 @@
   const currentSlug = route.params.slug
   const currentPostPath = route.path
 
-  // const posts = await queryContent("")
-  //   .sort({ key: 1 })
-  //   .skip(2)
-  //   .limit(5)
-  //   .where({ _path: { $ne: currentPostPath } })
-  //   .find()
-
-  const { data: posts } = await useAsyncData("posts", () =>
-    queryContent("")
-      .sort({ key: 1 })
-      .skip(2)
-      .limit(5)
-      .where({ _path: { $ne: currentPostPath } })
-      .find()
-  )
+  const posts = await queryContent("")
+    .sort({ key: 1 })
+    .skip(2)
+    .limit(5)
+    .where({ _path: { $ne: currentPostPath } })
+    .find()
 </script>
