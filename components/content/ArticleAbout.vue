@@ -26,8 +26,8 @@
           >proportional.design
           <img
             class="tooltip--thumbnail"
-            src="https://res.cloudinary.com/da32ufmnf/image/upload/v1629742674/ovo-3.6/subjects/thumbnail-prop_lqkcba.jpg"
-            alt="Photo of a nightstand"
+            src="https://res.cloudinary.com/dn1q8h2ga/image/upload/v1722356453/ovo-3.7/skills/davis-2_2x_b1z03n.png"
+            alt="Walnut bench with green upholstery"
           /> </span
       ></a>
       🪑.
@@ -40,7 +40,7 @@
         >easter eggs
         <img
           class="tooltip--thumbnail"
-          src="https://res.cloudinary.com/da32ufmnf/image/upload/v1629742815/ovo-3.6/subjects/thumb-easter_wjpekr.gif"
+          src="https://res.cloudinary.com/dn1q8h2ga/image/upload/v1722356186/ovo-3.7/global/simpsons_f2qj9v.webp"
           alt="Simpsons easter egg"
         />
       </span>
@@ -48,13 +48,27 @@
     </p>
     <hr />
 
-    <a
-      class="cv sans"
-      target="_blank"
-      href="/pence-cv.pdf"
-    >
-      <button>Curriculum vitae</button>
-    </a>
+    <footer>
+      <a
+        class="cv plausible-event-name=CV"
+        target="_blank"
+        href="/pence-cv.pdf"
+      >
+        <button class="sans">Curriculum vitae</button>
+      </a>
+      <a
+        class="sans link plausible-event-name=GitHub"
+        href="https://github.com/ohiosveryown"
+        target="_blank"
+        >GitHub</a
+      >
+      <a
+        class="sans link plausible-event-name=Twitter"
+        href="https://x.com/cmykw_"
+        target="_blank"
+        >Twitter</a
+      >
+    </footer>
   </article>
 </template>
 
@@ -70,8 +84,32 @@
     opacity: 0.24;
   }
 
-  button {
+  footer {
     display: flex;
+    align-items: center;
+    gap: 2rem;
+    font-weight: 500;
+    color: var(--color--primay);
+    @include breakpoint(md) {
+      gap: 3.2rem;
+    }
+  }
+
+  footer span {
+    opacity: 0.4;
+  }
+
+  footer .link {
+    opacity: 0.88;
+    transition: opacity 300ms ease;
+  }
+
+  footer .link:hover {
+    opacity: 0.64;
+  }
+
+  button {
+    display: inline-flex;
     align-items: center;
     gap: 5px;
     position: relative;
@@ -85,11 +123,11 @@
     background: var(--color--tertiary);
     cursor: inherit;
     overflow: hidden;
-    transition: background 200ms ease;
+    transition: opacity 200ms ease;
   }
 
   button:hover {
-    background: var(--color--tertiary);
+    opacity: 0.64;
   }
 
   .container {
