@@ -9,10 +9,10 @@
           <img
             class="icon"
             :src="logo.icon"
-            :alt="logo.label"
+            :alt="logo.alt"
           />
           <figcaption class="label tooltip--label">
-            <small>{{ logo.alt }}</small>
+            <small>{{ logo.label }}</small>
           </figcaption>
         </figure>
       </li>
