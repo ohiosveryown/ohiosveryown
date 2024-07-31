@@ -9,7 +9,6 @@
           <img
             class="icon"
             :src="logo.icon"
-            :alt="logo.label"
           />
           <figcaption class="label tooltip--label">
             <small>{{ logo.label }}</small>
