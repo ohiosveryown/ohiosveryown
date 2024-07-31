@@ -21,9 +21,13 @@
           ref="videoRef"
           playsinline
           controls
-          src="https://res.cloudinary.com/dn1q8h2ga/video/upload/v1722278376/ovo-3.7/global/guide-intro-sm_xujrcn.mp4"
           @play="onPlay"
-        />
+        >
+          <source
+            media="(pointer: fine)"
+            src="https://res.cloudinary.com/dn1q8h2ga/video/upload/v1722278376/ovo-3.7/global/guide-intro-sm_xujrcn.mp4"
+          />
+        </video>
       </div>
     </header>
 

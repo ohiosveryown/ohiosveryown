@@ -20,7 +20,10 @@
             muted
             loop
           >
-            <source :src="post.video" />
+            <source
+              media="(pointer: fine)"
+              :src="post.video"
+            />
           </video>
           <img
             :src="post.poster"
@@ -54,7 +57,10 @@
             loop="loop"
             muted="muted"
           >
-            <source :src="post.video" />
+            <source
+              media="(pointer: fine)"
+              :src="post.video"
+            />
           </video>
           <img
             :src="post.poster"
