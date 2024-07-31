@@ -33,7 +33,7 @@
         </figure>
 
         <article>
-          <span class="h6">{{ post.kicker }}</span>
+          <h6 class="thin">{{ post.kicker }}</h6>
           <h4 class="name">{{ post.name }}</h4>
           <p class="sans caption">{{ post.caption }}</p>
         </article>
@@ -70,7 +70,7 @@
         </figure>
 
         <article>
-          <span class="h6">{{ post.kicker }}</span>
+          <h6 class="thin">{{ post.kicker }}</h6>
           <h4 class="name">
             {{ post.name }}
             <svg

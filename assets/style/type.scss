@@ -81,15 +81,11 @@ h5 {
   line-height: 120%;
 }
 
-h6, .h6 {
+h6 {
   @include sans;
   font-size: clamp(1.7rem, 1.1vw, 1.9rem);
   font-weight: 360;
   line-height: 132%;
-}
-
-.h6 {
-  @include thin;
 }
 
 small {

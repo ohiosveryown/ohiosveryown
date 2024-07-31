@@ -9,9 +9,10 @@
           <img
             class="icon"
             :src="logo.icon"
+            :alt="logo.label"
           />
           <figcaption class="label tooltip--label">
-            <small>{{ logo.label }}</small>
+            <small>{{ logo.alt }}</small>
           </figcaption>
         </figure>
       </li>
@@ -142,22 +143,27 @@
   const logos = ref([
     {
       label: "GitHub",
+      alt: "GitHub logo",
       icon: "https://ik.imagekit.io/ohiosveryown/ovo--3.7/index/logos/logo__gh.svg",
     },
     {
       label: "Mailchimp",
+      alt: "Mailchimp logo",
       icon: "https://ik.imagekit.io/ohiosveryown/ovo--3.7/index/logos/logo__mc.svg",
     },
     {
       label: "Intuit",
+      alt: "Intuit logo",
       icon: "https://ik.imagekit.io/ohiosveryown/ovo--3.7/index/logos/logo__intuit.svg",
     },
     {
       label: "Nike",
+      alt: "Nike logo",
       icon: "https://ik.imagekit.io/ohiosveryown/ovo--3.7/index/logos/logo__nike.svg",
     },
     {
       label: "Microsoft",
+      alt: "Microsoft logo",
       icon: "https://ik.imagekit.io/ohiosveryown/ovo--3.7/index/logos/logo__ms.svg?updatedAt=1716255214571",
     },
   ])
