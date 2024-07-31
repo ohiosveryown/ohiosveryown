@@ -138,7 +138,7 @@
       height: 2.7rem;
       font-size: 2.2rem;
       color: var(--color--secondary);
-      background: url("https://res.cloudinary.com/dn1q8h2ga/image/upload/v1721428544/ovo-3.7/index/folder--open-1_3x_tdyccd.webp")
+      background: url("https://res.cloudinary.com/dn1q8h2ga/image/upload/v1722447738/ovo-3.7/index/icons/folder-images_3x_okncdx.webp")
         no-repeat center center;
       background-size: cover;
       opacity: 0;

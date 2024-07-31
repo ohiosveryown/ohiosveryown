@@ -24,26 +24,26 @@
 
       <img
         class="folder"
-        src="https://res.cloudinary.com/dn1q8h2ga/image/upload/v1721428780/ovo-3.7/index/folder_3x_sbimem.webp"
+        src="https://res.cloudinary.com/dn1q8h2ga/image/upload/v1722447739/ovo-3.7/index/icons/folder_3x_wwvysu.webp"
         alt="folder closed icon"
       />
 
       <img
         class="folder"
-        src="https://res.cloudinary.com/dn1q8h2ga/image/upload/v1721429356/ovo-3.7/index/folder--open-2_3x_rkqm5b.webp"
+        src="https://res.cloudinary.com/dn1q8h2ga/image/upload/v1722447737/ovo-3.7/index/icons/folder--vid_3x_yqcncr.webp"
         alt="folder open with image icon"
       />
 
       <img
         class="folder"
-        src="https://res.cloudinary.com/dn1q8h2ga/image/upload/v1721428550/ovo-3.7/index/folder--open-3_3x_smzosn.webp"
+        src="https://res.cloudinary.com/dn1q8h2ga/image/upload/v1722447738/ovo-3.7/index/icons/folder-images_3x_okncdx.webp"
         alt="folder open with images icon"
       />
 
       <img
         class="folder"
-        src="https://res.cloudinary.com/dn1q8h2ga/image/upload/v1721428780/ovo-3.7/index/folder_3x_sbimem.webp"
-        alt="folder closed icon"
+        src="https://res.cloudinary.com/dn1q8h2ga/image/upload/v1722447736/ovo-3.7/index/icons/folder--browser_3x_aa5f79.webp"
+        alt="folder with browser icon"
       />
     </NuxtLink>
   </div>
