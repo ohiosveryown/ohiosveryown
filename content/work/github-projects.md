@@ -1,6 +1,6 @@
 ---
 key: 5
-kicker: "Product strategy, Human interface design"
+kicker: "Human interface design, Product strategy"
 name: "GitHub Projects"
 caption: "Flexible project planning for developers – and everyone else."
 poster: "https://ik.imagekit.io/ohiosveryown/ovo--3.7/index/covers/poster__ghp3@3x.webp?updatedAt=1716577827769"
