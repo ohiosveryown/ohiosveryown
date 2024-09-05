@@ -36,7 +36,7 @@ Following that definition, one of the very first challenges we faced involved se
 
 :Illustration{.tight backgroundUrl="https://ik.imagekit.io/ohiosveryown/ovo--3.7/work/backgrounds/field-02.webp" altText="Decision tree illustration" imgSrc="https://res.cloudinary.com/dn1q8h2ga/image/upload/v1721670511/ovo-3.7/gh-dnd/gh-dnd-03_2x_rc6m8u.webp" caption="❹ Abbreviated decision tree"}
 
-:Reel{ backgroundUrl="https://ik.imagekit.io/ohiosveryown/ovo--3.7/work/backgrounds/field-03.webp?updatedAt=1717347265097" videoSrc="https://res.cloudinary.com/dn1q8h2ga/video/upload/v1721671170/ovo-3.7/gh-dnd/specificity_yufadd.mp4#t=0.1" caption="❻ Peek behing the curtain – async discussion video"}
+:Reel{ backgroundUrl="https://ik.imagekit.io/ohiosveryown/ovo--3.7/work/backgrounds/field-03.webp?updatedAt=1717347265097" videoSrc="https://res.cloudinary.com/dn1q8h2ga/video/upload/v1721671170/ovo-3.7/gh-dnd/specificity_yufadd.mp4#t=0.1" caption="❻ Peek behing the curtain – async discussion video. Please ignore the egregious spelling error 🙃"}
 
 #### ↬ What difference did we make?
 
