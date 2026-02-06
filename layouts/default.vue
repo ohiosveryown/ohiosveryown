@@ -3,6 +3,8 @@
     <slot />
   </main>
 
+  <Chat />
+
   <picture>
     <source
       class="rainbow"
@@ -21,7 +23,7 @@
 </template>
 
 <style lang="scss" scoped>
-  @import "/assets/style/grid.scss";
+  @import '/assets/style/grid.scss';
 
   .rainbow {
     position: fixed;

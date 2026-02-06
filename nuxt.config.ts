@@ -3,6 +3,10 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: ["@nuxt/content", "@nuxt/image", "@nuxthq/studio"],
 
+  runtimeConfig: {
+    openaiApiKey: process.env.OPENAI_API_KEY,
+  },
+
   app: {
     head: {
       htmlAttrs: {
