@@ -83,7 +83,7 @@
 </template>
 
 <style lang="scss" scoped>
-  @import "/assets/style/grid.scss";
+  @import '/assets/style/grid.scss';
 
   // default
   .show-guide {
@@ -110,7 +110,7 @@
     width: 40rem;
     color: #fff;
     opacity: 0;
-    background: url("https://res.cloudinary.com/dn1q8h2ga/image/upload/v1722283127/ovo-3.7/global/guide-bg-03_3x_ldaado.webp")
+    background: url('https://res.cloudinary.com/dn1q8h2ga/image/upload/v1722283127/ovo-3.7/global/guide-bg-03_3x_ldaado.webp')
       no-repeat center center;
     // background: url("https://res.cloudinary.com/dn1q8h2ga/image/upload/v1722280045/ovo-3.7/global/tg-bg-02_2x_riwsd5.webp")
     //   no-repeat top center;
@@ -374,9 +374,9 @@
 
     if (
       scrollPercentage > 80 &&
-      (route.path === "/" || route.path === "/about")
+      (route.path === '/' || route.path === '/about')
     ) {
-      menuRef.value.classList.add("show-guide")
+      menuRef.value.classList.add('show-guide')
     }
   }
 
@@ -384,15 +384,15 @@
 
   const onPlay = () => {
     state.isPlaying = true
-    menuRef.value.classList.add("mini-player")
-    headerRef.value.classList.add("expanded")
-    sectionRef.value.classList.add("collapsed")
-    footerRef.value.classList.add("collapsed")
-    videoRef.value.classList.add("mini-player")
+    menuRef.value.classList.add('mini-player')
+    headerRef.value.classList.add('expanded')
+    sectionRef.value.classList.add('collapsed')
+    footerRef.value.classList.add('collapsed')
+    videoRef.value.classList.add('mini-player')
   }
 
   const dismissPlayer = () => {
-    menuRef.value.classList.add("dismiss-player")
+    menuRef.value.classList.add('dismiss-player')
     setTimeout(() => {
       videoRef.value
         ? (videoRef.value.remove(), (showMenu.value = false))
@@ -401,13 +401,13 @@
   }
 
   onMounted(() => {
-    window.addEventListener("scroll", throttledHandleScroll)
+    window.addEventListener('scroll', throttledHandleScroll)
     if (videoRef.value) {
-      videoRef.value.addEventListener("play", onPlay)
+      videoRef.value.addEventListener('play', onPlay)
     }
   })
 
   onUnmounted(() => {
-    window.removeEventListener("scroll", throttledHandleScroll)
+    window.removeEventListener('scroll', throttledHandleScroll)
   })
 </script>
