@@ -42,7 +42,7 @@
 </template>
 
 <style lang="scss" scoped>
-  @import "/assets/style/grid.scss";
+  @import '/assets/style/grid.scss';
 
   .container {
     display: flex;
@@ -148,6 +148,6 @@
   const backgroundImageValue = computed(() =>
     /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/.test(props.backgroundUrl)
       ? props.backgroundUrl
-      : `url(${props.backgroundUrl})`
+      : `url(${props.backgroundUrl})`,
   )
 </script>
