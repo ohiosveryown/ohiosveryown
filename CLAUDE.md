@@ -122,6 +122,52 @@ Prefer these tokens over hard-coded values where they fit.
 
 ---
 
+## Animation: `motion-v`
+
+This project uses [`motion-v`](https://motion.unovue.com/) for animation work. **Do not** use Vue's built-in `<Transition>` / `<TransitionGroup>` — `AnimatePresence` already wraps them.
+
+### When to use what
+
+- **CSS `transition`** (with `--ease`, `--ease-qubic`, `--spring` tokens) — trivial single-property hover/focus changes (`color`, `opacity`, `transform`).
+- **motion-v** — entrance/exit, choreographed sequences, viewport-triggered, gestures, anything across `v-if` / `v-show`, variant-driven subtrees.
+
+### API conventions
+
+- Prefer the namespace API (`<motion.div>`) over `<Motion as="div">`.
+- Bind object props with `:` and use kebab-case for multi-word props (`:in-view`, `:in-view-options`, `:while-hover`, `:while-press`).
+- Use `:initial="false"` to skip the first animation (e.g. SSR-hydrated content).
+- `motion.create(MyComponent)` wraps a custom Vue component.
+
+### Enter/exit
+
+Wrap conditional elements in `<AnimatePresence>`:
+
+```vue
+<AnimatePresence>
+  <motion.div
+    v-if="isOpen"
+    :initial="{ opacity: 0 }"
+    :animate="{ opacity: 1 }"
+    :exit="{ opacity: 0 }"
+  />
+</AnimatePresence>
+```
+
+- `:multiple="true"` for animating lists (uses `TransitionGroup`).
+- `mode="wait" | "sync" | "popLayout"` to control overlap.
+- `:unwrap-element="true"` for Radix-style wrapper components.
+
+### Viewport & gestures
+
+- `:in-view` + `:in-view-options="{ once, amount, margin, root }"` for scroll-triggered entry.
+- `:while-hover` / `:while-press` for gesture-driven motion (prefer over CSS `:hover` when the animation needs spring physics or multiple properties).
+
+### Accessibility
+
+`reset.scss` handles `prefers-reduced-motion` for CSS, but motion-v animations are JS-driven and are **not** affected — gate or shorten meaningful motion manually when reduced motion is preferred.
+
+---
+
 ## Style file map
 
 | File                       | Purpose                                                       | Loading                                      |

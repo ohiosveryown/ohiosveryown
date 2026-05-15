@@ -16,6 +16,10 @@
   --z1: 1;
   --z0: -1;
   --zmin: -9999;
+  // cursor
+  --cursor: image-set(
+      url('https://res.cloudinary.com/dskbwusdb/image/upload/v1778870320/cursor_3x_jfgcop.webp') 3x
+    ) 0 0, auto;
 }
 
 *,
@@ -32,6 +36,7 @@ html {
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility !important;
   height: 100dvh;
+  cursor: var(--cursor);
   // overscroll-behavior: none;
 }
 
@@ -76,13 +81,11 @@ li {
 
 a {
   text-decoration: none;
-  cursor: pointer;
 }
 
 button {
   border: none;
   background: none;
-  cursor: pointer;
   font-family: var(--font-sans);
 }
 

@@ -1,14 +1,79 @@
 <template>
-  <div>
-    <h1>Hello World!</h1>
-    this is body text...
+  <div class="container-index">
+    <header>
+      <div class="greeting">Welcome traveler</div>
+      <h1>
+        <span class="row"
+          >I'm
+          <span
+            class="has-tooltip"
+            data-tooltip="Hey there 👋"
+            data-tooltip-image="https://ik.imagekit.io/ohiosveryown/ovo--3.7/index/hero.webp?updatedAt=1715362287713"
+            >Matt</span
+          >, a principal designer at
+          <span
+            class="has-tooltip"
+            data-tooltip="$XYZ"
+            data-tooltip-image="https://ik.imagekit.io/ohiosveryown/ovo--3.7/index/hero.webp?updatedAt=1715362287713"
+            >Square</span
+          >
+          <IconSquare class="icon-square" />
+          ,</span
+        >
+        <span class="row"
+          >living in always peachy,
+          <span
+            class="has-tooltip"
+            data-tooltip="The city in a forest"
+            data-tooltip-image="https://ik.imagekit.io/ohiosveryown/ovo--3.7/index/atlanta@3x.webp?updatedAt=1716129844773"
+            >Atlanta, Ga</span
+          >
+          🍑.
+        </span>
+      </h1>
+    </header>
   </div>
 </template>
 
 <style scoped lang="scss">
-  h1 {
-    @include breakpoint(md) {
-      color: red;
-    }
+  .greeting {
+    margin-bottom: 2rem;
+    font-family: 'sans', var(--system-font);
+    font-size: clamp(1rem, -0.875rem + 12vw, 6rem);
+    font-weight: 360;
+    letter-spacing: -0.25rem;
+    line-height: 114%;
+  }
+
+  h1,
+  span {
+    font-family: italic, Courier, monospace;
+    font-size: clamp(1rem, -0.875rem + 10vw, 4.2rem);
+    font-weight: 100;
+    line-height: 124%;
+    letter-spacing: -0.072rem;
+  }
+
+  .row {
+    display: block;
+  }
+
+  .has-tooltip {
+    color: #7b7b7b;
+    text-decoration: underline;
+    text-decoration-thickness: 0.064rem;
+    text-decoration-color: currentColor;
+    text-underline-offset: 0.8rem;
+  }
+
+  .has-tooltip:hover {
+    text-decoration: none;
+  }
+
+  .icon-square {
+    width: 2.6rem;
+    height: 2.6rem;
+    margin-left: 1rem;
+    transform: translateY(0.1rem);
   }
 </style>

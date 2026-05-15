@@ -45,43 +45,44 @@
   @include italic;
 }
 
-h1 {
+.h1 {
   @include sans;
   font-size: clamp(1rem, -0.875rem + 12vw, 6rem);
   font-weight: 360;
-  letter-spacing: -0.64px;
+  letter-spacing: -0.25rem;
   line-height: 114%;
 }
 
-h2 {
+.h2 {
   @include italic;
   font-size: clamp(1rem, -0.875rem + 10vw, 4.2rem);
   font-weight: 100;
-  line-height: 144%;
+  line-height: 120%;
+  letter-spacing: -0.064rem;
 }
 
-h3 {
+.h3 {
   @include thin;
   font-size: clamp(3.2rem, -0.875rem + 4vw, 4rem);
   line-height: 120%;
 }
 
-h4 {
+.h4 {
   @include sans;
   font-size: clamp(2.4rem, 2.1vw, 3rem);
   font-weight: 450;
-  letter-spacing: -0.5px;
+  letter-spacing: -0.05rem;
   line-height: 120%;
 }
 
-h5 {
+.h5 {
   @include sans;
   font-size: clamp(2rem, 1.6vw, 2.4rem);
   font-weight: 480;
   line-height: 120%;
 }
 
-h6 {
+.h6 {
   @include sans;
   font-size: clamp(1.7rem, 1.1vw, 1.9rem);
   font-weight: 360;
