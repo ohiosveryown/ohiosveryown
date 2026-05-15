@@ -1,6 +1,5 @@
 <template>
-  <CmdMenu />
-  <Navigation />
-  <NuxtPage />
-  <TravelGuide />
+  <NuxtLayout>
+    <NuxtPage />
+  </NuxtLayout>
 </template>
