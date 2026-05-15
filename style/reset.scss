@@ -1,0 +1,131 @@
+:root {
+  --system-font: -apple-system, BlinkMacSystemFont, "avenir next",
+    "helvetica neue", helvetica, ubuntu, roboto, noto, "segoe ui", arial,
+    sans-serif;
+  --unit: 1.2rem;
+  --max-width: 200rem;
+  --ease: 200ms ease;
+  --ease-qubic: 700ms cubic-bezier(0.8, 0, 0.16, 1);
+  --spring: linear(0.00, 0.016, 0.048, 0.095, 0.150, 0.210, 0.270, 0.329, 0.383, 0.430, 1.027, 1.057, 1.079, 1.092, 1.102, 1.102, 1.097, 1.088, 1.079, 1.067, 1.048, 1.035, 1.022, 1.009, 0.999, 0.991, 0.986, 0.980, 0.977, 0.976, 0.977, 0.979, 0.980, 0.983, 0.986, 0.989, 0.993, 0.996, 0.998, 1.00, 1.004, 1.004, 1.004, 1.004, 1.004, 1.004, 1.004, 1.004, 1.004, 1.004, 1.004, 1.00, 1.00, 1.00, 0.999, 1.00);
+  // z-index
+  --zmax: 9999;
+  --z5: 5;
+  --z4: 4;
+  --z3: 3;
+  --z2: 2;
+  --z1: 1;
+  --z0: -1;
+  --zmin: -9999;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  overflow-x: hidden;
+  box-sizing: border-box;
+  font-size: 62.5% !important;
+  -webkit-font-smoothing: antialiased !important;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility !important;
+  height: 100dvh;
+  // overscroll-behavior: none;
+}
+
+body {
+  // min-height: 100vh;
+  font: normal 1.6rem/1.5 var(--font-sans);
+  color: #000;
+  background: #fff;
+  text-rendering: optimizeSpeed;
+}
+
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+a,
+span,
+blockquote,
+caption,
+ul,
+li,
+img,
+button,
+section,
+article,
+figure,
+main,
+menu,
+footer {
+  margin: 0;
+  padding: 0;
+  font-weight: normal;
+}
+
+li {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+button {
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-family: var(--font-sans);
+}
+
+figure,
+figcaption {
+  display: initial;
+  position: relative;
+}
+
+video,
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+img {
+  vertical-align: top;
+}
+
+ul {
+  list-style-type: none;
+  -webkit-margin-before: 0;
+  -webkit-margin-after: 0;
+}
+
+// helpers
+.debug {
+  border: 2px solid hotpink;
+}
+
+// a11y
+@media (prefers-reduced-motion: reduce) {
+  html:focus-within {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
