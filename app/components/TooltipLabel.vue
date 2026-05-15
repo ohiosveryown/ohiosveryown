@@ -28,11 +28,12 @@
         transition: { duration: 0.15 },
       }"
     >
-      <img
-        :src="image"
-        alt=""
-        class="tooltip-label__image"
-      />
+      <motion.div
+        class="tooltip-label__image-parallax"
+        :style="{ x: parallaxX, y: parallaxY }"
+      >
+        <img :src="image" alt="" class="tooltip-label__image" />
+      </motion.div>
     </motion.div>
   </AnimatePresence>
 
@@ -91,6 +92,11 @@
     will-change: transform, filter, opacity;
   }
 
+  .tooltip-label__image-parallax {
+    display: block;
+    will-change: transform;
+  }
+
   .tooltip-label__image {
     display: block;
     width: 8.8rem;
@@ -108,7 +114,9 @@
   const OFFSET_X = 14
   const OFFSET_Y = 14
   const ANCHOR_GAP = 16
+  const PARALLAX_MAX = 12
   const SPRING = { stiffness: 220, damping: 22, mass: 0.6 }
+  const PARALLAX_SPRING = { stiffness: 140, damping: 18, mass: 0.5 }
 
   const visible = ref(false)
   const content = ref('')
@@ -120,6 +128,11 @@
   const mouseY = useMotionValue(0)
   const x = useSpring(mouseX, SPRING)
   const y = useSpring(mouseY, SPRING)
+
+  const parallaxRawX = useMotionValue(0)
+  const parallaxRawY = useMotionValue(0)
+  const parallaxX = useSpring(parallaxRawX, PARALLAX_SPRING)
+  const parallaxY = useSpring(parallaxRawY, PARALLAX_SPRING)
 
   let primed = false
   let currentTarget: HTMLElement | null = null
@@ -148,11 +161,23 @@
       x.jump(nextX)
       y.jump(nextY)
       primed = true
-      return
+    } else {
+      mouseX.set(nextX)
+      mouseY.set(nextY)
     }
 
-    mouseX.set(nextX)
-    mouseY.set(nextY)
+    if (currentTarget) {
+      const rect = currentTarget.getBoundingClientRect()
+      const relX = (event.clientX - (rect.left + rect.width / 2)) / (rect.width / 2)
+      const relY = (event.clientY - (rect.top + rect.height / 2)) / (rect.height / 2)
+      const clampedX = Math.max(-1, Math.min(1, relX))
+      const clampedY = Math.max(-1, Math.min(1, relY))
+      parallaxRawX.set(clampedX * PARALLAX_MAX)
+      parallaxRawY.set(clampedY * PARALLAX_MAX)
+    } else {
+      parallaxRawX.set(0)
+      parallaxRawY.set(0)
+    }
   }
 
   function handleMouseOver(event: MouseEvent) {
