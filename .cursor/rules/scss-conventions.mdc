@@ -1,0 +1,101 @@
+---
+description: SCSS layout, breakpoints, nesting, units, and property order
+globs: "**/*.{scss,vue}"
+alwaysApply: false
+---
+
+# SCSS Conventions
+
+## Layout: Flexbox by default
+
+Use `display: flex` as the default. Only reach for CSS Grid when flexbox genuinely cannot solve the layout.
+
+## Units: rem for the box model
+
+`reset.scss` sets `html { font-size: 62.5% }`, so `1rem === 10px`. Use `rem` for `margin`, `padding`, `width`, and `height`. Use `px` only for hairline borders and similar fine details.
+
+```scss
+padding: 1.6rem;   // = 16px
+width: 100%;
+height: 4.8rem;    // = 48px
+```
+
+## Breakpoint mixin (no raw media queries)
+
+`grid.scss` is auto-injected via Vite `additionalData`, so `breakpoint()` is globally available — no `@use` needed.
+
+Available breakpoints: `xs` (360px), `sm` (600px), `md` (700px), `mdl` (1000px), `lg` (1200px), `xl` (2000px).
+
+```scss
+// correct
+.card {
+  font-size: 1.4rem;
+
+  @include breakpoint(md) {
+    font-size: 1.6rem;
+  }
+}
+
+// wrong - raw media query
+.card {
+  @media (min-width: 700px) { ... }
+}
+```
+
+## Flat selectors
+
+Keep nesting minimal. Only nest for:
+- Pseudo-classes / pseudo-elements (`:hover`, `::before`)
+- State variants (`&.is-active`)
+- Breakpoint mixins (`@include breakpoint(...)`)
+
+Do **not** nest descendant selectors — use a flat BEM-style class on the child instead.
+
+```scss
+// correct
+.card { display: flex; }
+.card-title {
+  font-size: 1.8rem;
+  &:hover { color: var(--color-accent); }
+}
+
+// wrong
+.card {
+  display: flex;
+  .card-title { ... }   // descendant nesting
+}
+```
+
+## Property order
+
+Order properties from broad layout impact to finer details. Maintain this order inside breakpoint mixins as well.
+
+1. **Layout** — `display`, then flex sub-props (`flex-direction`, `flex-wrap`, `align-items`, `justify-content`, `align-self`, `gap`), then `position`, `z-index`
+2. **Box model** — `margin`, `padding`, `width`, `height`
+3. **Visual** — `border`, `color`, `background`, `box-shadow`
+4. **Typography** — `font-size`, `font-family`, `text-align`, `text-transform`
+5. **Misc** — `transform`, `transition`, `overflow`, `cursor`
+
+```scss
+.example {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.6rem;
+  position: relative;
+  z-index: var(--z1);
+
+  margin: 0 auto;
+  padding: 1.6rem;
+  width: 100%;
+
+  border: 1px solid currentColor;
+  background: #fff;
+
+  font-size: 1.4rem;
+  text-transform: uppercase;
+
+  transition: opacity var(--ease);
+  cursor: pointer;
+}
+```

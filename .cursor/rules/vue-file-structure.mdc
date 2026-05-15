@@ -1,0 +1,55 @@
+---
+description: Vue SFC block order, scoping, and TypeScript requirements
+globs: **/*.vue
+alwaysApply: false
+---
+
+# Vue File Structure
+
+## Block Order
+
+Always use this exact block order in `.vue` files — no exceptions:
+
+1. `<template>`
+2. `<style scoped lang="scss">`
+3. `<script lang="ts">` (or `<script setup lang="ts">`)
+
+```vue
+<template>
+  <!-- markup -->
+</template>
+
+<style scoped lang="scss">
+  /* styles */
+</style>
+
+<script setup lang="ts">
+  // logic
+</script>
+```
+
+## Style Block Requirements
+
+- **Always `scoped`**: every `<style>` block must use the `scoped` attribute.
+- **Always `lang="scss"`**: plain CSS is not used in this project.
+
+```vue
+<!-- correct -->
+<style scoped lang="scss">
+
+<!-- wrong - missing scoped -->
+<style lang="scss">
+```
+
+## Script Block Requirements
+
+- **Always `lang="ts"`** — plain JS is not allowed.
+- Prefer `<script setup lang="ts">` for Composition API components.
+
+```vue
+<!-- correct -->
+<script setup lang="ts">
+
+<!-- wrong -->
+<script>
+```
