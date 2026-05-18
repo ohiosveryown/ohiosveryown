@@ -58,6 +58,8 @@
         </button>
       </a>
     </section>
+
+    <LogoPile />
   </div>
 </template>
 
