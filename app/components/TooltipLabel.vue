@@ -7,6 +7,7 @@
       :initial="{
         opacity: 0,
         scale: 0.72,
+        rotate: -10,
         x: '-50%',
         y: '-80%',
         filter: 'blur(2rem)',
@@ -14,6 +15,7 @@
       :animate="{
         opacity: 1,
         scale: 1,
+        rotate: 0,
         x: '-50%',
         y: '-90%',
         filter: 'blur(0)',
@@ -22,6 +24,7 @@
       :exit="{
         opacity: 0,
         scale: 0.72,
+        rotate: 10,
         x: '-50%',
         y: '-90%',
         filter: 'blur(2rem)',
@@ -32,7 +35,11 @@
         class="tooltip-label__image-parallax"
         :style="{ x: parallaxX, y: parallaxY }"
       >
-        <img :src="image" alt="" class="tooltip-label__image" />
+        <img
+          :src="image"
+          alt=""
+          class="tooltip-label__image"
+        />
       </motion.div>
     </motion.div>
   </AnimatePresence>
@@ -42,11 +49,12 @@
       v-if="visible"
       class="tooltip-label"
       :style="{ x, y }"
-      :initial="{ opacity: 0, scale: 0.5, filter: 'blur(2rem)' }"
+      :initial="{ opacity: 0, scale: 0.5, filter: 'blur(2rem)', rotate: 10 }"
       :animate="{
         opacity: 1,
         scale: 1,
         filter: 'blur(0)',
+        rotate: 0,
         transition: { duration: 0.3 },
       }"
       :exit="{
@@ -67,10 +75,10 @@
     top: 0;
     left: 0;
     z-index: var(--zmax);
-    padding: 0.4rem 1.2rem 0.6rem;
+    padding: 0.4rem 1rem 0.6rem;
     border-radius: 100rem;
+    border: 1px solid #000;
     background: #000;
-    box-shadow: 0 0.2rem 0.4rem 0 rgba(0, 0, 0, 0.32);
     color: #fff;
     font-weight: 600;
     font-family: var(--system-font);
@@ -80,6 +88,9 @@
     line-height: 1.4;
     pointer-events: none;
     will-change: transform;
+    box-shadow:
+      0 1px 0px 0 rgba(255, 255, 255, 0.4) inset,
+      0 2px 3px 0 rgba(0, 0, 0, 0.32);
   }
 
   .tooltip-label__image-anchor {
@@ -168,8 +179,10 @@
 
     if (currentTarget) {
       const rect = currentTarget.getBoundingClientRect()
-      const relX = (event.clientX - (rect.left + rect.width / 2)) / (rect.width / 2)
-      const relY = (event.clientY - (rect.top + rect.height / 2)) / (rect.height / 2)
+      const relX =
+        (event.clientX - (rect.left + rect.width / 2)) / (rect.width / 2)
+      const relY =
+        (event.clientY - (rect.top + rect.height / 2)) / (rect.height / 2)
       const clampedX = Math.max(-1, Math.min(1, relX))
       const clampedY = Math.max(-1, Math.min(1, relY))
       parallaxRawX.set(clampedX * PARALLAX_MAX)
