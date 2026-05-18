@@ -60,6 +60,34 @@
     </section>
 
     <LogoPile />
+
+    <section class="work">
+      <ul class="work-list">
+        <li
+          v-for="entry in workEntries"
+          :key="entry.path"
+          class="work-item"
+        >
+          <NuxtLink
+            :to="entry.path"
+            class="work-link"
+          >
+            <div class="work-text">
+              <h3 class="work-title">{{ entry.title }}</h3>
+              <p class="work-description">{{ entry.description }}</p>
+            </div>
+            <ul class="work-tags">
+              <li
+                v-for="tag in entry.tags"
+                :key="tag"
+              >
+                {{ tag }}
+              </li>
+            </ul>
+          </NuxtLink>
+        </li>
+      </ul>
+    </section>
   </div>
 </template>
 
@@ -192,9 +220,92 @@
   .button-contact:hover {
     background: #f7f7f7;
   }
+
+  .work {
+    margin-top: 8rem;
+  }
+
+  .work-heading {
+    margin-bottom: 2.4rem;
+    font-size: 1.4rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.12rem;
+    color: #7b7b7b;
+  }
+
+  .work-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .work-link {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    padding: 2rem 0;
+    border-top: 1px solid #ebebeb;
+    transition: background 200ms ease;
+    @include breakpoint(md) {
+      flex-direction: row;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 4rem;
+    }
+  }
+
+  .work-item:last-child .work-link {
+    border-bottom: 1px solid #ebebeb;
+  }
+
+  .work-title {
+    font-size: 2rem;
+    font-weight: 500;
+    line-height: 1.2;
+  }
+
+  .work-description {
+    margin-top: 0.6rem;
+    max-width: 56rem;
+    color: #7b7b7b;
+    font-size: 1.4rem;
+    line-height: 1.4;
+  }
+
+  .work-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .work-tags li {
+    padding: 0.4rem 1rem;
+    border-radius: 100px;
+    background: #f2f2f2;
+    font-size: 1.2rem;
+    font-weight: 500;
+  }
 </style>
 
 <script setup lang="ts">
+  const router = useRouter()
+  const workEntries = router
+    .getRoutes()
+    .filter((r) => r.path.startsWith('/work/'))
+    .map((r) => ({
+      path: r.path,
+      title: r.meta.title,
+      description: r.meta.description,
+      tags: r.meta.tags,
+    }))
+
   const COPY_TARGETS = [
     {
       value: 'matt@ohiosveryown.co',
