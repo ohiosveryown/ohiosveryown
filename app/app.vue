@@ -1,5 +1,8 @@
 <template>
   <NuxtLayout>
+    <ClientOnly>
+      <GradientBackdrop />
+    </ClientOnly>
     <main>
       <NuxtPage />
     </main>

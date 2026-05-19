@@ -5,8 +5,9 @@
         v-for="entry in entries"
         :key="entry.path"
         class="work-item"
-        @mouseenter="hoveredPath = entry.path"
-        @mouseleave="hoveredPath = null"
+        @mouseenter="handleEnter(entry.path)"
+        @mousemove="handleMove"
+        @mouseleave="handleLeave"
       >
         <NuxtLink
           :to="entry.path"
@@ -27,12 +28,10 @@
                 class="work-folder-anchor"
               >
                 <AnimatePresence>
-                  <motion.img
+                  <motion.span
                     v-if="hoveredPath === entry.path"
                     :key="entry.path"
-                    :src="entry.folder"
-                    alt=""
-                    class="work-folder"
+                    class="work-folder-wrap"
                     :initial="{
                       opacity: 0,
                       scale: 0.88,
@@ -52,7 +51,14 @@
                       duration: 0.2,
                       ease: 'easeInOut',
                     }"
-                  />
+                  >
+                    <motion.img
+                      :src="entry.folder"
+                      alt=""
+                      class="work-folder"
+                      :style="{ x: parallaxX, y: parallaxY }"
+                    />
+                  </motion.span>
                 </AnimatePresence>
               </span>
               {{ entry.title }}
@@ -110,12 +116,18 @@
     pointer-events: none;
   }
 
+  .work-folder-wrap {
+    display: block;
+    width: 100%;
+    transform-origin: right center;
+    will-change: transform, opacity, filter;
+  }
+
   .work-folder {
     display: block;
     width: 100%;
     height: auto;
-    transform-origin: right center;
-    will-change: transform, opacity, filter;
+    will-change: transform;
   }
 
   .work-tags {
@@ -157,7 +169,10 @@
 
 <script setup lang="ts">
   import { ref } from 'vue'
-  import { motion, AnimatePresence } from 'motion-v'
+  import { motion, AnimatePresence, useMotionValue, useSpring } from 'motion-v'
+
+  const PARALLAX_MAX = 6
+  const PARALLAX_SPRING = { stiffness: 140, damping: 18, mass: 0.5 }
 
   const router = useRouter()
   const entries = router
@@ -173,4 +188,30 @@
     }))
 
   const hoveredPath = ref<string | null>(null)
+
+  const parallaxRawX = useMotionValue(0)
+  const parallaxRawY = useMotionValue(0)
+  const parallaxX = useSpring(parallaxRawX, PARALLAX_SPRING)
+  const parallaxY = useSpring(parallaxRawY, PARALLAX_SPRING)
+
+  function handleEnter(path: string) {
+    hoveredPath.value = path
+  }
+
+  function handleMove(event: MouseEvent) {
+    const target = event.currentTarget as HTMLElement
+    const rect = target.getBoundingClientRect()
+    const relX =
+      (event.clientX - (rect.left + rect.width / 2)) / (rect.width / 2)
+    const relY =
+      (event.clientY - (rect.top + rect.height / 2)) / (rect.height / 2)
+    const clampedX = Math.max(-1, Math.min(1, relX))
+    const clampedY = Math.max(-1, Math.min(1, relY))
+    parallaxRawX.set(clampedX * PARALLAX_MAX)
+    parallaxRawY.set(clampedY * PARALLAX_MAX)
+  }
+
+  function handleLeave() {
+    hoveredPath.value = null
+  }
 </script>

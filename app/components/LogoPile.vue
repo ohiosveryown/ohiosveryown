@@ -71,7 +71,7 @@
   }
 
   .logo-pile-item:hover {
-    transform: translateY(-0.3rem);
+    transform: translateY(-0.3rem) rotate(5deg);
   }
 
   .logo-pile-item svg {

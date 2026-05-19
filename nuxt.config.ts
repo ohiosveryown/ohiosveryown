@@ -2,6 +2,13 @@
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
+  typescript: {
+    tsConfig: {
+      compilerOptions: {
+        types: ['@webgpu/types'],
+      },
+    },
+  },
   css: [
     '~/style/type.scss',
     '~/style/reset.scss',
