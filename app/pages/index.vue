@@ -1,6 +1,34 @@
 <template>
   <div class="container-index">
-    <SiteHeader />
+    <SiteHeader>
+      <span class="row">
+        I'm
+        <span
+          class="has-tooltip"
+          data-tooltip="Hey there 👋"
+          data-tooltip-image="https://ik.imagekit.io/ohiosveryown/ovo--3.7/index/hero.webp?updatedAt=1715362287713"
+          >Matt</span
+        >, a principal designer at
+        <span
+          class="has-tooltip"
+          data-tooltip="$XYZ"
+          data-tooltip-image="https://ik.imagekit.io/ohiosveryown/ovo--3.7/index/hero.webp?updatedAt=1715362287713"
+          >Square</span
+        >
+        <IconSquare class="icon-square" />
+        ,
+      </span>
+      <span class="row">
+        living in always peachy,
+        <span
+          class="has-tooltip"
+          data-tooltip="The city in a forest"
+          data-tooltip-image="https://ik.imagekit.io/ohiosveryown/ovo--3.7/index/atlanta@3x.webp?updatedAt=1716129844773"
+          >Atlanta, Ga</span
+        >
+        🍑.
+      </span>
+    </SiteHeader>
 
     <section class="buttons">
       <a href="#">

@@ -1,34 +1,10 @@
 <template>
   <header class="site-header">
-    <div class="greeting">Welcome traveler</div>
+    <div class="greeting">
+      <slot name="greeting">{{ greeting }}</slot>
+    </div>
     <h1>
-      <span class="row">
-        I'm
-        <span
-          class="has-tooltip"
-          data-tooltip="Hey there 👋"
-          data-tooltip-image="https://ik.imagekit.io/ohiosveryown/ovo--3.7/index/hero.webp?updatedAt=1715362287713"
-          >Matt</span
-        >, a principal designer at
-        <span
-          class="has-tooltip"
-          data-tooltip="$XYZ"
-          data-tooltip-image="https://ik.imagekit.io/ohiosveryown/ovo--3.7/index/hero.webp?updatedAt=1715362287713"
-          >Square</span
-        >
-        <IconSquare class="icon-square" />
-        ,
-      </span>
-      <span class="row">
-        living in always peachy,
-        <span
-          class="has-tooltip"
-          data-tooltip="The city in a forest"
-          data-tooltip-image="https://ik.imagekit.io/ohiosveryown/ovo--3.7/index/atlanta@3x.webp?updatedAt=1716129844773"
-          >Atlanta, Ga</span
-        >
-        🍑.
-      </span>
+      <slot />
     </h1>
   </header>
 </template>
@@ -43,30 +19,30 @@
   }
 
   h1,
-  span {
-    font-family: italic, Courier, monospace;
+  h1 :deep(span) {
+    font-family: 'italic', Courier, monospace;
     font-size: clamp(1rem, -0.875rem + 10vw, 4.2rem);
     font-weight: 100;
     line-height: 128%;
     letter-spacing: -0.072rem;
   }
 
-  .row {
+  h1 :deep(.row) {
     display: block;
   }
 
-  span.has-tooltip {
+  h1 :deep(span.has-tooltip) {
     color: #7b7b7b;
     text-decoration-thickness: 0.064rem;
     text-decoration-color: currentColor;
     text-underline-offset: 0.8rem;
   }
 
-  span.has-tooltip:hover {
+  h1 :deep(span.has-tooltip:hover) {
     text-decoration: none;
   }
 
-  .icon-square {
+  h1 :deep(.icon-square) {
     width: 2.6rem;
     height: 2.6rem;
     margin-left: 1rem;
@@ -74,4 +50,8 @@
   }
 </style>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+  withDefaults(defineProps<{ greeting?: string }>(), {
+    greeting: 'Welcome traveler',
+  })
+</script>

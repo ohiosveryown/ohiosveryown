@@ -105,15 +105,18 @@
 
   .tooltip-label__image-parallax {
     display: block;
-    will-change: transform;
+    filter: drop-shadow(0 0.4rem 1.6rem rgba(0, 0, 0, 0.32));
+    will-change: transform, filter;
   }
 
   .tooltip-label__image {
+    --squircle: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'><path d='M45.4,0 L54.6,0 C73.75,0 80.85,0 86.52,2.41 C92.2,5.25 94.75,7.8 97.59,13.48 C100,19.15 100,26.25 100,45.4 L100,54.6 C100,73.75 100,80.85 97.59,86.52 C94.75,92.2 92.2,94.75 86.52,97.59 C80.85,100 73.75,100 54.6,100 L45.4,100 C26.25,100 19.15,100 13.48,97.59 C7.8,94.75 5.25,92.2 2.41,86.52 C0,80.85 0,73.75 0,54.6 L0,45.4 C0,26.25 0,19.15 2.41,13.48 C5.25,7.8 7.8,5.25 13.48,2.41 C19.15,0 26.25,0 45.4,0 Z'/></svg>");
+
     display: block;
     width: 8.8rem;
     height: 8.8rem;
-    border-radius: 1.7rem;
-    box-shadow: 0 0.4rem 1.6rem 0 rgba(0, 0, 0, 0.32);
+    -webkit-mask: var(--squircle) center / 100% 100% no-repeat;
+    mask: var(--squircle) center / 100% 100% no-repeat;
     object-fit: cover;
   }
 </style>

@@ -1,6 +1,6 @@
 # Project Guidelines
 
-Nuxt 4 + Vue 3 + TypeScript + SCSS. Styles live in `app/style/`. Long-form rationale is in `front-end-styling.md` (note: that doc's "Typography Rules" section describes a system that does **not** exist in this codebase — trust this file and `app/style/type.scss` instead).
+Nuxt 4 + Vue 3 + TypeScript + SCSS. Styles live in `app/style/`.
 
 ---
 
@@ -75,7 +75,7 @@ Do **not** nest descendant selectors — use a flat BEM-style class on the child
 
 ### Property order
 
-Order properties from broad layout impact to finer details. Maintain this order inside breakpoint blocks too.
+Order properties from broad layout impact to finer details. Maintain this order inside breakpoint blocks too. When in doubt, ask: "does this property affect how surrounding elements are positioned?" — if yes, it goes near the top.
 
 1. **Layout** — `display`, then flex sub-props (`flex-direction`, `flex-wrap`, `align-items`, `justify-content`, `align-self`, `gap`), then `position`, `z-index`
 2. **Box model** — `margin`, `padding`, `width`, `height`
