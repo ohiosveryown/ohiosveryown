@@ -67,23 +67,60 @@
           v-for="entry in workEntries"
           :key="entry.path"
           class="work-item"
+          @mouseenter="hoveredPath = entry.path"
+          @mouseleave="hoveredPath = null"
         >
           <NuxtLink
             :to="entry.path"
             class="work-link"
           >
             <div class="work-text">
-              <h3 class="work-title">{{ entry.title }}</h3>
+              <ul class="work-tags">
+                <li
+                  v-for="(tag, i) in entry.tags"
+                  :key="tag"
+                >
+                  {{ tag }}{{ i < (entry.tags?.length ?? 0) - 1 ? ',' : '' }}
+                </li>
+              </ul>
+              <h3 class="work-title">
+                <span
+                  v-if="entry.folder"
+                  class="work-folder-anchor"
+                >
+                  <AnimatePresence>
+                    <motion.img
+                      v-if="hoveredPath === entry.path"
+                      :key="entry.path"
+                      :src="entry.folder"
+                      alt=""
+                      class="work-folder"
+                      :initial="{
+                        opacity: 0,
+                        scale: 0.88,
+                        filter: 'blur(1rem)',
+                      }"
+                      :animate="{
+                        opacity: 1,
+                        scale: 1,
+                        filter: 'blur(0)',
+                      }"
+                      :exit="{
+                        opacity: 0,
+                        scale: 0.88,
+                        filter: 'blur(1rem)',
+                      }"
+                      :transition="{
+                        duration: 0.3,
+                        ease: 'easeInOut',
+                      }"
+                    />
+                  </AnimatePresence>
+                </span>
+                {{ entry.title }}
+              </h3>
               <p class="work-description">{{ entry.description }}</p>
             </div>
-            <ul class="work-tags">
-              <li
-                v-for="tag in entry.tags"
-                :key="tag"
-              >
-                {{ tag }}
-              </li>
-            </ul>
           </NuxtLink>
         </li>
       </ul>
@@ -94,10 +131,10 @@
 <style scoped lang="scss">
   .greeting {
     margin-bottom: 1.2rem;
-    font-family: 'sans', var(--system-font);
+    // font-family: 'sans', var(--system-font);
     font-size: clamp(1rem, -0.875rem + 12vw, 6rem);
     font-weight: 360;
-    letter-spacing: -0.25rem;
+    letter-spacing: -0.2rem;
     line-height: 114%;
   }
 
@@ -222,7 +259,10 @@
   }
 
   .work {
-    margin-top: 8rem;
+    margin-top: 5rem;
+    @include breakpoint(md) {
+      width: grid-width(5);
+    }
   }
 
   .work-heading {
@@ -243,58 +283,88 @@
     list-style: none;
   }
 
+  .work-item {
+    position: relative;
+  }
+
   .work-link {
     display: flex;
     flex-direction: column;
-    gap: 1.2rem;
-    padding: 2rem 0;
-    border-top: 1px solid #ebebeb;
-    transition: background 200ms ease;
-    @include breakpoint(md) {
-      flex-direction: row;
-      align-items: baseline;
-      justify-content: space-between;
-      gap: 4rem;
+    cursor: var(--cursor);
+    // padding: 2rem 0;
+    // border-top: 1px solid #ebebeb;
+  }
+
+  .work-link:hover {
+    .work-title {
+      background: #f7f7f7;
     }
   }
 
-  .work-item:last-child .work-link {
-    border-bottom: 1px solid #ebebeb;
+  .work-folder-anchor {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: calc(100% + 0.8rem);
+    width: 3.2rem;
+    pointer-events: none;
   }
 
-  .work-title {
-    font-size: 2rem;
-    font-weight: 500;
-    line-height: 1.2;
+  .work-folder {
+    display: block;
+    width: 100%;
+    height: auto;
+    transform-origin: right center;
+    will-change: transform, opacity, filter;
   }
 
-  .work-description {
-    margin-top: 0.6rem;
-    max-width: 56rem;
-    color: #7b7b7b;
-    font-size: 1.4rem;
-    line-height: 1.4;
-  }
+  // .work-item:last-child .work-link {
+  //   border-bottom: 1px solid #ebebeb;
+  // }
 
   .work-tags {
     display: flex;
     flex-wrap: wrap;
     gap: 0.6rem;
-    margin: 0;
+    margin: 0 0 0.8rem;
     padding: 0;
     list-style: none;
   }
 
+  .work-title {
+    position: relative;
+    border-radius: 0.5rem;
+    margin-bottom: 1.3rem;
+    width: fit-content;
+    font-size: clamp(2.4rem, 2.1vw, 2.8rem);
+    font-weight: 440;
+    line-height: 1.2;
+    letter-spacing: -0.068rem;
+  }
+
+  .work-description {
+    font-size: clamp(1.7rem, 1.26vw, 1.8rem);
+    font-weight: 450;
+    letter-spacing: -0.024rem;
+    opacity: 0.72;
+    line-height: 1.3;
+    text-wrap: balance;
+  }
+
   .work-tags li {
-    padding: 0.4rem 1rem;
-    border-radius: 100px;
-    background: #f2f2f2;
-    font-size: 1.2rem;
-    font-weight: 500;
+    font-family: 'thin', Georgia, serif;
+    font-size: clamp(1.7rem, 1.1vw, 1.9rem);
+    font-weight: 360;
+    line-height: 1.32;
   }
 </style>
 
 <script setup lang="ts">
+  import { ref } from 'vue'
+  import { motion, AnimatePresence } from 'motion-v'
+
   const router = useRouter()
   const workEntries = router
     .getRoutes()
@@ -304,7 +374,11 @@
       title: r.meta.title,
       description: r.meta.description,
       tags: r.meta.tags,
+      cover: r.meta.cover,
+      folder: r.meta.folder,
     }))
+
+  const hoveredPath = ref<string | null>(null)
 
   const COPY_TARGETS = [
     {

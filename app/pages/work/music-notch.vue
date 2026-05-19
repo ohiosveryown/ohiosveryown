@@ -51,6 +51,9 @@
     description:
       'Building a now-playing app for Mac, from custom Shape to Perl-piped streaming state.',
     tags: ['Agentic Engineering', 'Human Interface Design'],
+    cover: '/work/music-notch/cover.png',
+    folder:
+      'https://ik.imagekit.io/ohiosveryown/ovo--3.7/index/folder--notch@3x.webp',
   })
 
   const { meta } = useRoute()
