@@ -2,7 +2,7 @@
   <canvas
     ref="canvasEl"
     class="gradient-backdrop"
-    :class="{ 'is-fallback': isFallback }"
+    :class="{ 'is-fallback': isFallback, 'is-ready': isReady }"
     aria-hidden="true"
   />
 </template>
@@ -15,7 +15,19 @@
     inset: 0;
     width: 100dvw;
     height: 100dvh;
+    opacity: 0;
     pointer-events: none;
+    transition: opacity 400ms ease;
+  }
+
+  .gradient-backdrop.is-ready {
+    opacity: 1;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .gradient-backdrop {
+      transition: none;
+    }
   }
 
   .gradient-backdrop.is-fallback {
@@ -50,6 +62,7 @@
 
   const canvasEl = ref<HTMLCanvasElement | null>(null)
   const isFallback = ref(false)
+  const isReady = ref(false)
 
   let renderer: Renderer | null = null
   let rafId = 0
@@ -395,6 +408,18 @@
     if (reduceMotion) renderer?.render((performance.now() - startTime) / 1000)
   }
 
+  function reveal() {
+    if (isReady.value) return
+    if (reduceMotion) {
+      isReady.value = true
+      return
+    }
+    // Wait until the first frame is painted before fading in.
+    requestAnimationFrame(() => {
+      isReady.value = true
+    })
+  }
+
   async function init() {
     const canvas = canvasEl.value
     if (!canvas) return
@@ -425,15 +450,19 @@
         '[GradientBackdrop] no GPU renderer available — using CSS fallback',
       )
       isFallback.value = true
+      reveal()
       return
     }
 
     renderer.resize()
+    renderer.render(0)
     window.addEventListener('resize', onResize, { passive: true })
     startTime = performance.now()
     if (reduceMotion) {
       renderer.render(8)
+      reveal()
     } else {
+      reveal()
       rafId = requestAnimationFrame(loop)
     }
   }
