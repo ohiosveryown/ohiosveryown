@@ -51,7 +51,11 @@
     description:
       'Building a now-playing app for Mac, from custom Shape to Perl-piped streaming state.',
     tags: ['Agentic Engineering', 'Human Interface Design'],
-    cover: '/work/music-notch/cover.png',
+    cover:
+      'https://ik.imagekit.io/ohiosveryown/ovo--3.7/index/folder--notch@3x.webp',
+    coverColor: '#1a1208',
+    video:
+      'https://res.cloudinary.com/dnxxsspmw/video/upload/v1778607269/notch_ueqycn.mp4#t=0.1',
     folder:
       'https://ik.imagekit.io/ohiosveryown/ovo--3.7/index/folder--notch@3x.webp',
   })

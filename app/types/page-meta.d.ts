@@ -4,6 +4,8 @@ declare module '#app' {
     description?: string
     tags?: string[]
     cover?: string
+    coverColor?: string
+    video?: string
     folder?: string
   }
 }

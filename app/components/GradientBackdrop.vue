@@ -58,7 +58,7 @@
 
   // Three slowly-drifting pastel blobs on white. A tiny low-frequency noise
   // warp gives organic, photo-blur-like edges without any fractal detail.
-  const PEACH = 'vec3(0.995, 0.810, 0.755)'
+  const PEACH = 'vec3(0.99, 0.825, 0.78)'
   const LAVENDER = 'vec3(0.825, 0.785, 0.955)'
   const PALE_BLUE = 'vec3(0.815, 0.860, 0.965)'
   const SPEED = '0.14'
@@ -141,9 +141,9 @@
       let sideMask = smoothstep(0.18, 0.85, uv.x / aspect);
 
       var col = vec3<f32>(1.0);
-      col = mix(col, ${PEACH},    clamp(w1 * 0.95 * sideMask, 0.0, 1.0));
-      col = mix(col, ${PEACH},    clamp(w4 * 0.70 * sideMask, 0.0, 1.0));
-      col = mix(col, ${LAVENDER}, clamp(w2 * 0.55 * sideMask, 0.0, 1.0));
+      col = mix(col, ${PEACH},    clamp(w1 * 0.85 * sideMask, 0.0, 1.0));
+      col = mix(col, ${PEACH},    clamp(w4 * 0.60 * sideMask, 0.0, 1.0));
+      col = mix(col, ${LAVENDER}, clamp(w2 * 0.58 * sideMask, 0.0, 1.0));
       col = mix(col, ${PALE_BLUE},clamp(w3 * 0.50 * sideMask, 0.0, 1.0));
 
       return vec4<f32>(col, 1.0);
@@ -221,9 +221,9 @@
       float sideMask = smoothstep(0.18, 0.85, uv.x / aspect);
 
       vec3 col = vec3(1.0);
-      col = mix(col, ${PEACH},    clamp(w1 * 0.95 * sideMask, 0.0, 1.0));
-      col = mix(col, ${PEACH},    clamp(w4 * 0.70 * sideMask, 0.0, 1.0));
-      col = mix(col, ${LAVENDER}, clamp(w2 * 0.55 * sideMask, 0.0, 1.0));
+      col = mix(col, ${PEACH},    clamp(w1 * 0.85 * sideMask, 0.0, 1.0));
+      col = mix(col, ${PEACH},    clamp(w4 * 0.60 * sideMask, 0.0, 1.0));
+      col = mix(col, ${LAVENDER}, clamp(w2 * 0.58 * sideMask, 0.0, 1.0));
       col = mix(col, ${PALE_BLUE},clamp(w3 * 0.50 * sideMask, 0.0, 1.0));
 
       outColor = vec4(col, 1.0);
