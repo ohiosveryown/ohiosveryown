@@ -132,7 +132,7 @@
   .work-list {
     display: flex;
     flex-direction: column;
-    gap: 0.4rem;
+    gap: 6.4rem;
     margin: 0;
     padding: 0;
     list-style: none;
@@ -152,6 +152,12 @@
     .work-title {
       background: #f7f7f7;
     }
+  }
+
+  .work-text {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
   }
 
   .work-folder-anchor {
@@ -183,22 +189,21 @@
     display: flex;
     flex-wrap: wrap;
     gap: 0.6rem;
-    margin: 0 0 0.8rem;
+    // margin: 0 0 0.8rem;
     padding: 0;
     list-style: none;
   }
 
   .work-tags li {
     font-family: 'thin', Georgia, serif;
-    font-size: clamp(1.7rem, 1.1vw, 1.9rem);
-    font-weight: 360;
+    font-size: clamp(1.7rem, 1.15vw, 1.9rem);
     line-height: 1.32;
   }
 
   .work-title {
     position: relative;
     border-radius: 0.5rem;
-    margin-bottom: 1.3rem;
+    // margin-bottom: 1rem;
     width: fit-content;
     font-size: clamp(2.4rem, 2.1vw, 2.8rem);
     font-weight: 440;
@@ -208,10 +213,10 @@
 
   .work-description {
     font-size: clamp(1.7rem, 1.26vw, 1.8rem);
-    font-weight: 450;
+    font-weight: 440;
     letter-spacing: -0.024rem;
-    line-height: 1.3;
-    opacity: 0.72;
+    line-height: 1.35;
+    opacity: 0.64;
     text-wrap: balance;
   }
 
@@ -241,9 +246,10 @@
 
   .work-cover__media {
     display: block;
-    height: 30dvh;
-    width: auto;
+    margin: auto;
     border-radius: 1.2rem;
+    width: 72%;
+    height: auto;
     object-fit: contain;
   }
 </style>

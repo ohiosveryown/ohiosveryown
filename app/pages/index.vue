@@ -52,6 +52,10 @@
 </template>
 
 <style scoped lang="scss">
+  .container-index {
+    padding-bottom: 5.6rem;
+  }
+
   .buttons {
     display: flex;
     align-items: center;

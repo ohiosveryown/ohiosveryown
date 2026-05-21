@@ -53,7 +53,7 @@
     tags: ['Agentic Engineering', 'Human Interface Design'],
     cover:
       'https://ik.imagekit.io/ohiosveryown/ovo--3.7/index/folder--notch@3x.webp',
-    coverColor: '#1a1208',
+    coverColor: 'transparent',
     video:
       'https://res.cloudinary.com/dnxxsspmw/video/upload/v1778607269/notch_ueqycn.mp4#t=0.1',
     folder:

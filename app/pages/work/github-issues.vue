@@ -48,13 +48,14 @@
 <script setup lang="ts">
   definePageMeta({
     title: 'GitHub Issues',
-    description: 'Automating the creation of GitHub issues from a spreadsheet.',
+    description:
+      'Tracking work with GitHub. Nested tasks, rolled-up progress, and cross-repo planning.',
     tags: ['Human Interface Design', 'Product Strategy'],
     cover:
       'https://ik.imagekit.io/ohiosveryown/ovo--3.7/index/folder--issues@3x.webp',
-    coverColor: '#1a1208',
+    coverColor: 'transparent',
     video:
-      'https://res.cloudinary.com/dnxxsspmw/video/upload/v1778607269/issues_bzawqy.mp4#t=0.1',
+      'https://res.cloudinary.com/dskbwusdb/video/upload/v1779311020/github-copilot-agent-mode_saecbe.mp4#t=0.1',
     folder:
       'https://ik.imagekit.io/ohiosveryown/ovo--3.7/index/folder--notch@3x.webp',
   })
