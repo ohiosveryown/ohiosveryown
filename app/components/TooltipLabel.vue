@@ -196,6 +196,11 @@
     }
   }
 
+  function dismiss() {
+    currentTarget = null
+    visible.value = false
+  }
+
   function handleMouseOver(event: MouseEvent) {
     const target = (event.target as HTMLElement | null)?.closest<HTMLElement>(
       '.has-tooltip',
@@ -226,6 +231,7 @@
   }
 
   onMounted(() => {
+    registerTooltipDismiss(dismiss)
     window.addEventListener('mousemove', handleMouseMove, { passive: true })
     window.addEventListener('scroll', handleViewportChange, { passive: true })
     window.addEventListener('resize', handleViewportChange)
@@ -234,6 +240,7 @@
   })
 
   onBeforeUnmount(() => {
+    unregisterTooltipDismiss(dismiss)
     window.removeEventListener('mousemove', handleMouseMove)
     window.removeEventListener('scroll', handleViewportChange)
     window.removeEventListener('resize', handleViewportChange)

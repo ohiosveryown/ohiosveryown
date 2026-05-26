@@ -32,7 +32,10 @@
 
     <section class="buttons">
       <div class="button-adventure-wrap">
-        <a href="#">
+        <NuxtLink
+          :to="randomWorkPath"
+          @click="handleAdventureClick"
+        >
           <button
             class="button-adventure has-tooltip"
             data-tooltip="Let the models shape your destiny"
@@ -43,7 +46,7 @@
             <span class="button-bg" />
             Adventure time
           </button>
-        </a>
+        </NuxtLink>
 
         <motion.span
           v-for="folder in adventureFolders"
@@ -193,8 +196,31 @@
 </style>
 
 <script setup lang="ts">
-  import { ref } from 'vue'
+  import { ref, onMounted, onActivated } from 'vue'
   import { motion } from 'motion-v'
+
+  const router = useRouter()
+  const workPaths = router
+    .getRoutes()
+    .filter((route) => route.path.startsWith('/work/'))
+    .map((route) => route.path)
+
+  const randomWorkPath = ref(workPaths[0] ?? '/')
+  const adventureHover = ref(false)
+
+  function randomizeWorkPath() {
+    if (workPaths.length === 0) return
+    randomWorkPath.value =
+      workPaths[Math.floor(Math.random() * workPaths.length)]!
+  }
+
+  function handleAdventureClick() {
+    dismissTooltip()
+    adventureHover.value = false
+  }
+
+  onMounted(randomizeWorkPath)
+  onActivated(randomizeWorkPath)
 
   const FOLDER_EASE = [0.8, 0, 0.16, 1] as const
   const FOLDER_EXIT_TRANSITION = {
@@ -215,8 +241,6 @@
     }
     exitTransition: typeof FOLDER_EXIT_TRANSITION
   }
-
-  const adventureHover = ref(false)
 
   const adventureFolders: readonly AdventureFolder[] = [
     {
