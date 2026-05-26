@@ -12,7 +12,7 @@
         <span
           class="has-tooltip"
           data-tooltip="$XYZ"
-          data-tooltip-image="https://ik.imagekit.io/ohiosveryown/ovo--3.7/index/hero.webp?updatedAt=1715362287713"
+          data-tooltip-image="https://ik.imagekit.io/ohiosveryown/ovo--3.7/index/skills/loop.gif"
           >Square</span
         >
         <IconSquare class="icon-square" />
@@ -31,16 +31,46 @@
     </SiteHeader>
 
     <section class="buttons">
-      <a href="#">
-        <button
-          class="button-adventure has-tooltip"
-          data-tooltip="Let the models shape your destiny"
+      <div class="button-adventure-wrap">
+        <a href="#">
+          <button
+            class="button-adventure has-tooltip"
+            data-tooltip="Let the models shape your destiny"
+            @mouseenter="adventureHover = true"
+            @mouseleave="adventureHover = false"
+          >
+            <span class="sheen" />
+            <span class="button-bg" />
+            Adventure time
+          </button>
+        </a>
+
+        <motion.span
+          v-for="folder in adventureFolders"
+          :key="folder.src"
+          class="adventure-folder-wrap"
+          :initial="false"
+          :animate="
+            adventureHover
+              ? { opacity: 1, filter: 'blur(0)' }
+              : { opacity: 0, filter: 'blur(1rem)' }
+          "
+          :transition="
+            adventureHover ? folder.transition : folder.exitTransition
+          "
         >
-          <span class="sheen" />
-          <span class="button-bg" />
-          Adventure time
-        </button>
-      </a>
+          <motion.img
+            :src="folder.src"
+            :alt="folder.alt"
+            class="adventure-folder"
+            :initial="false"
+            :animate="adventureHover ? folder.animate : folder.initial"
+            :transition="
+              adventureHover ? folder.transition : folder.exitTransition
+            "
+          />
+        </motion.span>
+      </div>
 
       <ContactButton />
     </section>
@@ -64,6 +94,35 @@
     @include breakpoint(md) {
       margin-top: 4rem;
     }
+  }
+
+  .button-adventure-wrap {
+    position: relative;
+  }
+
+  .adventure-folder-wrap {
+    display: block;
+    position: absolute;
+    z-index: var(--z0);
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+    width: 4.8rem;
+    height: 4.8rem;
+    pointer-events: none;
+    will-change: transform, opacity, filter;
+  }
+
+  .adventure-folder {
+    display: block;
+    width: 100%;
+    height: auto;
+    will-change: transform;
+    filter: drop-shadow(0 0.6rem 0.4rem rgba(0, 0, 0, 0.05))
+      drop-shadow(0 1.9rem 1.6rem rgba(0, 0, 0, 0.07))
+      drop-shadow(0 8.4rem 6.8rem rgba(0, 0, 0, 0.12));
   }
 
   .button-adventure {
@@ -133,4 +192,104 @@
   }
 </style>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+  import { ref } from 'vue'
+  import { motion } from 'motion-v'
+
+  const FOLDER_EASE = [0.8, 0, 0.16, 1] as const
+  const FOLDER_EXIT_TRANSITION = {
+    duration: 0.35,
+    delay: 0,
+    ease: FOLDER_EASE,
+  } as const
+
+  type AdventureFolder = {
+    src: string
+    alt: string
+    initial: Record<string, string | number>
+    animate: Record<string, string | number>
+    transition: {
+      duration: number
+      delay: number
+      ease: readonly [number, number, number, number]
+    }
+    exitTransition: typeof FOLDER_EXIT_TRANSITION
+  }
+
+  const adventureHover = ref(false)
+
+  const adventureFolders: readonly AdventureFolder[] = [
+    {
+      src: 'https://res.cloudinary.com/dn1q8h2ga/image/upload/v1722447739/ovo-3.7/index/icons/folder_3x_wwvysu.webp',
+      alt: 'folder closed icon',
+      initial: {
+        x: '-6rem',
+        y: '-2.2rem',
+        rotate: 0,
+        scale: 0.5,
+      },
+      animate: {
+        x: '-8rem',
+        y: '-3.6rem',
+        rotate: -15,
+        scale: 1,
+      },
+      transition: { duration: 0.6, delay: 0.15, ease: FOLDER_EASE },
+      exitTransition: FOLDER_EXIT_TRANSITION,
+    },
+    {
+      src: 'https://res.cloudinary.com/dn1q8h2ga/image/upload/v1722447737/ovo-3.7/index/icons/folder--vid_3x_yqcncr.webp',
+      alt: 'folder open with image icon',
+      initial: {
+        x: '4rem',
+        y: '-1.8rem',
+        rotate: 0,
+        scale: 0.5,
+      },
+      animate: {
+        x: '7.2rem',
+        y: '-3.6rem',
+        rotate: 24,
+        scale: 0.76,
+      },
+      transition: { duration: 0.6, delay: 0.25, ease: FOLDER_EASE },
+      exitTransition: FOLDER_EXIT_TRANSITION,
+    },
+    {
+      src: 'https://res.cloudinary.com/dn1q8h2ga/image/upload/v1722447738/ovo-3.7/index/icons/folder-images_3x_okncdx.webp',
+      alt: 'folder open with images icon',
+      initial: {
+        x: '-3.2rem',
+        y: '2.4rem',
+        rotate: 0,
+        scale: 0.5,
+      },
+      animate: {
+        x: '-5.6rem',
+        y: '4.8rem',
+        rotate: 16,
+        scale: 0.92,
+      },
+      transition: { duration: 0.6, delay: 0.2, ease: FOLDER_EASE },
+      exitTransition: FOLDER_EXIT_TRANSITION,
+    },
+    {
+      src: 'https://res.cloudinary.com/dn1q8h2ga/image/upload/v1722447736/ovo-3.7/index/icons/folder--browser_3x_aa5f79.webp',
+      alt: 'folder with browser icon',
+      initial: {
+        x: '3.6rem',
+        y: '2.6rem',
+        rotate: 0,
+        scale: 0.5,
+      },
+      animate: {
+        x: '5.6rem',
+        y: '4.4rem',
+        rotate: -10,
+        scale: 0.8,
+      },
+      transition: { duration: 0.6, delay: 0.3, ease: FOLDER_EASE },
+      exitTransition: FOLDER_EXIT_TRANSITION,
+    },
+  ]
+</script>
