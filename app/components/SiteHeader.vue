@@ -1,7 +1,9 @@
 <template>
   <header class="site-header">
     <div class="greeting">
-      <slot name="greeting">{{ greeting }}</slot>
+      <slot name="greeting"
+        ><span class="greeting-w">W</span>{{ greetingRest }}</slot
+      >
     </div>
     <h1>
       <slot />
@@ -16,6 +18,10 @@
     font-weight: 360;
     letter-spacing: -0.2rem;
     line-height: 114%;
+  }
+
+  .greeting-w {
+    margin-right: -0.3rem;
   }
 
   h1,
@@ -51,7 +57,10 @@
 </style>
 
 <script setup lang="ts">
-  withDefaults(defineProps<{ greeting?: string }>(), {
+  const props = withDefaults(defineProps<{ greeting?: string }>(), {
     greeting: 'Welcome traveler',
   })
+
+  // Strip the leading "W" so it can be wrapped for manual W/e kerning.
+  const greetingRest = computed(() => props.greeting.replace(/^W/, ''))
 </script>
