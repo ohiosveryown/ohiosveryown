@@ -14,10 +14,8 @@
   main {
     position: relative;
     margin: 0 auto;
+    padding-top: 10rem;
     max-width: 2100rem;
     width: 90dvw;
-    @include breakpoint(lg) {
-      padding-top: 10rem;
-    }
   }
 </style>
