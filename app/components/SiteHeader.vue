@@ -11,7 +11,7 @@
   .site-header {
     display: flex;
     flex-direction: column;
-    gap: 0.6rem;
+    gap: 1rem;
     width: 100%;
     max-width: 58.6rem;
   }
