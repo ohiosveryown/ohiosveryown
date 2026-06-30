@@ -1,0 +1,64 @@
+---
+description: Typography mixins, font families, and text utility classes
+globs: "**/*.{scss,vue}"
+alwaysApply: false
+---
+
+# Typography System
+
+The typography system lives in `app/style/type.scss` and is auto-loaded via `nuxt.config.ts`. Use the system — do not invent ad-hoc `font-family` or sizing.
+
+## Font families
+
+Three custom local fonts are loaded via `@font-face`. Apply them with mixins or utility classes — never with a raw `font-family` string.
+
+| Mixin           | Utility class | Underlying `font-family` |
+| --------------- | ------------- | ------------------------ |
+| `@include sans` | `.sans`       | `"sans"` (variable, weight 1–999) |
+| `@include thin` | `.thin`       | `"thin"`                          |
+| `@include italic` | `.italic`   | `"italic"` (variable, weight 1–999) |
+
+There is also a CSS variable `--system-font` for system-font fallbacks (used in `body`).
+
+```scss
+// correct
+.label {
+  @include sans;
+  font-weight: 450;
+}
+
+// wrong - raw font stack
+.label {
+  font-family: "Helvetica Neue", sans-serif;
+}
+```
+
+## Heading and body scale
+
+`h1`–`h6`, `p`, and `small` are already styled in `type.scss` with fluid `clamp()` sizing and the appropriate mixin. Use the right semantic tag; avoid overriding `font-size` / `line-height` / `font-family` on them without a strong reason.
+
+```vue
+<!-- preferred: let the global scale do the work -->
+<h2>Section heading</h2>
+<p>Body copy…</p>
+```
+
+## Text utility classes
+
+These ship globally from `type.scss`:
+
+- `.sans`, `.thin`, `.italic` — apply a font family
+- `.uc` — `text-transform: uppercase`
+- `.tac` / `.tar` / `.taj` — text-align center / right / justify
+- `.underline` — `text-decoration: underline`
+
+## Global CSS variables for styling
+
+From `reset.scss`:
+
+- `--unit: 1.2rem` — base spacing unit
+- `--max-width: 200rem`
+- `--ease`, `--ease-qubic`, `--spring` — easing tokens
+- `--zmax`, `--z5` … `--z0`, `--zmin` — z-index scale
+
+Prefer these tokens over hard-coded values where they fit.

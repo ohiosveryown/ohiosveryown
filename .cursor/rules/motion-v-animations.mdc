@@ -1,0 +1,101 @@
+---
+description: Use motion-v for animations, transitions, gestures, and viewport-triggered motion
+globs: "**/*.vue"
+alwaysApply: false
+---
+
+# Animations: motion-v
+
+This project uses [`motion-v`](https://motion.unovue.com/) (Motion for Vue) for animation work. **Do not** reach for Vue's built-in `<Transition>` / `<TransitionGroup>` — `AnimatePresence` wraps them with a richer, declarative API.
+
+## When to use motion-v vs plain CSS
+
+- **CSS `transition`** (with `--ease`, `--ease-qubic`, `--spring` tokens) — fine for trivial hover/focus state changes on a single property (`color`, `opacity`, `transform`).
+- **motion-v** — entrance/exit animations, choreographed sequences, viewport-triggered (scroll), gestures, animating across `v-if` / `v-show`, variants across a subtree.
+
+## Import & API style
+
+Prefer the namespace API (`motion.div`) over `<Motion as="div" />` — it's terser and gives you HTML/SVG type completion.
+
+```vue
+<script setup lang="ts">
+  import { motion, AnimatePresence } from 'motion-v'
+</script>
+
+<template>
+  <motion.div
+    :initial="{ opacity: 0, y: 20 }"
+    :animate="{ opacity: 1, y: 0 }"
+    :transition="{ duration: 0.4, ease: [0.8, 0, 0.16, 1] }"
+  />
+</template>
+```
+
+In Vue templates, **object props must be bound with `:`** and use **kebab-case** for multi-word props (`:in-view`, `:in-view-options`, `:while-hover`). `initial`, `animate`, `exit`, `transition`, `variants` are common enough to remember.
+
+## Enter/exit with v-if or v-show
+
+Wrap conditional elements in `<AnimatePresence>` so exits animate too:
+
+```vue
+<AnimatePresence>
+  <motion.div
+    v-if="isOpen"
+    :initial="{ opacity: 0 }"
+    :animate="{ opacity: 1 }"
+    :exit="{ opacity: 0 }"
+  />
+</AnimatePresence>
+```
+
+- `:multiple="true"` when animating multiple siblings (uses `TransitionGroup` under the hood).
+- `mode="wait"` to make the entering child wait for the exiting child.
+- `mode="popLayout"` to let surrounding elements reflow immediately.
+- `:unwrap-element="true"` when wrapping a component that renders its own wrapper (e.g. Radix `PopoverContent`).
+
+## Viewport-triggered animations
+
+```vue
+<motion.div
+  :initial="{ opacity: 0 }"
+  :in-view="{ opacity: 1 }"
+  :in-view-options="{ once: true, amount: 'some', margin: 100 }"
+/>
+```
+
+`:initial="false"` skips the initial animation entirely (useful on SSR-hydrated content you don't want to re-animate).
+
+## Gestures
+
+Use `hover` / `press` props instead of CSS `:hover` / `:active` when the animation involves more than a single property or needs spring physics:
+
+```vue
+<motion.button
+  :while-hover="{ scale: 1.05 }"
+  :while-press="{ scale: 0.95 }"
+  :transition="{ type: 'spring', stiffness: 260, damping: 20 }"
+/>
+```
+
+## Variants for coordinated motion
+
+When multiple elements should animate together, define `variants` once and trigger by name:
+
+```vue
+<motion.ul :initial="'hidden'" :animate="'visible'" :variants="list">
+  <motion.li v-for="i in items" :key="i" :variants="item" />
+</motion.ul>
+```
+
+## Wrapping custom components
+
+```ts
+import { motion } from 'motion-v'
+import IconSquare from '~/components/Icon/Square.vue'
+
+const MotionIcon = motion.create(IconSquare)
+```
+
+## Accessibility
+
+`reset.scss` only neutralizes CSS animations under `prefers-reduced-motion: reduce`. motion-v runs in JS and is **not** affected by that rule — gate or shorten meaningful motion manually when reduced motion is preferred.
