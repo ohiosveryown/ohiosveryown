@@ -15,6 +15,7 @@
         <component
           :is="item.href ? 'a' : 'span'"
           class="link-row__link"
+          :class="{ 'link-row__link--external': item.external }"
           v-bind="
             item.href
               ? { href: item.href, target: '_blank', rel: 'noopener' }
@@ -91,6 +92,9 @@
     display: flex;
     align-items: center;
     gap: 0.8rem;
+  }
+
+  a.link-row__link {
     cursor: var(--cursor);
   }
 
@@ -135,9 +139,10 @@
 
   .link-row__arrow {
     color: rgba(0, 0, 0, 0.5);
+    font-size: 1.4rem;
   }
 
-  a.link-row__link:hover .link-row__label {
+  a.link-row__link--external:hover .link-row__label {
     text-decoration: underline;
     text-decoration-thickness: 0.064rem;
     text-underline-offset: 0.4rem;
@@ -173,24 +178,27 @@
       items: [
         {
           label: 'Slack',
-          href: 'https://slack.com',
+          href: 'https://slack.com/blog/news/today-daily-briefing',
+          external: true,
           icon: { src: '/icons/slack.svg', pad: true },
         },
         {
           label: 'GitHub',
-          href: 'https://github.com',
+          href: 'https://github.com/features/copilot',
+          external: true,
           icon: { src: '/icons/github.png', rounded: true },
         },
         {
           label: 'Mailchimp',
           href: 'https://mailchimp.com',
+          external: true,
           icon: { src: '/icons/mailchimp.png', rounded: true, scale: 1.32 },
         },
         {
-          // Figma reuses the GitHub mark here as a placeholder.
           label: 'Eleven Warriors',
-          href: 'https://www.elevenwarriors.com',
-          icon: { src: '/icons/github.png', rounded: true },
+          href: 'https://www.elevenwarriors.com/data-viz/2016/09/74352/statagram-ohio-state-45-oklahoma-24',
+          external: true,
+          icon: { src: '/icons/elevenwarriors.png', rounded: true },
         },
       ],
     },
@@ -199,26 +207,18 @@
       items: [
         {
           label: 'Bookmarks',
-          href: '#',
-          external: true,
           icon: { src: '/icons/bookmarks.svg' },
         },
         {
           label: 'Notch',
-          href: '#',
-          external: true,
           icon: { src: '/icons/notch.png' },
         },
         {
           label: 'Proportional Design',
-          href: '#',
-          external: true,
           icon: { src: '/icons/proportional.png' },
         },
         {
           label: 'Supersymmetry',
-          href: '#',
-          external: true,
           icon: { src: '/icons/supersymmetry.png' },
         },
       ],
