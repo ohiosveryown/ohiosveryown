@@ -69,8 +69,6 @@
   let startTime = 0
   let reduceMotion = false
 
-  // Three slowly-drifting pastel blobs on white. A tiny low-frequency noise
-  // warp gives organic, photo-blur-like edges without any fractal detail.
   const PEACH = 'vec3(0.99, 0.825, 0.78)'
   const LAVENDER = 'vec3(0.825, 0.785, 0.955)'
   const PALE_BLUE = 'vec3(0.815, 0.860, 0.965)'
