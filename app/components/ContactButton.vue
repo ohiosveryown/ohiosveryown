@@ -16,16 +16,53 @@
 
 <style scoped lang="scss">
   .button-contact {
-    border-radius: 100px;
-    padding: 1.2rem 1.6rem 1.3rem;
-    font-weight: 600;
-    font-size: 1.4rem;
-    letter-spacing: -0.025rem;
-    transition: background 200ms ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    height: 3.8rem;
+    padding: 0 1.7rem;
+    border: 1px solid rgba(220, 220, 220, 0.5);
+    border-radius: 200px;
+    color: #3d3f44;
+    background: linear-gradient(180deg, rgba(225, 225, 225, 0.5), #fff);
+    box-shadow:
+      0 1.13px 3.63px 0 rgba(0, 0, 0, 0.05),
+      0 9px 29px 0 rgba(0, 0, 0, 0.09);
+    font-size: 1.3rem;
+    font-family: var(--system-font);
+    font-weight: 500;
+    letter-spacing: -0.02rem;
+    white-space: nowrap;
+    cursor: var(--cursor);
+    transition: transform var(--ease);
+  }
+
+  .button-contact::before {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    right: 0.9rem;
+    left: 0.9rem;
+    height: 2.4rem;
+    border-radius: 13rem;
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.6),
+      rgba(255, 255, 255, 0)
+    );
+    pointer-events: none;
   }
 
   .button-contact:hover {
-    background: #f7f7f7;
+    transform: translateY(-0.1rem);
+  }
+
+  .button-contact:active {
+    transform: translateY(0);
   }
 </style>
 
