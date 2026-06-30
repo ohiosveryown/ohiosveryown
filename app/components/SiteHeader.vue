@@ -21,8 +21,11 @@
     font-size: clamp(2.6rem, 6vw, 3.6rem);
     font-family: var(--system-font);
     font-weight: 400;
-    letter-spacing: -0.14rem;
+    letter-spacing: -0.08rem;
     line-height: 1.1;
+    @include breakpoint(md) {
+      letter-spacing: -0.14rem;
+    }
   }
 
   .greeting-w {
@@ -34,8 +37,11 @@
     font-size: clamp(2.6rem, 6vw, 3.6rem);
     font-family: var(--system-font);
     font-weight: 400;
-    letter-spacing: -0.14rem;
+    letter-spacing: -0.108rem;
     line-height: 1.18;
+    @include breakpoint(md) {
+      letter-spacing: -0.14rem;
+    }
   }
 </style>
 

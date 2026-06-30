@@ -46,7 +46,6 @@
     align-items: flex-start;
     margin: 0 auto;
     max-width: 58.6rem;
-    padding-bottom: 5.6rem;
   }
 
   .square {
