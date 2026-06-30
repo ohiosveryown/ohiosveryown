@@ -66,6 +66,7 @@
     align-items: center;
     gap: 0.4rem;
     padding-block: 2rem;
+    padding: 3.2rem 0 2rem;
   }
 
   .button-github {

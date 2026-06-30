@@ -18,10 +18,10 @@
 
   .greeting {
     color: #000;
-    font-size: clamp(2.6rem, 6vw, 3.6rem);
+    font-size: clamp(3rem, 6vw, 3.6rem);
     font-family: var(--system-font);
     font-weight: 400;
-    letter-spacing: -0.08rem;
+    letter-spacing: -0.06rem;
     line-height: 1.1;
     @include breakpoint(md) {
       letter-spacing: -0.14rem;
@@ -34,10 +34,10 @@
 
   .intro {
     color: #7d7d7d;
-    font-size: clamp(2.6rem, 6vw, 3.6rem);
+    font-size: clamp(2.8rem, 6vw, 3.6rem);
     font-family: var(--system-font);
     font-weight: 400;
-    letter-spacing: -0.108rem;
+    letter-spacing: -0.1rem;
     line-height: 1.18;
     @include breakpoint(md) {
       letter-spacing: -0.14rem;

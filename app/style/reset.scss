@@ -17,9 +17,13 @@
   --z0: -1;
   --zmin: -9999;
   // safe-area (requires viewport-fit=cover)
+  --safe-top: constant(safe-area-inset-top);
   --safe-top: env(safe-area-inset-top, 0px);
+  --safe-right: constant(safe-area-inset-right);
   --safe-right: env(safe-area-inset-right, 0px);
+  --safe-bottom: constant(safe-area-inset-bottom);
   --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-left: constant(safe-area-inset-left);
   --safe-left: env(safe-area-inset-left, 0px);
   // cursor
   --cursor: image-set(
@@ -40,15 +44,18 @@ html {
   -webkit-font-smoothing: antialiased !important;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility !important;
+  min-height: 100svh;
   min-height: 100dvh;
+  min-height: -webkit-fill-available;
   cursor: var(--cursor);
   // overscroll-behavior: none;
 }
 
 body {
+  min-height: 100svh;
   min-height: 100dvh;
-  padding-right: var(--safe-right);
-  padding-left: var(--safe-left);
+  min-height: -webkit-fill-available;
+  margin: 0;
   font: normal 1.6rem/1.5 var(--system-font);
   color: #000;
   background: #fff;
@@ -74,7 +81,6 @@ button,
 section,
 article,
 figure,
-main,
 menu,
 footer {
   margin: 0;

@@ -13,8 +13,8 @@
     position: fixed;
     z-index: var(--z0);
     inset: 0;
-    width: 100dvw;
-    height: 100dvh;
+    width: 100%;
+    height: 100%;
     opacity: 0;
     pointer-events: none;
     transition: opacity 400ms ease;
@@ -33,21 +33,41 @@
   .gradient-backdrop.is-fallback {
     background:
       radial-gradient(
-        60% 55% at 80% 22%,
+        80% 70% at 50% 18%,
         hsla(282, 70%, 86%, 0.85),
         hsla(282, 70%, 86%, 0) 70%
       ),
       radial-gradient(
-        55% 50% at 95% 38%,
+        70% 65% at 80% 55%,
         hsla(330, 80%, 88%, 0.7),
         hsla(330, 80%, 88%, 0) 70%
       ),
       radial-gradient(
-        45% 45% at 62% 12%,
+        60% 55% at 30% 85%,
         hsla(220, 80%, 90%, 0.55),
         hsla(220, 80%, 90%, 0) 70%
       ),
       #fff;
+
+    @include breakpoint(sm) {
+      background:
+        radial-gradient(
+          60% 55% at 80% 22%,
+          hsla(282, 70%, 86%, 0.85),
+          hsla(282, 70%, 86%, 0) 70%
+        ),
+        radial-gradient(
+          55% 50% at 95% 38%,
+          hsla(330, 80%, 88%, 0.7),
+          hsla(330, 80%, 88%, 0) 70%
+        ),
+        radial-gradient(
+          45% 45% at 62% 12%,
+          hsla(220, 80%, 90%, 0.55),
+          hsla(220, 80%, 90%, 0) 70%
+        ),
+        #fff;
+    }
   }
 </style>
 
@@ -148,8 +168,11 @@
       let w3 = blob(p, c3, r3);
       let w4 = blob(p, c4, r4);
 
-      // soft left-to-right fade so the left third stays mostly white
-      let sideMask = smoothstep(0.18, 0.85, uv.x / aspect);
+      // wide: keep left clean for text; narrow/portrait: let color bleed across
+      let narrow = 1.0 - smoothstep(0.55, 0.85, aspect);
+      let fadeLo = mix(0.18, 0.0, narrow);
+      let fadeHi = mix(0.85, 0.55, narrow);
+      let sideMask = smoothstep(fadeLo, fadeHi, uv.x / aspect);
 
       var col = vec3<f32>(1.0);
       col = mix(col, ${PEACH},    clamp(w1 * 0.85 * sideMask, 0.0, 1.0));
@@ -229,7 +252,10 @@
       float w3 = blob(p, c3, r3);
       float w4 = blob(p, c4, r4);
 
-      float sideMask = smoothstep(0.18, 0.85, uv.x / aspect);
+      float narrow = 1.0 - smoothstep(0.55, 0.85, aspect);
+      float fadeLo = mix(0.18, 0.0, narrow);
+      float fadeHi = mix(0.85, 0.55, narrow);
+      float sideMask = smoothstep(fadeLo, fadeHi, uv.x / aspect);
 
       vec3 col = vec3(1.0);
       col = mix(col, ${PEACH},    clamp(w1 * 0.85 * sideMask, 0.0, 1.0));
