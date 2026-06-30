@@ -18,12 +18,13 @@
       <ContactButton />
 
       <a
-        class="button-linkedin"
-        href="https://linkedin.com/in/mpence20"
+        class="button-github has-tooltip"
+        href="https://github.com/ohiosveryown"
         target="_blank"
         rel="noopener"
+        data-tooltip="github.com/ohiosveryown"
       >
-        LinkedIn <span class="button-linkedin__muted">(hail corporate)</span>
+        GitHub
       </a>
     </section>
 
@@ -68,7 +69,7 @@
     padding-block: 2rem;
   }
 
-  .button-linkedin {
+  .button-github {
     display: inline-flex;
     align-items: center;
     height: 3.8rem;
@@ -84,12 +85,8 @@
     transition: background var(--ease);
   }
 
-  .button-linkedin:hover {
+  .button-github:hover {
     background: #f7f7f7;
-  }
-
-  .button-linkedin__muted {
-    color: rgba(69, 72, 77, 0.5);
   }
 </style>
 
