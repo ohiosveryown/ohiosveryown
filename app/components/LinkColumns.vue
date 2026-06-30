@@ -206,16 +206,18 @@
       title: 'Tools & Side Projects',
       items: [
         {
+          label: 'proportional.design',
+          href: 'https://proportional.design',
+          external: true,
+          icon: { src: '/icons/proportional.png' },
+        },
+        {
           label: 'Bookmarks',
           icon: { src: '/icons/bookmarks.svg' },
         },
         {
           label: 'Notch',
           icon: { src: '/icons/notch.png' },
-        },
-        {
-          label: 'Proportional Design',
-          icon: { src: '/icons/proportional.png' },
         },
         {
           label: 'Supersymmetry',
