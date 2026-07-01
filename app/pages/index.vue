@@ -1,20 +1,33 @@
 <template>
-  <div class="container-index">
-    <SiteHeader>
-      Matt is a principal designer at
-      <a
-        class="square has-tooltip"
-        href="https://squareup.com"
-        target="_blank"
-        rel="noopener"
-        data-tooltip="$XYZ"
-        data-tooltip-image="https://ik.imagekit.io/ohiosveryown/ovo--3.7/index/skills/loop.gif"
-        >Square</a
-      >
-      living in always peachy, Atlanta, Ga 🍑.
-    </SiteHeader>
+  <motion.div
+    class="container-index"
+    :initial="reduceMotion ? false : 'hidden'"
+    :animate="reduceMotion ? undefined : 'visible'"
+    :variants="list"
+  >
+    <motion.div
+      :variants="item"
+      class="container-index__block"
+    >
+      <SiteHeader>
+        Matt is a principal designer at
+        <a
+          class="square has-tooltip"
+          href="https://squareup.com"
+          target="_blank"
+          rel="noopener"
+          data-tooltip="$XYZ"
+          data-tooltip-image="https://ik.imagekit.io/ohiosveryown/ovo--3.7/index/skills/loop.gif"
+          >Square</a
+        >
+        living in always peachy, Atlanta, Ga 🍑.
+      </SiteHeader>
+    </motion.div>
 
-    <section class="actions">
+    <motion.section
+      :variants="item"
+      class="actions"
+    >
       <ContactButton />
 
       <a
@@ -26,12 +39,22 @@
       >
         GitHub
       </a>
-    </section>
+    </motion.section>
 
-    <LinkColumns />
+    <motion.div
+      :variants="item"
+      class="container-index__block"
+    >
+      <LinkColumns />
+    </motion.div>
 
-    <LastPlayed />
-  </div>
+    <motion.div
+      :variants="item"
+      class="container-index__block"
+    >
+      <LastPlayed />
+    </motion.div>
+  </motion.div>
 </template>
 
 <style scoped lang="scss">
@@ -41,6 +64,10 @@
     align-items: flex-start;
     margin: 0 auto;
     max-width: 58.6rem;
+  }
+
+  .container-index__block {
+    width: 100%;
   }
 
   .square {
@@ -84,3 +111,27 @@
     background: #f7f7f7;
   }
 </style>
+
+<script setup lang="ts">
+  import { motion } from 'motion-v'
+
+  const reduceMotion = import.meta.client
+    ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    : false
+
+  const list = {
+    hidden: {},
+    visible: {
+      transition: {
+        staggerChildren: 0.08,
+        delayChildren: 0.04,
+        duration: 0.55,
+      },
+    },
+  }
+
+  const item = {
+    hidden: { opacity: 0, filter: 'blur(1.2rem)' },
+    visible: { opacity: 1, filter: 'blur(0)' },
+  }
+</script>
