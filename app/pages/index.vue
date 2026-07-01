@@ -35,6 +35,7 @@
         href="https://github.com/ohiosveryown"
         target="_blank"
         rel="noopener"
+        aria-label="ohiosveryown on GitHub"
         data-tooltip="github.com/ohiosveryown"
       >
         GitHub

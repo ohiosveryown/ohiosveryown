@@ -27,3 +27,11 @@
     }
   }
 </style>
+
+<script setup lang="ts">
+  const route = useRoute()
+
+  useHead({
+    title: computed(() => (route.meta.title as string | undefined) ?? 'Matthew Pence'),
+  })
+</script>
