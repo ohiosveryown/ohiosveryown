@@ -30,12 +30,7 @@
 
     <LinkColumns />
 
-    <LastPlayed
-      :title="lastPlayed?.title"
-      :artist="lastPlayed?.artist"
-      :cover="lastPlayed?.cover"
-      :url="lastPlayed?.url"
-    />
+    <LastPlayed />
   </div>
 </template>
 
@@ -89,15 +84,3 @@
     background: #f7f7f7;
   }
 </style>
-
-<script setup lang="ts">
-  import type { LastPlayed } from '~~/server/api/last-played.get'
-
-  const { data: lastPlayed, refresh } = await useFetch<LastPlayed | null>(
-    '/api/last-played',
-  )
-
-  onMounted(() => {
-    refresh()
-  })
-</script>

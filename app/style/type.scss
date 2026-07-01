@@ -3,7 +3,7 @@
 @font-face {
   font-family: "sans";
   src: url("../assets/type/sans.woff2") format("woff2");
-  font-display: block;
+  font-display: swap;
   font-weight: 1 999;
   font-variation-settings: 'slnt' 0;
 }
@@ -11,14 +11,7 @@
 @font-face {
   font-family: "thin";
   src: url("../assets/type/thin.woff2") format("woff2");
-  font-display: block;
-}
-
-@font-face {
-  font-family: "italic";
-  src: url("../assets/type/italic.woff2") format("woff2");
-  font-display: block;
-  font-weight: 1 999;
+  font-display: swap;
 }
 
 @mixin sans {
@@ -30,7 +23,7 @@
 }
 
 @mixin italic {
-  font-family: "italic", Courier, monospace;
+  font-family: Courier, monospace;
 }
 
 .sans {

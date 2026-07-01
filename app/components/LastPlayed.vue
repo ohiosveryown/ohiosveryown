@@ -3,14 +3,18 @@
     <p class="last-played__label thin">Last played</p>
 
     <component
-      :is="url ? 'a' : 'div'"
+      :is="track.url ? 'a' : 'div'"
       class="last-played__row"
-      v-bind="url ? { href: url, target: '_blank', rel: 'noopener' } : {}"
+      v-bind="
+        track.url
+          ? { href: track.url, target: '_blank', rel: 'noopener' }
+          : {}
+      "
     >
       <div class="last-played__art">
         <img
-          v-if="cover"
-          :src="cover"
+          v-if="track.cover"
+          :src="track.cover"
           alt=""
           class="last-played__cover"
         />
@@ -18,8 +22,8 @@
       </div>
 
       <div class="last-played__meta">
-        <p class="last-played__title">{{ title }}</p>
-        <p class="last-played__artist">{{ artist }}</p>
+        <p class="last-played__title">{{ track.title }}</p>
+        <p class="last-played__artist">{{ track.artist }}</p>
       </div>
     </component>
   </section>
@@ -117,18 +121,20 @@
 </style>
 
 <script setup lang="ts">
-  withDefaults(
-    defineProps<{
-      title?: string
-      artist?: string
-      cover?: string | null
-      url?: string | null
-    }>(),
-    {
-      title: 'Say You Will (ft. Caroline Shaw)',
-      artist: 'Kanye West',
-      cover: null,
-      url: null,
-    },
-  )
+  import type { LastPlayed } from '~~/server/api/last-played.get'
+
+  const fallback: LastPlayed = {
+    title: 'Say You Will (ft. Caroline Shaw)',
+    artist: 'Kanye West',
+    cover: null,
+    url: null,
+    source: 'recently-played',
+    playedAt: null,
+  }
+
+  const { data } = useFetch<LastPlayed | null>('/api/last-played', {
+    server: false,
+  })
+
+  const track = computed(() => data.value ?? fallback)
 </script>
