@@ -183,7 +183,7 @@
           icon: { src: '/icons/slack.svg', pad: true },
         },
         {
-          label: 'GitHub Copilot',
+          label: 'GitHub',
           href: 'https://github.com/features/copilot',
           external: true,
           icon: { src: '/icons/github.webp', rounded: true },
