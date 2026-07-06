@@ -47,7 +47,7 @@
 
 <script setup lang="ts">
   const props = withDefaults(defineProps<{ greeting?: string }>(), {
-    greeting: 'Welcome traveler',
+    greeting: 'Welcome traveler.',
   })
 
   // Strip the leading "W" so it can be wrapped for manual W/e kerning.
