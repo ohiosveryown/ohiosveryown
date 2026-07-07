@@ -1,14 +1,6 @@
 <template>
-  <motion.div
-    class="container-index"
-    :initial="false"
-    :animate="reduceMotion ? undefined : 'visible'"
-    :variants="list"
-  >
-    <motion.div
-      :variants="item"
-      class="container-index__block"
-    >
+  <div class="container-index">
+    <div class="container-index__block container-index__part">
       <SiteHeader>
         Matt is a principal designer at
         <a
@@ -22,12 +14,9 @@
         >
         living in always peachy, Atlanta, Ga 🍑.
       </SiteHeader>
-    </motion.div>
+    </div>
 
-    <motion.section
-      :variants="item"
-      class="actions"
-    >
+    <section class="actions container-index__part">
       <ContactButton />
 
       <a
@@ -40,22 +29,16 @@
       >
         GitHub
       </a>
-    </motion.section>
+    </section>
 
-    <motion.div
-      :variants="item"
-      class="container-index__block"
-    >
+    <div class="container-index__block container-index__part">
       <LinkColumns />
-    </motion.div>
+    </div>
 
-    <motion.div
-      :variants="item"
-      class="container-index__block"
-    >
+    <div class="container-index__block container-index__part">
       <LastPlayed />
-    </motion.div>
-  </motion.div>
+    </div>
+  </div>
 </template>
 
 <style scoped lang="scss">
@@ -69,6 +52,33 @@
 
   .container-index__block {
     width: 100%;
+  }
+
+  .container-index__part {
+    animation: index-enter 0.55s var(--ease-qubic) backwards;
+
+    &:nth-child(1) {
+      animation-delay: 0.04s;
+    }
+
+    &:nth-child(2) {
+      animation-delay: 0.12s;
+    }
+
+    &:nth-child(3) {
+      animation-delay: 0.2s;
+    }
+
+    &:nth-child(4) {
+      animation-delay: 0.28s;
+    }
+  }
+
+  @keyframes index-enter {
+    from {
+      opacity: 0;
+      filter: blur(1.2rem);
+    }
   }
 
   .square {
@@ -112,27 +122,3 @@
     background: #f7f7f7;
   }
 </style>
-
-<script setup lang="ts">
-  import { motion } from 'motion-v'
-
-  const reduceMotion = import.meta.client
-    ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    : false
-
-  const list = {
-    hidden: {},
-    visible: {
-      transition: {
-        staggerChildren: 0.08,
-        delayChildren: 0.04,
-        duration: 0.55,
-      },
-    },
-  }
-
-  const item = {
-    hidden: { opacity: 0, filter: 'blur(1.2rem)' },
-    visible: { opacity: 1, filter: 'blur(0)' },
-  }
-</script>
