@@ -75,7 +75,7 @@
     top: 0;
     left: 0;
     z-index: var(--zmax);
-    padding: 0.4rem 1rem 0.6rem;
+    padding: 0.4rem 1rem 0.5rem;
     border-radius: 100rem;
     border: 1px solid #000;
     background: #000;
