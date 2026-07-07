@@ -4,12 +4,12 @@
 
     <component
       :is="track.url ? 'a' : 'div'"
-      class="last-played__row"
+      class="last-played__row has-tooltip"
       v-bind="
-        track.url
-          ? { href: track.url, target: '_blank', rel: 'noopener' }
-          : {}
+        track.url ? { href: track.url, target: '_blank', rel: 'noopener' } : {}
       "
+      :data-tooltip="tooltipText"
+      :data-tooltip-image="tooltipImage"
     >
       <div class="last-played__art">
         <img
@@ -51,6 +51,7 @@
     display: flex;
     align-items: center;
     gap: 1.2rem;
+    width: max-content;
   }
 
   a.last-played__row {
@@ -136,5 +137,18 @@
     server: false,
   })
 
+  const tooltipImage =
+    'https://res.cloudinary.com/dn1q8h2ga/image/upload/v1783431537/ovo-3.7/misc/tqfS3mgQU28ko_xxafcw.webp'
+
   const track = computed(() => data.value ?? fallback)
+
+  const tooltipText = computed(() => {
+    const current = track.value
+
+    if (!current.url) return 'good taste ✦'
+
+    if (current.source === 'now-playing') return 'now spinning ↻'
+
+    return 'open in spotify ↗'
+  })
 </script>
