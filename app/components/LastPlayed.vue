@@ -149,6 +149,6 @@
 
     if (current.source === 'now-playing') return 'now spinning ↻'
 
-    return 'open in spotify ↗'
+    return 'Open in Spotify'
   })
 </script>
