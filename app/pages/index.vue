@@ -1,7 +1,7 @@
 <template>
   <motion.div
     class="container-index"
-    :initial="reduceMotion ? false : 'hidden'"
+    :initial="false"
     :animate="reduceMotion ? undefined : 'visible'"
     :variants="list"
   >

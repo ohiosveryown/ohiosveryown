@@ -29,9 +29,20 @@
 </style>
 
 <script setup lang="ts">
+  import thinWoff2 from '~/assets/type/thin.woff2'
+
   const route = useRoute()
 
   useHead({
     title: computed(() => (route.meta.title as string | undefined) ?? 'Matthew Pence'),
+    link: [
+      {
+        rel: 'preload',
+        href: thinWoff2,
+        as: 'font',
+        type: 'font/woff2',
+        crossorigin: 'anonymous',
+      },
+    ],
   })
 </script>
