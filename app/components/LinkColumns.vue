@@ -26,17 +26,13 @@
             class="link-row__icon"
             :class="{ 'link-row__icon--rounded': item.icon.rounded }"
           >
-            <img
-              v-if="item.icon.src"
-              :src="item.icon.src"
-              alt=""
-              class="link-row__img"
-              :class="{ 'link-row__img--pad': item.icon.pad }"
-              :style="
-                item.icon.scale
-                  ? { transform: `scale(${item.icon.scale})` }
-                  : undefined
-              "
+            <IconSlack
+              v-if="item.icon.inline === 'slack'"
+              class="link-row__svg link-row__svg--pad"
+            />
+            <IconBookmarks
+              v-else-if="item.icon.inline === 'bookmarks'"
+              class="link-row__svg"
             />
             <span
               v-else-if="item.icon.sprite"
@@ -118,19 +114,13 @@
     border-radius: 100px;
   }
 
-  .link-row__img {
+  .link-row__svg {
     display: block;
     width: 100%;
     height: 100%;
-    object-fit: contain;
-    transform-origin: center;
   }
 
-  .link-row__icon--rounded .link-row__img {
-    object-fit: cover;
-  }
-
-  .link-row__img--pad {
+  .link-row__svg--pad {
     width: 80%;
     height: 80%;
   }
@@ -189,17 +179,14 @@
 </style>
 
 <script setup lang="ts">
+  type InlineIcon = 'slack' | 'bookmarks'
   type SpriteIcon = 'github' | 'mailchimp' | 'elevenwarriors' | 'proportional' | 'notch' | 'supersymmetry'
 
   type IconSpec = {
-    src?: string
+    inline?: InlineIcon
     sprite?: SpriteIcon
     // Clip the asset into a circle (logos that ship as a filled square/circle).
     rounded?: boolean
-    // Inset the asset within its 2rem box (transparent marks that need padding).
-    pad?: boolean
-    // Zoom the asset within the box (logo art with excess padding in the file).
-    scale?: number
   }
 
   type LinkItem = {
@@ -222,7 +209,7 @@
           label: 'Slack',
           href: 'https://slack.com/blog/news/today-daily-briefing',
           external: true,
-          icon: { src: '/icons/slack.svg', pad: true },
+          icon: { inline: 'slack' },
         },
         {
           label: 'GitHub',
@@ -255,7 +242,7 @@
         },
         {
           label: 'Bookmarks',
-          icon: { src: '/icons/bookmarks.svg' },
+          icon: { inline: 'bookmarks' },
         },
         {
           label: 'Notch',
