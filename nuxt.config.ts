@@ -34,6 +34,18 @@ export default defineNuxtConfig({
       ],
     },
   },
+  routeRules: {
+    '/': { prerender: true },
+    '/work/**': { prerender: true },
+    '/callback': { ssr: true },
+    '/api/**': { cors: true },
+  },
+  nitro: {
+    prerender: {
+      crawlLinks: true,
+      ignore: ['/callback', '/api/**'],
+    },
+  },
   runtimeConfig: {
     spotifyClientId: '',
     spotifyClientSecret: '',
