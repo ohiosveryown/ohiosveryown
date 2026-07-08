@@ -6,6 +6,7 @@
     "build": "nuxt build",
     "dev": "nuxt dev",
     "generate": "nuxt generate",
+    "icons:sprite": "node scripts/build-link-icons-sprite.mjs",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare"
   },
@@ -17,6 +18,7 @@
     "vue-router": "^5.0.6"
   },
   "devDependencies": {
-    "@webgpu/types": "^0.1.70"
+    "@webgpu/types": "^0.1.70",
+    "sharp": "^0.35.3"
   }
 }

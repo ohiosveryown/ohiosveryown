@@ -27,6 +27,7 @@
             :class="{ 'link-row__icon--rounded': item.icon.rounded }"
           >
             <img
+              v-if="item.icon.src"
               :src="item.icon.src"
               alt=""
               class="link-row__img"
@@ -36,6 +37,11 @@
                   ? { transform: `scale(${item.icon.scale})` }
                   : undefined
               "
+            />
+            <span
+              v-else-if="item.icon.sprite"
+              class="link-row__sprite"
+              :class="`link-row__sprite--${item.icon.sprite}`"
             />
           </span>
 
@@ -129,6 +135,39 @@
     height: 80%;
   }
 
+  .link-row__sprite {
+    display: block;
+    width: 100%;
+    height: 100%;
+    background-image: url('/icons/link-icons.webp');
+    background-repeat: no-repeat;
+    background-size: 600% 100%;
+  }
+
+  .link-row__sprite--github {
+    background-position: 0% 50%;
+  }
+
+  .link-row__sprite--mailchimp {
+    background-position: 20% 50%;
+  }
+
+  .link-row__sprite--elevenwarriors {
+    background-position: 40% 50%;
+  }
+
+  .link-row__sprite--proportional {
+    background-position: 60% 50%;
+  }
+
+  .link-row__sprite--notch {
+    background-position: 80% 50%;
+  }
+
+  .link-row__sprite--supersymmetry {
+    background-position: 100% 50%;
+  }
+
   .link-row__label {
     color: #000;
     font-size: 1.7rem;
@@ -150,8 +189,11 @@
 </style>
 
 <script setup lang="ts">
+  type SpriteIcon = 'github' | 'mailchimp' | 'elevenwarriors' | 'proportional' | 'notch' | 'supersymmetry'
+
   type IconSpec = {
-    src: string
+    src?: string
+    sprite?: SpriteIcon
     // Clip the asset into a circle (logos that ship as a filled square/circle).
     rounded?: boolean
     // Inset the asset within its 2rem box (transparent marks that need padding).
@@ -186,19 +228,19 @@
           label: 'GitHub',
           href: 'https://github.com/features/copilot',
           external: true,
-          icon: { src: '/icons/github.webp', rounded: true },
+          icon: { sprite: 'github', rounded: true },
         },
         {
           label: 'Mailchimp',
           href: 'https://mailchimp.com',
           external: true,
-          icon: { src: '/icons/mailchimp.webp', rounded: true, scale: 1.32 },
+          icon: { sprite: 'mailchimp', rounded: true },
         },
         {
           label: 'Eleven Warriors',
           href: 'https://www.elevenwarriors.com/data-viz/2016/09/74352/statagram-ohio-state-45-oklahoma-24',
           external: true,
-          icon: { src: '/icons/elevenwarriors.webp', rounded: true },
+          icon: { sprite: 'elevenwarriors', rounded: true },
         },
       ],
     },
@@ -209,7 +251,7 @@
           label: 'proportional.design',
           href: 'https://proportional.design',
           external: true,
-          icon: { src: '/icons/proportional.webp' },
+          icon: { sprite: 'proportional' },
         },
         {
           label: 'Bookmarks',
@@ -217,11 +259,11 @@
         },
         {
           label: 'Notch',
-          icon: { src: '/icons/notch@2x.webp' },
+          icon: { sprite: 'notch' },
         },
         {
           label: 'Supersymmetry',
-          icon: { src: '/icons/supersymmetry.webp' },
+          icon: { sprite: 'supersymmetry' },
         },
       ],
     },
