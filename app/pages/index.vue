@@ -10,9 +10,9 @@
           rel="noopener"
           data-tooltip="$XYZ"
           data-tooltip-image="https://ik.imagekit.io/ohiosveryown/ovo--3.7/index/skills/loop.gif"
-          >Square</a
+          >Square,</a
         >
-        living in always peachy, Atlanta, Ga 🍑.
+        living in always-peachy Atlanta, GA 🍑.
       </SiteHeader>
     </div>
 
