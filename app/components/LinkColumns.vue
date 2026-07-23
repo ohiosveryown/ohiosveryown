@@ -15,12 +15,16 @@
         <component
           :is="item.href ? 'a' : 'span'"
           class="link-row__link"
-          :class="{ 'link-row__link--external': item.external }"
+          :class="{
+            'link-row__link--external': item.external,
+            'has-tooltip': Boolean(item.tooltip),
+          }"
           v-bind="
             item.href
               ? { href: item.href, target: '_blank', rel: 'noopener' }
               : {}
           "
+          :data-tooltip="item.tooltip"
         >
           <span
             class="link-row__icon"
@@ -193,6 +197,7 @@
     label: string
     href?: string
     external?: boolean
+    tooltip?: string
     icon: IconSpec
   }
 
@@ -238,6 +243,7 @@
           label: 'proportional.design',
           href: 'https://proportional.design',
           external: true,
+          tooltip: "Furniture I've made",
           icon: { sprite: 'proportional' },
         },
         {
