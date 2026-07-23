@@ -17,7 +17,7 @@
           class="link-row__link"
           :class="{
             'link-row__link--external': item.external,
-            'has-tooltip': Boolean(item.tooltip),
+            'has-tooltip': Boolean(item.tooltip || item.tooltipImage),
           }"
           v-bind="
             item.href
@@ -25,6 +25,7 @@
               : {}
           "
           :data-tooltip="item.tooltip"
+          :data-tooltip-image="item.tooltipImage"
         >
           <span
             class="link-row__icon"
@@ -198,6 +199,7 @@
     href?: string
     external?: boolean
     tooltip?: string
+    tooltipImage?: string
     icon: IconSpec
   }
 
@@ -244,6 +246,8 @@
           href: 'https://proportional.design',
           external: true,
           tooltip: "Furniture I've made",
+          tooltipImage:
+            'https://res.cloudinary.com/dn1q8h2ga/image/upload/v1784821939/pp_uthfbh.gif',
           icon: { sprite: 'proportional' },
         },
         {
