@@ -1,5 +1,8 @@
 <template>
-  <section class="last-played">
+  <section
+    v-if="track"
+    class="last-played"
+  >
     <p class="last-played__label thin">Last played</p>
 
     <component
@@ -37,8 +40,17 @@
     margin-top: 4rem;
     width: 100%;
     max-width: 56.6rem;
+    animation: last-played-enter 0.55s var(--ease-qubic) backwards;
+
     @include breakpoint(md) {
       transform: translateX(0.6rem);
+    }
+  }
+
+  @keyframes last-played-enter {
+    from {
+      opacity: 0;
+      filter: blur(1.2rem);
     }
   }
 
@@ -124,15 +136,6 @@
 <script setup lang="ts">
   import type { LastPlayed } from '~~/server/api/last-played.get'
 
-  const fallback: LastPlayed = {
-    title: 'Say You Will (ft. Caroline Shaw)',
-    artist: 'Kanye West',
-    cover: null,
-    url: null,
-    source: 'recently-played',
-    playedAt: null,
-  }
-
   const { data } = useFetch<LastPlayed | null>('/api/last-played', {
     server: false,
   })
@@ -140,14 +143,12 @@
   const tooltipImage =
     'https://res.cloudinary.com/dn1q8h2ga/image/upload/v1783431537/ovo-3.7/misc/tqfS3mgQU28ko_xxafcw.webp'
 
-  const track = computed(() => data.value ?? fallback)
+  const track = computed(() => data.value ?? null)
 
   const tooltipText = computed(() => {
-    const current = track.value
+    if (!track.value?.url) return 'good taste ✦'
 
-    if (!current.url) return 'good taste ✦'
-
-    if (current.source === 'now-playing') return 'now spinning ↻'
+    if (track.value.source === 'now-playing') return 'now spinning ↻'
 
     return 'Open in Spotify'
   })
