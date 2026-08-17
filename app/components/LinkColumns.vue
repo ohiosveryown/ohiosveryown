@@ -185,7 +185,13 @@
 
 <script setup lang="ts">
   type InlineIcon = 'slack' | 'bookmarks'
-  type SpriteIcon = 'github' | 'mailchimp' | 'elevenwarriors' | 'proportional' | 'notch' | 'supersymmetry'
+  type SpriteIcon =
+    | 'github'
+    | 'mailchimp'
+    | 'elevenwarriors'
+    | 'proportional'
+    | 'notch'
+    | 'supersymmetry'
 
   type IconSpec = {
     inline?: InlineIcon
@@ -252,6 +258,9 @@
         },
         {
           label: 'Bookmarks',
+          tooltip: 'Save any link',
+          tooltipImage:
+            'https://res.cloudinary.com/dn1q8h2ga/image/upload/v1786929283/ovo-3.7/skills/bkm_cq3wcs.gif',
           icon: { inline: 'bookmarks' },
         },
         {

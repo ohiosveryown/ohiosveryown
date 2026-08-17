@@ -22,7 +22,7 @@
     padding-left: var(--safe-left);
 
     @include breakpoint(lg) {
-      padding-top: calc(var(--safe-top) + 10rem);
+      padding-top: calc(var(--safe-top) + 13rem);
       padding-bottom: calc(var(--safe-bottom) + 5.6rem);
     }
   }
@@ -34,7 +34,9 @@
   const route = useRoute()
 
   useHead({
-    title: computed(() => (route.meta.title as string | undefined) ?? 'Matthew Pence'),
+    title: computed(
+      () => (route.meta.title as string | undefined) ?? 'Matthew Pence',
+    ),
     link: [
       {
         rel: 'preload',

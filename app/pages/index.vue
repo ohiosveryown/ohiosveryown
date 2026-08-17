@@ -28,6 +28,7 @@
         data-tooltip="github.com/ohiosveryown"
       >
         GitHub
+        <span class="button-github__arrow">↗</span>
       </a>
     </section>
 
@@ -116,6 +117,12 @@
     white-space: nowrap;
     cursor: var(--cursor);
     transition: background var(--ease);
+  }
+
+  .button-github__arrow {
+    padding-left: 0.4rem;
+    color: rgba(0, 0, 0, 0.5);
+    font-size: 1.4rem;
   }
 
   .button-github:hover {
