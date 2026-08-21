@@ -4,11 +4,13 @@
     :class="{ 'is-ready': isReady }"
     aria-hidden="true"
   >
-    <canvas
-      ref="canvasEl"
-      class="gradient-backdrop__canvas"
-      :class="{ 'is-hidden': isFallback }"
-    />
+    <div class="gradient-backdrop__fill">
+      <canvas
+        ref="canvasEl"
+        class="gradient-backdrop__canvas"
+        :class="{ 'is-hidden': isFallback }"
+      />
+    </div>
   </div>
 </template>
 
@@ -18,16 +20,23 @@
     position: fixed;
     z-index: 0;
     inset: 0;
-    width: 100%;
-    height: 100%;
-    background: var(--page-bg);
-    opacity: 0;
     pointer-events: none;
+    // Safari 26 samples background-color on this fixed layer for chrome tint.
+    // Keep it transparent; the visible fill lives on the absolute child.
+    background-color: transparent;
+    opacity: 0;
     transition: opacity 400ms ease;
+
+    &.is-ready {
+      opacity: 1;
+    }
   }
 
-  .gradient-backdrop.is-ready {
-    opacity: 1;
+  .gradient-backdrop__fill {
+    position: absolute;
+    inset: 0;
+    background-color: var(--page-bg-color);
+    background-image: var(--page-bg-image);
   }
 
   .gradient-backdrop__canvas {

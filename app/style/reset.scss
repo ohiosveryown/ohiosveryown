@@ -25,9 +25,10 @@
   --safe-bottom: env(safe-area-inset-bottom, 0px);
   --safe-left: constant(safe-area-inset-left);
   --safe-left: env(safe-area-inset-left, 0px);
-  // page fill — html background is what iOS paints behind the status bar
-  // and Safari toolbar. position:fixed layers do not cover those regions.
-  --page-bg:
+  // Safari 26 Liquid Glass samples `background-color` (not images) from
+  // html/body and from position:fixed elements at the viewport edges.
+  --page-bg-color: #f6e4dc;
+  --page-bg-image:
     radial-gradient(
       80% 70% at 82% 8%,
       hsla(20, 85%, 84%, 0.95),
@@ -47,8 +48,7 @@
       45% 45% at 62% 12%,
       hsla(220, 80%, 90%, 0.55),
       hsla(220, 80%, 90%, 0) 70%
-    ),
-    #fff;
+    );
   // cursor
   --cursor: image-set(
       url('https://res.cloudinary.com/dskbwusdb/image/upload/v1778870320/cursor_3x_jfgcop.webp') 3x
@@ -68,7 +68,8 @@ html {
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility !important;
   min-height: 100%;
-  background: var(--page-bg);
+  background-color: var(--page-bg-color);
+  background-image: var(--page-bg-image);
   cursor: var(--cursor);
 }
 
@@ -77,7 +78,7 @@ body {
   margin: 0;
   font: normal 1.6rem/1.5 var(--system-font);
   color: #000;
-  background: transparent;
+  background-color: var(--page-bg-color);
   text-rendering: optimizeSpeed;
 }
 
