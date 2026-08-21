@@ -1,3 +1,8 @@
+import { createHash } from 'node:crypto'
+import { mkdir, readFile, writeFile } from 'node:fs/promises'
+import { join } from 'node:path'
+import type { H3Event } from 'h3'
+
 export type LastVisit = {
   id: string
   label: string
@@ -12,8 +17,6 @@ type Geo = {
   region: string
   country: string
 }
-
-const STORAGE_KEY = 'last-visit'
 
 function titleState(code: string) {
   const upper = code.toUpperCase()
@@ -47,7 +50,11 @@ function isPrivateIp(ip: string) {
   if (ip === '127.0.0.1' || ip === '::1' || ip === '::ffff:127.0.0.1') {
     return true
   }
-  if (ip.startsWith('10.') || ip.startsWith('192.168.') || ip.startsWith('169.254.')) {
+  if (
+    ip.startsWith('10.') ||
+    ip.startsWith('192.168.') ||
+    ip.startsWith('169.254.')
+  ) {
     return true
   }
   const m = /^172\.(\d+)\./.exec(ip)
@@ -67,7 +74,7 @@ function decodeHeader(value: string | undefined) {
   }
 }
 
-export function getClientIp(event: Parameters<typeof getRequestIP>[0]) {
+export function getClientIp(event: H3Event) {
   return (
     getRequestIP(event, { xForwardedFor: true }) ||
     getHeader(event, 'cf-connecting-ip') ||
@@ -76,9 +83,11 @@ export function getClientIp(event: Parameters<typeof getRequestIP>[0]) {
   )
 }
 
-function geoFromHeaders(event: Parameters<typeof getHeader>[0]): Geo | null {
+function geoFromHeaders(event: H3Event): Geo | null {
   const vercelCity = decodeHeader(getHeader(event, 'x-vercel-ip-city'))
-  const vercelRegion = decodeHeader(getHeader(event, 'x-vercel-ip-country-region'))
+  const vercelRegion = decodeHeader(
+    getHeader(event, 'x-vercel-ip-country-region'),
+  )
   const vercelCountry = decodeHeader(getHeader(event, 'x-vercel-ip-country'))
   if (vercelCity || vercelCountry) {
     return {
@@ -127,50 +136,54 @@ async function geoFromIpLookup(ip: string): Promise<Geo | null> {
   }
 }
 
-async function hashIp(ip: string) {
-  const bytes = new TextEncoder().encode(ip)
-  const digest = await crypto.subtle.digest('SHA-256', bytes)
-  return Array.from(new Uint8Array(digest), (b) =>
-    b.toString(16).padStart(2, '0'),
-  )
-    .join('')
-    .slice(0, 16)
+function hashIp(ip: string) {
+  return createHash('sha256').update(ip).digest('hex').slice(0, 16)
 }
 
-export function isBotRequest(event: Parameters<typeof getHeader>[0]) {
+export function isBotRequest(event: H3Event) {
   const ua = getHeader(event, 'user-agent') || ''
   return /bot|crawl|spider|preview|facebookexternalhit|slackbot|embed/i.test(ua)
 }
 
+let memory: StoredVisit | null = null
+const FILE = join(process.cwd(), '.data', 'last-visit.json')
+
 async function readStored(): Promise<StoredVisit | null> {
-  return (await useStorage('data').getItem<StoredVisit>(STORAGE_KEY)) ?? null
+  if (memory) return memory
+  try {
+    memory = JSON.parse(await readFile(FILE, 'utf8')) as StoredVisit
+    return memory
+  } catch {
+    return null
+  }
 }
 
 async function writeStored(visit: StoredVisit) {
-  await useStorage('data').setItem(STORAGE_KEY, visit)
+  memory = visit
+  try {
+    await mkdir(join(process.cwd(), '.data'), { recursive: true })
+    await writeFile(FILE, JSON.stringify(visit), 'utf8')
+  } catch {
+    // read-only / serverless hosts still keep the in-memory value
+  }
 }
 
 function toPublic(visit: StoredVisit): LastVisit {
   return { id: visit.id, label: visit.label }
 }
 
-export async function peekLastVisit(
-  event: Parameters<typeof getClientIp>[0],
-): Promise<LastVisit | null> {
+export async function peekLastVisit(event: H3Event): Promise<LastVisit | null> {
   const stored = await readStored()
   if (!stored) return null
 
   const ip = getClientIp(event)
   if (!ip) return toPublic(stored)
 
-  const ipHash = await hashIp(ip)
-  if (stored.ipHash === ipHash) return null
+  if (stored.ipHash === hashIp(ip)) return null
   return toPublic(stored)
 }
 
-export async function recordVisit(
-  event: Parameters<typeof getClientIp>[0],
-): Promise<LastVisit | null> {
+export async function recordVisit(event: H3Event): Promise<LastVisit | null> {
   const stored = await readStored()
   const ip = getClientIp(event)
 
@@ -178,7 +191,7 @@ export async function recordVisit(
     return stored ? toPublic(stored) : null
   }
 
-  const ipHash = await hashIp(ip)
+  const ipHash = hashIp(ip)
   const shown =
     stored && stored.ipHash !== ipHash ? toPublic(stored) : null
 

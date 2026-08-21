@@ -116,11 +116,19 @@
   )
 
   onMounted(async () => {
-    visit.value = await $fetch<LastVisit | null>('/api/last-visit', {
-      method: 'POST',
-    })
+    try {
+      visit.value = await $fetch<LastVisit | null>('/api/last-visit', {
+        method: 'POST',
+      })
+    } catch {
+      visit.value = null
+    }
     pollTimer = setInterval(async () => {
-      visit.value = await $fetch<LastVisit | null>('/api/last-visit')
+      try {
+        visit.value = await $fetch<LastVisit | null>('/api/last-visit')
+      } catch {
+        visit.value = null
+      }
     }, POLL_MS)
   })
 
