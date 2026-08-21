@@ -11,7 +11,7 @@ export default defineNuxtConfig({
       },
       meta: [
         { charset: "utf-8" },
-        { name: "viewport", content: "width=device-width, initial-scale=1" },
+        { name: "viewport", content: "width=device-width, initial-scale=1, viewport-fit=cover" },
         { hid: "description", name: "description", content: "ohiosveryown is the web presence and portfolio of work for Matthew Pence – a designer living in Atlanta, Ga." },
         { name: "author", content: "Matthew Pence" },
         { property: "og:title", content: "ohiosveryown" },

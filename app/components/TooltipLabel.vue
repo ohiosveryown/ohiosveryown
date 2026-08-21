@@ -119,6 +119,13 @@
     mask: var(--squircle) center / 100% 100% no-repeat;
     object-fit: cover;
   }
+
+  @media (pointer: coarse) {
+    .tooltip-label,
+    .tooltip-label__image-anchor {
+      display: none;
+    }
+  }
 </style>
 
 <script setup lang="ts">
@@ -150,6 +157,11 @@
 
   let primed = false
   let currentTarget: HTMLElement | null = null
+  let coarseQuery: MediaQueryList | null = null
+
+  function isCoarsePointer() {
+    return coarseQuery?.matches ?? false
+  }
 
   function getTooltipContent(el: HTMLElement): string {
     return el.dataset.tooltip ?? el.textContent?.trim() ?? ''
@@ -166,6 +178,8 @@
   }
 
   function handleMouseMove(event: MouseEvent) {
+    if (isCoarsePointer()) return
+
     const nextX = event.clientX + OFFSET_X
     const nextY = event.clientY + OFFSET_Y
 
@@ -201,7 +215,13 @@
     visible.value = false
   }
 
+  function handlePointerChange() {
+    if (isCoarsePointer()) dismiss()
+  }
+
   function handleMouseOver(event: MouseEvent) {
+    if (isCoarsePointer()) return
+
     const target = (event.target as HTMLElement | null)?.closest<HTMLElement>(
       '.has-tooltip',
     )
@@ -231,6 +251,8 @@
   }
 
   onMounted(() => {
+    coarseQuery = window.matchMedia('(pointer: coarse)')
+    coarseQuery.addEventListener('change', handlePointerChange)
     registerTooltipDismiss(dismiss)
     window.addEventListener('mousemove', handleMouseMove, { passive: true })
     window.addEventListener('scroll', handleViewportChange, { passive: true })
@@ -240,6 +262,7 @@
   })
 
   onBeforeUnmount(() => {
+    coarseQuery?.removeEventListener('change', handlePointerChange)
     unregisterTooltipDismiss(dismiss)
     window.removeEventListener('mousemove', handleMouseMove)
     window.removeEventListener('scroll', handleViewportChange)
