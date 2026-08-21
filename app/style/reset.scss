@@ -43,18 +43,13 @@ html {
   -webkit-font-smoothing: antialiased !important;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility !important;
-  min-height: 100svh;
   min-height: 100dvh;
-  min-height: 100lvh;
   background: #fff;
   cursor: var(--cursor);
-  // overflow-x: hidden on html clips position:fixed at the iOS status bar
 }
 
 body {
-  min-height: 100svh;
   min-height: 100dvh;
-  min-height: 100lvh;
   margin: 0;
   font: normal 1.6rem/1.5 var(--system-font);
   color: #000;

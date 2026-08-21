@@ -17,15 +17,9 @@
     display: block;
     position: fixed;
     z-index: 0;
-    // Pull into iOS unsafe areas (status bar / home indicator). Harmless
-    // extra overflow if the containing block already includes them.
-    top: calc(-1 * var(--safe-top));
-    right: calc(-1 * var(--safe-right));
-    bottom: calc(-1 * var(--safe-bottom));
-    left: calc(-1 * var(--safe-left));
-    width: auto;
-    height: auto;
-    min-height: 100lvh;
+    inset: 0;
+    width: 100%;
+    height: 100%;
     background:
       radial-gradient(
         80% 70% at 82% 8%,
