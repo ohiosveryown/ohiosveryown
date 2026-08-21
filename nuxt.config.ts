@@ -32,6 +32,13 @@ export default defineNuxtConfig({
       link: [
         { rel: "canonical", href: "https://ohiosveryown.co" },
       ],
+      script: [
+        {
+          src: 'https://plausible.io/js/script.js',
+          defer: true,
+          'data-domain': 'ohiosveryown.co',
+        },
+      ],
     },
   },
   routeRules: {
