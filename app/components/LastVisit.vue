@@ -30,11 +30,19 @@
 <style scoped lang="scss">
   .last-visit {
     display: flex;
+    justify-content: center;
     position: fixed;
     z-index: var(--z4);
+    right: 0;
     bottom: calc(var(--safe-bottom) + 2.4rem);
-    left: calc(var(--safe-left) + 2.4rem);
+    left: 0;
     pointer-events: none;
+
+    @include breakpoint(md) {
+      justify-content: flex-start;
+      right: auto;
+      left: calc(var(--safe-left) + 2.4rem);
+    }
 
     @include breakpoint(lg) {
       bottom: calc(var(--safe-bottom) + 3.2rem);
