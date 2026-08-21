@@ -2,6 +2,7 @@
   <NuxtLayout>
     <ClientOnly>
       <GradientBackdrop />
+      <LastVisit />
     </ClientOnly>
     <main>
       <NuxtPage />
