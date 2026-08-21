@@ -1,4 +1,4 @@
-import { createHash } from 'node:crypto'
+import { randomUUID } from 'node:crypto'
 import { mkdir, readFile, writeFile } from 'node:fs/promises'
 import { join } from 'node:path'
 import type { H3Event } from 'h3'
@@ -9,7 +9,7 @@ export type LastVisit = {
 }
 
 type StoredVisit = LastVisit & {
-  ipHash: string
+  sessionId: string
 }
 
 type Geo = {
@@ -17,6 +17,8 @@ type Geo = {
   region: string
   country: string
 }
+
+const SESSION_COOKIE = 'ovo-vs'
 
 function titleState(code: string) {
   const upper = code.toUpperCase()
@@ -136,13 +138,24 @@ async function geoFromIpLookup(ip: string): Promise<Geo | null> {
   }
 }
 
-function hashIp(ip: string) {
-  return createHash('sha256').update(ip).digest('hex').slice(0, 16)
-}
-
 export function isBotRequest(event: H3Event) {
   const ua = getHeader(event, 'user-agent') || ''
   return /bot|crawl|spider|preview|facebookexternalhit|slackbot|embed/i.test(ua)
+}
+
+function getSessionId(event: H3Event, create: boolean) {
+  const existing = getCookie(event, SESSION_COOKIE)
+  if (existing) return existing
+  if (!create) return ''
+
+  const id = randomUUID()
+  setCookie(event, SESSION_COOKIE, id, {
+    httpOnly: true,
+    sameSite: 'lax',
+    path: '/',
+    secure: !import.meta.dev,
+  })
+  return id
 }
 
 let memory: StoredVisit | null = null
@@ -172,39 +185,38 @@ function toPublic(visit: StoredVisit): LastVisit {
   return { id: visit.id, label: visit.label }
 }
 
-export async function peekLastVisit(event: H3Event): Promise<LastVisit | null> {
-  const stored = await readStored()
+function fromOtherSession(
+  stored: StoredVisit | null,
+  sessionId: string,
+): LastVisit | null {
   if (!stored) return null
-
-  const ip = getClientIp(event)
-  if (!ip) return toPublic(stored)
-
-  if (stored.ipHash === hashIp(ip)) return null
+  if (sessionId && stored.sessionId === sessionId) return null
   return toPublic(stored)
+}
+
+export async function peekLastVisit(event: H3Event): Promise<LastVisit | null> {
+  return fromOtherSession(await readStored(), getSessionId(event, false))
 }
 
 export async function recordVisit(event: H3Event): Promise<LastVisit | null> {
   const stored = await readStored()
+  const sessionId = getSessionId(event, true)
+  const shown = fromOtherSession(stored, sessionId)
+
+  if (stored?.sessionId === sessionId) return shown
+  if (isBotRequest(event)) return shown
+
   const ip = getClientIp(event)
-
-  if (!ip || isPrivateIp(ip) || isBotRequest(event)) {
-    return stored ? toPublic(stored) : null
-  }
-
-  const ipHash = hashIp(ip)
-  const shown =
-    stored && stored.ipHash !== ipHash ? toPublic(stored) : null
-
-  if (stored?.ipHash === ipHash) return shown
+  if (!ip || isPrivateIp(ip)) return shown
 
   const geo = geoFromHeaders(event) ?? (await geoFromIpLookup(ip))
   const label = geo ? formatVisitLabel(geo) : null
   if (!label) return shown
 
   await writeStored({
-    id: `${Date.now()}-${ipHash}`,
+    id: randomUUID(),
     label,
-    ipHash,
+    sessionId,
   })
 
   return shown
