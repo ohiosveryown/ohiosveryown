@@ -1,20 +1,53 @@
 <template>
-  <canvas
-    ref="canvasEl"
+  <div
     class="gradient-backdrop"
-    :class="{ 'is-fallback': isFallback, 'is-ready': isReady }"
+    :class="{ 'is-ready': isReady }"
     aria-hidden="true"
-  />
+  >
+    <canvas
+      ref="canvasEl"
+      class="gradient-backdrop__canvas"
+      :class="{ 'is-hidden': isFallback }"
+    />
+  </div>
 </template>
 
 <style scoped lang="scss">
   .gradient-backdrop {
     display: block;
     position: fixed;
-    z-index: var(--z0);
-    inset: 0;
-    width: 100%;
-    height: 100%;
+    z-index: 0;
+    // Pull into iOS unsafe areas (status bar / home indicator). Harmless
+    // extra overflow if the containing block already includes them.
+    top: calc(-1 * var(--safe-top));
+    right: calc(-1 * var(--safe-right));
+    bottom: calc(-1 * var(--safe-bottom));
+    left: calc(-1 * var(--safe-left));
+    width: auto;
+    height: auto;
+    min-height: 100lvh;
+    background:
+      radial-gradient(
+        80% 70% at 82% 8%,
+        hsla(20, 85%, 84%, 0.95),
+        hsla(20, 85%, 84%, 0) 70%
+      ),
+      radial-gradient(
+        60% 55% at 80% 22%,
+        hsla(282, 70%, 86%, 0.85),
+        hsla(282, 70%, 86%, 0) 70%
+      ),
+      radial-gradient(
+        55% 50% at 95% 38%,
+        hsla(330, 80%, 88%, 0.7),
+        hsla(330, 80%, 88%, 0) 70%
+      ),
+      radial-gradient(
+        45% 45% at 62% 12%,
+        hsla(220, 80%, 90%, 0.55),
+        hsla(220, 80%, 90%, 0) 70%
+      ),
+      #fff;
     opacity: 0;
     pointer-events: none;
     transition: opacity 400ms ease;
@@ -24,49 +57,19 @@
     opacity: 1;
   }
 
-  @media (prefers-reduced-motion: reduce) {
-    .gradient-backdrop {
-      transition: none;
+  .gradient-backdrop__canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+
+    &.is-hidden {
+      display: none;
     }
   }
 
-  .gradient-backdrop.is-fallback {
-    background:
-      radial-gradient(
-        80% 70% at 50% 18%,
-        hsla(282, 70%, 86%, 0.85),
-        hsla(282, 70%, 86%, 0) 70%
-      ),
-      radial-gradient(
-        70% 65% at 80% 55%,
-        hsla(330, 80%, 88%, 0.7),
-        hsla(330, 80%, 88%, 0) 70%
-      ),
-      radial-gradient(
-        60% 55% at 30% 85%,
-        hsla(220, 80%, 90%, 0.55),
-        hsla(220, 80%, 90%, 0) 70%
-      ),
-      #fff;
-
-    @include breakpoint(sm) {
-      background:
-        radial-gradient(
-          60% 55% at 80% 22%,
-          hsla(282, 70%, 86%, 0.85),
-          hsla(282, 70%, 86%, 0) 70%
-        ),
-        radial-gradient(
-          55% 50% at 95% 38%,
-          hsla(330, 80%, 88%, 0.7),
-          hsla(330, 80%, 88%, 0) 70%
-        ),
-        radial-gradient(
-          45% 45% at 62% 12%,
-          hsla(220, 80%, 90%, 0.55),
-          hsla(220, 80%, 90%, 0) 70%
-        ),
-        #fff;
+  @media (prefers-reduced-motion: reduce) {
+    .gradient-backdrop {
+      transition: none;
     }
   }
 </style>
@@ -481,6 +484,7 @@
     renderer.resize()
     renderer.render(0)
     window.addEventListener('resize', onResize, { passive: true })
+    window.visualViewport?.addEventListener('resize', onResize, { passive: true })
     startTime = performance.now()
     if (reduceMotion) {
       renderer.render(8)
@@ -498,6 +502,7 @@
   onBeforeUnmount(() => {
     if (rafId) cancelAnimationFrame(rafId)
     window.removeEventListener('resize', onResize)
+    window.visualViewport?.removeEventListener('resize', onResize)
     renderer?.destroy()
     renderer = null
   })

@@ -13,6 +13,7 @@
 <style scoped lang="scss">
   main {
     position: relative;
+    z-index: var(--z1);
     margin: 0 auto;
     width: min(90dvw, 100%);
     max-width: 2100rem;
