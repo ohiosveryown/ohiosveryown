@@ -25,6 +25,30 @@
   --safe-bottom: env(safe-area-inset-bottom, 0px);
   --safe-left: constant(safe-area-inset-left);
   --safe-left: env(safe-area-inset-left, 0px);
+  // page fill — html background is what iOS paints behind the status bar
+  // and Safari toolbar. position:fixed layers do not cover those regions.
+  --page-bg:
+    radial-gradient(
+      80% 70% at 82% 8%,
+      hsla(20, 85%, 84%, 0.95),
+      hsla(20, 85%, 84%, 0) 70%
+    ),
+    radial-gradient(
+      60% 55% at 80% 22%,
+      hsla(282, 70%, 86%, 0.85),
+      hsla(282, 70%, 86%, 0) 70%
+    ),
+    radial-gradient(
+      55% 50% at 95% 38%,
+      hsla(330, 80%, 88%, 0.7),
+      hsla(330, 80%, 88%, 0) 70%
+    ),
+    radial-gradient(
+      45% 45% at 62% 12%,
+      hsla(220, 80%, 90%, 0.55),
+      hsla(220, 80%, 90%, 0) 70%
+    ),
+    #fff;
   // cursor
   --cursor: image-set(
       url('https://res.cloudinary.com/dskbwusdb/image/upload/v1778870320/cursor_3x_jfgcop.webp') 3x
@@ -43,17 +67,19 @@ html {
   -webkit-font-smoothing: antialiased !important;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility !important;
+  min-height: 100%;
   min-height: 100dvh;
-  background: #fff;
+  background: var(--page-bg);
   cursor: var(--cursor);
 }
 
 body {
+  min-height: 100%;
   min-height: 100dvh;
   margin: 0;
   font: normal 1.6rem/1.5 var(--system-font);
   color: #000;
-  background: #fff;
+  background: transparent;
   text-rendering: optimizeSpeed;
 }
 

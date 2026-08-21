@@ -20,28 +20,7 @@
     inset: 0;
     width: 100%;
     height: 100%;
-    background:
-      radial-gradient(
-        80% 70% at 82% 8%,
-        hsla(20, 85%, 84%, 0.95),
-        hsla(20, 85%, 84%, 0) 70%
-      ),
-      radial-gradient(
-        60% 55% at 80% 22%,
-        hsla(282, 70%, 86%, 0.85),
-        hsla(282, 70%, 86%, 0) 70%
-      ),
-      radial-gradient(
-        55% 50% at 95% 38%,
-        hsla(330, 80%, 88%, 0.7),
-        hsla(330, 80%, 88%, 0) 70%
-      ),
-      radial-gradient(
-        45% 45% at 62% 12%,
-        hsla(220, 80%, 90%, 0.55),
-        hsla(220, 80%, 90%, 0) 70%
-      ),
-      #fff;
+    background: var(--page-bg);
     opacity: 0;
     pointer-events: none;
     transition: opacity 400ms ease;
