@@ -68,14 +68,12 @@ html {
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility !important;
   min-height: 100%;
-  min-height: 100dvh;
   background: var(--page-bg);
   cursor: var(--cursor);
 }
 
 body {
   min-height: 100%;
-  min-height: 100dvh;
   margin: 0;
   font: normal 1.6rem/1.5 var(--system-font);
   color: #000;

@@ -15,7 +15,7 @@
     position: relative;
     z-index: var(--z1);
     margin: 0 auto;
-    width: min(90dvw, 100%);
+    width: 90%;
     max-width: 2100rem;
     padding-top: 4.8rem;
     padding-right: var(--safe-right);
