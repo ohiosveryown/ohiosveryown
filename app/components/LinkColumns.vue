@@ -208,24 +208,29 @@
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
+    margin: 0;
+    padding: 0;
     width: 1.6rem;
     height: 1.6rem;
-    padding: 0;
-    color: #000;
-    opacity: 0.5;
+    border: 0;
+    color: rgba(0, 0, 0, 0.5);
+    background: transparent;
+    line-height: 0;
+    appearance: none;
     cursor: var(--cursor);
-    transition: opacity var(--ease);
+    transition: color var(--ease);
 
     &:hover,
     &:focus-visible {
-      opacity: 1;
+      color: #000;
     }
   }
 
   .link-row__info-icon {
     display: block;
-    width: 100%;
-    height: 100%;
+    width: 1.6rem;
+    height: 1.6rem;
+    overflow: visible;
   }
 </style>
 
