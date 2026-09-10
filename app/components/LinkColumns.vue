@@ -59,12 +59,13 @@
         <button
           v-if="item.caseStudy === 'fotos'"
           type="button"
-          class="link-row__info"
+          class="link-row__info has-tooltip"
+          data-tooltip="A mini case study"
           aria-label="Proportional Design Fotos case study"
           :aria-expanded="fotosOpen"
           aria-haspopup="dialog"
           aria-controls="fotos-dialog"
-          @click="fotosOpen = true"
+          @click="openFotos"
         >
           <IconInfo class="link-row__info-icon" />
         </button>
@@ -261,6 +262,11 @@
   }
 
   const fotosOpen = ref(false)
+
+  function openFotos() {
+    dismissTooltip()
+    fotosOpen.value = true
+  }
 
   const columns: readonly LinkColumn[] = [
     {
