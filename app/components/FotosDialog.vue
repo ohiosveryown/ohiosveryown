@@ -229,8 +229,14 @@
     z-index: 1;
     right: calc(var(--safe-right) + 1.6rem);
     bottom: calc(var(--safe-bottom) + 1.6rem);
-    width: min(49.2rem, calc(100vw - 3.2rem - var(--safe-left) - var(--safe-right)));
-    height: min(58.4rem, calc(100dvh - 3.2rem - var(--safe-top) - var(--safe-bottom)));
+    width: min(
+      49.2rem,
+      calc(100vw - 3.2rem - var(--safe-left) - var(--safe-right))
+    );
+    height: min(
+      58.4rem,
+      calc(100dvh - 3.2rem - var(--safe-top) - var(--safe-bottom))
+    );
     overflow: hidden;
     border-radius: 2.3rem;
     background: #fff;
@@ -321,10 +327,11 @@
   .fotos-dialog__article {
     display: flex;
     flex-direction: column;
-    gap: 2.8rem;
   }
 
   .fotos-dialog__heading {
+    margin-top: 2rem;
+    margin-bottom: 1.2rem;
     color: #000;
     font-size: 1.6rem;
     font-family: var(--system-font);
@@ -344,6 +351,7 @@
   }
 
   .fotos-dialog__article p + p {
+    margin-top: 2.8rem;
     margin-bottom: 0;
   }
 
@@ -386,7 +394,10 @@
   const leave = computed(() => ({
     opacity: 0,
     filter: reduceMotion.value ? 'blur(0px)' : 'blur(10px)',
-    transition: { duration: reduceMotion.value ? 0.01 : 0.28, ease: [0.8, 0, 0.16, 1] },
+    transition: {
+      duration: reduceMotion.value ? 0.01 : 0.28,
+      ease: [0.8, 0, 0.16, 1],
+    },
   }))
 
   function close() {
