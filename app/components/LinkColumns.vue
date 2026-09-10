@@ -55,9 +55,27 @@
             >
           </span>
         </component>
+
+        <button
+          v-if="item.caseStudy === 'fotos'"
+          type="button"
+          class="link-row__info"
+          aria-label="Proportional Design Fotos case study"
+          :aria-expanded="fotosOpen"
+          aria-haspopup="dialog"
+          aria-controls="fotos-dialog"
+          @click="fotosOpen = true"
+        >
+          <IconInfo class="link-row__info-icon" />
+        </button>
       </li>
     </ul>
   </section>
+
+  <FotosDialog
+    :open="fotosOpen"
+    @close="fotosOpen = false"
+  />
 </template>
 
 <style scoped lang="scss">
@@ -93,6 +111,8 @@
 
   .link-row {
     display: flex;
+    align-items: center;
+    gap: 0.4rem;
   }
 
   .link-row__link {
@@ -181,6 +201,31 @@
     text-decoration-thickness: 0.064rem;
     text-underline-offset: 0.4rem;
   }
+
+  .link-row__info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 1.6rem;
+    height: 1.6rem;
+    padding: 0;
+    color: #000;
+    opacity: 0.5;
+    cursor: var(--cursor);
+    transition: opacity var(--ease);
+
+    &:hover,
+    &:focus-visible {
+      opacity: 1;
+    }
+  }
+
+  .link-row__info-icon {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
 </style>
 
 <script setup lang="ts">
@@ -206,6 +251,7 @@
     external?: boolean
     tooltip?: string
     tooltipImage?: string
+    caseStudy?: 'fotos'
     icon: IconSpec
   }
 
@@ -213,6 +259,8 @@
     title: string
     items: readonly LinkItem[]
   }
+
+  const fotosOpen = ref(false)
 
   const columns: readonly LinkColumn[] = [
     {
@@ -254,6 +302,7 @@
           tooltip: "Furniture I've made",
           tooltipImage:
             'https://res.cloudinary.com/dn1q8h2ga/image/upload/v1784821939/pp_uthfbh.gif',
+          caseStudy: 'fotos',
           icon: { sprite: 'proportional' },
         },
         {
