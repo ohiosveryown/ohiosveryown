@@ -339,7 +339,7 @@
     font-size: 1.6rem;
     font-family: var(--system-font);
     font-weight: 400;
-    letter-spacing: -0.075rem;
+    letter-spacing: -0.02rem;
     line-height: 1.6;
   }
 
