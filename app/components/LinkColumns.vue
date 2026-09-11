@@ -60,7 +60,7 @@
           v-if="item.caseStudy === 'fotos'"
           type="button"
           class="link-row__info has-tooltip"
-          data-tooltip="A mini case study"
+          data-tooltip="The how and why"
           aria-label="Proportional Design Fotos case study"
           :aria-expanded="fotosOpen"
           aria-haspopup="dialog"

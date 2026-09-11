@@ -35,38 +35,55 @@
 
           <div class="fotos-dialog__fade" />
 
-          <div class="fotos-dialog__scroll">
-            <header class="fotos-dialog__header">
+          <motion.div
+            class="fotos-dialog__scroll"
+            :initial="'hidden'"
+            :animate="'visible'"
+            :variants="contentList"
+          >
+            <motion.header
+              class="fotos-dialog__header"
+              :variants="contentItem"
+            >
               <h2
                 id="fotos-dialog-title"
                 class="fotos-dialog__title"
               >
                 Proportional Design Fotos Architecture
               </h2>
-            </header>
+            </motion.header>
 
-            <div class="fotos-dialog__meta">
+            <motion.div
+              class="fotos-dialog__meta"
+              :variants="contentItem"
+            >
               <p class="thin">Contributions: Agentic engineering</p>
               <p class="thin">Timeline: 2026</p>
-            </div>
+            </motion.div>
 
-            <article class="fotos-dialog__article">
-              <p>
-                I take a lot of photos of my woodworking projects — finished
-                pieces, half-cut joinery, the workshop on a quiet morning. For
-                years they'd pile up on my Camera Roll until I either lost them
-                in iCloud or never posted them. I wanted a small public-facing
-                gallery that felt like mine — not Instagram, not Lightroom, not
-                a cloud-photo product I'd have to feed forever. So I built one.
-                The whole thing lives at
-                <a
-                  href="https://proportional.design"
-                  target="_blank"
-                  rel="noopener"
-                  >proportional.design</a
-                >, and I never open it to upload a photo.
-              </p>
+            <motion.p
+              class="fotos-dialog__lede"
+              :variants="contentItem"
+            >
+              I take a lot of photos of my woodworking projects — finished
+              pieces, half-cut joinery, the workshop on a quiet morning. For
+              years they'd pile up on my Camera Roll until I either lost them in
+              iCloud or never posted them. I wanted a small public-facing
+              gallery that felt like mine — not Instagram, not Lightroom, not a
+              cloud-photo product I'd have to feed forever. So I built one. The
+              whole thing lives at
+              <a
+                href="https://proportional.design"
+                target="_blank"
+                rel="noopener"
+                >proportional.design</a
+              >, and I never open it to upload a photo.
+            </motion.p>
 
+            <motion.div
+              class="fotos-dialog__section"
+              :variants="contentItem"
+            >
               <h3 class="fotos-dialog__heading">
                 ↬ What prompted me to build this?
               </h3>
@@ -87,7 +104,12 @@
                 UI at all. If I couldn't publish from the Share Sheet, I
                 couldn't publish.
               </p>
+            </motion.div>
 
+            <motion.div
+              class="fotos-dialog__section"
+              :variants="contentItem"
+            >
               <h3 class="fotos-dialog__heading">↬ Where did I start?</h3>
 
               <p>
@@ -104,7 +126,12 @@
                 That's the whole upload "flow." There's no form. The Shortcut is
                 the form.
               </p>
+            </motion.div>
 
+            <motion.div
+              class="fotos-dialog__section"
+              :variants="contentItem"
+            >
               <h3 class="fotos-dialog__heading">↬ What did I build?</h3>
 
               <p>
@@ -175,7 +202,12 @@
                 resolves, the app now gets to first interaction in well under a
                 second on a cold visit.
               </p>
+            </motion.div>
 
+            <motion.div
+              class="fotos-dialog__section"
+              :variants="contentItem"
+            >
               <h3 class="fotos-dialog__heading">
                 ↬ What I deliberately didn't build
               </h3>
@@ -202,8 +234,8 @@
                 definition itself, the auto-tag prompt, the chat tool schema, or
                 the perf work — if you're curious.
               </p>
-            </article>
-          </div>
+            </motion.div>
+          </motion.div>
         </div>
       </motion.div>
     </AnimatePresence>
@@ -324,13 +356,7 @@
     line-height: 1.2;
   }
 
-  .fotos-dialog__article {
-    display: flex;
-    flex-direction: column;
-  }
-
   .fotos-dialog__heading {
-    margin-top: 2rem;
     margin-bottom: 1.2rem;
     color: #000;
     font-size: 1.6rem;
@@ -340,7 +366,8 @@
     line-height: 1.5;
   }
 
-  .fotos-dialog__article p {
+  .fotos-dialog__lede,
+  .fotos-dialog__section p {
     margin: 0;
     color: #000;
     font-size: 1.6rem;
@@ -350,12 +377,13 @@
     line-height: 1.6;
   }
 
-  .fotos-dialog__article p + p {
+  .fotos-dialog__section p + p {
     margin-top: 2.8rem;
     margin-bottom: 0;
   }
 
-  .fotos-dialog__article a {
+  .fotos-dialog__lede a,
+  .fotos-dialog__section a {
     text-decoration: underline;
     text-decoration-thickness: 0.064rem;
     text-underline-offset: 0.3rem;
@@ -378,25 +406,52 @@
   let previousOverflow = ''
   let previousFocus: HTMLElement | null = null
 
-  const motionMs = computed(() => (reduceMotion.value ? 0.01 : 0.4))
+  const motionMs = computed(() => (reduceMotion.value ? 0.01 : 0.45))
+  const ease = [0.8, 0, 0.16, 1] as const
+  const itemEase = [0.16, 1, 0.3, 1] as const
 
   const enter = computed(() => ({
     opacity: 0,
-    filter: reduceMotion.value ? 'blur(0px)' : 'blur(10px)',
   }))
 
   const shown = computed(() => ({
     opacity: 1,
-    filter: 'blur(0px)',
-    transition: { duration: motionMs.value, ease: [0.8, 0, 0.16, 1] },
+    transition: { duration: motionMs.value, ease },
   }))
 
   const leave = computed(() => ({
     opacity: 0,
     filter: reduceMotion.value ? 'blur(0px)' : 'blur(10px)',
     transition: {
-      duration: reduceMotion.value ? 0.01 : 0.28,
-      ease: [0.8, 0, 0.16, 1],
+      duration: reduceMotion.value ? 0.01 : 0.32,
+      ease,
+    },
+  }))
+
+  const contentList = computed(() => ({
+    hidden: {},
+    visible: {
+      transition: {
+        staggerChildren: reduceMotion.value ? 0 : 0.07,
+        delayChildren: reduceMotion.value ? 0 : 0.06,
+      },
+    },
+  }))
+
+  const contentItem = computed(() => ({
+    hidden: {
+      opacity: 0,
+      y: reduceMotion.value ? 0 : '-0.8rem',
+      filter: reduceMotion.value ? 'blur(0px)' : 'blur(10px)',
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      filter: 'blur(0px)',
+      transition: {
+        duration: reduceMotion.value ? 0.01 : 1,
+        ease: itemEase,
+      },
     },
   }))
 
