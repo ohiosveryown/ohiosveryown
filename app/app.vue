@@ -1,10 +1,9 @@
 <template>
   <NuxtLayout>
     <ClientOnly>
-      <GradientBackdrop />
-      <LastVisit />
+      <LastVisit v-if="!isHome" />
     </ClientOnly>
-    <main>
+    <main :class="{ 'is-home': isHome }">
       <NuxtPage />
     </main>
     <TooltipLabel />
@@ -27,6 +26,13 @@
       padding-top: 13rem;
       padding-bottom: calc(var(--safe-bottom) + 5.6rem);
     }
+
+    &.is-home {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      max-width: none;
+    }
   }
 </style>
 
@@ -34,6 +40,7 @@
   import thinWoff2 from '~/assets/type/thin.woff2'
 
   const route = useRoute()
+  const isHome = computed(() => route.path === '/')
 
   useHead({
     title: computed(

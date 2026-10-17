@@ -1,11 +1,13 @@
 <template>
   <a
     href="mailto:matt@ohiosveryown.co"
+    :class="{ 'button-contact-link--field': variant === 'field' }"
     @click.prevent
   >
     <button
       ref="buttonRef"
       class="button-contact has-tooltip"
+      :class="{ 'button-contact--field blush': variant === 'field' }"
       :data-tooltip="currentTooltip"
       @click="handleClick"
     >
@@ -64,10 +66,62 @@
   .button-contact:active {
     transform: translateY(0);
   }
+
+  .button-contact-link--field {
+    display: block;
+    width: 100%;
+  }
+
+  .button-contact--field {
+    width: 100%;
+    height: auto;
+    padding: 2rem 1.6rem;
+    border: 1px solid #d2f976;
+    border-radius: 100rem;
+    color: #d2f976;
+    background: transparent;
+    box-shadow: none;
+    font-family: "blush", var(--system-font);
+    font-size: 2rem;
+    font-synthesis: none;
+    font-weight: 600;
+    letter-spacing: 0.04rem;
+    line-height: 0.87;
+    text-transform: uppercase;
+    text-box-edge: cap alphabetic;
+    text-box-trim: trim-both;
+    font-variation-settings: "wdth" 100, "HGHT" 100;
+
+    @include breakpoint(md) {
+      padding: 1.5rem 1.6rem;
+      font-size: 1.6rem;
+      font-weight: 700;
+      letter-spacing: 0.048rem;
+      font-variation-settings: "wdth" 100, "HGHT" 120;
+    }
+  }
+
+  .button-contact--field::before {
+    display: none;
+  }
+
+  .button-contact--field:hover {
+    background: rgba(210, 249, 118, 0.12);
+    transform: none;
+  }
+
+  .button-contact--field:active {
+    background: rgba(210, 249, 118, 0.2);
+    transform: none;
+  }
 </style>
 
 <script setup lang="ts">
   import { ref, nextTick } from 'vue'
+
+  withDefaults(defineProps<{ variant?: 'field' }>(), {
+    variant: undefined,
+  })
 
   type CopyTarget = {
     value: string
