@@ -12,6 +12,13 @@
       <div class="home__shade" />
     </div>
 
+    <p class="home__rail home__rail--left blush">
+      *ohiosveryown*ohiosveryown*ohiosveryown*
+    </p>
+    <p class="home__rail home__rail--right blush">
+      *not a portfolio of work—rather a collection of vignettes*
+    </p>
+
     <div class="home__panel">
       <h1 class="home__title">Matthew Pence</h1>
 
@@ -198,6 +205,41 @@
       rgba(0, 0, 0, 0.06),
       rgba(0, 0, 0, 0.3)
     );
+  }
+
+  .home__rail {
+    display: none;
+    position: absolute;
+    z-index: 1;
+    top: 50%;
+    margin: 0;
+    color: #d2f976;
+    font-size: 1.2rem;
+    font-weight: 500;
+    line-height: 1.11;
+    text-align: center;
+    text-transform: uppercase;
+    white-space: nowrap;
+    writing-mode: vertical-rl;
+    text-orientation: sideways;
+    pointer-events: none;
+    font-variation-settings:
+      "wdth" 100,
+      "HGHT" 100;
+    transform: translateY(-50%);
+
+    @include breakpoint(md) {
+      display: block;
+    }
+  }
+
+  .home__rail--left {
+    left: 1.2rem;
+    transform: translateY(-50%) rotate(180deg);
+  }
+
+  .home__rail--right {
+    right: 1.2rem;
   }
 
   .home__panel {
