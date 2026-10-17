@@ -81,7 +81,7 @@
     color: #d2f976;
     background: transparent;
     box-shadow: none;
-    font-family: "blush", var(--system-font);
+    font-family: 'blush', var(--system-font);
     font-size: 2rem;
     font-synthesis: none;
     font-weight: 600;
@@ -90,14 +90,18 @@
     text-transform: uppercase;
     text-box-edge: cap alphabetic;
     text-box-trim: trim-both;
-    font-variation-settings: "wdth" 100, "HGHT" 100;
+    font-variation-settings:
+      'wdth' 100,
+      'HGHT' 100;
 
     @include breakpoint(md) {
       padding: 1.5rem 1.6rem;
       font-size: 1.6rem;
       font-weight: 700;
       letter-spacing: 0.048rem;
-      font-variation-settings: "wdth" 100, "HGHT" 120;
+      font-variation-settings:
+        'wdth' 100,
+        'HGHT' 120;
     }
   }
 
@@ -106,12 +110,10 @@
   }
 
   .button-contact--field:hover {
-    background: rgba(210, 249, 118, 0.12);
     transform: none;
   }
 
   .button-contact--field:active {
-    background: rgba(210, 249, 118, 0.2);
     transform: none;
   }
 </style>

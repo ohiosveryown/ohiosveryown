@@ -19,7 +19,7 @@
         <div class="roles__line">
           <div class="roles__item">
             <span class="roles__label">Currently: Square</span>
-            <span class="roles__title blush">Principal product designer</span>
+            <span class="roles__title roles__title--square blush">Principal product designer</span>
             <span class="roles__mark">
               <img
                 class="roles__icon roles__icon--square"
@@ -139,10 +139,12 @@
           <p class="home__prose">
             He also runs the furniture design studio:
             <a
-              class="home__dotted"
+              class="home__dotted has-tooltip"
               href="https://proportional.design"
               target="_blank"
               rel="noopener"
+              data-tooltip="Furniture I've made"
+              data-tooltip-image="https://res.cloudinary.com/dn1q8h2ga/image/upload/v1784821939/pp_uthfbh.gif"
               >proportional design</a
             >.
           </p>
@@ -371,6 +373,20 @@
       font-variation-settings:
         'wdth' 88,
         'HGHT' 100;
+    }
+  }
+
+  .roles__title--square {
+    font-variation-settings:
+      'wdth' 82,
+      'HGHT' 0,
+      'slnt' -6;
+
+    @include breakpoint(md) {
+      font-variation-settings:
+        'wdth' 88,
+        'HGHT' 100,
+        'slnt' -6;
     }
   }
 
