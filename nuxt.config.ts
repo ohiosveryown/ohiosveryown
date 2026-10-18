@@ -44,7 +44,6 @@ export default defineNuxtConfig({
   },
   routeRules: {
     '/': { prerender: true },
-    '/work/**': { prerender: true },
     '/callback': { ssr: true },
     '/api/**': { cors: true },
   },

@@ -1,8 +1,5 @@
 <template>
   <NuxtLayout>
-    <ClientOnly>
-      <LastVisit v-if="!isHome" />
-    </ClientOnly>
     <main :class="{ 'is-home': isHome }">
       <NuxtPage />
     </main>

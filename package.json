@@ -6,7 +6,6 @@
     "build": "nuxt build",
     "dev": "nuxt dev",
     "generate": "nuxt generate",
-    "icons:sprite": "node scripts/build-link-icons-sprite.mjs",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare"
   },
@@ -16,8 +15,5 @@
     "sass": "^1.99.0",
     "vue": "^3.5.34",
     "vue-router": "^5.0.6"
-  },
-  "devDependencies": {
-    "sharp": "^0.35.3"
   }
 }
