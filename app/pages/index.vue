@@ -5,6 +5,7 @@
   >
     <div
       class="home__bg"
+      :style="{ '--chrome': toRgb(chrome.scrolled) }"
       aria-hidden="true"
     >
       <img
@@ -34,7 +35,20 @@
       *not a portfolio of work—rather a collection of vignettes*
     </motion.p>
 
+    <DeskFile
+      class="home__kiosk"
+      :name="kioskEntry.name"
+      :image="kioskEntry.image"
+      :expanded="openEntry?.id === kioskEntry.id"
+      :delay="0.5"
+      @open="toggleEntry(kioskEntry, $event)"
+    />
     <LastPlayed />
+    <DeskDialog
+      :entry="openEntry"
+      :origin="origin"
+      @close="openEntry = null"
+    />
 
     <div class="home__panel">
       <h1 class="home__title">Matthew Pence</h1>
@@ -348,17 +362,21 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    position: fixed;
-    inset: 0;
-    overflow-x: hidden;
-    overflow-y: auto;
-    padding: 4.8rem 2.4rem calc(3.7rem + var(--safe-bottom));
+    position: relative;
+    padding: 60svh 2.4rem calc(3.7rem + var(--safe-bottom));
+    min-height: 100svh;
     color: #d2f976;
     background: #6f8d7a;
+    overflow-x: clip;
 
     @include breakpoint(md) {
       align-items: center;
+      position: fixed;
+      inset: 0;
       padding: 6rem 1.6rem calc(5.6rem + var(--safe-bottom));
+      min-height: 0;
+      overflow-x: hidden;
+      overflow-y: auto;
     }
   }
 
@@ -384,8 +402,17 @@
     background: linear-gradient(
       to bottom,
       rgba(0, 0, 0, 0.06),
-      rgba(0, 0, 0, 0.3)
+      rgba(0, 0, 0, 0.3) calc(100% - 16rem),
+      var(--chrome)
     );
+
+    @include breakpoint(md) {
+      background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.06),
+        rgba(0, 0, 0, 0.3)
+      );
+    }
   }
 
   .home__rail {
@@ -421,6 +448,19 @@
 
   .home__rail--right {
     right: 1.2rem;
+  }
+
+  .home__kiosk {
+    position: absolute;
+    top: 9svh;
+    left: 2.4rem;
+    width: 22rem;
+    max-width: calc(100% - 4.8rem);
+
+    @include breakpoint(md) {
+      top: 12.89%;
+      left: 10.07%;
+    }
   }
 
   .home__panel {
@@ -547,7 +587,7 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 0.8rem;
+    gap: clamp(1rem, calc((100vw - 4.8rem) * 0.0234), 1.27rem);
     order: 3;
     width: 100%;
     container-type: inline-size;
@@ -578,13 +618,17 @@
   .roles__item {
     display: flex;
     align-items: flex-end;
-    gap: clamp(0.5rem, calc(0.5rem + (100vw - 144rem) * 0.00223), 0.625rem);
+    gap: clamp(0.5rem, 1.46cqi, 0.8rem);
+
+    @include breakpoint(md) {
+      gap: clamp(0.5rem, calc(0.5rem + (100vw - 144rem) * 0.00223), 0.625rem);
+    }
   }
 
   .roles__label,
   .roles__more {
     font-family: var(--system-font);
-    font-size: clamp(1.2rem, 3.76cqi, 1.4rem);
+    font-size: clamp(1.2rem, 3.76cqi, 2.04rem);
     font-weight: 500;
     letter-spacing: -0.056rem;
     line-height: 0.87;
@@ -602,8 +646,15 @@
     }
   }
 
+  .roles__more {
+    margin-top: 0.8rem;
+    @include breakpoint(md) {
+      margin-top: 0;
+    }
+  }
+
   .roles__title {
-    font-size: clamp(1.8rem, 5.9cqi, 2.2rem);
+    font-size: clamp(1.8rem, 5.9cqi, 3.2rem);
     font-weight: 400;
     letter-spacing: -0.0275rem;
     line-height: 0.8;
@@ -648,11 +699,15 @@
     justify-content: center;
     align-self: stretch;
     flex-shrink: 0;
-    width: clamp(2.2rem, calc(2.2rem + (100vw - 144rem) * 0.00982), 2.75rem);
+    width: clamp(2.2rem, 6.43cqi, 3.48rem);
+
+    @include breakpoint(md) {
+      width: clamp(2.2rem, calc(2.2rem + (100vw - 144rem) * 0.00982), 2.75rem);
+    }
   }
 
   .roles__mark--chimp {
-    width: 1.9569rem;
+    width: clamp(1.9569rem, 5.72cqi, 3.1rem);
 
     @include breakpoint(md) {
       width: clamp(2.2rem, calc(2.2rem + (100vw - 144rem) * 0.00982), 2.75rem);
@@ -663,14 +718,16 @@
   .roles__icon--slack,
   .roles__icon--github-sm {
     display: block;
-    width: 1.6rem;
-    height: 1.6rem;
+    width: clamp(1.6rem, 4.68cqi, 2.53rem);
+    height: clamp(1.6rem, 4.68cqi, 2.53rem);
   }
 
   .roles__icon--square,
   .roles__icon--slack {
-    width: clamp(1.6rem, calc(1.6rem + (100vw - 144rem) * 0.00714), 2rem);
-    height: clamp(1.6rem, calc(1.6rem + (100vw - 144rem) * 0.00714), 2rem);
+    @include breakpoint(md) {
+      width: clamp(1.6rem, calc(1.6rem + (100vw - 144rem) * 0.00714), 2rem);
+      height: clamp(1.6rem, calc(1.6rem + (100vw - 144rem) * 0.00714), 2rem);
+    }
   }
 
   .roles__icon--github-lg {
@@ -682,8 +739,8 @@
   .chimp--sm {
     display: block;
     position: relative;
-    width: 1.51213rem;
-    height: 1.60973rem;
+    width: clamp(1.51213rem, 4.42cqi, 2.4rem);
+    aspect-ratio: 15.1213 / 16.0973;
   }
 
   .chimp--lg {
@@ -699,8 +756,8 @@
 
   .chimp__body--sm {
     display: block;
-    width: 1.51213rem;
-    height: 1.60973rem;
+    width: 100%;
+    height: 100%;
   }
 
   .chimp__body--lg {
@@ -715,10 +772,10 @@
 
   .chimp__dot--sm {
     position: absolute;
-    top: 0.7rem;
-    left: 0.837rem;
-    width: 0.07018rem;
-    height: 0.14009rem;
+    top: 43.5%;
+    left: 55.4%;
+    width: 4.64%;
+    height: 8.7%;
   }
 
   .chimp__dot--lg {
@@ -759,10 +816,61 @@
 <script setup lang="ts">
   import { motion } from 'motion-v'
   import field from '~/assets/index/0_1.webp'
+  import { kioskEntry, type DeskEntry } from '~/data/desk'
   import blushWoff2 from '~/assets/type/blush.woff2'
+
+  // iOS Safari paints the status bar (at scroll 0), its toolbar fades, and the
+  // strip under its toolbar (at the end of the page) with the html background
+  // color, never the page itself. On mobile `.home__shade` fades into the same
+  // color so the page end has no seam. Fixed elements at the viewport edges turn
+  // the toolbars opaque; avoid them. Safari re-tints live as the color changes,
+  // so it blends from `rest` to `scrolled` with scroll position.
+  const chrome = {
+    rest: [85, 169, 183],
+    scrolled: [0, 0, 0],
+  } as const
+  const CHROME_RANGE = 200
+
+  function toRgb(color: readonly number[]) {
+    return `rgb(${color.map(Math.round).join(', ')})`
+  }
+
+  const chromeProgress = ref(0)
+  const chromeColor = computed(() => {
+    const t = chromeProgress.value
+    const eased = t * t * (3 - 2 * t)
+    return toRgb(
+      chrome.rest.map(
+        (channel, index) =>
+          channel + (chrome.scrolled[index]! - channel) * eased,
+      ),
+    )
+  })
+
+  let chromeFrame = 0
+
+  function onWindowScroll() {
+    if (chromeFrame) return
+    chromeFrame = requestAnimationFrame(() => {
+      chromeFrame = 0
+      const maxScroll =
+        document.documentElement.scrollHeight - window.innerHeight
+      const range = Math.min(CHROME_RANGE, maxScroll)
+      chromeProgress.value =
+        range > 0 ? Math.min(Math.max(window.scrollY / range, 0), 1) : 0
+    })
+  }
 
   const desk = useTemplateRef<HTMLElement>('desk')
   provideDesk(desk)
+
+  const openEntry = shallowRef<DeskEntry | null>(null)
+  const origin = shallowRef<HTMLElement | null>(null)
+
+  function toggleEntry(entry: DeskEntry, from: HTMLElement | null) {
+    origin.value = from
+    openEntry.value = openEntry.value?.id === entry.id ? null : entry
+  }
 
   const ready = ref(false)
   const wide = ref(false)
@@ -819,11 +927,20 @@
       '(prefers-reduced-motion: reduce)',
     ).matches
     wide.value = window.matchMedia('(min-width: 700px)').matches
+    window.addEventListener('scroll', onWindowScroll, { passive: true })
+    onWindowScroll()
     await nextTick()
     ready.value = true
   })
 
+  onBeforeUnmount(() => {
+    window.removeEventListener('scroll', onWindowScroll)
+    cancelAnimationFrame(chromeFrame)
+  })
+
   useHead({
+    htmlAttrs: { style: computed(() => `background-color: ${chromeColor.value}`) },
+    meta: [{ name: 'theme-color', content: toRgb(chrome.rest) }],
     link: [
       {
         rel: 'preload',
