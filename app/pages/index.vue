@@ -1,5 +1,8 @@
 <template>
-  <section class="home">
+  <section
+    ref="desk"
+    class="home"
+  >
     <div
       class="home__bg"
       aria-hidden="true"
@@ -30,6 +33,8 @@
     >
       *not a portfolio of work—rather a collection of vignettes*
     </motion.p>
+
+    <LastPlayed />
 
     <div class="home__panel">
       <h1 class="home__title">Matthew Pence</h1>
@@ -755,6 +760,9 @@
   import { motion } from 'motion-v'
   import field from '~/assets/index/0_1.webp'
   import blushWoff2 from '~/assets/type/blush.woff2'
+
+  const desk = useTemplateRef<HTMLElement>('desk')
+  provideDesk(desk)
 
   const ready = ref(false)
   const wide = ref(false)

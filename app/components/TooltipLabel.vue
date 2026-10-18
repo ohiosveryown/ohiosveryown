@@ -194,6 +194,11 @@
       mouseY.set(nextY)
     }
 
+    if (currentTarget && !currentTarget.contains(event.target as Node)) {
+      dismiss()
+      return
+    }
+
     if (currentTarget) {
       const rect = currentTarget.getBoundingClientRect()
       const relX =
@@ -220,7 +225,7 @@
   }
 
   function handleMouseOver(event: MouseEvent) {
-    if (isCoarsePointer()) return
+    if (isCoarsePointer() || isTooltipSuppressed()) return
 
     const target = (event.target as HTMLElement | null)?.closest<HTMLElement>(
       '.has-tooltip',
