@@ -39,6 +39,7 @@
       class="home__kiosk"
       :name="kioskEntry.name"
       :image="kioskEntry.image"
+      tooltip="Square Kiosk GTM"
       :expanded="openEntry?.id === kioskEntry.id"
       :delay="0.5"
       @open="toggleEntry(kioskEntry, $event)"
