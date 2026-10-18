@@ -11,6 +11,8 @@
       initial="hidden"
       :animate="phase"
       exit="exit"
+      @mousedown.capture="swallowOpeningClick"
+      @click.capture="swallowOpeningClick"
     >
       <motion.div
         class="desk-dialog__content"
@@ -625,6 +627,19 @@
 
   let returnFocus: HTMLElement | null = null
 
+  // When the opening click is the first half of a double-click, the second
+  // half lands on the dialog (it covers the trigger on narrow screens) and
+  // would select a word or follow a link.
+  const OPENING_CLICK_MS = 600
+  let openedAt = 0
+
+  function swallowOpeningClick(event: MouseEvent) {
+    if (event.detail < 2) return
+    if (performance.now() - openedAt > OPENING_CLICK_MS) return
+    event.preventDefault()
+    event.stopPropagation()
+  }
+
   function onKeydown(event: KeyboardEvent) {
     if (event.key === 'Escape' && props.entry) emit('close')
   }
@@ -633,6 +648,7 @@
     () => props.entry,
     async (entry, previous) => {
       if (entry && !previous) {
+        openedAt = performance.now()
         returnFocus = document.activeElement as HTMLElement | null
         await nextTick()
         closeButton.value?.focus({ preventScroll: true })

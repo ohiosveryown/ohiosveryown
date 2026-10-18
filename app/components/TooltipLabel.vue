@@ -225,12 +225,14 @@
   }
 
   function handleMouseOver(event: MouseEvent) {
-    if (isCoarsePointer() || isTooltipSuppressed()) return
-
     const target = (event.target as HTMLElement | null)?.closest<HTMLElement>(
       '.has-tooltip',
     )
-    if (!target) return
+    if (target) show(target)
+  }
+
+  function show(target: HTMLElement) {
+    if (isCoarsePointer() || isTooltipSuppressed()) return
     currentTarget = target
     updateAnchor(target)
     content.value = getTooltipContent(target)
@@ -259,6 +261,7 @@
     coarseQuery = window.matchMedia('(pointer: coarse)')
     coarseQuery.addEventListener('change', handlePointerChange)
     registerTooltipDismiss(dismiss)
+    registerTooltipShow(show)
     window.addEventListener('mousemove', handleMouseMove, { passive: true })
     window.addEventListener('scroll', handleViewportChange, { passive: true })
     window.addEventListener('resize', handleViewportChange)
@@ -269,6 +272,7 @@
   onBeforeUnmount(() => {
     coarseQuery?.removeEventListener('change', handlePointerChange)
     unregisterTooltipDismiss(dismiss)
+    unregisterTooltipShow(show)
     window.removeEventListener('mousemove', handleMouseMove)
     window.removeEventListener('scroll', handleViewportChange)
     window.removeEventListener('resize', handleViewportChange)

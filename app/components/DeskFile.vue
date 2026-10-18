@@ -4,7 +4,7 @@
       :is="href ? 'a' : 'button'"
       ref="file"
       class="desk-file"
-      :class="{ 'has-tooltip': tooltip }"
+      :class="{ 'has-tooltip': tooltipText }"
       v-bind="
         href
           ? { href, target: '_blank', rel: 'noopener' }
@@ -14,8 +14,8 @@
               'aria-expanded': expanded,
             }
       "
-      :data-tooltip="tooltip"
-      :data-tooltip-image="tooltipImage"
+      :data-tooltip="tooltipText"
+      :data-tooltip-image="hinting ? undefined : tooltipImage"
       :aria-label="label"
       @mousedown="onMouseDown"
       @click="onClick"
@@ -153,12 +153,28 @@
   // when the click selects.
   let wasSelected = false
 
+  // Hint the second click until the visitor has opened any desk file once.
+  // Delayed past a double-click so it doesn't flash on the way to opening.
+  const HINT_DELAY = 400
+  const learned = useState('desk-file-learned', () => false)
+  const hinting = computed(() => selected.value && !learned.value)
+  const tooltipText = computed(() =>
+    hinting.value ? 'Double-click to open' : props.tooltip,
+  )
+  let hintTimer: ReturnType<typeof setTimeout> | undefined
+
   // A mousedown moves focus (Safari drops it to <body>), which would steal it
   // back from the dialog we open, especially on double-click.
   function onMouseDown(event: MouseEvent) {
     if (!props.href) event.preventDefault()
     wasSelected = selected.value
     selected.value = true
+    if (!wasSelected && !learned.value) {
+      clearTimeout(hintTimer)
+      hintTimer = setTimeout(() => {
+        if (hinting.value && file.value) showTooltip(file.value)
+      }, HINT_DELAY)
+    }
   }
 
   function onClick(event: MouseEvent) {
@@ -169,6 +185,13 @@
     if (!keyboard && ignored) {
       event.preventDefault()
       return
+    }
+    if (!keyboard) {
+      clearTimeout(hintTimer)
+      if (!learned.value) {
+        learned.value = true
+        dismissTooltip()
+      }
     }
     if (!props.href) emit('open', art.value)
   }
@@ -184,7 +207,8 @@
   }
 
   onMounted(() => document.addEventListener('pointerdown', onPointerDown))
-  onBeforeUnmount(() =>
-    document.removeEventListener('pointerdown', onPointerDown),
-  )
+  onBeforeUnmount(() => {
+    clearTimeout(hintTimer)
+    document.removeEventListener('pointerdown', onPointerDown)
+  })
 </script>
