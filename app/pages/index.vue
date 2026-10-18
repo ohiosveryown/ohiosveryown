@@ -231,7 +231,12 @@
             :animate="ready ? 'visible' : 'hidden'"
             :custom="sequence.more"
           >
-            Plus a <span class="home__dotted">couple more</span>.
+            Plus a
+            <span
+              class="home__dotted has-tooltip"
+              data-tooltip="Review CV"
+              >couple more</span
+            >.
           </motion.p>
         </div>
       </div>
@@ -296,8 +301,8 @@
           :animate="ready ? 'visible' : 'hidden'"
           :custom="sequence.lead"
         >
-          Matt Pence is a craft and quality-conscious software designer and
-          builder based in Atlanta, GA, working across brand, product, and code.
+          Matt is a craft and quality-conscious software designer and builder
+          based in Atlanta, GA, working across brand, product, and code.
         </motion.p>
         <div class="home__aside">
           <motion.p
@@ -307,15 +312,15 @@
             :animate="ready ? 'visible' : 'hidden'"
             :custom="sequence.aside"
           >
-            He also runs the furniture design studio:
+            He also builds furniture and runs the studio:
             <a
               class="home__dotted has-tooltip"
               href="https://proportional.design"
               target="_blank"
               rel="noopener"
-              data-tooltip="Furniture I've made"
+              data-tooltip="Furniture studio site"
               data-tooltip-image="https://res.cloudinary.com/dn1q8h2ga/image/upload/v1784821939/pp_uthfbh.gif"
-              >proportional design</a
+              >proportional design↗</a
             >.
           </motion.p>
           <motion.div
@@ -348,7 +353,7 @@
 
     @include breakpoint(md) {
       align-items: center;
-      padding: 6rem 1.6rem calc(3.2rem + var(--safe-bottom));
+      padding: 6rem 1.6rem calc(5.6rem + var(--safe-bottom));
     }
   }
 
@@ -385,7 +390,7 @@
     top: 50%;
     margin: 0;
     color: #d2f976;
-    font-size: clamp(1.2rem, calc(1.2rem + (100vw - 144rem) * 0.00536), 1.5rem);
+    font-size: clamp(1.3rem, calc(1.3rem + (100vw - 144rem) * 0.00536), 1.5rem);
     font-weight: 500;
     line-height: 1.11;
     text-align: center;
@@ -428,6 +433,7 @@
   }
 
   .home__cta {
+    margin-top: 0.4rem;
     width: 100%;
   }
 
@@ -478,13 +484,17 @@
     font-size: 2rem;
     font-weight: 500;
     letter-spacing: -0.08rem;
-    line-height: 1.2;
+    line-height: 1.3;
     text-align: justify;
     text-box-edge: cap alphabetic;
     text-box-trim: trim-both;
 
     @include breakpoint(md) {
-      font-size: clamp(1.7rem, calc(1.7rem + (100vw - 144rem) * 0.00759), 2.125rem);
+      font-size: clamp(
+        1.7rem,
+        calc(1.7rem + (100vw - 144rem) * 0.00759),
+        2.125rem
+      );
       letter-spacing: -0.029em;
     }
   }
@@ -516,8 +526,16 @@
 
   .home__marks-lg {
     display: none;
-    width: clamp(3.93183rem, calc(3.93183rem + (100vw - 144rem) * 0.01755), 4.91479rem);
-    height: clamp(1.1951rem, calc(1.1951rem + (100vw - 144rem) * 0.00534), 1.49388rem);
+    width: clamp(
+      3.93183rem,
+      calc(3.93183rem + (100vw - 144rem) * 0.01755),
+      4.91479rem
+    );
+    height: clamp(
+      1.1951rem,
+      calc(1.1951rem + (100vw - 144rem) * 0.00534),
+      1.49388rem
+    );
   }
 
   .roles {
@@ -546,7 +564,8 @@
       flex-wrap: wrap;
       align-items: flex-end;
       justify-content: center;
-      gap: clamp(0.4rem, calc(0.4rem + (100vw - 144rem) * 0.00179), 0.5rem) clamp(0.5rem, calc(0.5rem + (100vw - 144rem) * 0.00223), 0.625rem);
+      gap: clamp(0.4rem, calc(0.4rem + (100vw - 144rem) * 0.00179), 0.5rem)
+        clamp(0.5rem, calc(0.5rem + (100vw - 144rem) * 0.00223), 0.625rem);
       max-width: 100%;
     }
   }
@@ -569,7 +588,11 @@
     text-box-trim: trim-both;
 
     @include breakpoint(md) {
-      font-size: clamp(1.2rem, #{"min(1.25vw, calc(1.8rem + (100vw - 144rem) * 0.00804))"}, 2.25rem);
+      font-size: clamp(
+        1.2rem,
+        #{'min(1.25vw, calc(1.8rem + (100vw - 144rem) * 0.00804))'},
+        2.25rem
+      );
       letter-spacing: -0.028em;
     }
   }
@@ -588,7 +611,11 @@
       'HGHT' 0;
 
     @include breakpoint(md) {
-      font-size: clamp(1.8rem, #{"min(2.64vw, calc(3.8rem + (100vw - 144rem) * 0.01696))"}, 4.75rem);
+      font-size: clamp(
+        1.8rem,
+        #{'min(2.64vw, calc(3.8rem + (100vw - 144rem) * 0.01696))'},
+        4.75rem
+      );
       letter-spacing: -0.0125em;
       font-variation-settings:
         'wdth' 88,
@@ -658,7 +685,11 @@
     display: none;
     position: relative;
     width: clamp(1.7rem, calc(1.7rem + (100vw - 144rem) * 0.00759), 2.125rem);
-    height: clamp(1.80973rem, calc(1.80973rem + (100vw - 144rem) * 0.00808), 2.26216rem);
+    height: clamp(
+      1.80973rem,
+      calc(1.80973rem + (100vw - 144rem) * 0.00808),
+      2.26216rem
+    );
   }
 
   .chimp__body--sm {
@@ -670,7 +701,11 @@
   .chimp__body--lg {
     display: block;
     width: clamp(1.7rem, calc(1.7rem + (100vw - 144rem) * 0.00759), 2.125rem);
-    height: clamp(1.80973rem, calc(1.80973rem + (100vw - 144rem) * 0.00808), 2.26216rem);
+    height: clamp(
+      1.80973rem,
+      calc(1.80973rem + (100vw - 144rem) * 0.00808),
+      2.26216rem
+    );
   }
 
   .chimp__dot--sm {
@@ -718,7 +753,7 @@
 
 <script setup lang="ts">
   import { motion } from 'motion-v'
-  import field from '~/assets/index/field.jpg'
+  import field from '~/assets/index/0_1.webp'
   import blushWoff2 from '~/assets/type/blush.woff2'
 
   const ready = ref(false)
