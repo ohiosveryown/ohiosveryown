@@ -363,7 +363,7 @@
     flex-direction: column;
     justify-content: flex-end;
     position: relative;
-    padding: 60svh 2.4rem calc(3.7rem + var(--safe-bottom));
+    padding: 60svh 1.6rem calc(3.7rem + var(--safe-bottom));
     min-height: 100svh;
     color: #d2f976;
     background: #6f8d7a;
@@ -377,6 +377,7 @@
       min-height: 0;
       overflow-x: hidden;
       overflow-y: auto;
+      overscroll-behavior: none;
     }
   }
 
@@ -493,7 +494,7 @@
   .home__copy {
     display: flex;
     flex-direction: column;
-    gap: 2.4rem;
+    gap: 1rem;
     order: 1;
     width: 100%;
 
@@ -530,9 +531,7 @@
     font-weight: 500;
     letter-spacing: -0.08rem;
     line-height: 1.3;
-    text-align: justify;
-    text-box-edge: cap alphabetic;
-    text-box-trim: trim-both;
+    text-align: left;
 
     @include breakpoint(md) {
       font-size: clamp(
@@ -939,7 +938,9 @@
   })
 
   useHead({
-    htmlAttrs: { style: computed(() => `background-color: ${chromeColor.value}`) },
+    htmlAttrs: {
+      style: computed(() => `background-color: ${chromeColor.value}`),
+    },
     meta: [{ name: 'theme-color', content: toRgb(chrome.rest) }],
     link: [
       {

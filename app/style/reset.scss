@@ -46,6 +46,10 @@ html {
   min-height: 100%;
   background: #fff;
   cursor: var(--cursor);
+
+  @include breakpoint(md) {
+    overscroll-behavior: none;
+  }
 }
 
 body {

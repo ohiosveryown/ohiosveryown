@@ -2,6 +2,7 @@
   <DeskItem :delay="delay">
     <component
       :is="href ? 'a' : 'button'"
+      ref="file"
       class="desk-file"
       :class="{ 'has-tooltip': tooltip }"
       v-bind="
@@ -18,10 +19,13 @@
       :aria-label="label"
       @mousedown="onMouseDown"
       @click="onClick"
+      @focus="onFocus"
+      @blur="keyboardFocus = false"
     >
       <span
         ref="art"
         class="desk-file__art"
+        :class="{ 'is-selected': selected || keyboardFocus }"
       >
         <img
           v-if="image"
@@ -44,6 +48,10 @@
     gap: 0.9rem;
     color: #fff;
     text-decoration: none;
+
+    &:focus-visible {
+      outline: none;
+    }
   }
 
   button.desk-file {
@@ -67,6 +75,11 @@
     background: #d2f976;
     box-shadow: 0 0.4rem 1.2rem 0 rgba(0, 0, 0, 0.19);
     overflow: hidden;
+
+    &.is-selected {
+      outline: 2px solid #285955;
+      outline-offset: 3px;
+    }
   }
 
   .desk-file__image {
@@ -130,16 +143,48 @@
 
   const emit = defineEmits<{ open: [origin: HTMLElement | null] }>()
 
+  const file = useTemplateRef<HTMLElement>('file')
   const art = useTemplateRef<HTMLElement>('art')
+  const selected = ref(false)
+  const keyboardFocus = ref(false)
+
+  // Like a desktop: the first click selects, a second click (or double-click)
+  // opens. Touch opens on the first tap. Read at mousedown, since that's also
+  // when the click selects.
+  let wasSelected = false
 
   // A mousedown moves focus (Safari drops it to <body>), which would steal it
   // back from the dialog we open, especially on double-click.
   function onMouseDown(event: MouseEvent) {
     if (!props.href) event.preventDefault()
+    wasSelected = selected.value
+    selected.value = true
   }
 
   function onClick(event: MouseEvent) {
-    if (props.href || event.detail > 1) return
-    emit('open', art.value)
+    const keyboard = event.detail === 0
+    const ignored = matchMedia('(pointer: coarse)').matches
+      ? event.detail > 1
+      : !wasSelected || event.detail > 2
+    if (!keyboard && ignored) {
+      event.preventDefault()
+      return
+    }
+    if (!props.href) emit('open', art.value)
   }
+
+  function onFocus(event: FocusEvent) {
+    keyboardFocus.value = (event.target as HTMLElement).matches(
+      ':focus-visible',
+    )
+  }
+
+  function onPointerDown(event: PointerEvent) {
+    if (!file.value?.contains(event.target as Node)) selected.value = false
+  }
+
+  onMounted(() => document.addEventListener('pointerdown', onPointerDown))
+  onBeforeUnmount(() =>
+    document.removeEventListener('pointerdown', onPointerDown),
+  )
 </script>
