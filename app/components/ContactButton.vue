@@ -95,10 +95,10 @@
       'HGHT' 100;
 
     @include breakpoint(md) {
-      padding: 1.5rem 1.6rem;
-      font-size: 1.6rem;
+      padding: clamp(1.5rem, calc(1.5rem + (100vw - 144rem) * 0.0067), 1.875rem) clamp(1.6rem, calc(1.6rem + (100vw - 144rem) * 0.00714), 2rem);
+      font-size: clamp(1.6rem, calc(1.6rem + (100vw - 144rem) * 0.00714), 2rem);
       font-weight: 700;
-      letter-spacing: 0.048rem;
+      letter-spacing: 0.03em;
       font-variation-settings:
         'wdth' 100,
         'HGHT' 120;
