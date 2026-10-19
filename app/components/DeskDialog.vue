@@ -5,8 +5,10 @@
       :key="entry.id"
       ref="shell"
       class="desk-dialog"
+      :class="{ 'is-resized': height != null }"
       role="dialog"
       :aria-labelledby="`${entry.id}-title`"
+      :style="shellStyle"
       :variants="variants"
       initial="hidden"
       :animate="phase"
@@ -105,6 +107,18 @@
           />
         </div>
 
+        <div
+          v-if="canResize"
+          class="desk-dialog__resize"
+          role="separator"
+          aria-orientation="horizontal"
+          aria-label="Resize dialog"
+          :aria-valuemin="minHeight"
+          :aria-valuemax="maxHeight"
+          :aria-valuenow="height ?? minHeight"
+          @pointerdown="onResizeDown"
+        />
+
         <button
           ref="closeButton"
           class="desk-dialog__close"
@@ -194,7 +208,8 @@
     top: 0.8rem;
     right: 0.8rem;
     left: 0.8rem;
-    max-height: calc(100% - 2.4rem);
+    // Bottom inset matches the 0.8rem top inset.
+    max-height: calc(100% - 1.6rem);
     border: 0.5px solid rgba(255, 255, 255, 0.26);
     border-radius: 3.5rem;
     color: #fff;
@@ -211,20 +226,23 @@
       left: auto;
       width: min(62rem, calc(100% - 3.2rem));
       min-height: 0;
-      max-height: min(68rem, calc(100% - 3.2rem));
       aspect-ratio: 4 / 3;
     }
 
-    // A full-height column beside the inset page (see `.home.is-split`).
-    @include breakpoint(mdl) {
-      bottom: 0.8rem;
-      width: 45.6rem;
-      max-height: none;
-      border-color: rgba(255, 255, 255, 0.32);
-      border-radius: 2.5rem;
-      background: #1d1d1d;
+    &.is-resized {
       aspect-ratio: auto;
     }
+  }
+
+  .desk-dialog__resize {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
+    height: 1.2rem;
+    touch-action: none;
+    cursor: ns-resize;
   }
 
   .desk-dialog__content {
@@ -568,6 +586,65 @@
   // Vue nulls the template ref as soon as the leave starts, before `exit` runs.
   let dialog: HTMLElement | null = null
 
+  // Height resize (pointer: fine only). Min is the default laid-out height;
+  // max matches the CSS max-height.
+  const finePointer = ref(false)
+  const minHeight = ref(0)
+  const maxHeight = ref(0)
+  const height = ref<number | null>(null)
+  const canResize = computed(
+    () => finePointer.value && maxHeight.value > minHeight.value + 1,
+  )
+  const shellStyle = computed(() =>
+    height.value != null ? { height: `${height.value}px` } : undefined,
+  )
+
+  let resizeStart = { y: 0, height: 0 }
+  let fineQuery: MediaQueryList | undefined
+
+  function measureHeightBounds() {
+    if (!dialog) return
+    // Max height leaves the same gap below as the dialog has above.
+    const top = Number.parseFloat(getComputedStyle(dialog).top) || 0
+    maxHeight.value = Math.max(0, window.innerHeight - top * 2)
+
+    // offsetHeight is the layout size (ignores the FLIP transform). While the
+    // user hasn't resized, keep min in sync with the default height.
+    if (height.value == null) {
+      minHeight.value = dialog.offsetHeight
+      return
+    }
+    height.value = Math.min(
+      Math.max(height.value, minHeight.value),
+      maxHeight.value,
+    )
+  }
+
+  function onResizeDown(event: PointerEvent) {
+    if (!dialog || !canResize.value) return
+    event.preventDefault()
+    ;(event.currentTarget as HTMLElement).setPointerCapture(event.pointerId)
+    resizeStart = {
+      y: event.clientY,
+      height: height.value ?? dialog.offsetHeight,
+    }
+    window.addEventListener('pointermove', onResizeMove)
+    window.addEventListener('pointerup', onResizeUp)
+    window.addEventListener('pointercancel', onResizeUp)
+  }
+
+  function onResizeMove(event: PointerEvent) {
+    if (!dialog) return
+    const next = resizeStart.height + (event.clientY - resizeStart.y)
+    height.value = Math.min(Math.max(next, minHeight.value), maxHeight.value)
+  }
+
+  function onResizeUp() {
+    window.removeEventListener('pointermove', onResizeMove)
+    window.removeEventListener('pointerup', onResizeUp)
+    window.removeEventListener('pointercancel', onResizeUp)
+  }
+
   // FLIP: the transform that maps the dialog's resting box onto the trigger's
   // box, given `transform-origin: 0 0`. Measured live because the trigger can
   // be dragged around the desk while the dialog is open.
@@ -590,11 +667,15 @@
   watch(shell, (instance) => {
     if (!instance) {
       phase.value = 'hidden'
+      height.value = null
+      minHeight.value = 0
+      maxHeight.value = 0
       return
     }
     dialog = instance.$el as HTMLElement
     from = invert()
     phase.value = 'visible'
+    nextTick(measureHeightBounds)
   })
 
   const variants = {
@@ -688,11 +769,22 @@
     reduceMotion.value = window.matchMedia(
       '(prefers-reduced-motion: reduce)',
     ).matches
+    fineQuery = window.matchMedia('(pointer: fine)')
+    finePointer.value = fineQuery.matches
+    fineQuery.addEventListener('change', onFineChange)
     window.addEventListener('keydown', onKeydown)
+    window.addEventListener('resize', measureHeightBounds)
   })
+
+  function onFineChange(event: MediaQueryListEvent) {
+    finePointer.value = event.matches
+  }
 
   onBeforeUnmount(() => {
     clearTimeout(idleTimer)
+    onResizeUp()
+    fineQuery?.removeEventListener('change', onFineChange)
     window.removeEventListener('keydown', onKeydown)
+    window.removeEventListener('resize', measureHeightBounds)
   })
 </script>
