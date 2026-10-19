@@ -15,6 +15,9 @@
     :animate="{
       opacity: 1,
       filter: 'blur(0px)',
+      // Any filter left on, even blur(0px), stops backdrop-filter inside
+      // the item (the desk-file count pill) from seeing the desk behind it.
+      transitionEnd: { filter: 'none' },
       transition: {
         duration: reduceMotion ? 0.01 : 0.7,
         delay: reduceMotion ? 0 : delay,

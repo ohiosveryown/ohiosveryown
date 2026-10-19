@@ -10,20 +10,21 @@ The typography system lives in `app/style/type.scss` and is auto-loaded via `nux
 
 ## Font families
 
-Three custom local fonts are loaded via `@font-face`. Apply them with mixins or utility classes — never with a raw `font-family` string.
+One custom local font (`blush.woff2`) is loaded via `@font-face`. Everything else uses the system stack or Courier. Apply via mixins or utility classes — never with a raw `font-family` string.
 
-| Mixin           | Utility class | Underlying `font-family` |
-| --------------- | ------------- | ------------------------ |
-| `@include sans` | `.sans`       | `"sans"` (variable, weight 1–999) |
-| `@include thin` | `.thin`       | `"thin"`                          |
-| `@include italic` | `.italic`   | `"italic"` (variable, weight 1–999) |
+| Mixin             | Utility class | Underlying `font-family`   |
+| ----------------- | ------------- | -------------------------- |
+| `@include blush`  | `.blush`      | `"blush"` (variable)       |
+| `@include sans`   | `.sans`       | `var(--system-font)`       |
+| `@include thin`   | `.thin`       | `var(--system-font)`       |
+| `@include italic` | `.italic`     | Courier, monospace         |
 
-There is also a CSS variable `--system-font` for system-font fallbacks (used in `body`).
+`--system-font` is the default body stack (defined in `reset.scss`).
 
 ```scss
 // correct
 .label {
-  @include sans;
+  @include blush;
   font-weight: 450;
 }
 
@@ -35,11 +36,11 @@ There is also a CSS variable `--system-font` for system-font fallbacks (used in 
 
 ## Heading and body scale
 
-`h1`–`h6`, `p`, and `small` are already styled in `type.scss` with fluid `clamp()` sizing and the appropriate mixin. Use the right semantic tag; avoid overriding `font-size` / `line-height` / `font-family` on them without a strong reason.
+`.h1`–`.h6`, `p`, and `small` are already styled in `type.scss` with fluid `clamp()` sizing and the appropriate mixin. Prefer the utility classes / semantic tags; avoid overriding `font-size` / `line-height` / `font-family` on them without a strong reason.
 
 ```vue
 <!-- preferred: let the global scale do the work -->
-<h2>Section heading</h2>
+<h2 class="h2">Section heading</h2>
 <p>Body copy…</p>
 ```
 
@@ -47,7 +48,7 @@ There is also a CSS variable `--system-font` for system-font fallbacks (used in 
 
 These ship globally from `type.scss`:
 
-- `.sans`, `.thin`, `.italic` — apply a font family
+- `.blush`, `.sans`, `.thin`, `.italic` — apply a font family
 - `.uc` — `text-transform: uppercase`
 - `.tac` / `.tar` / `.taj` — text-align center / right / justify
 - `.underline` — `text-decoration: underline`

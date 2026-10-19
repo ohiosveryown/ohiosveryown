@@ -91,23 +91,24 @@ Defined in `app/style/type.scss` (auto-loaded via `nuxt.config.ts`).
 
 ### Font families
 
-Three custom local fonts. Apply via mixins or utility classes — never raw `font-family` strings.
+One custom local font (`blush.woff2`). Everything else uses the system stack or Courier. Apply via mixins or utility classes — never raw `font-family` strings.
 
-| Mixin             | Class     | Font file        |
-| ----------------- | --------- | ---------------- |
-| `@include sans`   | `.sans`   | `sans.woff2` (variable 1–999)   |
-| `@include thin`   | `.thin`   | `thin.woff2`                    |
-| `@include italic` | `.italic` | `italic.woff2` (variable 1–999) |
+| Mixin             | Class     | Stack                                      |
+| ----------------- | --------- | ------------------------------------------ |
+| `@include blush`  | `.blush`  | `"blush"` (`blush.woff2`, variable)        |
+| `@include sans`   | `.sans`   | `var(--system-font)`                       |
+| `@include thin`   | `.thin`   | `var(--system-font)`                       |
+| `@include italic` | `.italic` | Courier, monospace                         |
 
-`--system-font` is also available for system-font fallbacks.
+`--system-font` is the default body stack (defined in `reset.scss`).
 
 ### Headings and body
 
-`h1`–`h6`, `p`, and `small` are pre-styled with fluid `clamp()` sizing. Use the semantic tag; do not override `font-size` / `line-height` / `font-family` without a strong reason.
+`.h1`–`.h6`, `p`, and `small` are pre-styled with fluid `clamp()` sizing. Prefer the utility classes / semantic tags; do not override `font-size` / `line-height` / `font-family` without a strong reason.
 
 ### Text utility classes (global)
 
-`.sans` / `.thin` / `.italic`, `.uc` (uppercase), `.tac` / `.tar` / `.taj` (align), `.underline`.
+`.blush` / `.sans` / `.thin` / `.italic`, `.uc` (uppercase), `.tac` / `.tar` / `.taj` (align), `.underline`.
 
 ---
 

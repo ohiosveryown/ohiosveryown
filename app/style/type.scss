@@ -1,20 +1,6 @@
 @use "./grid.scss";
 
 @font-face {
-  font-family: "sans";
-  src: url("../assets/type/sans.woff2") format("woff2");
-  font-display: swap;
-  font-weight: 1 999;
-  font-variation-settings: 'slnt' 0;
-}
-
-@font-face {
-  font-family: "thin";
-  src: url("../assets/type/thin.woff2") format("woff2");
-  font-display: swap;
-}
-
-@font-face {
   font-family: "blush";
   src: url("../assets/type/blush.woff2") format("woff2");
   font-display: swap;
@@ -23,15 +9,20 @@
 }
 
 @mixin sans {
-  font-family: "sans", var(--system-font);
+  font-family: var(--system-font);
 }
 
 @mixin thin {
-  font-family: "thin", Georgia, serif;
+  font-family: var(--system-font);
 }
 
 @mixin italic {
   font-family: Courier, monospace;
+}
+
+@mixin blush {
+  font-family: "blush", var(--system-font);
+  font-synthesis: none;
 }
 
 .sans {
@@ -47,8 +38,7 @@
 }
 
 .blush {
-  font-family: "blush", var(--system-font);
-  font-synthesis: none;
+  @include blush;
 }
 
 .h1 {
@@ -98,11 +88,9 @@
 small {
   font-size: 1.3rem;
   font-weight: 550;
-  ;
 }
 
 p {
-  // @include sans;
   font-size: clamp(1.7rem, 1.24vw, 1.9rem);
   font-weight: 400;
   line-height: 148%;
@@ -110,7 +98,6 @@ p {
 
 p+p {
   margin-bottom: 1.5rem;
-  // text-indent: 4ch;
 }
 
 h5+h4 {

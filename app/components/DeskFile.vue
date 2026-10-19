@@ -36,6 +36,41 @@
       </span>
       <span class="desk-file__meta">
         <span class="desk-file__name blush">{{ name }}</span>
+        <AnimatePresence>
+          <motion.span
+            v-if="count != null"
+            class="desk-file__count"
+            aria-hidden="true"
+            :initial="{
+              opacity: 0,
+              filter: reduceMotion ? 'blur(0px)' : 'blur(10px)',
+            }"
+            :animate="{
+              opacity: 1,
+              filter: 'blur(0px)',
+              // A leftover filter would cancel this pill's backdrop blur.
+              transitionEnd: { filter: 'none' },
+            }"
+            :exit="{ opacity: 0 }"
+            :transition="{ duration: reduceMotion ? 0.01 : 0.4 }"
+          >
+            <svg
+              class="desk-file__count-icon"
+              width="6.644"
+              height="7.537"
+              viewBox="0 0 6.64398 7.53742"
+              fill="none"
+            >
+              <path
+                d="M3.14589 0.115172C3.21307 -0.0383908 3.4309 -0.0383906 3.49809 0.115172L6.62726 7.26756C6.69709 7.42718 6.53557 7.58991 6.37544 7.52128L3.39771 6.24511C3.34935 6.22439 3.29462 6.22439 3.24627 6.24511L0.268534 7.52128C0.108402 7.58991 -0.0531138 7.42718 0.0167163 7.26756L3.14589 0.115172Z"
+                fill="currentColor"
+              />
+            </svg>
+            <span class="desk-file__count-value blush">{{
+              formatCount(count)
+            }}</span>
+          </motion.span>
+        </AnimatePresence>
       </span>
     </component>
   </DeskItem>
@@ -116,9 +151,49 @@
       'HGHT' 100;
     overflow: hidden;
   }
+
+  .desk-file__count {
+    display: inline-flex;
+    align-items: center;
+    align-self: flex-start;
+    gap: 0.4rem;
+    margin-top: 0.5rem;
+    padding: 0.4rem 0.7rem 0.4rem 0.4rem;
+    height: 2rem;
+    border-radius: 100rem;
+    color: #fff;
+    background: rgba(0, 0, 0, 0.24);
+    backdrop-filter: blur(6px);
+    overflow: hidden;
+  }
+
+  .desk-file__count-icon {
+    display: block;
+    flex-shrink: 0;
+    margin: 0 0.15rem 0.1rem;
+    opacity: 1;
+    transform: rotate(-37deg);
+  }
+
+  .desk-file__count-value {
+    font-size: 1.3rem;
+    font-weight: 500;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.07em;
+    line-height: 1.11;
+    text-transform: uppercase;
+    white-space: nowrap;
+    text-box-edge: cap alphabetic;
+    text-box-trim: trim-both;
+    font-variation-settings:
+      'wdth' 80,
+      'HGHT' 100;
+  }
 </style>
 
 <script setup lang="ts">
+  import { motion, AnimatePresence } from 'motion-v'
+
   const props = withDefaults(
     defineProps<{
       name: string
@@ -129,6 +204,8 @@
       label?: string
       expanded?: boolean
       delay?: number
+      // Times opened; null hides the pill (not loaded or Worker down).
+      count?: number | null
     }>(),
     {
       image: null,
@@ -138,8 +215,11 @@
       label: undefined,
       expanded: false,
       delay: 0,
+      count: null,
     },
   )
+
+  const reduceMotion = ref(false)
 
   const emit = defineEmits<{ open: [origin: HTMLElement | null] }>()
 
@@ -206,7 +286,12 @@
     if (!file.value?.contains(event.target as Node)) selected.value = false
   }
 
-  onMounted(() => document.addEventListener('pointerdown', onPointerDown))
+  onMounted(() => {
+    reduceMotion.value = window.matchMedia(
+      '(prefers-reduced-motion: reduce)',
+    ).matches
+    document.addEventListener('pointerdown', onPointerDown)
+  })
   onBeforeUnmount(() => {
     clearTimeout(hintTimer)
     document.removeEventListener('pointerdown', onPointerDown)

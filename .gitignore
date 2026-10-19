@@ -26,3 +26,6 @@ logs
 
 # Vercel
 .vercel
+
+# Cloudflare Worker local state
+.wrangler

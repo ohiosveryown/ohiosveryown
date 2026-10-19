@@ -81,6 +81,13 @@ export default defineNuxtConfig({
     r2PublicUrl: '',
     isrBypassToken: '',
     refreshKey: '',
+    public: {
+      // Open-counter Worker (worker/); the browser calls it directly.
+      counterUrl: '',
+      // Dev shares the real database, so it only reads counts unless this is
+      // set (NUXT_PUBLIC_COUNTER_IN_DEV=true) for debugging.
+      counterInDev: false,
+    },
   },
   css: [
     '~/style/type.scss',

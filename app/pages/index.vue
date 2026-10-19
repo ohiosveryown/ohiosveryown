@@ -44,6 +44,8 @@
       :image="study.hero?.thumb"
       :tooltip="study.tooltip?.text"
       :expanded="openStudy?.id === study.id"
+      :count="countOf(study)"
+      :label="countLabel(study)"
       :delay="0.5 + index * 0.1"
       @open="toggleStudy(study, $event)"
       @pointerenter="preload(study)"
@@ -889,6 +891,29 @@
   )
   const origin = shallowRef<HTMLElement | null>(null)
 
+  // Every open counts, whether from an icon or a direct /work/[slug] link.
+  const { counts, load: loadCounts, recordOpen } = useOpenCounts()
+  watch(
+    () => openStudy.value?.id,
+    (id) => {
+      if (id) recordOpen(id)
+    },
+    { immediate: true },
+  )
+
+  // null hides the pill (counts not loaded); a study nobody has opened yet
+  // has no row, so it's 0.
+  function countOf(study: CaseStudy) {
+    return counts.value ? (counts.value[study.id] ?? 0) : null
+  }
+
+  // The pill is decorative (aria-hidden); the icon's name carries the count.
+  function countLabel(study: CaseStudy) {
+    const count = countOf(study)
+    if (count == null) return undefined
+    return `${study.label}, opened ${count.toLocaleString()} ${count === 1 ? 'time' : 'times'}`
+  }
+
   // Opening takes a second click, so warming the panel's first images on
   // hover/focus means they're usually cached by the time it opens.
   const PRELOAD_BODY_IMAGES = 2
@@ -998,6 +1023,7 @@
   }
 
   onMounted(async () => {
+    loadCounts()
     reduceMotion.value = window.matchMedia(
       '(prefers-reduced-motion: reduce)',
     ).matches

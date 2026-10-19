@@ -34,8 +34,6 @@
 </style>
 
 <script setup lang="ts">
-  import thinWoff2 from '~/assets/type/thin.woff2'
-
   const route = useRoute()
   // /work/[slug] is a child of the home page, so it keeps the home layout.
   const isHome = computed(() => route.matched[0]?.path === '/')
@@ -44,14 +42,5 @@
     title: computed(
       () => (route.meta.title as string | undefined) ?? 'Matthew Pence',
     ),
-    link: [
-      {
-        rel: 'preload',
-        href: thinWoff2,
-        as: 'font',
-        type: 'font/woff2',
-        crossorigin: 'anonymous',
-      },
-    ],
   })
 </script>
