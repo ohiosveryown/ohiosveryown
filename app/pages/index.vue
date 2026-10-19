@@ -340,7 +340,7 @@
               rel="noopener"
               data-tooltip="Furniture studio site"
               data-tooltip-image="https://res.cloudinary.com/dn1q8h2ga/image/upload/v1784821939/pp_uthfbh.gif"
-              >proportional design↗</a
+              >proportional design ↗</a
             >.
           </motion.p>
           <motion.div
@@ -404,7 +404,7 @@
     background: linear-gradient(
       to bottom,
       rgba(0, 0, 0, 0.06),
-      rgba(0, 0, 0, 0.3) calc(100% - 16rem),
+      rgba(0, 0, 0, 0.64) calc(100% - 16rem),
       var(--chrome)
     );
 
@@ -412,7 +412,7 @@
       background: linear-gradient(
         to bottom,
         rgba(0, 0, 0, 0.06),
-        rgba(0, 0, 0, 0.3)
+        rgba(0, 0, 0, 0.4)
       );
     }
   }

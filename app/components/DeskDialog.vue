@@ -209,14 +209,17 @@
     @include breakpoint(md) {
       right: 1.6rem;
       left: auto;
-      width: 52rem;
+      width: min(72rem, calc(100% - 3.2rem));
+      min-height: 0;
       max-height: min(70rem, calc(100% - 3.2rem));
+      aspect-ratio: 4 / 3;
     }
   }
 
   .desk-dialog__content {
     display: flex;
     flex-direction: column;
+    flex: 1 1 auto;
     position: relative;
     min-height: 0;
   }
