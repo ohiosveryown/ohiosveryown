@@ -197,7 +197,7 @@
     border: 0.5px solid rgba(255, 255, 255, 0.26);
     border-radius: 3.5rem;
     color: #fff;
-    background: rgba(0, 0, 0, 0.56);
+    background: rgba(0, 0, 0, 0.6);
     box-shadow:
       0 7.3rem 8rem 0 rgba(0, 0, 0, 0.2),
       0 1.6rem 1.7rem 0 rgba(0, 0, 0, 0.12),
@@ -209,9 +209,9 @@
     @include breakpoint(md) {
       right: 1.6rem;
       left: auto;
-      width: min(72rem, calc(100% - 3.2rem));
+      width: min(62rem, calc(100% - 3.2rem));
       min-height: 0;
-      max-height: min(70rem, calc(100% - 3.2rem));
+      max-height: min(68rem, calc(100% - 3.2rem));
       aspect-ratio: 4 / 3;
     }
   }
@@ -299,7 +299,7 @@
     font-weight: 600;
     letter-spacing: -0.04em;
     line-height: 1;
-    text-wrap: pretty;
+    text-wrap: balance;
     text-box-edge: cap alphabetic;
     text-box-trim: trim-both;
   }
@@ -315,7 +315,7 @@
   .desk-dialog__row {
     display: flex;
     align-items: flex-start;
-    gap: 1.2rem;
+    gap: 1.8rem;
     padding-top: 1rem;
     background: repeating-linear-gradient(
         to right,
@@ -337,13 +337,16 @@
 
   .desk-dialog__label {
     flex-shrink: 0;
-    width: 17.4rem;
+    width: 10rem;
     font-weight: 500;
     letter-spacing: 0.05em;
     line-height: 1.11;
     text-transform: uppercase;
     text-box-edge: cap alphabetic;
     text-box-trim: trim-both;
+    @include breakpoint(md) {
+      width: 18rem;
+    }
   }
 
   .desk-dialog__value {
