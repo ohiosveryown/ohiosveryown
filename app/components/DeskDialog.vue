@@ -33,6 +33,17 @@
             </h2>
           </header>
 
+          <figure
+            v-if="entry.figure"
+            class="desk-dialog__figure"
+          >
+            <img
+              class="desk-dialog__image"
+              :src="entry.figure.src"
+              :alt="entry.figure.alt"
+            />
+          </figure>
+
           <dl class="desk-dialog__details">
             <div
               v-for="detail in entry.details"
@@ -55,22 +66,12 @@
           </dl>
 
           <article class="desk-dialog__article">
-            <p
-              v-if="entry.lead"
-              class="desk-dialog__lead"
+            <h3
+              v-if="entry.heading"
+              class="desk-dialog__heading"
             >
-              {{ entry.lead }}
-            </p>
-            <figure
-              v-if="entry.figure"
-              class="desk-dialog__figure"
-            >
-              <img
-                class="desk-dialog__image"
-                :src="entry.figure.src"
-                :alt="entry.figure.alt"
-              />
-            </figure>
+              {{ entry.heading }}
+            </h3>
             <div class="desk-dialog__copy">
               <p
                 v-for="(paragraph, index) in entry.body"
@@ -190,29 +191,39 @@
     flex-direction: column;
     position: fixed;
     z-index: calc(var(--zmax) - 1);
-    top: 1.2rem;
-    right: 1.2rem;
-    left: 1.2rem;
+    top: 0.8rem;
+    right: 0.8rem;
+    left: 0.8rem;
     max-height: calc(100% - 2.4rem);
     border: 0.5px solid rgba(255, 255, 255, 0.26);
     border-radius: 3.5rem;
     color: #fff;
-    background: rgba(0, 0, 0, 0.6);
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.6), #000);
     box-shadow:
       0 7.3rem 8rem 0 rgba(0, 0, 0, 0.2),
       0 1.6rem 1.7rem 0 rgba(0, 0, 0, 0.12),
       0 0.5rem 0.5rem 0 rgba(0, 0, 0, 0.08);
-    backdrop-filter: blur(20px);
+    backdrop-filter: blur(6px);
     transform-origin: 0 0;
     overflow: hidden;
 
     @include breakpoint(md) {
-      right: 1.6rem;
       left: auto;
       width: min(62rem, calc(100% - 3.2rem));
       min-height: 0;
       max-height: min(68rem, calc(100% - 3.2rem));
       aspect-ratio: 4 / 3;
+    }
+
+    // A full-height column beside the inset page (see `.home.is-split`).
+    @include breakpoint(mdl) {
+      bottom: 0.8rem;
+      width: 45.6rem;
+      max-height: none;
+      border-color: rgba(255, 255, 255, 0.32);
+      border-radius: 2.5rem;
+      background: #1d1d1d;
+      aspect-ratio: auto;
     }
   }
 
@@ -297,17 +308,19 @@
     font-family: var(--system-font);
     font-size: 2.6rem;
     font-weight: 600;
-    letter-spacing: -0.04em;
+    letter-spacing: -0.03rem;
     line-height: 1;
     text-wrap: balance;
-    text-box-edge: cap alphabetic;
-    text-box-trim: trim-both;
+    @include breakpoint(md) {
+      margin-bottom: 1.2rem;
+      font-size: 3.2rem;
+    }
   }
 
   .desk-dialog__details {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 1.2rem;
     margin: 0;
     padding: 1.6rem 0;
   }
@@ -316,7 +329,7 @@
     display: flex;
     align-items: flex-start;
     gap: 1.8rem;
-    padding-top: 1rem;
+    padding-top: 1.2rem;
     background: repeating-linear-gradient(
         to right,
         #fff 0 1px,
@@ -326,7 +339,7 @@
     font-size: 1.3rem;
 
     &:last-child {
-      padding-bottom: 1rem;
+      padding-bottom: 1.2rem;
       background:
         repeating-linear-gradient(to right, #fff 0 1px, transparent 1px 3px)
           top / 100% 0.5px no-repeat,
@@ -338,6 +351,7 @@
   .desk-dialog__label {
     flex-shrink: 0;
     width: 10rem;
+    opacity: 0.8;
     font-weight: 500;
     letter-spacing: 0.05em;
     line-height: 1.11;
@@ -370,23 +384,11 @@
   .desk-dialog__article {
     display: flex;
     flex-direction: column;
-    gap: 1.7rem;
-  }
-
-  .desk-dialog__lead {
-    font-family: var(--system-font);
-    font-size: 1.5rem;
-    font-weight: 500;
-    letter-spacing: -0.02em;
-    line-height: 1.3;
-    text-wrap: pretty;
-    text-box-edge: cap alphabetic;
-    text-box-trim: trim-both;
+    gap: 1.6rem;
   }
 
   .desk-dialog__figure {
     display: block;
-    padding: 1.2rem 0 0.8rem;
   }
 
   .desk-dialog__image {
@@ -398,19 +400,35 @@
     object-fit: cover;
   }
 
+  .desk-dialog__heading {
+    padding: 0.8rem 0;
+    font-family: var(--system-font);
+    font-size: 2rem;
+    font-weight: 500;
+    letter-spacing: -0.03rem;
+    line-height: 1.3;
+    text-wrap: pretty;
+    text-box-edge: cap alphabetic;
+    text-box-trim: trim-both;
+  }
+
   .desk-dialog__copy {
     display: flex;
     flex-direction: column;
     gap: 1.6rem;
+    opacity: 0.88;
   }
 
   .desk-dialog__para {
     margin: 0;
     font-family: var(--system-font);
     font-size: 1.7rem;
-    letter-spacing: -0.01em;
-    line-height: 1.4;
-    text-wrap: pretty;
+    letter-spacing: -0.005em;
+    line-height: 1.5;
+    @include breakpoint(md) {
+      font-size: 1.6rem;
+      text-wrap: pretty;
+    }
   }
 
   .desk-dialog__close {
