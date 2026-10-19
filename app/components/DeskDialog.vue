@@ -1,13 +1,14 @@
 <template>
   <AnimatePresence>
     <motion.section
-      v-if="entry"
-      :key="entry.id"
+      v-if="study"
+      :key="study.id"
       ref="shell"
       class="desk-dialog"
       :class="{ 'is-resized': height != null }"
       role="dialog"
-      :aria-labelledby="`${entry.id}-title`"
+      aria-modal="true"
+      :aria-labelledby="`${study.slug}-title`"
       :style="shellStyle"
       :variants="variants"
       initial="hidden"
@@ -26,29 +27,29 @@
           @scroll.passive="onScroll"
         >
           <header class="desk-dialog__header">
-            <p class="desk-dialog__name blush">{{ entry.name }}</p>
+            <p class="desk-dialog__name blush">{{ study.label }}</p>
             <h2
-              :id="`${entry.id}-title`"
+              :id="`${study.slug}-title`"
               class="desk-dialog__title"
             >
-              {{ entry.title }}
+              {{ study.title }}
             </h2>
           </header>
 
           <figure
-            v-if="entry.figure"
+            v-if="study.hero"
             class="desk-dialog__figure"
           >
             <img
-              class="desk-dialog__image"
-              :src="entry.figure.src"
-              :alt="entry.figure.alt"
+              class="desk-dialog__image desk-dialog__image--hero"
+              :src="study.hero.src"
+              :alt="study.hero.alt"
             />
           </figure>
 
           <dl class="desk-dialog__details">
             <div
-              v-for="detail in entry.details"
+              v-for="detail in details"
               :key="detail.label"
               class="desk-dialog__row"
             >
@@ -68,20 +69,47 @@
           </dl>
 
           <article class="desk-dialog__article">
-            <h3
-              v-if="entry.heading"
-              class="desk-dialog__heading"
+            <p
+              v-if="study.intro"
+              class="desk-dialog__intro"
             >
-              {{ entry.heading }}
-            </h3>
+              {{ study.intro }}
+            </p>
             <div class="desk-dialog__copy">
-              <p
-                v-for="(paragraph, index) in entry.body"
+              <!-- html is rendered and sanitized on the server -->
+              <template
+                v-for="(node, index) in study.body"
                 :key="index"
-                class="desk-dialog__para"
               >
-                {{ paragraph }}
-              </p>
+                <img
+                  v-if="node.kind === 'img'"
+                  class="desk-dialog__image"
+                  :src="node.src"
+                  :alt="node.alt"
+                  :style="
+                    node.aspectRatio
+                      ? { aspectRatio: node.aspectRatio }
+                      : undefined
+                  "
+                  loading="lazy"
+                  decoding="async"
+                />
+                <h3
+                  v-else-if="node.kind === 'h3'"
+                  class="desk-dialog__h3"
+                  v-html="node.html"
+                />
+                <h4
+                  v-else-if="node.kind === 'h4'"
+                  class="desk-dialog__h4"
+                  v-html="node.html"
+                />
+                <p
+                  v-else
+                  class="desk-dialog__para"
+                  v-html="node.html"
+                />
+              </template>
             </div>
           </article>
         </div>
@@ -413,12 +441,16 @@
     width: 100%;
     height: auto;
     border-radius: 1.7rem;
+    background: rgba(255, 255, 255, 0.06);
+  }
+
+  .desk-dialog__image--hero {
     background: #fff;
     aspect-ratio: 408 / 280;
     object-fit: cover;
   }
 
-  .desk-dialog__heading {
+  .desk-dialog__intro {
     padding: 0.8rem 0;
     font-family: var(--system-font);
     font-size: 2rem;
@@ -434,11 +466,34 @@
     display: flex;
     flex-direction: column;
     gap: 1.6rem;
-    opacity: 0.88;
+  }
+
+  .desk-dialog__h3,
+  .desk-dialog__h4 {
+    font-family: var(--system-font);
+    font-weight: 600;
+    text-wrap: balance;
+
+    &:not(:first-child) {
+      margin-top: 1.6rem;
+    }
+  }
+
+  .desk-dialog__h3 {
+    font-size: 2rem;
+    letter-spacing: -0.03rem;
+    line-height: 1.3;
+  }
+
+  .desk-dialog__h4 {
+    font-size: 1.7rem;
+    letter-spacing: -0.01em;
+    line-height: 1.4;
   }
 
   .desk-dialog__para {
     margin: 0;
+    opacity: 0.88;
     font-family: var(--system-font);
     font-size: 1.7rem;
     letter-spacing: -0.005em;
@@ -447,6 +502,26 @@
       font-size: 1.6rem;
       text-wrap: pretty;
     }
+  }
+
+  // Body HTML comes from v-html, so scoped classes can't reach its links.
+  .desk-dialog__para :deep(a),
+  .desk-dialog__h3 :deep(a),
+  .desk-dialog__h4 :deep(a) {
+    color: inherit;
+    text-decoration-line: underline;
+    text-decoration-style: dotted;
+    text-decoration-thickness: 6%;
+    text-underline-offset: 0.18em;
+    cursor: var(--cursor);
+
+    &:hover {
+      text-decoration-style: solid;
+    }
+  }
+
+  .desk-dialog__para :deep(strong) {
+    font-weight: 600;
   }
 
   .desk-dialog__close {
@@ -475,13 +550,36 @@
 <script setup lang="ts">
   import { motion, AnimatePresence } from 'motion-v'
   import type { ComponentPublicInstance } from 'vue'
-  import type { DeskEntry } from '~/data/desk'
+  import type { CaseStudy } from '#shared/types/case-study'
 
   const props = defineProps<{
-    entry: DeskEntry | null
+    study: CaseStudy | null
     origin?: HTMLElement | null
   }>()
   const emit = defineEmits<{ close: [] }>()
+
+  type Detail = { label: string; value: string; href?: string }
+
+  const details = computed<Detail[]>(() => {
+    const study = props.study
+    if (!study) return []
+    const rows: Detail[] = []
+    if (study.date) rows.push({ label: 'Date', value: study.date })
+    if (study.link) {
+      rows.push({
+        label: 'Link',
+        value: study.link.replace(/^https?:\/\//, '').replace(/\/$/, ''),
+        href: study.link,
+      })
+    }
+    if (study.disciplines.length) {
+      rows.push({
+        label: 'Discipline(s)',
+        value: study.disciplines.join(', '),
+      })
+    }
+    return rows
+  })
 
   const ease = [0.8, 0, 0.16, 1] as const
   const reduceMotion = ref(false)
@@ -745,20 +843,67 @@
     event.stopPropagation()
   }
 
-  function onKeydown(event: KeyboardEvent) {
-    if (event.key === 'Escape' && props.entry) emit('close')
+  const FOCUSABLE =
+    'a[href], button:not([disabled]), input, select, textarea, [tabindex]:not([tabindex="-1"])'
+
+  // Keep Tab inside the panel. Pointer users can still reach the desk behind
+  // it (clicking another icon switches panels); keyboard users leave with Esc.
+  function trapTab(event: KeyboardEvent) {
+    if (!dialog) return
+    const focusables = Array.from(
+      dialog.querySelectorAll<HTMLElement>(FOCUSABLE),
+    ).filter((el) => el.offsetParent !== null || el === closeButton.value)
+    const first = focusables[0]
+    const last = focusables[focusables.length - 1]
+    if (!first || !last) return
+
+    const active = document.activeElement as HTMLElement | null
+    const outside = !active || !dialog.contains(active)
+    if (event.shiftKey && (outside || active === first)) {
+      event.preventDefault()
+      last.focus()
+    } else if (!event.shiftKey && (outside || active === last)) {
+      event.preventDefault()
+      first.focus()
+    }
   }
 
+  function onKeydown(event: KeyboardEvent) {
+    if (!props.study) return
+    if (event.key === 'Escape') emit('close')
+    else if (event.key === 'Tab') trapTab(event)
+  }
+
+  async function focusPanel() {
+    await nextTick()
+    closeButton.value?.focus({ preventScroll: true })
+    autoFocused.value = document.activeElement === closeButton.value
+  }
+
+  // The trigger keeps focus off itself on mousedown, so document.activeElement
+  // is usually <body>; return focus to the icon that opened the panel instead.
+  function triggerOf(origin: HTMLElement | null | undefined) {
+    return origin?.closest<HTMLElement>('a, button') ?? null
+  }
+
+  // Lock the page behind the panel (mostly matters on mobile, where the page
+  // itself scrolls).
+  useHead({
+    htmlAttrs: {
+      class: computed(() => (props.study ? 'is-scroll-locked' : undefined)),
+    },
+  })
+
   watch(
-    () => props.entry,
-    async (entry, previous) => {
-      if (entry && !previous) {
+    () => props.study,
+    async (study, previous) => {
+      if (study && !previous) {
         openedAt = performance.now()
-        returnFocus = document.activeElement as HTMLElement | null
-        await nextTick()
-        closeButton.value?.focus({ preventScroll: true })
-        autoFocused.value = document.activeElement === closeButton.value
-      } else if (!entry && previous) {
+        returnFocus =
+          triggerOf(props.origin) ??
+          (document.activeElement as HTMLElement | null)
+        await focusPanel()
+      } else if (!study && previous) {
         returnFocus?.focus({ preventScroll: true })
         returnFocus = null
       }
@@ -774,6 +919,8 @@
     fineQuery.addEventListener('change', onFineChange)
     window.addEventListener('keydown', onKeydown)
     window.addEventListener('resize', measureHeightBounds)
+    // A direct link to /work/[slug] renders the panel open on the server.
+    if (props.study) focusPanel()
   })
 
   function onFineChange(event: MediaQueryListEvent) {

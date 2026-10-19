@@ -36,20 +36,26 @@
     </motion.p>
 
     <DeskFile
-      class="home__kiosk"
-      :name="kioskEntry.name"
-      :image="kioskEntry.image"
-      tooltip="Square Kiosk GTM"
-      :expanded="openEntry?.id === kioskEntry.id"
-      :delay="0.5"
-      @open="toggleEntry(kioskEntry, $event)"
+      v-for="(study, index) in caseStudies"
+      :key="study.id"
+      class="home__study"
+      :style="placement(study, index)"
+      :name="study.label"
+      :image="study.hero?.thumb"
+      :tooltip="study.tooltip?.text"
+      :expanded="openStudy?.id === study.id"
+      :delay="0.5 + index * 0.1"
+      @open="toggleStudy(study, $event)"
+      @pointerenter="preload(study)"
+      @focusin="preload(study)"
     />
     <LastPlayed />
     <DeskDialog
-      :entry="openEntry"
+      :study="openStudy"
       :origin="origin"
-      @close="openEntry = null"
+      @close="closeStudy"
     />
+    <NuxtPage />
 
     <div class="home__panel">
       <h1 class="home__title">Matthew Pence</h1>
@@ -452,16 +458,18 @@
     right: 1.2rem;
   }
 
-  .home__kiosk {
+  // Positions come from Craft (see placement()): the icon's top-left corner.
+  .home__study {
     position: absolute;
-    top: 9svh;
-    left: 2.4rem;
+    top: calc(var(--mobile-y) * 1svh);
+    left: calc(var(--mobile-x) * 1%);
     width: 22rem;
-    max-width: calc(100% - 4.8rem);
+    max-width: calc(100% - var(--mobile-x) * 1% - 2.4rem);
 
     @include breakpoint(md) {
-      top: 12.89%;
-      left: 10.07%;
+      top: calc(var(--y) * 1%);
+      left: calc(var(--x) * 1%);
+      max-width: calc(100% - var(--x) * 1% - 2.4rem);
     }
   }
 
@@ -816,7 +824,7 @@
 <script setup lang="ts">
   import { motion } from 'motion-v'
   import field from '~/assets/index/0_1.webp'
-  import { kioskEntry, type DeskEntry } from '~/data/desk'
+  import type { CaseStudy } from '#shared/types/case-study'
   import blushWoff2 from '~/assets/type/blush.woff2'
 
   // iOS Safari paints the status bar (at scroll 0), its toolbar fades, and the
@@ -864,12 +872,79 @@
   const desk = useTemplateRef<HTMLElement>('desk')
   provideDesk(desk)
 
-  const openEntry = shallowRef<DeskEntry | null>(null)
+  // Arriving back at / from a panel shouldn't jump the page to the top.
+  definePageMeta({
+    scrollToTop: (_to, from) => !from.path.startsWith('/work/'),
+  })
+
+  const route = useRoute()
+  const router = useRouter()
+  const { data: caseStudies } = await useCaseStudies()
+
+  // The URL is the source of truth: /work/[slug] opens that panel.
+  const openStudy = computed(
+    () =>
+      caseStudies.value.find((study) => study.slug === route.params.slug) ??
+      null,
+  )
   const origin = shallowRef<HTMLElement | null>(null)
 
-  function toggleEntry(entry: DeskEntry, from: HTMLElement | null) {
+  // Opening takes a second click, so warming the panel's first images on
+  // hover/focus means they're usually cached by the time it opens.
+  const PRELOAD_BODY_IMAGES = 2
+  const preloaded = new Map<string, HTMLImageElement[]>()
+
+  function preload(study: CaseStudy) {
+    if (preloaded.has(study.id)) return
+    const sources = [
+      study.hero?.src,
+      ...study.body
+        .flatMap((node) => (node.kind === 'img' ? [node.src] : []))
+        .slice(0, PRELOAD_BODY_IMAGES),
+    ].filter((src): src is string => !!src)
+    preloaded.set(
+      study.id,
+      sources.map((src) => Object.assign(new Image(), { src })),
+    )
+  }
+
+  // Fallback for empty Craft positions: a loose grid in the open areas of
+  // the desk (above the copy on mobile), filled row by row in Order.
+  const FALLBACK = {
+    desktop: { x: 10, y: 13, columns: 4, dx: 20, dy: 16 },
+    mobile: { x: 6, y: 9, columns: 2, dx: 46, dy: 12 },
+  }
+
+  function placement(study: CaseStudy, index: number) {
+    const { desktop, mobile } = FALLBACK
+    const position = study.position ?? {}
+    return {
+      '--x':
+        position.x ?? desktop.x + (index % desktop.columns) * desktop.dx,
+      '--y':
+        position.y ??
+        desktop.y + Math.floor(index / desktop.columns) * desktop.dy,
+      '--mobile-x':
+        position.mobileX ?? mobile.x + (index % mobile.columns) * mobile.dx,
+      '--mobile-y':
+        position.mobileY ??
+        mobile.y + Math.floor(index / mobile.columns) * mobile.dy,
+    }
+  }
+
+  function toggleStudy(study: CaseStudy, from: HTMLElement | null) {
     origin.value = from
-    openEntry.value = openEntry.value?.id === entry.id ? null : entry
+    if (openStudy.value?.id === study.id) return closeStudy()
+    // Switching panels replaces the entry, so Back still closes rather than
+    // stepping through every panel opened.
+    const to = `/work/${study.slug}`
+    return openStudy.value ? router.replace(to) : router.push(to)
+  }
+
+  // Back when the panel was opened from here; a direct link has nothing
+  // behind it on this site, so replace instead.
+  function closeStudy() {
+    return window.history.state?.back === '/' ? router.back() : router.replace('/')
   }
 
   const ready = ref(false)

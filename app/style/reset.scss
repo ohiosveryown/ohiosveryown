@@ -37,6 +37,11 @@
   box-sizing: border-box;
 }
 
+// Set while a case-study panel is open (DeskDialog).
+html.is-scroll-locked {
+  overflow: hidden;
+}
+
 html {
   box-sizing: border-box;
   font-size: 62.5% !important;

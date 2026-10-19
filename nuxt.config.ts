@@ -43,20 +43,44 @@ export default defineNuxtConfig({
     },
   },
   routeRules: {
-    '/': { prerender: true },
     '/callback': { ssr: true },
     '/api/**': { cors: true },
   },
+  // ISR on Vercel: served from the CDN like a static page, regenerated in the
+  // background after `expiration` seconds, so Craft edits show up within a
+  // minute without a deploy (or right away via the refresh link in Craft).
+  // Production only: in dev, Nuxt's payload cache writes `/` as a file and
+  // then can't create `/work/*` beneath it (ENOTDIR).
+  // `allowQuery: []` ignores query strings, so `?anything` can't skip the
+  // cache and hit Craft per request.
+  $production: {
+    routeRules: {
+      '/': { isr: { expiration: 60, allowQuery: [] } },
+      '/work/**': { isr: { expiration: 60, allowQuery: [] } },
+      '/api/case-studies': { isr: { expiration: 60, allowQuery: [] } },
+    },
+  },
+  // Lets /api/refresh regenerate ISR pages on demand (Vercel on-demand
+  // revalidation via the `x-prerender-revalidate` header). Read at build.
   nitro: {
-    prerender: {
-      crawlLinks: true,
-      ignore: ['/callback', '/api/**'],
+    vercel: {
+      config: { bypassToken: process.env.NUXT_ISR_BYPASS_TOKEN },
     },
   },
   runtimeConfig: {
     spotifyClientId: '',
     spotifyClientSecret: '',
     spotifyRefreshToken: '',
+    craftApiUrl: '',
+    craftApiKey: '',
+    craftCollectionId: '',
+    r2AccountId: '',
+    r2AccessKeyId: '',
+    r2SecretAccessKey: '',
+    r2Bucket: '',
+    r2PublicUrl: '',
+    isrBypassToken: '',
+    refreshKey: '',
   },
   css: [
     '~/style/type.scss',

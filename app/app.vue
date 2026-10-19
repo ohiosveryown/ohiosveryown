@@ -37,7 +37,8 @@
   import thinWoff2 from '~/assets/type/thin.woff2'
 
   const route = useRoute()
-  const isHome = computed(() => route.path === '/')
+  // /work/[slug] is a child of the home page, so it keeps the home layout.
+  const isHome = computed(() => route.matched[0]?.path === '/')
 
   useHead({
     title: computed(
