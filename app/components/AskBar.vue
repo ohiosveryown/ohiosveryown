@@ -148,8 +148,20 @@
     flex-direction: column;
     padding: 1.2rem 1.5rem 1.2rem 1.8rem;
     border-radius: 3.2rem;
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.6), #000);
+    // A soft glow from the top centre, fading to black (after Figma
+    // 2299:3580, a little brighter and reaching further).
+    background: radial-gradient(
+      100% 100% at 50% 0%,
+      #3a3a3a 0%,
+      #1f1f1f 34%,
+      #0e0e0e 52%,
+      #000 70%
+    );
+    // The hairline edge is the first, inset shadow rather than a border:
+    // a border adds to the height (it's set by the content) and is drawn at
+    // a whole pixel in Chrome.
     box-shadow:
+      inset 0 0 0 0.5px rgba(255, 255, 255, 0.18),
       0 6.7237rem 7.3684rem 0 rgba(0, 0, 0, 0.2),
       0 1.5018rem 1.6458rem 0 rgba(0, 0, 0, 0.12),
       0 0.4471rem 0.49rem 0 rgba(0, 0, 0, 0.08);

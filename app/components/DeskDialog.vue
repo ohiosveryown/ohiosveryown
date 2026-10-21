@@ -240,7 +240,17 @@
     border: 0.5px solid rgba(255, 255, 255, 0.26);
     border-radius: 3.5rem;
     color: #fff;
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.6), #000);
+    // The same glow as the Mallow bar (AskBar): from the top centre, fading
+    // to black. The panel is tall, so the glow has a fixed depth rather
+    // than stretching down the whole panel. (Not min(): gradient sizes
+    // don't take it, and the whole background is dropped.)
+    background: radial-gradient(
+      100% 48rem at 50% 0%,
+      #3a3a3a 0%,
+      #1f1f1f 34%,
+      #0e0e0e 52%,
+      #000 70%
+    );
     box-shadow:
       0 7.3rem 8rem 0 rgba(0, 0, 0, 0.2),
       0 1.6rem 1.7rem 0 rgba(0, 0, 0, 0.12),

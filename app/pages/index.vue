@@ -481,6 +481,11 @@
         width: var(--ask-bar-open-width);
       }
     }
+
+    // More room for the conversation on big screens.
+    @include breakpoint(lg) {
+      --ask-bar-open-width: 40rem;
+    }
   }
 
   // Positions come from Craft (see placement()): the icon's top-left corner.
