@@ -7,30 +7,10 @@
     aria-label="Ask Mallow"
     :inert="!ready"
     :initial="{ opacity: 0, filter: 'blur(10px)' }"
-    :animate="
-      ready
-        ? {
-            opacity: 1,
-            filter: 'blur(0px)',
-            // Any filter left on, even blur(0px), stops the bar's own
-            // backdrop-filter from seeing the page behind it.
-            transitionEnd: { filter: 'none' },
-            transition: { duration: reduceMotion ? 0.01 : 0.6, ease },
-          }
-        : { opacity: 0, filter: 'blur(10px)' }
-    "
-    drag
-    :drag-listener="false"
-    :drag-controls="dragControls"
-    :drag-constraints="bounds"
-    :drag-elastic="0.12"
-    :drag-transition="{ power: 0.18, timeConstant: 220 }"
-    :while-drag="{ scale: 1.04 }"
+    :animate="reveal"
     :class="{ 'is-open': open }"
-    :style="sprungWidth ? { x, y, width } : { x, y }"
+    :style="sprungWidth ? { x, y, scale, width } : { x, y, scale }"
     @pointerdown="startDrag"
-    @drag-start="onDragStart"
-    @drag-end="onDragEnd"
     @click.capture="onClick"
     @submit.prevent="submit"
     @keydown.esc="open = false"
@@ -215,6 +195,67 @@
     scrollbar-width: none;
   }
 
+  // Soft edges where there's more to scroll to, instead of a hard clip. All
+  // CSS: the list's own scroll position drives each fade (a scroll-driven
+  // animation), so scrolling runs no script and re-renders nothing. The top
+  // fades in over the first 2.4rem of scroll, the bottom fades out over the
+  // last 2.4rem. A list too short to scroll has no timeline, so no fades.
+  // (FADE_PX in the script matches 2.4rem.)
+  @property --ask-bar-fade-top {
+    syntax: '<length>';
+    inherits: false;
+    initial-value: 0px;
+  }
+
+  @property --ask-bar-fade-bottom {
+    syntax: '<length>';
+    inherits: false;
+    initial-value: 0px;
+  }
+
+  .ask-bar__messages {
+    mask-image: linear-gradient(
+      to bottom,
+      transparent,
+      #000 var(--ask-bar-fade-top),
+      #000 calc(100% - var(--ask-bar-fade-bottom)),
+      transparent
+    );
+  }
+
+  // Elsewhere the script sets the sizes as it scrolls (fadeEdgesOnScroll).
+  @supports (animation-timeline: scroll()) {
+    .ask-bar__messages {
+      animation:
+        ask-bar-fade-top linear both,
+        ask-bar-fade-bottom linear both;
+      animation-timeline: scroll(self);
+      animation-range:
+        0 2.4rem,
+        calc(100% - 2.4rem) 100%;
+    }
+  }
+
+  @keyframes ask-bar-fade-top {
+    from {
+      --ask-bar-fade-top: 0px;
+    }
+
+    to {
+      --ask-bar-fade-top: 2.4rem;
+    }
+  }
+
+  @keyframes ask-bar-fade-bottom {
+    from {
+      --ask-bar-fade-bottom: 2.4rem;
+    }
+
+    to {
+      --ask-bar-fade-bottom: 0px;
+    }
+  }
+
   .ask-bar__message {
     display: flex;
     gap: 1.2rem;
@@ -382,13 +423,7 @@
 </style>
 
 <script setup lang="ts">
-  import {
-    AnimatePresence,
-    animate,
-    motion,
-    useDragControls,
-    useMotionValue,
-  } from 'motion-v'
+  import { AnimatePresence, animate, motion, useMotionValue } from 'motion-v'
   import arrow from '~/assets/icons/send-arrow.svg'
 
   const ease = [0.8, 0, 0.16, 1] as const
@@ -468,6 +503,29 @@
     listObserver = new ResizeObserver(measure)
     listObserver.observe(el)
     measure()
+    fadeEdgesOnScroll(el)
+  }
+
+  // The list's soft edges are CSS (a scroll-driven animation) where it's
+  // supported. Elsewhere (Safari before 26) its scroll sets the two fade
+  // sizes itself: straight onto the list's style, once a frame at most, so
+  // scrolling re-renders nothing. Same sizes as the CSS.
+  const FADE_PX = 24
+  function fadeEdgesOnScroll(el: HTMLElement) {
+    if (CSS.supports('animation-timeline: scroll()')) return
+    let frame = 0
+    const update = () => {
+      frame = 0
+      const below = el.scrollHeight - el.clientHeight - el.scrollTop
+      const top = Math.min(FADE_PX, Math.max(0, el.scrollTop))
+      const bottom = Math.min(FADE_PX, Math.max(0, below))
+      el.style.setProperty('--ask-bar-fade-top', `${top}px`)
+      el.style.setProperty('--ask-bar-fade-bottom', `${bottom}px`)
+    }
+    const queue = () => (frame ||= requestAnimationFrame(update))
+    el.addEventListener('scroll', queue, { passive: true })
+    new ResizeObserver(queue).observe(el)
+    update()
   }
   // The width (desktop only; on phones the bar spans the screen). The page
   // sets both widths as CSS variables; motion springs between them.
@@ -498,21 +556,36 @@
   }
   const ready = ref(false)
   const reduceMotion = ref(false)
+  // The bar's fade in. A computed, not an object in the template, so it's
+  // the same object across re-renders.
+  const reveal = computed(() =>
+    ready.value
+      ? {
+          opacity: 1,
+          filter: 'blur(0px)',
+          // Any filter left on, even blur(0px), stops the bar's own
+          // backdrop-filter from seeing the page behind it.
+          transitionEnd: { filter: 'none' },
+          transition: { duration: reduceMotion.value ? 0.01 : 0.6, ease },
+        }
+      : { opacity: 0, filter: 'blur(10px)' },
+  )
 
   // With a mouse or trackpad the bar drags around the desk like the icons
   // (same bounds and feel as DeskItem). Not on touch, where it's full width.
-  // Drags start anywhere but the text field and the send button. `drag` stays
-  // on and startDrag decides: motion measures the drag bounds on mount, and
-  // turning drag on later left the bar with no bounds at all.
+  // Drags start anywhere but the text field and the send button.
+  // Not motion's `drag`: that gives the bar a layout projection, which
+  // clears the transform to measure the layout on every re-render. Chrome
+  // puts it back before painting, but Safari and Firefox showed the bar back
+  // in its layout spot for a frame (closing the panel re-renders it a few
+  // times, so it flickered). So the drag is done here, on motion values.
   const { surface } = useDesk()
-  const dragControls = useDragControls()
 
-  // Drag bounds: the desk, for the bar at its current size. (motion's own
-  // element bounds are measured once, while it's still a pill, so the open
-  // panel could be dragged past the bottom of the screen.) x/y are where
+  // Drag bounds: the desk, for the bar at its current size. x/y are where
   // it's been dragged to, relative to its place in the layout.
   const x = useMotionValue(0)
   const y = useMotionValue(0)
+  const scale = useMotionValue(1)
   const bounds = ref({ top: 0, left: 0, right: 0, bottom: 0 })
 
   function formEl() {
@@ -571,32 +644,85 @@
   const draggable = ref(false)
   let dragged = false
 
+  // The feel: it lifts a little while held, gives a little past the edges
+  // (the elastic), and is thrown on release, springing back inside.
+  const DRAG_THRESHOLD = 3
+  const ELASTIC = 0.12
+  const LIFT = { type: 'spring', stiffness: 400, damping: 30 } as const
+
   function startDrag(event: PointerEvent) {
     dragged = false
-    if (!draggable.value) return
+    if (!draggable.value || event.button !== 0) return
     if ((event.target as Element).closest('input, button')) return
     // The press would also start selecting text across the page. Turn
     // selection off until it's released (cancelling the press instead
-    // throws off motion's drag tracking).
+    // stops the input from taking focus).
     const root = document.documentElement
     root.classList.add('is-dragging-ask-bar')
     window.getSelection()?.removeAllRanges()
-    window.addEventListener(
-      'pointerup',
-      () => root.classList.remove('is-dragging-ask-bar'),
-      { once: true },
-    )
-    dragControls.start(event)
+
+    const from = { x: x.get(), y: y.get() }
+    const press = { x: event.clientX, y: event.clientY }
+    // Past an edge it only follows a fraction of the way.
+    const give = (value: number, min: number, max: number) =>
+      value < min
+        ? min + (value - min) * ELASTIC
+        : value > max
+          ? max + (value - max) * ELASTIC
+          : value
+
+    function move(e: PointerEvent) {
+      const dx = e.clientX - press.x
+      const dy = e.clientY - press.y
+      if (!dragging) {
+        if (Math.hypot(dx, dy) < DRAG_THRESHOLD) return
+        dragging = dragged = true
+        x.stop()
+        y.stop()
+        measureBounds()
+        animate(scale, 1.04, LIFT)
+      }
+      const { left, right, top, bottom } = bounds.value
+      x.set(give(from.x + dx, left, Math.max(left, right)))
+      y.set(give(from.y + dy, top, Math.max(top, bottom)))
+    }
+    function release() {
+      window.removeEventListener('pointermove', move)
+      window.removeEventListener('pointerup', release)
+      window.removeEventListener('pointercancel', release)
+      root.classList.remove('is-dragging-ask-bar')
+      if (!dragging) return
+      dragging = false
+      animate(scale, 1, LIFT)
+      throwInside()
+    }
+    window.addEventListener('pointermove', move)
+    window.addEventListener('pointerup', release)
+    window.addEventListener('pointercancel', release)
   }
 
-  function onDragStart() {
-    dragged = true
-    dragging = true
-  }
-
-  function onDragEnd() {
-    dragging = false
-    keepInside()
+  // Let go, it carries on a little with the drag's speed (power, as motion's
+  // own drag throw), then springs to rest inside the bounds, back in from
+  // an edge it was pulled or thrown past. (Not an inertia animation: motion
+  // skips those when they start and end on the same value.)
+  const THROW_POWER = 0.18
+  function throwInside() {
+    measureBounds()
+    if (reduceMotion.value) return keepInside()
+    const { left, right, top, bottom } = bounds.value
+    const glide = (value: typeof x, min: number, max: number) => {
+      const velocity = value.getVelocity()
+      const target = value.get() + velocity * THROW_POWER
+      animate(value, Math.min(Math.max(target, min), Math.max(min, max)), {
+        type: 'spring',
+        velocity,
+        stiffness: 260,
+        damping: 30,
+        restDelta: 0.5,
+      })
+    }
+    glide(x, left, right)
+    glide(y, top, bottom)
   }
 
   // Letting go after a drag isn't a click (no hop from the little guy).
