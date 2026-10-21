@@ -5,7 +5,6 @@
   >
     <div
       class="home__bg"
-      :style="{ '--chrome': toRgb(chrome.scrolled) }"
       aria-hidden="true"
     >
       <!-- The field, sized to the screen. The browser picks by `sizes`,
@@ -358,8 +357,12 @@
     // full-width ask bar, so a mobile y of 0 sits just under it (the info
     // panel's top padding makes room for it too). The bar is 5.6rem tall;
     // 1.2rem of air below it.
-    --ask-top: 1.6rem;
+    // The page's rounded top corners are concentric with the bar's ends:
+    // the bar's radius (half its 5.6rem height) plus its gap from the edge,
+    // the same 1.2rem at the top as at the sides.
+    --ask-top: 1.2rem;
     --desk-top: calc(var(--ask-top) + 5.6rem + 1.2rem);
+    --sheet-radius: calc(2.8rem + 1.2rem);
 
     display: flex;
     flex-direction: column;
@@ -367,11 +370,15 @@
     position: relative;
     padding: calc(60svh + 6rem) 1.6rem calc(3.7rem + var(--safe-bottom));
     min-height: 100svh;
+    // Rounded like `.home__bg` above it, so the corners show the black html
+    // background rather than this placeholder (shown until the photo loads).
+    border-radius: var(--sheet-radius) var(--sheet-radius) 0 0;
     color: #d2f976;
     background: #6f8d7a;
     overflow-x: clip;
 
     @include breakpoint(md) {
+      --ask-top: 1.6rem;
       --desk-top: 0rem;
 
       align-items: center;
@@ -379,16 +386,26 @@
       inset: 0;
       padding: 6rem 1.6rem calc(4rem + var(--safe-bottom));
       min-height: 0;
+      border-radius: 0;
       overflow-x: hidden;
       overflow-y: auto;
       overscroll-behavior: none;
     }
   }
 
+  // On phones the top corners are rounded, so the page reads as a sheet
+  // under Safari's black status bar (the html background shows in the
+  // corners). Desktop has no status bar band.
   .home__bg {
     position: absolute;
     z-index: 0;
     inset: 0;
+    border-radius: var(--sheet-radius) var(--sheet-radius) 0 0;
+    overflow: hidden;
+
+    @include breakpoint(md) {
+      border-radius: 0;
+    }
   }
 
   .home__photo {
@@ -408,7 +425,9 @@
       to bottom,
       rgba(0, 0, 0, 0.06),
       rgba(0, 0, 0, 0.64) calc(100% - 16rem),
-      var(--chrome)
+      // The html background (CHROME in the script), so the page end meets
+      // Safari's toolbar without a seam.
+      #000
     );
 
     @include breakpoint(md) {
@@ -891,47 +910,16 @@
     sizes: 'max(50vw, 67svh)',
   }
 
-  // iOS Safari paints the status bar (at scroll 0), its toolbar fades, and the
-  // strip under its toolbar (at the end of the page) with the html background
-  // color, never the page itself. On mobile `.home__shade` fades into the same
-  // color so the page end has no seam. Fixed elements at the viewport edges turn
-  // the toolbars opaque; avoid them. Safari re-tints live as the color changes,
-  // so it blends from `rest` to `scrolled` with scroll position.
-  const chrome = {
-    rest: [85, 169, 183],
-    scrolled: [0, 0, 0],
-  } as const
-  const CHROME_RANGE = 200
-
-  function toRgb(color: readonly number[]) {
-    return `rgb(${color.map(Math.round).join(', ')})`
-  }
-
-  const chromeProgress = ref(0)
-  const chromeColor = computed(() => {
-    const t = chromeProgress.value
-    const eased = t * t * (3 - 2 * t)
-    return toRgb(
-      chrome.rest.map(
-        (channel, index) =>
-          channel + (chrome.scrolled[index]! - channel) * eased,
-      ),
-    )
-  })
-
-  let chromeFrame = 0
-
-  function onWindowScroll() {
-    if (chromeFrame) return
-    chromeFrame = requestAnimationFrame(() => {
-      chromeFrame = 0
-      const maxScroll =
-        document.documentElement.scrollHeight - window.innerHeight
-      const range = Math.min(CHROME_RANGE, maxScroll)
-      chromeProgress.value =
-        range > 0 ? Math.min(Math.max(window.scrollY / range, 0), 1) : 0
-    })
-  }
+  // iOS Safari paints the status bar, its toolbar fades, and the strip
+  // under its toolbar with the html background color, never the page
+  // itself (iOS 26 doesn't sample the page's content), so one color serves
+  // both edges. It was teal to suit the sky at the top, but that tinted the
+  // bottom over the field; dark suits the field, and the status bar is dark
+  // too. On mobile `.home__shade` fades into the same color so the page end
+  // has no seam. Fixed elements at the viewport edges set the color as well,
+  // but turn the bar behind them opaque (tried at the top and the bottom,
+  // both clipped the page under a solid band), so avoid them.
+  const CHROME = '#000'
 
   const desk = useTemplateRef<HTMLElement>('desk')
   provideDesk(desk)
@@ -1037,20 +1025,13 @@
 
   onMounted(() => {
     loadCounts()
-    window.addEventListener('scroll', onWindowScroll, { passive: true })
-    onWindowScroll()
-  })
-
-  onBeforeUnmount(() => {
-    window.removeEventListener('scroll', onWindowScroll)
-    cancelAnimationFrame(chromeFrame)
   })
 
   useHead({
     htmlAttrs: {
-      style: computed(() => `background-color: ${chromeColor.value}`),
+      style: `background-color: ${CHROME}`,
     },
-    meta: [{ name: 'theme-color', content: toRgb(chrome.rest) }],
+    meta: [{ name: 'theme-color', content: CHROME }],
     link: [
       {
         rel: 'preload',
