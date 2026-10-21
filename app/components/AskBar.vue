@@ -228,7 +228,7 @@
     font-family: var(--system-font);
     font-size: 1.6rem;
     font-weight: 550;
-    letter-spacing: -0.048rem;
+    letter-spacing: -0.032rem;
     line-height: 1.2;
     overflow-wrap: anywhere;
     user-select: text;
@@ -238,7 +238,7 @@
     max-width: 85%;
     padding: 1.4rem;
     border-radius: 2.1rem;
-    color: #fff;
+    color: #e3e3e3;
     background: rgba(255, 255, 255, 0.1);
   }
 
@@ -247,8 +247,8 @@
     min-width: 0;
     // Centres the first line (16px × 1.37 ≈ 22px) on the 24px avatar.
     padding-top: 0.1rem;
-    color: #d7f296;
-    line-height: 1.37;
+    color: #fff;
+    line-height: 1.38;
     white-space: pre-wrap;
 
     &.is-waiting {
