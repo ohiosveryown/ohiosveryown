@@ -415,6 +415,8 @@
     inset: 0;
     border-radius: var(--sheet-radius) var(--sheet-radius) 0 0;
     overflow: hidden;
+    // Scenery only: no image drag, save or select on the photo.
+    pointer-events: none;
 
     @include breakpoint(md) {
       border-radius: 0;
