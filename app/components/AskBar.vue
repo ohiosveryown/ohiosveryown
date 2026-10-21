@@ -111,6 +111,7 @@
         enterkeyhint="send"
         maxlength="500"
         @focus="reopen"
+        @blur="foldWithKeyboard"
       />
       <button
         class="ask-bar__send"
@@ -187,7 +188,8 @@
     position: relative;
     // A string, so Sass passes the calc through instead of evaluating it.
     width: #{'calc(var(--ask-bar-open-width, 100% + 1.7rem) - 1.7rem)'};
-    max-height: min(46rem, 50svh);
+    // --ask-bar-room: what the keyboard leaves on phones (fitAboveKeyboard).
+    max-height: #{'min(46rem, 50svh, var(--ask-bar-room, 100svh))'};
     // Includes the 1rem above the input, so it grows open with the list.
     padding: 0.3rem 0.8rem 2.6rem;
     overflow-y: auto;
@@ -504,6 +506,29 @@
     listObserver.observe(el)
     measure()
     fadeEdgesOnScroll(el)
+    fitAboveKeyboard()
+  }
+
+  // On phones the keyboard, and Safari's form toolbar above it, cover the
+  // bottom of the screen; the visual viewport is what's left. The list is
+  // capped so the whole panel fits in that, with the same gap as at the
+  // sides. (Not with a mouse: there the bar is dragged back inside instead.)
+  const KEYBOARD_GAP = 12
+  let fitFrame = 0
+  function fitAboveKeyboard() {
+    fitFrame = 0
+    const list = trackedList
+    const form = formEl()
+    const view = window.visualViewport
+    if (!list || !form || !view || draggable.value) return
+    // Everything but the conversation: padding and the input row.
+    const chrome = form.offsetHeight - (list.parentElement?.offsetHeight ?? 0)
+    const top = Math.max(0, form.getBoundingClientRect().top - view.offsetTop)
+    const room = view.height - top - chrome - KEYBOARD_GAP
+    list.style.setProperty('--ask-bar-room', `${Math.max(0, room)}px`)
+  }
+  function queueFit() {
+    fitFrame ||= requestAnimationFrame(fitAboveKeyboard)
   }
 
   // The list's soft edges are CSS (a scroll-driven animation) where it's
@@ -632,6 +657,8 @@
     }
     window.addEventListener('resize', keepInside)
     window.addEventListener('resize', settleWidth)
+    window.visualViewport?.addEventListener('resize', queueFit)
+    window.visualViewport?.addEventListener('scroll', queueFit)
     settleWidth()
     measureBounds()
   })
@@ -640,6 +667,9 @@
     listObserver?.disconnect()
     window.removeEventListener('resize', keepInside)
     window.removeEventListener('resize', settleWidth)
+    window.visualViewport?.removeEventListener('resize', queueFit)
+    window.visualViewport?.removeEventListener('scroll', queueFit)
+    cancelAnimationFrame(fitFrame)
   })
   const draggable = ref(false)
   let dragged = false
@@ -981,15 +1011,40 @@
 
   // A click anywhere else on the page folds the panel back into the pill.
   function onDocumentPointer(event: PointerEvent) {
-    if (!open.value) return
     const form = input.value?.closest('form')
-    if (form && !form.contains(event.target as Node)) open.value = false
+    if (form?.contains(event.target as Node)) {
+      pressingInside = true
+      return
+    }
+    if (open.value && form) open.value = false
   }
-  onMounted(() =>
-    document.addEventListener('pointerdown', onDocumentPointer, true),
-  )
+
+  // On phones, closing the keyboard (Safari's Done, or swiping it away)
+  // folds the panel too. The text field losing focus is the sign, unless a
+  // tap inside the panel did that (sending, or scrolling the conversation,
+  // also dismisses the keyboard), so taps inside are tracked until just
+  // after they lift.
+  let pressingInside = false
+  let liftedAt = 0
+  function onDocumentLift() {
+    if (!pressingInside) return
+    pressingInside = false
+    liftedAt = performance.now()
+  }
+  function foldWithKeyboard() {
+    if (draggable.value || !open.value) return
+    if (pressingInside || performance.now() - liftedAt < 500) return
+    open.value = false
+  }
+  onMounted(() => {
+    document.addEventListener('pointerdown', onDocumentPointer, true)
+    document.addEventListener('pointerup', onDocumentLift, true)
+    document.addEventListener('pointercancel', onDocumentLift, true)
+  })
   onBeforeUnmount(() => {
     document.removeEventListener('pointerdown', onDocumentPointer, true)
+    document.removeEventListener('pointerup', onDocumentLift, true)
+    document.removeEventListener('pointercancel', onDocumentLift, true)
     controller?.abort()
   })
 </script>

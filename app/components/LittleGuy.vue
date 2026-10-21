@@ -258,11 +258,16 @@
       return
     }
 
-    const safari =
-      /^((?!chrome|chromium|android|crios|fxios|edg).)*safari/i.test(
-        navigator.userAgent,
-      )
-    ext.value = safari ? 'mp4' : 'webm'
+    // WebKit plays the WebM but drops its alpha (a black box), so it gets
+    // the HEVC one. That's Safari, and every browser on iPhone and iPad:
+    // Chrome, Firefox and Edge there are WebKit too. (iPads say Macintosh,
+    // but have touch.)
+    const ua = navigator.userAgent
+    const ios =
+      /iP(hone|ad|od)/.test(ua) ||
+      (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1)
+    const safari = /^((?!chrome|chromium|android|edg).)*safari/i.test(ua)
+    ext.value = ios || safari ? 'mp4' : 'webm'
     await nextTick()
     video.value?.play().catch(() => {
       // Autoplay refused: the still frame stays.
