@@ -954,10 +954,25 @@
   const { data: caseStudies } = await useCaseStudies()
 
   // The URL is the source of truth: /work/[slug] opens that panel.
+  // The panel follows the route (/work/[slug]), but opens and closes as soon
+  // as it's asked to: the navigation first downloads the route's payload,
+  // which is quick from Vercel's cache but takes seconds when Vercel has to
+  // render it first, so waiting on it left a tapped icon doing nothing.
+  // `requested` is what was asked for until the route catches up (a slug,
+  // or null for closed); undefined follows the route.
+  const requested = ref<string | null | undefined>(undefined)
+  const openSlug = computed(() =>
+    requested.value === undefined
+      ? ((route.params.slug as string | undefined) ?? null)
+      : requested.value,
+  )
   const openStudy = computed(
     () =>
-      caseStudies.value.find((study) => study.slug === route.params.slug) ??
-      null,
+      caseStudies.value.find((study) => study.slug === openSlug.value) ?? null,
+  )
+  watch(
+    () => route.fullPath,
+    () => (requested.value = undefined),
   )
   const origin = shallowRef<HTMLElement | null>(null)
 
@@ -983,6 +998,23 @@
     if (count == null) return undefined
     return `${study.label}, opened ${count.toLocaleString()} ${count === 1 ? 'time' : 'times'}`
   }
+
+  // Opening a panel navigates to /work/[slug], which first downloads that
+  // route's script and then its payload, one after the other. Once the page
+  // has loaded, fetch both for every panel, so the first tap on a slow
+  // connection doesn't wait on them.
+  const nuxtApp = useNuxtApp()
+  function warmRoutes() {
+    for (const study of caseStudies.value) {
+      const to = `/work/${study.slug}`
+      preloadRouteComponents(to, router)
+      nuxtApp.runWithContext(() => preloadPayload(to)).catch(() => {})
+    }
+  }
+  onMounted(() => {
+    if (document.readyState === 'complete') warmRoutes()
+    else window.addEventListener('load', warmRoutes, { once: true })
+  })
 
   // Opening takes a second click, so warming the panel's first images on
   // hover/focus means they're usually cached by the time it opens.
@@ -1032,15 +1064,20 @@
     // Switching panels replaces the entry, so Back still closes rather than
     // stepping through every panel opened.
     const to = `/work/${study.slug}`
-    return openStudy.value ? router.replace(to) : router.push(to)
+    const switching = !!openStudy.value
+    requested.value = study.slug
+    // A navigation that fails or is cancelled hands back to the route.
+    return (switching ? router.replace(to) : router.push(to)).finally(
+      () => (requested.value = undefined),
+    )
   }
 
   // Back when the panel was opened from here; a direct link has nothing
   // behind it on this site, so replace instead.
   function closeStudy() {
-    return window.history.state?.back === '/'
-      ? router.back()
-      : router.replace('/')
+    requested.value = null
+    if (window.history.state?.back === '/') return router.back()
+    return router.replace('/').finally(() => (requested.value = undefined))
   }
 
   onMounted(() => {
