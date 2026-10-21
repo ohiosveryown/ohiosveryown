@@ -16,24 +16,18 @@
       <div class="home__shade" />
     </div>
 
-    <motion.p
+    <p
       class="home__rail home__rail--left home__beat blush"
-      :variants="beat"
-      initial="hidden"
-      :animate="ready ? 'visible' : 'hidden'"
-      :custom="sequence.rails"
+      style="--beat: 0; --beat-wide: 0"
     >
       *ohiosveryown*ohiosveryown*ohiosveryown*
-    </motion.p>
-    <motion.p
+    </p>
+    <p
       class="home__rail home__rail--right home__beat blush"
-      :variants="beat"
-      initial="hidden"
-      :animate="ready ? 'visible' : 'hidden'"
-      :custom="sequence.rails"
+      style="--beat: 0; --beat-wide: 0"
     >
       *not a portfolio of work—rather a collection of vignettes*
-    </motion.p>
+    </p>
 
     <DeskFile
       v-for="(study, index) in caseStudies"
@@ -65,12 +59,9 @@
 
       <div class="roles">
         <div class="roles__line">
-          <motion.div
+          <div
             class="roles__item home__beat"
-            :variants="beat"
-            initial="hidden"
-            :animate="ready ? 'visible' : 'hidden'"
-            :custom="sequence.square"
+            style="--beat: 4; --beat-wide: 1"
           >
             <span class="roles__label">Currently: Square</span>
             <span class="roles__title roles__title--square blush"
@@ -91,13 +82,10 @@
                 />
               </svg>
             </span>
-          </motion.div>
-          <motion.div
+          </div>
+          <div
             class="roles__item home__beat"
-            :variants="beat"
-            initial="hidden"
-            :animate="ready ? 'visible' : 'hidden'"
-            :custom="sequence.slack"
+            style="--beat: 5; --beat-wide: 1"
           >
             <span class="roles__label">Previously at Slack</span>
             <span class="roles__title blush">Lead product designer</span>
@@ -139,16 +127,13 @@
                 </defs>
               </svg>
             </span>
-          </motion.div>
+          </div>
         </div>
 
         <div class="roles__line">
-          <motion.div
+          <div
             class="roles__item home__beat"
-            :variants="beat"
-            initial="hidden"
-            :animate="ready ? 'visible' : 'hidden'"
-            :custom="sequence.github"
+            style="--beat: 6; --beat-wide: 2"
           >
             <span class="roles__label">Erstwhile at GitHub</span>
             <span class="roles__title blush">Staff product designer</span>
@@ -184,13 +169,10 @@
                 />
               </svg>
             </span>
-          </motion.div>
-          <motion.div
+          </div>
+          <div
             class="roles__item home__beat"
-            :variants="beat"
-            initial="hidden"
-            :animate="ready ? 'visible' : 'hidden'"
-            :custom="sequence.mailchimp"
+            style="--beat: 7; --beat-wide: 2"
           >
             <span class="roles__label">And Mailchimp</span>
             <span class="roles__title blush">Staff product designer</span>
@@ -252,13 +234,10 @@
                 </svg>
               </span>
             </span>
-          </motion.div>
-          <motion.p
+          </div>
+          <p
             class="roles__more home__beat"
-            :variants="beat"
-            initial="hidden"
-            :animate="ready ? 'visible' : 'hidden'"
-            :custom="sequence.more"
+            style="--beat: 8; --beat-wide: 2"
           >
             Plus a
             <a
@@ -269,17 +248,14 @@
               data-tooltip="Review CV"
               >couple more</a
             >.
-          </motion.p>
+          </p>
         </div>
       </div>
 
-      <motion.div
+      <div
         class="home__marks home__beat"
         aria-hidden="true"
-        :variants="beat"
-        initial="hidden"
-        :animate="ready ? 'visible' : 'hidden'"
-        :custom="sequence.marks"
+        style="--beat: 3; --beat-wide: 3"
       >
         <svg
           class="home__marks-sm"
@@ -323,26 +299,20 @@
             fill="#D2F976"
           />
         </svg>
-      </motion.div>
+      </div>
 
       <div class="home__copy">
-        <motion.p
+        <p
           class="home__prose home__lead home__beat"
-          :variants="beat"
-          initial="hidden"
-          :animate="ready ? 'visible' : 'hidden'"
-          :custom="sequence.lead"
+          style="--beat: 0; --beat-wide: 4"
         >
           Matt is a software designer and builder based in Atlanta, GA, working
           across brand, product, and code.
-        </motion.p>
+        </p>
         <div class="home__aside">
-          <motion.p
+          <p
             class="home__prose home__beat"
-            :variants="beat"
-            initial="hidden"
-            :animate="ready ? 'visible' : 'hidden'"
-            :custom="sequence.aside"
+            style="--beat: 1; --beat-wide: 5"
           >
             He also builds furniture and runs the studio:
             <a
@@ -354,16 +324,13 @@
               data-tooltip-image="https://res.cloudinary.com/dn1q8h2ga/image/upload/v1784821939/pp_uthfbh.gif"
               >proportional design ↗</a
             >.
-          </motion.p>
-          <motion.div
+          </p>
+          <div
             class="home__cta home__beat"
-            :variants="beat"
-            initial="hidden"
-            :animate="ready ? 'visible' : 'hidden'"
-            :custom="sequence.button"
+            style="--beat: 2; --beat-wide: 6"
           >
             <ContactButton variant="field" />
-          </motion.div>
+          </div>
         </div>
       </div>
     </div>
@@ -526,8 +493,30 @@
     width: 100%;
   }
 
+  // The intro: each piece fades in from a blur in turn, its place in the
+  // order set inline (--beat on phones, --beat-wide from md, where the roles
+  // lead instead of the copy). Plain CSS, not motion-v, so it starts with the
+  // first paint instead of waiting for the page's JavaScript; that wait was
+  // most of the time before the copy showed.
   .home__beat {
-    opacity: 0;
+    animation: home-beat 700ms cubic-bezier(0.8, 0, 0.16, 1) backwards;
+    animation-delay: calc(var(--beat, 0) * 90ms);
+
+    @include breakpoint(md) {
+      animation-delay: calc(var(--beat-wide, 0) * 90ms);
+    }
+  }
+
+  // `backwards`: no filter is left on afterwards (even blur(0) renders text
+  // as an image, without its font smoothing). From 0.01, not 0: browsers
+  // don't count text at opacity 0 as shown, so the copy only "loaded" once
+  // it had faded in; at 0.01 (which looks the same) it counts from the
+  // first paint.
+  @keyframes home-beat {
+    from {
+      opacity: 0.01;
+      filter: blur(10px);
+    }
   }
 
   .home__cta {
@@ -865,7 +854,6 @@
 </style>
 
 <script setup lang="ts">
-  import { motion } from 'motion-v'
   import field from '~/assets/index/0_1.webp'
   import type { CaseStudy } from '#shared/types/case-study'
   import blushWoff2 from '~/assets/type/blush.woff2'
@@ -1014,66 +1002,10 @@
       : router.replace('/')
   }
 
-  const ready = ref(false)
-  const wide = ref(false)
-  const reduceMotion = ref(false)
-
-  const ease = [0.8, 0, 0.16, 1] as const
-
-  const sequence = computed(() =>
-    wide.value
-      ? {
-          rails: 0,
-          square: 1,
-          slack: 1,
-          github: 2,
-          mailchimp: 2,
-          more: 2,
-          marks: 3,
-          lead: 4,
-          aside: 5,
-          button: 6,
-        }
-      : {
-          rails: 0,
-          lead: 0,
-          aside: 1,
-          button: 2,
-          marks: 3,
-          square: 4,
-          slack: 5,
-          github: 6,
-          mailchimp: 7,
-          more: 8,
-        },
-  )
-
-  const beat = {
-    hidden: () => ({
-      opacity: 0,
-      filter: reduceMotion.value ? 'blur(0px)' : 'blur(10px)',
-    }),
-    visible: (index: number) => ({
-      opacity: 1,
-      filter: 'blur(0px)',
-      transition: {
-        duration: reduceMotion.value ? 0.01 : 0.7,
-        delay: reduceMotion.value ? 0 : index * 0.09,
-        ease,
-      },
-    }),
-  }
-
-  onMounted(async () => {
+  onMounted(() => {
     loadCounts()
-    reduceMotion.value = window.matchMedia(
-      '(prefers-reduced-motion: reduce)',
-    ).matches
-    wide.value = window.matchMedia('(min-width: 700px)').matches
     window.addEventListener('scroll', onWindowScroll, { passive: true })
     onWindowScroll()
-    await nextTick()
-    ready.value = true
   })
 
   onBeforeUnmount(() => {
