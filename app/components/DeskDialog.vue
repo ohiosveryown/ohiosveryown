@@ -453,7 +453,7 @@
     padding: 0.8rem 0;
     font-family: var(--system-font);
     font-size: 2.4rem;
-    font-weight: 520;
+    font-weight: 600;
     letter-spacing: -0.04rem;
     line-height: 1.12;
     text-wrap: pretty;
