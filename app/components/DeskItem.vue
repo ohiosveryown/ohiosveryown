@@ -129,6 +129,7 @@
     dragged = true
     suppressTooltip(true)
     carrying.value = !!props.ask && finePointer.value
+    if (carrying.value) askDrop.measure()
     window.addEventListener('keydown', onDragKey)
   }
 

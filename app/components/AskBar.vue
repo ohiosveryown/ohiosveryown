@@ -1342,12 +1342,18 @@
 
   // Dragging a desk item onto him (useAskDrop). While one is over the bar
   // it lifts a little and he hops; dropped, he's asked about it.
-  const { over: dropOver, dropped, setTarget } = useAskDrop()
+  const {
+    over: dropOver,
+    dropped,
+    setTarget,
+    targetRect: dropTargetRect,
+  } = useAskDrop()
   const pillGuy = useTemplateRef<{ hop: () => void }>('pillGuy')
   // Centred under the bar, where the bar is when the item arrives.
   const dropHintAt = ref({ top: '0px', left: '0px' })
   watch(dropOver, (isOver) => {
-    const bar = formEl()?.getBoundingClientRect()
+    // As measured when the drag began (see useAskDrop).
+    const bar = dropTargetRect()
     if (isOver && bar) {
       dropHintAt.value = {
         top: `${bar.bottom + 8}px`,

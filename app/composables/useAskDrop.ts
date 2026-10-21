@@ -15,6 +15,12 @@ export type AskDropItem = {
 
 // The ask bar's element. Client-only, and there's one bar per page.
 let target: HTMLElement | null = null
+// Where it was when the drag started. Measured once, not on every move:
+// when an item comes over the bar it re-renders, and motion briefly puts
+// back its transform without the drag offset, so a bar that had been
+// dragged elsewhere measured as being in its old spot and the item flipped
+// between over and not over without end.
+let targetRect: DOMRect | null = null
 
 export function useAskDrop() {
   const over = useState('ask-drop-over', () => false)
@@ -29,9 +35,13 @@ export function useAskDrop() {
     setTarget(el: HTMLElement | null) {
       target = el
     },
+    measure() {
+      targetRect = target?.getBoundingClientRect() ?? null
+    },
+    targetRect: () => targetRect,
     isOver(x: number, y: number) {
-      if (!target) return false
-      const r = target.getBoundingClientRect()
+      const r = targetRect
+      if (!r) return false
       return x >= r.left && x <= r.right && y >= r.top && y <= r.bottom
     },
     drop(item: AskDropItem) {
