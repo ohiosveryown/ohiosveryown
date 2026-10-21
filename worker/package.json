@@ -1,0 +1,14 @@
+{
+  "name": "ohiosveryown-counter",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "schema": "wrangler d1 execute ohiosveryown-views --remote --file schema.sql",
+    "types": "wrangler types"
+  },
+  "devDependencies": {
+    "wrangler": "4.147.0"
+  }
+}

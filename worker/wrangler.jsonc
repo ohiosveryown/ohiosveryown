@@ -1,0 +1,23 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "ohiosveryown-counter",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-10-01",
+  "account_id": "9f125c55a7d2fd4f7eafbc6af073b620",
+  "workers_dev": true,
+  "preview_urls": false,
+  "observability": { "enabled": true },
+  "vars": {
+    // Origins allowed to call the Worker from the browser.
+    "ALLOWED_ORIGINS": "https://ohiosveryown.co,http://localhost:8080,http://192.168.1.128:8080",
+    // Where the Worker reads the list of real case-study IDs.
+    "SITE_URL": "https://ohiosveryown.co"
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "ohiosveryown-views",
+      "database_id": "630e9047-ff45-4662-bdbc-999455aa6e69"
+    }
+  ]
+}

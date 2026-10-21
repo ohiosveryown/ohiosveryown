@@ -91,9 +91,9 @@ When multiple elements should animate together, define `variants` once and trigg
 
 ```ts
 import { motion } from 'motion-v'
-import IconSquare from '~/components/Icon/Square.vue'
+import ContactButton from '~/components/ContactButton.vue'
 
-const MotionIcon = motion.create(IconSquare)
+const MotionContact = motion.create(ContactButton)
 ```
 
 ## Accessibility

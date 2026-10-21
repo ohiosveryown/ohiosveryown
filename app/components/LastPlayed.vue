@@ -1,135 +1,40 @@
 <template>
-  <section
+  <DeskFile
     v-if="track"
     class="last-played"
-  >
-    <p class="last-played__label thin">Last played</p>
-
-    <component
-      :is="track.url ? 'a' : 'div'"
-      class="last-played__row has-tooltip"
-      v-bind="
-        track.url ? { href: track.url, target: '_blank', rel: 'noopener' } : {}
-      "
-      :data-tooltip="tooltipText"
-      :data-tooltip-image="tooltipImage"
-    >
-      <div class="last-played__art">
-        <img
-          v-if="track.cover"
-          :src="track.cover"
-          alt=""
-          class="last-played__cover"
-        />
-        <span class="last-played__overlay" />
-      </div>
-
-      <div class="last-played__meta">
-        <p class="last-played__title">{{ track.title }}</p>
-        <p class="last-played__artist">{{ track.artist }}</p>
-      </div>
-    </component>
-  </section>
+    :name="fileName"
+    :image="track.cover"
+    :href="track.url"
+    :tooltip="tooltipText"
+    :tooltip-image="tooltipImage"
+    :label="`${tooltipText}: ${track.title} by ${track.artist}`"
+    :delay="0.6"
+    :ask="{
+      label: fileName,
+      image: track.cover,
+      kind: 'track',
+      name: track.title,
+      prompt: `Matt's been listening to “${track.title}” by ${track.artist}. What do you make of it?`,
+    }"
+  />
 </template>
 
 <style scoped lang="scss">
   .last-played {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    margin-top: 4rem;
-    width: 100%;
-    max-width: 56.6rem;
-    animation: last-played-enter 0.55s var(--ease-qubic) backwards;
+    position: absolute;
+    // --desk-top (from the page): room for the ask bar on small screens.
+    top: calc(var(--desk-top, 0rem) + 24svh);
+    left: 50%;
+    margin-left: -3.9rem;
+    width: 22rem;
+    max-width: calc(50% + 3.9rem - 2.4rem);
 
     @include breakpoint(md) {
-      transform: translateX(0.6rem);
+      top: 29.33%;
+      left: calc(50% + 4.5rem);
+      margin-left: 0;
+      max-width: calc(50% - 4.5rem - 3.2rem);
     }
-  }
-
-  @keyframes last-played-enter {
-    from {
-      opacity: 0;
-      filter: blur(1.2rem);
-    }
-  }
-
-  .last-played__label {
-    font-size: 1.5rem;
-    letter-spacing: 0.025rem;
-  }
-
-  .last-played__row {
-    display: flex;
-    align-items: center;
-    gap: 1.2rem;
-    width: max-content;
-  }
-
-  a.last-played__row {
-    cursor: var(--cursor);
-  }
-
-  a.last-played__row:hover .last-played__title {
-    text-decoration: underline;
-    text-decoration-thickness: 0.064rem;
-    text-underline-offset: 0.3rem;
-  }
-
-  .last-played__art {
-    position: relative;
-    flex-shrink: 0;
-    overflow: hidden;
-    width: 4.8rem;
-    height: 4.8rem;
-    border-radius: 1.3rem;
-    background: linear-gradient(135deg, #b08a6a, #5b3f6b 55%, #2c2640);
-    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.22);
-  }
-
-  .last-played__cover {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    width: 100%;
-    height: 100%;
-    max-width: none;
-    object-fit: cover;
-    object-position: center;
-    transform: scale(1.4);
-  }
-
-  .last-played__overlay {
-    position: absolute;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.2);
-  }
-
-  .last-played__meta {
-    display: flex;
-    flex-direction: column;
-    gap: 0.4rem;
-    letter-spacing: -0.075rem;
-  }
-
-  .last-played__title {
-    margin: 0;
-    color: #000;
-    font-size: 1.7rem;
-    font-family: var(--system-font);
-    line-height: 1;
-    letter-spacing: -0.025rem;
-  }
-
-  .last-played__artist {
-    margin: 0;
-    opacity: 0.5;
-    color: #000;
-    font-size: 1.5rem;
-    font-family: var(--system-font);
-    font-weight: 400;
-    line-height: 1;
-    letter-spacing: -0.025rem;
   }
 </style>
 
@@ -145,11 +50,19 @@
 
   const track = computed(() => data.value ?? null)
 
-  const tooltipText = computed(() => {
-    if (!track.value?.url) return 'good taste ✦'
+  const fileName = computed(() => {
+    const slug = (track.value?.title ?? '')
+      .toLowerCase()
+      .normalize('NFKD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/\s*[([].*?[)\]]\s*/g, ' ')
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '')
 
-    if (track.value.source === 'now-playing') return 'now spinning ↻'
-
-    return 'Open in Spotify'
+    return `${slug || 'untitled'}.mp3`
   })
+
+  const tooltipText = computed(() =>
+    track.value?.source === 'now-playing' ? 'Now playing' : 'Last played',
+  )
 </script>

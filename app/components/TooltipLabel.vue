@@ -64,7 +64,31 @@
         transition: { duration: 0.15 },
       }"
     >
-      {{ content }}
+      <motion.span
+        class="tooltip-label__text"
+        :initial="false"
+        :animate="textWidth === null ? {} : { width: textWidth }"
+        :transition="{ duration: 0.3, ease }"
+      >
+        <AnimatePresence :initial="false">
+          <motion.span
+            :key="content"
+            class="tooltip-label__line"
+            :initial="{ opacity: 0, filter: 'blur(4px)' }"
+            :animate="{ opacity: 1, filter: 'blur(0px)' }"
+            :exit="{ opacity: 0, filter: 'blur(4px)' }"
+            :transition="{ duration: 0.2 }"
+          >
+            {{ content }}
+          </motion.span>
+        </AnimatePresence>
+      </motion.span>
+      <span
+        ref="measure"
+        class="tooltip-label__measure"
+        aria-hidden="true"
+        >{{ content }}</span
+      >
     </motion.div>
   </AnimatePresence>
 </template>
@@ -91,6 +115,28 @@
     box-shadow:
       0 1px 0px 0 rgba(255, 255, 255, 0.4) inset,
       0 2px 3px 0 rgba(0, 0, 0, 0.32);
+  }
+
+  .tooltip-label__text {
+    display: grid;
+    font-weight: inherit;
+    overflow-x: clip;
+  }
+
+  .tooltip-label__line {
+    grid-area: 1 / 1;
+    justify-self: start;
+    font-weight: inherit;
+    white-space: nowrap;
+  }
+
+  .tooltip-label__measure {
+    position: absolute;
+    top: 0;
+    left: 0;
+    visibility: hidden;
+    font-weight: inherit;
+    white-space: nowrap;
   }
 
   .tooltip-label__image-anchor {
@@ -129,7 +175,7 @@
 </style>
 
 <script setup lang="ts">
-  import { ref, onMounted, onBeforeUnmount } from 'vue'
+  import { ref, watch, useTemplateRef, onMounted, onBeforeUnmount } from 'vue'
   import { motion, AnimatePresence, useMotionValue, useSpring } from 'motion-v'
 
   const OFFSET_X = 14
@@ -139,8 +185,18 @@
   const SPRING = { stiffness: 220, damping: 22, mass: 0.6 }
   const PARALLAX_SPRING = { stiffness: 140, damping: 18, mass: 0.5 }
 
+  const ease = [0.8, 0, 0.16, 1] as const
+
   const visible = ref(false)
   const content = ref('')
+  const measure = useTemplateRef<HTMLElement>('measure')
+  const textWidth = ref<number | null>(null)
+
+  watch(
+    [content, measure],
+    () => (textWidth.value = measure.value?.offsetWidth ?? null),
+    { flush: 'post' },
+  )
   const image = ref('')
   const anchorX = ref(0)
   const anchorY = ref(0)
@@ -194,6 +250,11 @@
       mouseY.set(nextY)
     }
 
+    if (currentTarget && !currentTarget.contains(event.target as Node)) {
+      dismiss()
+      return
+    }
+
     if (currentTarget) {
       const rect = currentTarget.getBoundingClientRect()
       const relX =
@@ -220,12 +281,14 @@
   }
 
   function handleMouseOver(event: MouseEvent) {
-    if (isCoarsePointer()) return
-
     const target = (event.target as HTMLElement | null)?.closest<HTMLElement>(
       '.has-tooltip',
     )
-    if (!target) return
+    if (target) show(target)
+  }
+
+  function show(target: HTMLElement) {
+    if (isCoarsePointer() || isTooltipSuppressed()) return
     currentTarget = target
     updateAnchor(target)
     content.value = getTooltipContent(target)
@@ -254,6 +317,7 @@
     coarseQuery = window.matchMedia('(pointer: coarse)')
     coarseQuery.addEventListener('change', handlePointerChange)
     registerTooltipDismiss(dismiss)
+    registerTooltipShow(show)
     window.addEventListener('mousemove', handleMouseMove, { passive: true })
     window.addEventListener('scroll', handleViewportChange, { passive: true })
     window.addEventListener('resize', handleViewportChange)
@@ -264,6 +328,7 @@
   onBeforeUnmount(() => {
     coarseQuery?.removeEventListener('change', handlePointerChange)
     unregisterTooltipDismiss(dismiss)
+    unregisterTooltipShow(show)
     window.removeEventListener('mousemove', handleMouseMove)
     window.removeEventListener('scroll', handleViewportChange)
     window.removeEventListener('resize', handleViewportChange)
