@@ -12,7 +12,7 @@ const MAX_QUESTION = 500
 const MAX_REPLY_KEPT = 2000
 const MAX_TURNS = 10
 // A backstop: about 70 words. The instructions ask for far less.
-const MAX_REPLY_TOKENS = 100
+const MAX_REPLY_TOKENS = 110
 
 function readTurns(body: unknown): Turn[] {
   const messages = (body as { messages?: unknown })?.messages
@@ -130,7 +130,7 @@ export default defineEventHandler(async (event) => {
       model: openaiModel,
       stream: true,
       max_tokens: MAX_REPLY_TOKENS,
-      temperature: 0.6,
+      temperature: 0.8,
       messages: [
         { role: 'system', content: await mallowInstructions() },
         ...turns,

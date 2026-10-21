@@ -103,6 +103,11 @@
         ref="input"
         v-model="question"
         class="ask-bar__input"
+        @scroll.passive="fadeInputEdges"
+        @input="fadeInputEdges"
+        @keydown="fadeInputEdges"
+        @select="fadeInputEdges"
+        @click="fadeInputEdges"
         type="text"
         name="question"
         :placeholder="open ? 'Ask a follow-up...' : 'Ask Mallow anything...'"
@@ -111,7 +116,7 @@
         enterkeyhint="send"
         maxlength="500"
         @focus="reopen"
-        @blur="foldWithKeyboard"
+        @blur="onInputBlur"
       />
       <button
         class="ask-bar__send"
@@ -380,6 +385,15 @@
     letter-spacing: -0.048rem;
     line-height: 1;
     outline: none;
+    // Soft edges where a long question runs past the field, instead of a
+    // hard cut (sizes set by fadeInputEdges).
+    mask-image: linear-gradient(
+      to right,
+      transparent,
+      #000 var(--ask-bar-input-fade-left, 0px),
+      #000 calc(100% - var(--ask-bar-input-fade-right, 0px)),
+      transparent
+    );
     user-select: text;
 
     &::placeholder {
@@ -784,6 +798,28 @@
   const open = ref(false)
   const streaming = ref(false)
   const input = useTemplateRef<HTMLInputElement>('input')
+
+  // A question longer than the field scrolls inside it. Fade whichever end
+  // has text hidden past it, sized by how much is (up to INPUT_FADE_PX), the
+  // way the conversation's edges fade. Checked a frame after each change,
+  // once the caret has moved and the field has scrolled to it.
+  const INPUT_FADE_PX = 20
+  let inputFrame = 0
+  function fadeInputEdges() {
+    inputFrame ||= requestAnimationFrame(() => {
+      inputFrame = 0
+      const el = input.value
+      if (!el) return
+      // Rounded: at the end there can be a fraction of a pixel left over.
+      const past = Math.floor(el.scrollWidth - el.clientWidth - el.scrollLeft)
+      const left = Math.min(INPUT_FADE_PX, Math.max(0, el.scrollLeft))
+      const right = Math.min(INPUT_FADE_PX, Math.max(0, past))
+      el.style.setProperty('--ask-bar-input-fade-left', `${left}px`)
+      el.style.setProperty('--ask-bar-input-fade-right', `${right}px`)
+    })
+  }
+  // Sending clears it, and losing focus scrolls it back to the start.
+  watch(question, fadeInputEdges, { flush: 'post' })
   const canSend = computed(
     () => question.value.trim().length > 0 && !streaming.value,
   )
@@ -1030,6 +1066,10 @@
     if (!pressingInside) return
     pressingInside = false
     liftedAt = performance.now()
+  }
+  function onInputBlur() {
+    fadeInputEdges()
+    foldWithKeyboard()
   }
   function foldWithKeyboard() {
     if (draggable.value || !open.value) return
