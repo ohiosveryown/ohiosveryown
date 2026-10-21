@@ -453,9 +453,9 @@
     padding: 0.8rem 0;
     font-family: var(--system-font);
     font-size: 2.4rem;
-    font-weight: 500;
+    font-weight: 520;
     letter-spacing: -0.04rem;
-    line-height: 1.2;
+    line-height: 1.12;
     text-wrap: pretty;
     text-box-edge: cap alphabetic;
     text-box-trim: trim-both;

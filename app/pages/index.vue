@@ -260,10 +260,13 @@
             :custom="sequence.more"
           >
             Plus a
-            <span
+            <a
               class="home__dotted has-tooltip"
+              href="/cv.pdf"
+              target="_blank"
+              rel="noopener"
               data-tooltip="Review CV"
-              >couple more</span
+              >couple more</a
             >.
           </motion.p>
         </div>
