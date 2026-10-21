@@ -787,12 +787,37 @@
     sprungWidth.value = !!widths
     if (widths) width.set(open.value ? widths.open : widths.closed)
   }
+  // Which way it widens depends on where it's been dragged to: the layout
+  // pins its right edge, so on its own it always grows leftward (and from
+  // the left side of the screen, off the edge). In the left third it moves
+  // right by the whole change in width, so its left edge holds still; in the
+  // middle by half, so it grows from its centre; in the right third not at
+  // all. On the same spring as the width, so the held edge stays put.
+  const SHIFT_SETTLE_MS = 1200
+  let shiftingUntil = 0
+  function widthShare() {
+    const bar = formEl()?.getBoundingClientRect()
+    if (!bar) return 0
+    const middle = (bar.left + bar.width / 2) / window.innerWidth
+    return middle < 1 / 3 ? 1 : middle < 2 / 3 ? 0.5 : 0
+  }
   function springWidth(spring: ReturnType<typeof growFor>) {
     const widths = cssWidths()
     if (!widths) return
     const target = open.value ? widths.open : widths.closed
-    if (reduceMotion.value) width.set(target)
-    else animate(width, target, spring)
+    const shift = (target - width.get()) * widthShare()
+    if (reduceMotion.value) {
+      width.set(target)
+      x.set(x.get() + shift)
+      return
+    }
+    animate(width, target, spring)
+    if (!shift) return
+    animate(x, x.get() + shift, spring)
+    // Keep-inside's sideways correction would cut the shift short; it
+    // checks again after.
+    shiftingUntil = performance.now() + SHIFT_SETTLE_MS
+    setTimeout(keepInside, SHIFT_SETTLE_MS)
   }
   const ready = ref(false)
   const reduceMotion = ref(false)
@@ -858,14 +883,24 @@
     const form = formEl()
     const desk = surface.value
     if (!form || !desk) return
+    // Where it can be dragged, thrown and grown: the desk, less a margin
+    // along every edge so it never sits flush against the screen's edge.
+    // The margin matches its starting gap from the right, so its starting
+    // spot is just inside. Only with a mouse or trackpad, the only time it
+    // moves; on touch it spans the screen.
+    const rem = Number.parseFloat(
+      getComputedStyle(document.documentElement).fontSize,
+    )
+    const edge = draggable.value ? EDGE_REM * rem : 0
     // offsetLeft/Top ignore the drag transform: the bar's spot in the layout.
     bounds.value = {
-      left: -form.offsetLeft,
-      top: -form.offsetTop,
-      right: desk.clientWidth - form.offsetLeft - form.offsetWidth,
-      bottom: desk.clientHeight - form.offsetTop - form.offsetHeight,
+      left: -form.offsetLeft + edge,
+      top: -form.offsetTop + edge,
+      right: desk.clientWidth - form.offsetLeft - form.offsetWidth - edge,
+      bottom: desk.clientHeight - form.offsetTop - form.offsetHeight - edge,
     }
   }
+  const EDGE_REM = 1.2
 
   // When it grows (opening, a longer reply) or the window shrinks, glide
   // back inside if it now hangs off an edge. Not while it's being dragged.
@@ -873,16 +908,22 @@
   function keepInside() {
     measureBounds()
     if (dragging) return
+    // Mid-shift (springWidth) only the up-down correction runs.
+    const shifting = performance.now() < shiftingUntil
     const { left, right, top, bottom } = bounds.value
     const clamp = (value: number, min: number, max: number) =>
       Math.min(Math.max(value, min), Math.max(min, max))
     const tx = clamp(x.get(), left, right)
     const ty = clamp(y.get(), top, bottom)
     const glide = { type: 'spring', stiffness: 260, damping: 30 } as const
-    if (tx !== x.get())
+    if (tx !== x.get() && !shifting)
       animate(x, tx, reduceMotion.value ? { duration: 0 } : glide)
-    if (ty !== y.get())
-      animate(y, ty, reduceMotion.value ? { duration: 0 } : glide)
+    if (ty === y.get()) return
+    // While the panel's height is animating, follow it exactly: near the
+    // bottom of the screen it then grows upward, its bottom edge held at
+    // the bottom of the desk (a spring of its own lagged, then overshot).
+    if (reduceMotion.value || growHeight.isAnimating()) y.set(ty)
+    else animate(y, ty, glide)
   }
 
   let resizeObserver: ResizeObserver | undefined
@@ -1332,7 +1373,10 @@
       streaming.value = false
       controller = undefined
       scrollToEnd()
-      input.value?.focus()
+      // Without scrolling: on desktop the page is its own scroll box, and
+      // with the bar near the bottom the grown panel's input sat below it,
+      // so focusing scrolled the whole page.
+      input.value?.focus({ preventScroll: true })
       // Once the last character has unblurred, back to plain text: kept as
       // spans, reopening the panel replayed every one's unblur at once,
       // hundreds in a long thread, and the panel stuttered open.
