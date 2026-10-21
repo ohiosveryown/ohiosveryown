@@ -8,11 +8,26 @@
       :style="{ '--chrome': toRgb(chrome.scrolled) }"
       aria-hidden="true"
     >
-      <img
-        class="home__photo"
-        :src="field"
-        alt=""
-      />
+      <!-- The field, sized to the screen. The browser picks by `sizes`,
+           which asks for about one image pixel per CSS pixel (a soft photo
+           under a shade doesn't need the screen's full density), so a phone
+           gets a few hundred KB, not the 1MB original. Covering a tall page
+           on a phone, it's drawn wider than the screen, hence the svh. -->
+      <picture>
+        <source
+          type="image/avif"
+          :srcset="field.avif"
+          :sizes="field.sizes"
+        />
+        <img
+          class="home__photo"
+          :src="field.fallback"
+          :srcset="field.webp"
+          :sizes="field.sizes"
+          alt=""
+          decoding="async"
+        />
+      </picture>
       <div class="home__shade" />
     </div>
 
@@ -854,9 +869,22 @@
 </style>
 
 <script setup lang="ts">
-  import field from '~/assets/index/0_1.webp'
   import type { CaseStudy } from '#shared/types/case-study'
   import blushWoff2 from '~/assets/type/blush.woff2'
+
+  // The background photo (see the <picture> in the template). The sizes
+  // are half the slot, so about 1x on 2x screens. In public/, not imported:
+  // Nuxt prefetches every asset the page's script imports, which fetched
+  // all six. Cached for a year (routeRules), so a new photo needs new
+  // filenames.
+  const fieldSet = (ext: string) =>
+    [1280, 1920, 2544].map((w) => `/field/field-${w}.${ext} ${w}w`).join(', ')
+  const field = {
+    avif: fieldSet('avif'),
+    webp: fieldSet('webp'),
+    fallback: '/field/field-1920.webp',
+    sizes: 'max(50vw, 67svh)',
+  }
 
   // iOS Safari paints the status bar (at scroll 0), its toolbar fades, and the
   // strip under its toolbar (at the end of the page) with the html background

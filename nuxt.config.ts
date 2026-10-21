@@ -45,6 +45,11 @@ export default defineNuxtConfig({
   routeRules: {
     '/callback': { ssr: true },
     '/api/**': { cors: true },
+    // The home page's background sizes (public/field). Not hashed, so new
+    // images need new filenames.
+    '/field/**': {
+      headers: { 'cache-control': 'public, max-age=31536000, immutable' },
+    },
   },
   // ISR on Vercel: served from the CDN like a static page, regenerated in the
   // background after `expiration` seconds, so Craft edits show up within a

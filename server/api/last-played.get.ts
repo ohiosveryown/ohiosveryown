@@ -1,5 +1,5 @@
 type SpotifyArtist = { name: string }
-type SpotifyImage = { url: string }
+type SpotifyImage = { url: string; width: number | null }
 type SpotifyTrack = {
   name: string
   artists: SpotifyArtist[]
@@ -18,6 +18,16 @@ export type LastPlayed = {
   playedAt: string | null
 }
 
+// The cover shows as a small desk icon, but Spotify lists its 640px image
+// first (about 100KB). Take the smallest that's still sharp on a 3x screen.
+const COVER_MIN_WIDTH = 216
+function coverFor(images: SpotifyImage[]) {
+  const sharp = images
+    .filter((image) => (image.width ?? 0) >= COVER_MIN_WIDTH)
+    .sort((a, b) => (a.width ?? 0) - (b.width ?? 0))
+  return (sharp[0] ?? images[0])?.url ?? null
+}
+
 function toLastPlayed(
   track: SpotifyTrack,
   source: LastPlayed['source'],
@@ -26,7 +36,7 @@ function toLastPlayed(
   return {
     title: track.name,
     artist: track.artists.map((a) => a.name).join(', '),
-    cover: track.album.images?.[0]?.url ?? null,
+    cover: coverFor(track.album.images ?? []),
     url: track.external_urls.spotify ?? null,
     source,
     playedAt,

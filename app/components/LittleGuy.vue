@@ -267,6 +267,11 @@
       /iP(hone|ad|od)/.test(ua) ||
       (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1)
     const safari = /^((?!chrome|chromium|android|edg).)*safari/i.test(ua)
+    // The video waits for the page to finish loading, so its few hundred KB
+    // don't compete with what the page needs to show. The still stands in
+    // until then.
+    await pageLoaded()
+    if (unmounted) return
     ext.value = ios || safari ? 'mp4' : 'webm'
     await nextTick()
     video.value?.play().catch(() => {
@@ -275,7 +280,16 @@
     })
   })
 
+  let unmounted = false
   onBeforeUnmount(() => {
+    unmounted = true
     window.removeEventListener('pointermove', onPointerMove)
   })
+
+  function pageLoaded() {
+    if (document.readyState === 'complete') return Promise.resolve()
+    return new Promise<void>((resolve) =>
+      window.addEventListener('load', () => resolve(), { once: true }),
+    )
+  }
 </script>
