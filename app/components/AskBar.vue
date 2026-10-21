@@ -116,25 +116,55 @@
           />
         </span>
       </span>
-      <input
-        ref="input"
-        v-model="question"
-        class="ask-bar__input"
-        @scroll.passive="fadeInputEdges"
-        @input="fadeInputEdges"
-        @keydown="fadeInputEdges"
-        @select="fadeInputEdges"
-        @click="fadeInputEdges"
-        type="text"
-        name="question"
-        :placeholder="open ? 'Ask a follow-up...' : 'Ask Mallow anything...'"
-        aria-label="Ask Mallow anything"
-        autocomplete="off"
-        enterkeyhint="send"
-        maxlength="500"
-        @focus="reopen"
-        @blur="onInputBlur"
-      />
+      <span class="ask-bar__field">
+        <input
+          ref="input"
+          v-model="question"
+          class="ask-bar__input"
+          @scroll.passive="fadeInputEdges"
+          @input="fadeInputEdges"
+          @keydown="fadeInputEdges"
+          @select="fadeInputEdges"
+          @click="fadeInputEdges"
+          type="text"
+          name="question"
+          :placeholder="open ? 'Ask a follow-up...' : showHints ? '' : HINTS[0]"
+          aria-label="Ask Mallow anything"
+          autocomplete="off"
+          enterkeyhint="send"
+          maxlength="500"
+          @focus="onInputFocus"
+          @blur="onInputBlur"
+        />
+        <!-- While it's empty and folded, a line that changes every few
+           seconds in place of a placeholder (which can't animate). -->
+        <span
+          v-if="showHints"
+          class="ask-bar__hints"
+          aria-hidden="true"
+        >
+          <AnimatePresence mode="wait">
+            <motion.span
+              :key="hint"
+              class="ask-bar__hint"
+              :initial="{ opacity: 1 }"
+              :animate="{ opacity: 1 }"
+              :exit="{ opacity: 0, filter: 'blur(10px)', y: -6 }"
+              :transition="{ duration: 0.35, ease }"
+            >
+              <!-- Coming in, a word at a time (ask-bar-hint-word); going
+                   out, the whole line at once. -->
+              <span
+                v-for="(word, index) in hint.split(' ')"
+                :key="index"
+                class="ask-bar__hint-word"
+                :style="{ '--word': index }"
+                >{{ word }}{{ ' ' }}</span
+              >
+            </motion.span>
+          </AnimatePresence>
+        </span>
+      </span>
       <button
         class="ask-bar__send"
         :class="{ 'is-ready': canSend }"
@@ -496,6 +526,49 @@
     top: 50%;
     left: 50%;
     transform: translate(-49.3%, -52.7%);
+  }
+
+  .ask-bar__field {
+    display: flex;
+    flex: 1 0 0;
+    position: relative;
+    min-width: 0;
+  }
+
+  .ask-bar__hints {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    inset: 0;
+    color: #d2f976;
+    font-family: var(--system-font);
+    font-size: 1.6rem;
+    font-weight: 550;
+    letter-spacing: -0.048rem;
+    line-height: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .ask-bar__hint {
+    font-weight: inherit;
+    white-space: pre;
+  }
+
+  .ask-bar__hint-word {
+    display: inline-block;
+    font-weight: inherit;
+    animation: ask-bar-hint-word 350ms cubic-bezier(0.8, 0, 0.16, 1) backwards;
+    animation-delay: calc(var(--word) * 60ms);
+  }
+
+  @keyframes ask-bar-hint-word {
+    from {
+      opacity: 0;
+      filter: blur(10px);
+      transform: translateY(0.6rem);
+    }
   }
 
   .ask-bar__input {
@@ -1103,6 +1176,38 @@
     if (messages.value.length) open.value = true
   }
 
+  // The folded bar's hint, in place of a placeholder: a few lines in turn,
+  // every few seconds, while it's empty. Paused while it has focus; the
+  // drag hint only where dragging onto Mallow works. Reduced motion keeps
+  // the first line.
+  const HINTS = [
+    "What's Matt up to?",
+    'Psst, ask me anything',
+    'Drag a file here…',
+    'I get paid by the hour',
+  ]
+  const HINT_MS = 3500
+  const focused = ref(false)
+  const hintIndex = ref(0)
+  const hints = computed(() =>
+    draggable.value ? HINTS : HINTS.filter((line) => !line.startsWith('Drag')),
+  )
+  const hint = computed(() => hints.value[hintIndex.value % hints.value.length])
+  const showHints = computed(() => !open.value && !question.value)
+  let hintTimer: ReturnType<typeof setInterval> | undefined
+  watchEffect(() => {
+    clearInterval(hintTimer)
+    if (!ready.value || !showHints.value || focused.value || reduceMotion.value)
+      return
+    hintTimer = setInterval(() => (hintIndex.value += 1), HINT_MS)
+  })
+  onBeforeUnmount(() => clearInterval(hintTimer))
+
+  function onInputFocus() {
+    focused.value = true
+    reopen()
+  }
+
   // Replies arrive in bursts of words; show them a character at a time at
   // a steady pace instead, catching up if a lot is waiting. Resolves once
   // everything pushed has been shown.
@@ -1314,6 +1419,7 @@
     liftedAt = performance.now()
   }
   function onInputBlur() {
+    focused.value = false
     fadeInputEdges()
     foldWithKeyboard()
   }
