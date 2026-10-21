@@ -1,14 +1,18 @@
+import type { H3Event } from 'h3'
+
 // Mallow's chat: takes the conversation so far, streams the reply back as
 // plain text. Guards, since every question costs money: same-origin only,
 // short messages and history, a capped reply, and a per-visitor rate limit
-// (askLimit, kept in the counter Worker's D1).
+// (askLimit, kept in the counter Worker's D1). Questions starting with
+// /test get a canned reply instead (see testReply).
 
 type Turn = { role: 'user' | 'assistant'; content: string }
 
 const MAX_QUESTION = 500
 const MAX_REPLY_KEPT = 2000
 const MAX_TURNS = 10
-const MAX_REPLY_TOKENS = 350
+// A backstop: about 70 words. The instructions ask for far less.
+const MAX_REPLY_TOKENS = 100
 
 function readTurns(body: unknown): Turn[] {
   const messages = (body as { messages?: unknown })?.messages
@@ -61,13 +65,44 @@ function textStream(upstream: ReadableStream<Uint8Array>) {
   )
 }
 
-export default defineEventHandler(async (event) => {
-  const { openaiApiKey, openaiModel } = useRuntimeConfig(event)
-  const apiKey = openaiApiKey || process.env.OPENAI_API_KEY
-  if (!apiKey) {
-    throw createError({ statusCode: 503, statusMessage: 'Chat is off' })
-  }
+// "/test" questions get a canned reply without calling OpenAI or the
+// Worker, so the chat can be tried without cost, rate limiting or logging.
+// Streamed in bursts like a real reply, so the typing still gets exercised.
+const TEST_REPLIES: Record<string, string> = {
+  '': 'Testing, testing! This is a pretend answer, so nothing was sent to OpenAI or saved. 🧪',
+  long: "This is a longer pretend answer for checking how replies wrap and scroll. Matt is a software designer and builder in Atlanta, working across brand, product, and code. He's a Principal Product Designer at Square, and before that he designed at Slack, GitHub and Mailchimp. Outside of work he runs Proportional Design, a small furniture studio. None of this came from OpenAI.",
+}
 
+function testReply(event: H3Event, command: string) {
+  const variant = command.slice('/test'.length).trim().toLowerCase()
+  if (variant === 'busy') {
+    throw createError({ statusCode: 429, statusMessage: 'Too many questions' })
+  }
+  if (variant === 'error') {
+    throw createError({
+      statusCode: 502,
+      statusMessage: 'Mallow is unavailable',
+    })
+  }
+  const words = (TEST_REPLIES[variant] ?? TEST_REPLIES['']!).split(/(?<= )/)
+  const encoder = new TextEncoder()
+  const stream = new ReadableStream<Uint8Array>({
+    async start(controller) {
+      for (let i = 0; i < words.length; i += 3) {
+        controller.enqueue(encoder.encode(words.slice(i, i + 3).join('')))
+        await new Promise((r) => setTimeout(r, 60))
+      }
+      controller.close()
+    },
+  })
+  setResponseHeaders(event, {
+    'Content-Type': 'text/plain; charset=utf-8',
+    'Cache-Control': 'no-store',
+  })
+  return sendStream(event, stream)
+}
+
+export default defineEventHandler(async (event) => {
   // Browsers always send Origin on POST; other sites can't spend the key.
   const origin = getRequestHeader(event, 'origin')
   if (origin !== getRequestURL(event).origin) {
@@ -75,7 +110,15 @@ export default defineEventHandler(async (event) => {
   }
 
   const turns = readTurns(await readBody(event))
-  await askLimit(event, turns.at(-1)!.content)
+  const question = turns.at(-1)!.content
+  if (/^\/test\b/i.test(question)) return testReply(event, question)
+
+  const { openaiApiKey, openaiModel } = useRuntimeConfig(event)
+  const apiKey = openaiApiKey || process.env.OPENAI_API_KEY
+  if (!apiKey) {
+    throw createError({ statusCode: 503, statusMessage: 'Chat is off' })
+  }
+  await askLimit(event, question)
 
   const res = await fetch('https://api.openai.com/v1/chat/completions', {
     method: 'POST',

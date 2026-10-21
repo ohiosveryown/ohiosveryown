@@ -488,6 +488,8 @@
       left: auto;
       width: 28rem;
       max-width: calc(100% - 2.4rem);
+      // Same timing as the panel's height (GROW_S in AskBar).
+      transition: width 400ms cubic-bezier(0.8, 0, 0.16, 1);
 
       // Open, it's the chat panel.
       &.is-open {
