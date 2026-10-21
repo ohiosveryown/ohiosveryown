@@ -35,7 +35,7 @@
         />
       </span>
       <span class="desk-file__meta">
-        <span class="desk-file__name blush">{{ name }}</span>
+        <span class="desk-file__name blush">{{ displayName }}</span>
         <AnimatePresence>
           <motion.span
             v-if="count != null"
@@ -218,6 +218,14 @@
       count: null,
     },
   )
+
+  // Desk labels read like filenames; keep them short so they don't stretch.
+  const NAME_MAX = 16
+  const displayName = computed(() => {
+    const name = props.name
+    if (name.length <= NAME_MAX) return name
+    return `${name.slice(0, NAME_MAX)}…`
+  })
 
   const reduceMotion = ref(false)
 

@@ -47,34 +47,33 @@
             />
           </figure>
 
-          <dl class="desk-dialog__details">
-            <div
-              v-for="detail in details"
-              :key="detail.label"
-              class="desk-dialog__row"
-            >
-              <dt class="desk-dialog__label blush">{{ detail.label }}</dt>
-              <dd class="desk-dialog__value">
-                <a
-                  v-if="detail.href"
-                  class="desk-dialog__link"
-                  :href="detail.href"
-                  target="_blank"
-                  rel="noopener"
-                  >{{ detail.value }}&nbsp;↗</a
-                >
-                <template v-else>{{ detail.value }}</template>
-              </dd>
-            </div>
-          </dl>
-
           <article class="desk-dialog__article">
-            <p
+            <h3
               v-if="study.intro"
               class="desk-dialog__intro"
             >
               {{ study.intro }}
-            </p>
+            </h3>
+            <dl class="desk-dialog__details">
+              <div
+                v-for="detail in details"
+                :key="detail.label"
+                class="desk-dialog__row"
+              >
+                <dt class="desk-dialog__label blush">{{ detail.label }}</dt>
+                <dd class="desk-dialog__value">
+                  <a
+                    v-if="detail.href"
+                    class="desk-dialog__link"
+                    :href="detail.href"
+                    target="_blank"
+                    rel="noopener"
+                    >{{ detail.value }}&nbsp;↗</a
+                  >
+                  <template v-else>{{ detail.value }}</template>
+                </dd>
+              </div>
+            </dl>
             <div class="desk-dialog__copy">
               <!-- html is rendered and sanitized on the server -->
               <template
@@ -254,7 +253,7 @@
       left: auto;
       width: min(62rem, calc(100% - 3.2rem));
       min-height: 0;
-      aspect-ratio: 4 / 3;
+      aspect-ratio: 4 / 3.45;
     }
 
     &.is-resized {
@@ -332,7 +331,7 @@
   .desk-dialog__header {
     display: flex;
     flex-direction: column;
-    gap: 2.4rem;
+    gap: 1.2rem;
     padding-right: 4rem;
   }
 
@@ -453,10 +452,10 @@
   .desk-dialog__intro {
     padding: 0.8rem 0;
     font-family: var(--system-font);
-    font-size: 2rem;
+    font-size: 2.4rem;
     font-weight: 500;
-    letter-spacing: -0.03rem;
-    line-height: 1.3;
+    letter-spacing: -0.04rem;
+    line-height: 1.2;
     text-wrap: pretty;
     text-box-edge: cap alphabetic;
     text-box-trim: trim-both;
@@ -493,13 +492,12 @@
 
   .desk-dialog__para {
     margin: 0;
-    opacity: 0.88;
+    opacity: 0.9;
     font-family: var(--system-font);
     font-size: 1.7rem;
-    letter-spacing: -0.005em;
+    letter-spacing: -0.003em;
     line-height: 1.5;
     @include breakpoint(md) {
-      font-size: 1.6rem;
       text-wrap: pretty;
     }
   }

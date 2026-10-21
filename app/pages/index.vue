@@ -329,8 +329,8 @@
           :animate="ready ? 'visible' : 'hidden'"
           :custom="sequence.lead"
         >
-          Matt is a craft and quality-conscious software designer and builder
-          based in Atlanta, GA, working across brand, product, and code.
+          Matt is a software designer and builder based in Atlanta, GA, working
+          across brand, product, and code.
         </motion.p>
         <div class="home__aside">
           <motion.p
@@ -382,7 +382,7 @@
       align-items: center;
       position: fixed;
       inset: 0;
-      padding: 6rem 1.6rem calc(5.6rem + var(--safe-bottom));
+      padding: 6rem 1.6rem calc(4rem + var(--safe-bottom));
       min-height: 0;
       overflow-x: hidden;
       overflow-y: auto;
@@ -420,7 +420,7 @@
       background: linear-gradient(
         to bottom,
         rgba(0, 0, 0, 0.06),
-        rgba(0, 0, 0, 0.4)
+        rgba(0, 0, 0, 0.64)
       );
     }
   }
@@ -944,8 +944,7 @@
     const { desktop, mobile } = FALLBACK
     const position = study.position ?? {}
     return {
-      '--x':
-        position.x ?? desktop.x + (index % desktop.columns) * desktop.dx,
+      '--x': position.x ?? desktop.x + (index % desktop.columns) * desktop.dx,
       '--y':
         position.y ??
         desktop.y + Math.floor(index / desktop.columns) * desktop.dy,
@@ -969,7 +968,9 @@
   // Back when the panel was opened from here; a direct link has nothing
   // behind it on this site, so replace instead.
   function closeStudy() {
-    return window.history.state?.back === '/' ? router.back() : router.replace('/')
+    return window.history.state?.back === '/'
+      ? router.back()
+      : router.replace('/')
   }
 
   const ready = ref(false)

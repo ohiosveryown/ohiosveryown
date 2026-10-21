@@ -1,7 +1,7 @@
 <template>
   <motion.div
     class="desk-item"
-    :style="{ zIndex: 2 + layer }"
+    :style="{ zIndex: 2 + layer, x, y }"
     drag
     :drag-constraints="surface ?? false"
     :drag-elastic="0.12"
@@ -43,7 +43,7 @@
 </style>
 
 <script setup lang="ts">
-  import { motion } from 'motion-v'
+  import { motion, useMotionValue } from 'motion-v'
 
   withDefaults(defineProps<{ delay?: number }>(), { delay: 0 })
 
@@ -54,6 +54,28 @@
   const layer = ref(0)
 
   let dragged = false
+
+  // Where the item has been dragged to.
+  const x = useMotionValue(0)
+  const y = useMotionValue(0)
+
+  // On every window resize, motion re-fits dragged items into the desk by
+  // re-measuring both. On iOS, scrolling shows and hides the toolbar, which
+  // fires resizes mid-scroll; the measurements land at different scroll
+  // positions and items jump back. A resize that only changes the height
+  // (the toolbar) keeps the item where it was; width changes still re-fit.
+  // The capture listener runs before motion's, the other one after it.
+  let before: { x: number; y: number; width: number } | undefined
+  function beforeResize() {
+    before = { x: x.get(), y: y.get(), width: window.innerWidth }
+  }
+  function afterResize() {
+    if (before && window.innerWidth === before.width) {
+      x.set(before.x)
+      y.set(before.y)
+    }
+    before = undefined
+  }
 
   function onGrab() {
     dragged = false
@@ -79,11 +101,16 @@
 
   onBeforeUnmount(() => {
     if (dragged) suppressTooltip(false)
+    window.removeEventListener('resize', beforeResize, { capture: true })
+    window.removeEventListener('resize', afterResize)
   })
 
   onMounted(() => {
     reduceMotion.value = window.matchMedia(
       '(prefers-reduced-motion: reduce)',
     ).matches
+    // Added after motion's own listener (the motion.div mounts first).
+    window.addEventListener('resize', beforeResize, { capture: true })
+    window.addEventListener('resize', afterResize)
   })
 </script>

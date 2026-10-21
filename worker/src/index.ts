@@ -16,13 +16,16 @@ interface Env {
 
 const RATE_WINDOW_MS = 60_000
 const IDS_TTL_MS = 5 * 60_000
+// An unknown ID may just be a study added since the last fetch, so a miss
+// refetches early, but at most this often (junk IDs can't hammer the site).
+const IDS_MISS_REFRESH_MS = 30_000
 
 // Only IDs that exist in the Craft collection can be counted, so random
 // POSTs can't create junk rows. Cached per isolate.
 let known: { ids: Set<string>; at: number } | undefined
 
-async function knownIds(env: Env) {
-  if (known && Date.now() - known.at < IDS_TTL_MS) return known.ids
+async function knownIds(env: Env, maxAge = IDS_TTL_MS) {
+  if (known && Date.now() - known.at < maxAge) return known.ids
   try {
     const res = await fetch(`${env.SITE_URL}/api/case-studies`)
     if (!res.ok) throw new Error(`site ${res.status}`)
@@ -145,7 +148,8 @@ export default {
         return json({ error: 'forbidden' }, 403, cors)
       }
       const id = decodeURIComponent(match[1]!)
-      const ids = await knownIds(env)
+      let ids = await knownIds(env)
+      if (ids && !ids.has(id)) ids = await knownIds(env, IDS_MISS_REFRESH_MS)
       if (!ids) return json({ error: 'unavailable' }, 503, cors)
       if (!ids.has(id)) return json({ error: 'unknown id' }, 404, cors)
       return json(await hit(id, request, env, ctx), 200, cors)

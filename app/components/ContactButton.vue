@@ -1,6 +1,6 @@
 <template>
   <a
-    href="mailto:matt@ohiosveryown.co"
+    :href="MAILTO"
     :class="{ 'button-contact-link--field': variant === 'field' }"
     @click.prevent
   >
@@ -96,6 +96,9 @@
 
   const RESET_DELAY = 4000
 
+  // Touch devices open an email instead of copying through the tooltip.
+  const MAILTO = `mailto:matt@ohiosveryown.co?subject=${encodeURIComponent('hey matt')}`
+
   function getTarget(index: number): CopyTarget {
     return COPY_TARGETS[index % COPY_TARGETS.length] as CopyTarget
   }
@@ -133,6 +136,14 @@
   async function handleClick() {
     const button = buttonRef.value
     if (!button) return
+
+    if (window.matchMedia('(pointer: coarse)').matches) {
+      // Copy the address too: with no mail app set up, iOS can't open the
+      // link ("the address is invalid"), and the address is still at hand.
+      legacyCopy(getTarget(0).value)
+      window.location.href = MAILTO
+      return
+    }
 
     const target = getTarget(copyIndex.value)
     let success = legacyCopy(target.value)
