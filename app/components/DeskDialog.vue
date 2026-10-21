@@ -236,7 +236,7 @@
     right: 0.8rem;
     left: 0.8rem;
     // Bottom inset matches the 0.8rem top inset.
-    max-height: calc(100% - 1.6rem);
+    max-height: calc(100% - 1.2rem);
     border: 0.5px solid rgba(255, 255, 255, 0.26);
     border-radius: 3.5rem;
     color: #fff;

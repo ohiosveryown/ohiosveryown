@@ -68,7 +68,10 @@
     />
     <NuxtPage />
 
-    <div class="home__panel">
+    <div
+      class="home__panel"
+      :class="{ 'is-behind': openStudy }"
+    >
       <h1 class="home__title">Matthew Pence</h1>
 
       <div class="roles">
@@ -530,6 +533,23 @@
     position: relative;
     z-index: 1;
     width: 100%;
+    transition: opacity 300ms ease;
+
+    // On phones the open case study covers most of the screen; the copy
+    // behind it fades out (from md the panel sits beside it, so it stays).
+    // Opacity only: a blur over this much text stuttered in Safari.
+    &.is-behind {
+      opacity: 0;
+      pointer-events: none;
+      // Fading out waits a beat for the case study to open over it, then
+      // eases out gently; it fades back in straight away.
+      transition: opacity 600ms cubic-bezier(0.45, 0, 0.55, 1) 300ms;
+
+      @include breakpoint(md) {
+        opacity: 1;
+        pointer-events: auto;
+      }
+    }
   }
 
   // The intro: each piece fades in from a blur in turn, its place in the
