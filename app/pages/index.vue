@@ -485,15 +485,18 @@
     z-index: calc(var(--zmax) - 2);
 
     @include breakpoint(md) {
-      left: auto;
-      width: 28rem;
-      max-width: calc(100% - 2.4rem);
-      // Same timing as the panel's height (GROW_S in AskBar).
-      transition: width 400ms cubic-bezier(0.8, 0, 0.16, 1);
+      // Pill and open-panel widths. AskBar springs between them (with the
+      // same spring as its height) and lays the conversation out at the
+      // open width while it grows.
+      --ask-bar-width: 28rem;
+      --ask-bar-open-width: 34.2rem;
 
-      // Open, it's the chat panel.
+      left: auto;
+      width: var(--ask-bar-width);
+      max-width: calc(100% - 2.4rem);
+
       &.is-open {
-        width: 34.2rem;
+        width: var(--ask-bar-open-width);
       }
     }
   }

@@ -27,7 +27,7 @@
     :drag-transition="{ power: 0.18, timeConstant: 220 }"
     :while-drag="{ scale: 1.04 }"
     :class="{ 'is-open': open }"
-    :style="{ x, y }"
+    :style="sprungWidth ? { x, y, width } : { x, y }"
     @pointerdown="startDrag"
     @drag-start="onDragStart"
     @drag-end="onDragEnd"
@@ -43,28 +43,17 @@
       <motion.div
         v-if="open"
         class="ask-bar__grow"
-        :initial="{ height: 0, opacity: 0 }"
-        :animate="{
-          height: 'auto',
-          opacity: 1,
-          transition: { duration: reduceMotion ? 0.01 : GROW_S, ease },
-        }"
-        :exit="{
-          height: 0,
-          opacity: 0,
-          transition: { duration: reduceMotion ? 0.01 : GROW_S, ease },
-        }"
+        :style="{ height: shownHeight }"
+        :initial="{ opacity: 0 }"
+        :animate="{ opacity: 1, transition: fadeIn }"
+        :exit="{ opacity: 0, transition: fadeOut }"
       >
-        <motion.ul
+        <!-- No blur on the way in: blurring the whole list while the panel
+             springs open was janky. The panel's fade is enough. -->
+        <ul
+          :ref="trackList"
           class="ask-bar__messages"
           aria-live="polite"
-          :initial="{ opacity: 0, filter: 'blur(10px)' }"
-          :animate="{
-            opacity: 1,
-            filter: 'blur(0px)',
-            transitionEnd: { filter: 'none' },
-            transition: { duration: reduceMotion ? 0.01 : 0.4, ease },
-          }"
         >
           <li
             v-for="(message, index) in messages"
@@ -113,7 +102,7 @@
               />
             </span>
           </motion.li>
-        </motion.ul>
+        </ul>
       </motion.div>
     </AnimatePresence>
 
@@ -196,15 +185,28 @@
   // list pads it back, so Mallow, who's wider than his perch, isn't clipped
   // by the list's scrolling or this wrapper's height animation.
   .ask-bar__grow {
+    display: flex;
+    // Not stretched to this wrapper's animated height: the list keeps its
+    // own, which is what the wrapper grows to.
+    align-items: flex-start;
+    justify-content: flex-end;
     margin: 0 -0.8rem;
     overflow: hidden;
   }
 
+  // Laid out at the open panel's width from the first frame, pinned to the
+  // right (the bar grows leftward): its height is measured to grow open
+  // while the width is still animating, and measuring at the narrower
+  // width made it open too tall, then settle. --ask-bar-open-width comes
+  // from the page; the 1.7rem is the bar's side padding minus the bleed.
   .ask-bar__messages {
     display: flex;
     flex-direction: column;
+    flex-shrink: 0;
     gap: 1.6rem;
     position: relative;
+    // A string, so Sass passes the calc through instead of evaluating it.
+    width: #{'calc(var(--ask-bar-open-width, 100% + 1.7rem) - 1.7rem)'};
     max-height: min(46rem, 50svh);
     // Includes the 1rem above the input, so it grows open with the list.
     padding: 0.3rem 0.8rem 2.6rem;
@@ -259,7 +261,8 @@
   // Newly revealed characters come in from a blur (reset.scss turns this
   // off for reduced motion). `backwards`, not `both`: a filter left on
   // afterwards, even blur(0), renders text as an image without its font
-  // smoothing, so it looked lighter than its real weight.
+  // smoothing, so it looked lighter than its real weight. The duration
+  // is UNBLUR_MS in the script.
   .ask-bar__char {
     // reset.scss sets spans to normal weight; keep the reply's.
     font-weight: inherit;
@@ -389,8 +392,110 @@
   import arrow from '~/assets/icons/send-arrow.svg'
 
   const ease = [0.8, 0, 0.16, 1] as const
-  // Opening and folding the panel (matches the width transition in index.vue).
-  const GROW_S = 0.4
+  // Opening and folding the panel: one spring for its height and its width,
+  // both ways, so they move together. Its bounce would take the height
+  // below zero when folding (invalid, so the browser would show it full
+  // size for a frame); the height is clamped at zero instead, so it lands.
+  // Taller panels get a slower spring: the quick one suits two or three
+  // lines, but a long thread would fly open in the same time. A full panel
+  // takes about 1s to open and 0.7s to fold (folding has no visible
+  // bounce, so it settles sooner for the same spring).
+  const GROW_S = 0.35
+  const OPEN_MAX_S = 0.5
+  const FOLD_MAX_S = 0.55
+  function growFor(height: number, maxS: number) {
+    const t = Math.min(1, Math.max(0, (height - 120) / 340))
+    const visualDuration = GROW_S + (maxS - GROW_S) * t
+    return { type: 'spring', bounce: 0.35, visualDuration } as const
+  }
+  const instant = { duration: 0 }
+  const growHeight = useMotionValue(0)
+  const shownHeight = useMotionValue(0)
+  growHeight.on('change', (h) => shownHeight.set(Math.max(0, h)))
+  // The content fades with it; folding, the fade also keeps the panel
+  // mounted until the height has sprung shut.
+  const fadeIn = computed(() =>
+    reduceMotion.value ? instant : { duration: GROW_S * 0.6, ease },
+  )
+  // As long as the fold's spring for the panel's current height. Kept up to
+  // date as it's measured: the panel's exit uses the props it last
+  // rendered with, so setting it only as it folds came too late.
+  const fadeOut = ref<{ duration: number; ease?: typeof ease }>(instant)
+
+  // The panel's height follows the conversation's, measured as it changes:
+  // the spring opens it, then each new line of a streaming reply eases it
+  // taller (with plain `auto` it jumped a line at a time). Each measurement
+  // starts its own animation: going through a watched value, reopening to
+  // the same height as before looked like no change, so it stayed shut.
+  const LINE_EASE = { duration: 0.25, ease: 'easeOut' } as const
+
+  let listObserver: ResizeObserver | undefined
+  let trackedList: HTMLElement | null = null
+  let measureList = () => {}
+  // Called with each conversation list as it mounts (and null as it goes),
+  // so a list that's still folding away when the panel reopens is never the
+  // one measured.
+  function trackList(ref: unknown) {
+    const el = (ref as { $el?: unknown } | null)?.$el ?? ref
+    if (!(el instanceof HTMLElement)) {
+      if (trackedList && !trackedList.isConnected) {
+        listObserver?.disconnect()
+        trackedList = null
+      }
+      return
+    }
+    if (el === trackedList) return
+    trackedList = el
+    listObserver?.disconnect()
+    let measured = 0
+    const measure = () => {
+      const height = el.offsetHeight
+      if (!height || height === measured) return
+      // The first size opens it (spring); later ones are new lines (ease).
+      const opening = !measured
+      const grow = growFor(height, OPEN_MAX_S)
+      const move = reduceMotion.value ? instant : opening ? grow : LINE_EASE
+      measured = height
+      animate(growHeight, height, move)
+      fadeOut.value = reduceMotion.value
+        ? instant
+        : { duration: growFor(height, FOLD_MAX_S).visualDuration, ease }
+      // The width opens with the height, on the same spring.
+      if (opening) springWidth(grow)
+    }
+
+    measureList = measure
+    listObserver = new ResizeObserver(measure)
+    listObserver.observe(el)
+    measure()
+  }
+  // The width (desktop only; on phones the bar spans the screen). The page
+  // sets both widths as CSS variables; motion springs between them.
+  const width = useMotionValue(0)
+  const sprungWidth = ref(false)
+  function cssWidths() {
+    const form = formEl()
+    if (!form) return null
+    const style = getComputedStyle(form)
+    const rem = parseFloat(getComputedStyle(document.documentElement).fontSize)
+    const closed = parseFloat(style.getPropertyValue('--ask-bar-width'))
+    const opened = parseFloat(style.getPropertyValue('--ask-bar-open-width'))
+    return closed && opened
+      ? { closed: closed * rem, open: opened * rem }
+      : null
+  }
+  function settleWidth() {
+    const widths = cssWidths()
+    sprungWidth.value = !!widths
+    if (widths) width.set(open.value ? widths.open : widths.closed)
+  }
+  function springWidth(spring: ReturnType<typeof growFor>) {
+    const widths = cssWidths()
+    if (!widths) return
+    const target = open.value ? widths.open : widths.closed
+    if (reduceMotion.value) width.set(target)
+    else animate(width, target, spring)
+  }
   const ready = ref(false)
   const reduceMotion = ref(false)
 
@@ -453,11 +558,15 @@
       resizeObserver.observe(form)
     }
     window.addEventListener('resize', keepInside)
+    window.addEventListener('resize', settleWidth)
+    settleWidth()
     measureBounds()
   })
   onBeforeUnmount(() => {
     resizeObserver?.disconnect()
+    listObserver?.disconnect()
     window.removeEventListener('resize', keepInside)
+    window.removeEventListener('resize', settleWidth)
   })
   const draggable = ref(false)
   let dragged = false
@@ -535,6 +644,9 @@
         ?.closest('form')
         ?.querySelector<HTMLElement>('.ask-bar__messages')
       if (el) el.scrollTop = el.scrollHeight
+      // Also called as a reply grows, so keep the panel's height in step
+      // (alongside the ResizeObserver).
+      measureList()
     })
   }
 
@@ -603,9 +715,22 @@
     () => messages.value.length,
     () => nextTick(hopTo),
   )
+  // Opening starts from nothing: the list's first size then springs the
+  // height and width open (see trackList). Folding springs both shut.
+  watch(open, (isOpen) => {
+    if (isOpen) return growHeight.set(0)
+    const fold = growFor(growHeight.get(), FOLD_MAX_S)
+    springWidth(fold)
+    animate(growHeight, 0, reduceMotion.value ? instant : fold)
+  })
   watch(open, (isOpen) => {
     perch.value = null
-    if (isOpen) nextTick(hopTo)
+    if (isOpen) {
+      nextTick(hopTo)
+    } else {
+      listObserver?.disconnect()
+      trackedList = null
+    }
   })
 
   function reopen() {
@@ -616,6 +741,8 @@
   // a steady pace instead, catching up if a lot is waiting. Resolves once
   // everything pushed has been shown.
   const CHAR_MS = 24
+  // How long each character takes to unblur (ask-bar-unblur in the styles).
+  const UNBLUR_MS = 400
   // Whole characters, not UTF-16 units: slicing a string can cut an emoji
   // in half, which shows as a broken glyph.
   const graphemes =
@@ -719,6 +846,10 @@
       controller = undefined
       scrollToEnd()
       input.value?.focus()
+      // Once the last character has unblurred, back to plain text: kept as
+      // spans, reopening the panel replayed every one's unblur at once,
+      // hundreds in a long thread, and the panel stuttered open.
+      setTimeout(() => (reply.parts = undefined), UNBLUR_MS)
     }
   }
 
