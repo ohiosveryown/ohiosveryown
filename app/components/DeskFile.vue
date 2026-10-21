@@ -1,5 +1,9 @@
 <template>
-  <DeskItem :delay="delay">
+  <DeskItem
+    v-slot="{ asking }"
+    :delay="delay"
+    :ask="ask"
+  >
     <component
       :is="href ? 'a' : 'button'"
       ref="file"
@@ -34,7 +38,10 @@
           alt=""
         />
       </span>
-      <span class="desk-file__meta">
+      <span
+        class="desk-file__meta"
+        :class="{ 'is-asking': asking }"
+      >
         <span class="desk-file__name blush">{{ displayName }}</span>
         <AnimatePresence>
           <motion.span
@@ -132,6 +139,12 @@
     flex-direction: column;
     min-width: 0;
     padding-top: 0.6rem;
+    transition: opacity 200ms ease;
+
+    // Held over Mallow (see useAskDrop): just the picture.
+    &.is-asking {
+      opacity: 0;
+    }
   }
 
   .desk-file__name {
@@ -192,6 +205,7 @@
 </style>
 
 <script setup lang="ts">
+  import type { AskDropItem } from '~/composables/useAskDrop'
   import { motion, AnimatePresence } from 'motion-v'
 
   const props = withDefaults(
@@ -206,6 +220,8 @@
       delay?: number
       // Times opened; null hides the pill (not loaded or Worker down).
       count?: number | null
+      // Dropped on Mallow, what he's asked (see useAskDrop).
+      ask?: AskDropItem
     }>(),
     {
       image: null,

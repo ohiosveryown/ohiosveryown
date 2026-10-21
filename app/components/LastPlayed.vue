@@ -9,6 +9,13 @@
     :tooltip-image="tooltipImage"
     :label="`${tooltipText}: ${track.title} by ${track.artist}`"
     :delay="0.6"
+    :ask="{
+      label: fileName,
+      image: track.cover,
+      kind: 'track',
+      name: track.title,
+      prompt: `Matt's been listening to “${track.title}” by ${track.artist}. What do you make of it?`,
+    }"
   />
 </template>
 

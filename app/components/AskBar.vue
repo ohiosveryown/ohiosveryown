@@ -5,10 +5,10 @@
   <motion.form
     class="ask-bar"
     aria-label="Ask Mallow"
-    :inert="!ready"
+    :inert="!ready || tucked"
     :initial="{ opacity: 0, filter: 'blur(10px)' }"
     :animate="reveal"
-    :class="{ 'is-open': open }"
+    :class="{ 'is-open': open, 'is-drop-target': dropOver }"
     :style="sprungWidth ? { x, y, scale, width } : { x, y, scale }"
     @pointerdown="startDrag"
     @click.capture="onClick"
@@ -42,15 +42,26 @@
             :class="`ask-bar__message--${message.role}`"
           >
             <template v-if="message.role === 'user'">
-              <p class="ask-bar__bubble">{{ message.content }}</p>
+              <div class="ask-bar__asked">
+                <!-- Asked by dropping a desk item on Mallow: that item's
+                     picture in a bubble of its own, above the words. -->
+                <p
+                  v-if="message.chip?.image"
+                  class="ask-bar__bubble ask-bar__bubble--image"
+                >
+                  <img
+                    class="ask-bar__chip-image"
+                    :src="message.chip.image"
+                    :alt="message.chip.label"
+                  />
+                </p>
+                <p class="ask-bar__bubble">{{ message.content }}</p>
+              </div>
             </template>
             <template v-else>
               <!-- Mallow's perch; he sits over the latest reply's (below). -->
               <span class="ask-bar__face" />
-              <p
-                class="ask-bar__reply"
-                :class="{ 'is-waiting': !message.content }"
-              >
+              <p class="ask-bar__reply">
                 <template v-if="message.parts?.length">
                   <!-- Each reveal step is its own span, so it can unblur in. -->
                   <span
@@ -60,7 +71,12 @@
                     >{{ part }}</span
                   >
                 </template>
-                <template v-else>{{ message.content || '…' }}</template>
+                <span
+                  v-else-if="!message.content"
+                  class="ask-bar__thinking"
+                  >{{ message.thinking ?? THINKING[0] }}</span
+                >
+                <template v-else>{{ message.content }}</template>
               </p>
             </template>
           </li>
@@ -93,6 +109,7 @@
       >
         <span class="ask-bar__guy">
           <LittleGuy
+            ref="pillGuy"
             :size="4.2"
             label="Mallow, the site's assistant"
             @ready="ready = true"
@@ -134,6 +151,24 @@
         />
       </button>
     </div>
+    <!-- While a desk item is dragged over him. On <body>, so it's drawn
+         above the item being dragged (which sits above the bar). -->
+    <Teleport to="body">
+      <AnimatePresence>
+        <motion.span
+          v-if="dropOver"
+          class="ask-bar__drop-hint"
+          :style="dropHintAt"
+          aria-hidden="true"
+          :initial="{ opacity: 0, y: -4, filter: 'blur(6px)' }"
+          :animate="{ opacity: 1, y: 0, filter: 'blur(0px)' }"
+          :exit="{ opacity: 0, filter: 'blur(6px)' }"
+          :transition="{ duration: reduceMotion ? 0.01 : 0.2 }"
+        >
+          Drop here to ask Mallow
+        </motion.span>
+      </AnimatePresence>
+    </Teleport>
   </motion.form>
 </template>
 
@@ -167,6 +202,62 @@
       0 0.4471rem 0.49rem 0 rgba(0, 0, 0, 0.08);
     backdrop-filter: blur(0.5526rem);
     user-select: none;
+
+    // A desk item is being dragged over him: a lime edge to drop onto.
+    &.is-drop-target {
+      box-shadow:
+        inset 0 0 0 1px rgba(210, 249, 118, 0.7),
+        0 6.7237rem 7.3684rem 0 rgba(0, 0, 0, 0.2),
+        0 1.5018rem 1.6458rem 0 rgba(0, 0, 0, 0.12),
+        0 0.4471rem 0.49rem 0 rgba(0, 0, 0, 0.08);
+    }
+  }
+
+  // Styled as the site's tooltip (TooltipLabel). Placed by dropHintAt.
+  .ask-bar__drop-hint {
+    position: fixed;
+    z-index: var(--zmax);
+    padding: 0.4rem 1rem 0.5rem;
+    border: 1px solid #000;
+    border-radius: 100rem;
+    color: #fff;
+    background: #000;
+    box-shadow:
+      0 1px 0 0 rgba(255, 255, 255, 0.4) inset,
+      0 2px 3px 0 rgba(0, 0, 0, 0.32);
+    font-family: var(--system-font);
+    font-size: 1.3rem;
+    font-weight: 600;
+    letter-spacing: -0.04rem;
+    line-height: 1.4;
+    white-space: nowrap;
+    // `translate`, not transform: motion animates the transform.
+    translate: -50% 0;
+    pointer-events: none;
+  }
+
+  .ask-bar__asked {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.6rem;
+    max-width: 85%;
+  }
+
+  .ask-bar__bubble--image {
+    display: flex;
+    padding: 2rem;
+    border-radius: 2.4rem;
+  }
+
+  // Framed like the desk file it came from.
+  .ask-bar__chip-image {
+    display: block;
+    width: 7.6rem;
+    height: 5.6rem;
+    border: 3px solid #fff;
+    border-radius: 2px;
+    object-fit: cover;
   }
 
   .ask-bar__row {
@@ -297,7 +388,6 @@
   }
 
   .ask-bar__bubble {
-    max-width: 85%;
     padding: 1.4rem;
     border-radius: 2.1rem;
     color: #e3e3e3;
@@ -312,9 +402,33 @@
     color: #fff;
     line-height: 1.38;
     white-space: pre-wrap;
+  }
 
-    &.is-waiting {
-      opacity: 0.6;
+  // While Mallow waits on the reply: a light that sweeps across the words,
+  // the gradient clipped to the text. (reset.scss stops it, and leaves it
+  // dim, for reduced motion.)
+  .ask-bar__thinking {
+    // reset.scss sets spans to normal weight; keep the reply's.
+    font-weight: inherit;
+    color: transparent;
+    background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.45) 40%,
+        #fff 50%,
+        rgba(255, 255, 255, 0.45) 60%
+      )
+      0 0 / 250% 100%;
+    background-clip: text;
+    animation: ask-bar-shimmer 1.6s linear infinite;
+  }
+
+  @keyframes ask-bar-shimmer {
+    from {
+      background-position: 100% 0;
+    }
+
+    to {
+      background-position: 0 0;
     }
   }
 
@@ -451,6 +565,7 @@
 </style>
 
 <script setup lang="ts">
+  import type { AskDropItem } from '~/composables/useAskDrop'
   import { AnimatePresence, animate, motion, useMotionValue } from 'motion-v'
   import arrow from '~/assets/icons/send-arrow.svg'
 
@@ -607,19 +722,36 @@
   }
   const ready = ref(false)
   const reduceMotion = ref(false)
+
+  // On desktop an open case study covers the top right, where the bar sits
+  // until it's dragged away. While it's there it fades out under the panel,
+  // and back when the panel closes; dragged elsewhere, it stays.
+  const props = defineProps<{ covered?: boolean }>()
+  const wide = ref(false)
+  const atHome = ref(true)
+  const tucked = computed(() => props.covered && wide.value && atHome.value)
   // The bar's fade in. A computed, not an object in the template, so it's
   // the same object across re-renders.
   const reveal = computed(() =>
-    ready.value
+    tucked.value
       ? {
-          opacity: 1,
-          filter: 'blur(0px)',
-          // Any filter left on, even blur(0px), stops the bar's own
-          // backdrop-filter from seeing the page behind it.
-          transitionEnd: { filter: 'none' },
-          transition: { duration: reduceMotion.value ? 0.01 : 0.6, ease },
+          opacity: 0,
+          filter: 'blur(10px)',
+          // A beat after the panel starts opening over it.
+          transition: reduceMotion.value
+            ? { duration: 0.01 }
+            : { duration: 0.3, delay: 0.12, ease },
         }
-      : { opacity: 0, filter: 'blur(10px)' },
+      : ready.value
+        ? {
+            opacity: 1,
+            filter: 'blur(0px)',
+            // Any filter left on, even blur(0px), stops the bar's own
+            // backdrop-filter from seeing the page behind it.
+            transitionEnd: { filter: 'none' },
+            transition: { duration: reduceMotion.value ? 0.01 : 0.6, ease },
+          }
+        : { opacity: 0, filter: 'blur(10px)' },
   )
 
   // With a mouse or trackpad the bar drags around the desk like the icons
@@ -637,6 +769,11 @@
   const x = useMotionValue(0)
   const y = useMotionValue(0)
   const scale = useMotionValue(1)
+  // Still in its place in the layout (see `tucked`).
+  const trackHome = () =>
+    (atHome.value = Math.abs(x.get()) < 1 && Math.abs(y.get()) < 1)
+  x.on('change', trackHome)
+  y.on('change', trackHome)
   const bounds = ref({ top: 0, left: 0, right: 0, bottom: 0 })
 
   function formEl() {
@@ -794,6 +931,9 @@
       '(prefers-reduced-motion: reduce)',
     ).matches
     draggable.value = window.matchMedia('(pointer: fine)').matches
+    const wideQuery = window.matchMedia('(min-width: 700px)')
+    wide.value = wideQuery.matches
+    wideQuery.addEventListener('change', (e) => (wide.value = e.matches))
   })
 
   // Mallow's chat (server/api/ask.post.ts): the pill grows into a panel with
@@ -803,6 +943,28 @@
     content: string
     // A reply as it was revealed, piece by piece (for the unblur).
     parts?: string[]
+    // What Mallow says while the reply is on its way.
+    thinking?: string
+    // Asked by dropping a desk item on him: the item, and what he's really
+    // asked (the bubble has a line like "Tell me about …", see dropLine).
+    chip?: { label: string; image?: string | null }
+    prompt?: string
+  }
+
+  // A different one each time (never the same twice in a row).
+  const THINKING = [
+    'Mallow is thinking…',
+    'Rummaging through the desk…',
+    'Fluffing up an answer…',
+    'Mulling it over…',
+    'Checking the desk drawers…',
+  ]
+  let lastThinking = -1
+  function pickThinking() {
+    let index = Math.floor(Math.random() * THINKING.length)
+    if (index === lastThinking) index = (index + 1) % THINKING.length
+    lastThinking = index
+    return THINKING[index]!
   }
 
   const question = ref('')
@@ -974,6 +1136,10 @@
     }
     return {
       push(text: string) {
+        // A reply can open with a blank line or two; the reply keeps line
+        // breaks (pre-wrap), so they'd show as extra space above it.
+        if (!message.content && !queue.length) text = text.trimStart()
+        if (!text) return
         if (reduceMotion.value) {
           message.content += text
           scrollToEnd()
@@ -994,15 +1160,19 @@
     }
   }
 
-  async function submit() {
+  function submit() {
     if (!canSend.value) return
     const text = question.value.trim()
     question.value = ''
-    const history = [
-      ...messages.value,
-      { role: 'user', content: text } as Message,
+    return ask({ role: 'user', content: text })
+  }
+
+  async function ask(question: Message) {
+    const history = [...messages.value, question]
+    messages.value = [
+      ...history,
+      { role: 'assistant', content: '', parts: [], thinking: pickThinking() },
     ]
-    messages.value = [...history, { role: 'assistant', content: '', parts: [] }]
     const reply = messages.value.at(-1)!
     open.value = true
     streaming.value = true
@@ -1016,7 +1186,10 @@
         headers: { 'Content-Type': 'application/json' },
         // Only finished turns; the server keeps the last few.
         body: JSON.stringify({
-          messages: history.map(({ role, content }) => ({ role, content })),
+          messages: history.map(({ role, content, prompt }) => ({
+            role,
+            content: prompt ?? content,
+          })),
         }),
         signal: controller.signal,
       })
@@ -1046,6 +1219,8 @@
         await typer.done()
       }
     } finally {
+      // Likewise a trailing line break, as space below it.
+      reply.content = reply.content.trimEnd()
       streaming.value = false
       controller = undefined
       scrollToEnd()
@@ -1056,6 +1231,65 @@
       setTimeout(() => (reply.parts = undefined), UNBLUR_MS)
     }
   }
+
+  // Dragging a desk item onto him (useAskDrop). While one is over the bar
+  // it lifts a little and he hops; dropped, he's asked about it.
+  const { over: dropOver, dropped, setTarget } = useAskDrop()
+  const pillGuy = useTemplateRef<{ hop: () => void }>('pillGuy')
+  // Centred under the bar, where the bar is when the item arrives.
+  const dropHintAt = ref({ top: '0px', left: '0px' })
+  watch(dropOver, (isOver) => {
+    const bar = formEl()?.getBoundingClientRect()
+    if (isOver && bar) {
+      dropHintAt.value = {
+        top: `${bar.bottom + 8}px`,
+        left: `${bar.left + bar.width / 2}px`,
+      }
+    }
+    if (reduceMotion.value) return
+    animate(scale, isOver ? 1.03 : 1, LIFT)
+    if (isOver && !open.value) pillGuy.value?.hop()
+  })
+  // The visitor's line under a dropped item's picture, so a run of drops
+  // doesn't read "Tell me about…" every time (never the same twice in a row).
+  const DROP_LINES = {
+    study: [
+      'Tell me about {name}',
+      "What's the story with {name}?",
+      'Give me the gist of {name}',
+      "What's {name} all about?",
+      'Sum up {name} for me',
+    ],
+    track: [
+      "What's {name}?",
+      'Tell me about {name}',
+      'What do you make of {name}?',
+      'Is {name} any good?',
+      "Why's Matt listening to {name}?",
+    ],
+  } as const
+  let lastDropLine = ''
+  function dropLine(item: AskDropItem) {
+    const lines = DROP_LINES[item.kind]
+    let line = lines[Math.floor(Math.random() * lines.length)]!
+    if (line === lastDropLine) {
+      line = lines[(lines.indexOf(line) + 1) % lines.length]!
+    }
+    lastDropLine = line
+    return line.replace('{name}', item.name)
+  }
+
+  watch(dropped, (drop) => {
+    if (!drop || streaming.value) return
+    ask({
+      role: 'user',
+      content: dropLine(drop.item),
+      chip: { label: drop.item.label, image: drop.item.image },
+      prompt: drop.item.prompt,
+    })
+  })
+  onMounted(() => setTarget(formEl()))
+  onBeforeUnmount(() => setTarget(null))
 
   // A click anywhere else on the page folds the panel back into the pill.
   function onDocumentPointer(event: PointerEvent) {

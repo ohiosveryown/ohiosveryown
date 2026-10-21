@@ -1,7 +1,7 @@
 <template>
   <motion.div
     class="desk-item"
-    :style="{ zIndex: 2 + layer, x, y }"
+    :style="{ zIndex: carrying ? 'calc(var(--zmax) - 1)' : 2 + layer, x, y }"
     drag
     :drag-constraints="surface ?? false"
     :drag-elastic="0.12"
@@ -25,12 +25,20 @@
       },
     }"
     @drag-start="onDragStart"
+    @drag="onDrag"
     @drag-end="onDragEnd"
     @pointerdown.capture="onGrab"
     @click.capture="onClick"
     @dragstart.capture.prevent
   >
-    <slot />
+    <!-- Its own element for the drop fade: the item itself has motion's
+         entrance on its opacity and filter. -->
+    <div
+      class="desk-item__body"
+      :class="{ 'is-away': away }"
+    >
+      <slot :asking="asking" />
+    </div>
   </motion.div>
 </template>
 
@@ -40,12 +48,33 @@
     touch-action: none;
     -webkit-user-drag: none;
   }
+
+  // Dropped on Mallow: it fades out where it was let go, and back in where
+  // it was picked up.
+  .desk-item__body {
+    transition:
+      opacity 250ms ease,
+      filter 250ms ease;
+
+    &.is-away {
+      opacity: 0;
+      filter: blur(10px);
+    }
+  }
 </style>
 
 <script setup lang="ts">
   import { motion, useMotionValue } from 'motion-v'
+  import type { AskDropItem } from '~/composables/useAskDrop'
 
-  withDefaults(defineProps<{ delay?: number }>(), { delay: 0 })
+  const props = withDefaults(
+    defineProps<{
+      delay?: number
+      // What Mallow is asked if this is dropped on him (see useAskDrop).
+      ask?: AskDropItem
+    }>(),
+    { delay: 0, ask: undefined },
+  )
 
   const { surface, raise } = useDesk()
 
@@ -80,16 +109,50 @@
   function onGrab() {
     dragged = false
     layer.value = raise()
+    // On press: motion reports the drag start only after it has moved.
+    pickedUp = { x: x.get(), y: y.get() }
   }
+
+  // Dropping on Mallow (mouse and trackpad only). While dragged the item
+  // sits above the ask bar; dropped on it, it fades out and back in where
+  // it was picked up from, so asking never rearranges the desk.
+  const askDrop = useAskDrop()
+  const finePointer = ref(false)
+  const carrying = ref(false)
+  // Held over Mallow: the item shows just its picture.
+  const asking = computed(() => carrying.value && askDrop.over.value)
+  let pickedUp = { x: 0, y: 0 }
+  const away = ref(false)
+  const FADE_MS = 250
 
   function onDragStart() {
     dragged = true
     suppressTooltip(true)
+    carrying.value = !!props.ask && finePointer.value
+  }
+
+  function onDrag(event: PointerEvent) {
+    if (!carrying.value) return
+    askDrop.over.value = askDrop.isOver(event.clientX, event.clientY)
   }
 
   function onDragEnd() {
     suppressTooltip(false)
     dismissTooltip()
+    const droppedOnMallow = carrying.value && askDrop.over.value
+    carrying.value = false
+    askDrop.over.value = false
+    if (!droppedOnMallow || !props.ask) return
+    askDrop.drop(props.ask)
+    away.value = true
+    setTimeout(() => {
+      // Ends motion's throw, which carries on while it fades.
+      x.stop()
+      y.stop()
+      x.set(pickedUp.x)
+      y.set(pickedUp.y)
+      requestAnimationFrame(() => (away.value = false))
+    }, FADE_MS)
   }
 
   function onClick(event: MouseEvent) {
@@ -109,6 +172,7 @@
     reduceMotion.value = window.matchMedia(
       '(prefers-reduced-motion: reduce)',
     ).matches
+    finePointer.value = window.matchMedia('(pointer: fine)').matches
     // Added after motion's own listener (the motion.div mounts first).
     window.addEventListener('resize', beforeResize, { capture: true })
     window.addEventListener('resize', afterResize)

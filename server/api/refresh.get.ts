@@ -73,17 +73,9 @@ export default defineEventHandler(async (event) => {
   }
   const studies = await $fetch<CaseStudy[]>(`${origin}/api/case-studies`)
 
-  // Pages and the payloads Nuxt loads when navigating between them (payloads
-  // only exist in production builds).
+  // The pages (their data is inline: payload extraction is off).
   const pages = ['/', ...studies.map((study) => `/work/${study.slug}`)]
-  const results = await Promise.all(
-    pages.flatMap((path) => [
-      revalidate(path),
-      ...(import.meta.dev
-        ? []
-        : [revalidate(`${path.replace(/\/$/, '')}/_payload.json`)]),
-    ]),
-  )
+  const results = await Promise.all(pages.map((path) => revalidate(path)))
   const failed = results.filter((ok) => !ok).length
 
   return failed

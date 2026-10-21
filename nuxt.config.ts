@@ -42,6 +42,14 @@ export default defineNuxtConfig({
       ],
     },
   },
+  // Each page's data stays inline in its HTML, not also in a separate
+  // _payload.json. Navigating to /work/[slug] then needs no download: the
+  // home page already has every case study. (Waiting on that payload held
+  // the panel open for seconds when Vercel had to render it, and preloading
+  // it for the home page set off "preloaded but not used" warnings.)
+  experimental: {
+    payloadExtraction: false,
+  },
   routeRules: {
     '/callback': { ssr: true },
     '/api/**': { cors: true },

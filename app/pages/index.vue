@@ -55,12 +55,22 @@
       :count="countOf(study)"
       :label="countLabel(study)"
       :delay="0.5 + index * 0.1"
+      :ask="{
+        label: study.label,
+        image: study.hero?.thumb,
+        kind: 'study',
+        name: study.title,
+        prompt: `Summarize the ${study.title} case study.`,
+      }"
       @open="toggleStudy(study, $event)"
       @pointerenter="preload(study)"
       @focusin="preload(study)"
     />
     <LastPlayed />
-    <AskBar class="home__ask" />
+    <AskBar
+      class="home__ask"
+      :covered="!!openStudy"
+    />
     <DeskDialog
       :study="openStudy"
       :origin="origin"
@@ -955,9 +965,9 @@
 
   // The URL is the source of truth: /work/[slug] opens that panel.
   // The panel follows the route (/work/[slug]), but opens and closes as soon
-  // as it's asked to: the navigation first downloads the route's payload,
-  // which is quick from Vercel's cache but takes seconds when Vercel has to
-  // render it first, so waiting on it left a tapped icon doing nothing.
+  // as it's asked to, not when the navigation finishes: that used to wait
+  // on the route's payload, seconds when Vercel had to render it, and still
+  // waits on the route's script the first time.
   // `requested` is what was asked for until the route catches up (a slug,
   // or null for closed); undefined follows the route.
   const requested = ref<string | null | undefined>(undefined)
@@ -999,16 +1009,11 @@
     return `${study.label}, opened ${count.toLocaleString()} ${count === 1 ? 'time' : 'times'}`
   }
 
-  // Opening a panel navigates to /work/[slug], which first downloads that
-  // route's script and then its payload, one after the other. Once the page
-  // has loaded, fetch both for every panel, so the first tap on a slow
-  // connection doesn't wait on them.
-  const nuxtApp = useNuxtApp()
+  // Opening a panel navigates to /work/[slug], which downloads that route's
+  // script first. Once the page has loaded, fetch it for every panel.
   function warmRoutes() {
     for (const study of caseStudies.value) {
-      const to = `/work/${study.slug}`
-      preloadRouteComponents(to, router)
-      nuxtApp.runWithContext(() => preloadPayload(to)).catch(() => {})
+      preloadRouteComponents(`/work/${study.slug}`, router)
     }
   }
   onMounted(() => {
