@@ -1195,10 +1195,12 @@
   const hint = computed(() => hints.value[hintIndex.value % hints.value.length])
   const showHints = computed(() => !open.value && !question.value)
   let hintTimer: ReturnType<typeof setInterval> | undefined
+  // Also paused while a desk file is held over the bar, about to be dropped.
+  const fileOver = useAskDrop().over
   watchEffect(() => {
     clearInterval(hintTimer)
-    if (!ready.value || !showHints.value || focused.value || reduceMotion.value)
-      return
+    const paused = focused.value || fileOver.value || reduceMotion.value
+    if (!ready.value || !showHints.value || paused) return
     hintTimer = setInterval(() => (hintIndex.value += 1), HINT_MS)
   })
   onBeforeUnmount(() => clearInterval(hintTimer))

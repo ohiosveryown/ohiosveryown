@@ -64,7 +64,7 @@
 </style>
 
 <script setup lang="ts">
-  import { motion, useMotionValue } from 'motion-v'
+  import { animate, motion, useMotionValue } from 'motion-v'
   import type { AskDropItem } from '~/composables/useAskDrop'
 
   const props = withDefaults(
@@ -129,6 +129,21 @@
     dragged = true
     suppressTooltip(true)
     carrying.value = !!props.ask && finePointer.value
+    window.addEventListener('keydown', onDragKey)
+  }
+
+  // Escape mid-drag puts it back where it was picked up. Motion can't cancel
+  // a drag, so this ends it with a release of its own (motion listens on
+  // the window) and onDragEnd springs it home instead of dropping it.
+  let cancelled = false
+  const SPRING_BACK = { type: 'spring', stiffness: 300, damping: 28 } as const
+  function onDragKey(event: KeyboardEvent) {
+    if (event.key !== 'Escape') return
+    event.preventDefault()
+    cancelled = true
+    window.dispatchEvent(
+      new PointerEvent('pointerup', { isPrimary: true, pointerType: 'mouse' }),
+    )
   }
 
   function onDrag(event: PointerEvent) {
@@ -137,11 +152,21 @@
   }
 
   function onDragEnd() {
+    window.removeEventListener('keydown', onDragKey)
     suppressTooltip(false)
     dismissTooltip()
-    const droppedOnMallow = carrying.value && askDrop.over.value
+    const droppedOnMallow = carrying.value && askDrop.over.value && !cancelled
     carrying.value = false
     askDrop.over.value = false
+    if (cancelled) {
+      cancelled = false
+      // A frame later, so it replaces motion's own throw.
+      requestAnimationFrame(() => {
+        animate(x, pickedUp.x, SPRING_BACK)
+        animate(y, pickedUp.y, SPRING_BACK)
+      })
+      return
+    }
     if (!droppedOnMallow || !props.ask) return
     askDrop.drop(props.ask)
     away.value = true
@@ -163,6 +188,7 @@
   }
 
   onBeforeUnmount(() => {
+    window.removeEventListener('keydown', onDragKey)
     if (dragged) suppressTooltip(false)
     window.removeEventListener('resize', beforeResize, { capture: true })
     window.removeEventListener('resize', afterResize)
