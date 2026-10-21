@@ -559,15 +559,16 @@
   .ask-bar__hint-word {
     display: inline-block;
     font-weight: inherit;
-    animation: ask-bar-hint-word 350ms cubic-bezier(0.8, 0, 0.16, 1) backwards;
-    animation-delay: calc(var(--word) * 60ms);
+    // A soft ease-out, so each word settles rather than pops.
+    animation: ask-bar-hint-word 600ms cubic-bezier(0.22, 1, 0.36, 1) backwards;
+    animation-delay: calc(var(--word) * 80ms);
   }
 
   @keyframes ask-bar-hint-word {
     from {
       opacity: 0;
       filter: blur(10px);
-      transform: translateY(0.6rem);
+      transform: translateY(0.3rem);
     }
   }
 
@@ -1186,7 +1187,7 @@
     'Drag a file here…',
     'I get paid by the hour',
   ]
-  const HINT_MS = 3500
+  const HINT_MS = 5500
   const focused = ref(false)
   const hintIndex = ref(0)
   const hints = computed(() =>
