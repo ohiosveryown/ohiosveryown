@@ -7,5 +7,7 @@ export const LITTLE_GUY = {
   height: 648,
   fps: 24,
   frames: 240,
-  rows: ["idle", "talking", "thinking", "shut"] as const,
+  rows: ["idle", "talking"] as const,
+  // speak-sm / rest-sm, for widths up to this many CSS px.
+  smallUpTo: 80,
 }

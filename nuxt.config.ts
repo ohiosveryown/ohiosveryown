@@ -81,6 +81,12 @@ export default defineNuxtConfig({
     r2PublicUrl: '',
     isrBypassToken: '',
     refreshKey: '',
+    // Mallow's chat (server/api/ask.post.ts). The key is read from
+    // OPENAI_API_KEY too.
+    openaiApiKey: '',
+    openaiModel: 'gpt-4.1-mini',
+    // Shared with the counter Worker's ASK_LIMIT_SECRET.
+    askLimitSecret: '',
     public: {
       // Open-counter Worker (worker/); the browser calls it directly.
       counterUrl: '',

@@ -15,7 +15,8 @@
 <style scoped lang="scss">
   .last-played {
     position: absolute;
-    top: 24svh;
+    // --desk-top (from the page): room for the ask bar on small screens.
+    top: calc(var(--desk-top, 0rem) + 24svh);
     left: 50%;
     margin-left: -3.9rem;
     width: 22rem;

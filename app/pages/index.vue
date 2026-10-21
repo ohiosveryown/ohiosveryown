@@ -52,6 +52,7 @@
       @focusin="preload(study)"
     />
     <LastPlayed />
+    <AskBar class="home__ask" />
     <DeskDialog
       :study="openStudy"
       :origin="origin"
@@ -371,17 +372,26 @@
 
 <style scoped lang="scss">
   .home {
+    // Small screens: desk positions (icons, Last played) start below the
+    // full-width ask bar, so a mobile y of 0 sits just under it (the info
+    // panel's top padding makes room for it too). The bar is 5.6rem tall;
+    // 1.2rem of air below it.
+    --ask-top: 1.6rem;
+    --desk-top: calc(var(--ask-top) + 5.6rem + 1.2rem);
+
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
     position: relative;
-    padding: 60svh 1.6rem calc(3.7rem + var(--safe-bottom));
+    padding: calc(60svh + 6rem) 1.6rem calc(3.7rem + var(--safe-bottom));
     min-height: 100svh;
     color: #d2f976;
     background: #6f8d7a;
     overflow-x: clip;
 
     @include breakpoint(md) {
+      --desk-top: 0rem;
+
       align-items: center;
       position: fixed;
       inset: 0;
@@ -463,10 +473,33 @@
     right: 1.2rem;
   }
 
+  // Above the desk items (whose z-index climbs as they're raised), under
+  // the case-study dialog.
+  // Full width on small screens (the desk starts below it, see --desk-top);
+  // a pill in the top-right corner from md up.
+  .home__ask {
+    position: absolute;
+    top: var(--ask-top);
+    right: 1.2rem;
+    left: 1.2rem;
+    z-index: calc(var(--zmax) - 2);
+
+    @include breakpoint(md) {
+      left: auto;
+      width: 28rem;
+      max-width: calc(100% - 2.4rem);
+
+      // Open, it's the chat panel.
+      &.is-open {
+        width: 34.2rem;
+      }
+    }
+  }
+
   // Positions come from Craft (see placement()): the icon's top-left corner.
   .home__study {
     position: absolute;
-    top: calc(var(--mobile-y) * 1svh);
+    top: calc(var(--desk-top) + var(--mobile-y) * 1svh);
     left: calc(var(--mobile-x) * 1%);
     width: 22rem;
     max-width: calc(100% - var(--mobile-x) * 1% - 2.4rem);

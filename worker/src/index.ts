@@ -3,6 +3,10 @@
 //   POST /hit/:id  → adds 1 (at most once per visitor per study per minute)
 //                    and returns { count, counted }
 //   GET  /counts   → { "<craft item id>": count, … }
+//   POST /ask-limit → 204, or 429 once a visitor has asked too many of
+//                    Mallow's chat questions lately; allowed questions are
+//                    kept in ask_questions for 90 days. Called by the site's
+//                    server (Bearer ASK_LIMIT_SECRET), never by browsers.
 //
 // The browser calls this directly from the site, so CORS only allows the
 // site's own origins (ALLOWED_ORIGINS).
@@ -12,6 +16,7 @@ interface Env {
   ALLOWED_ORIGINS: string
   SITE_URL: string
   IP_SALT: string
+  ASK_LIMIT_SECRET: string
 }
 
 const RATE_WINDOW_MS = 60_000
@@ -119,6 +124,67 @@ async function hit(id: string, request: Request, env: Env, ctx: ExecutionContext
   return { count: row?.count ?? 1, counted: true }
 }
 
+const ASK_WINDOW_MS = 10 * 60_000
+const ASK_MAX = 10
+const QUESTION_MAX = 500
+const QUESTION_KEEP_MS = 90 * 24 * 60 * 60_000
+
+async function askLimit(request: Request, env: Env, ctx: ExecutionContext) {
+  const auth = request.headers.get('Authorization') ?? ''
+  if (!env.ASK_LIMIT_SECRET || auth !== `Bearer ${env.ASK_LIMIT_SECRET}`) {
+    return json({ error: 'forbidden' }, 403, {})
+  }
+  const { ip, question } = (await request.json().catch(() => ({}))) as {
+    ip?: string
+    question?: string
+  }
+  const key = await sha256(`${env.IP_SALT}:ask:${ip ?? 'unknown'}`)
+  const now = Date.now()
+  const since = now - ASK_WINDOW_MS
+
+  const row = await env.DB.prepare(
+    'SELECT COUNT(*) AS n, MIN(at) AS first FROM ask_hits WHERE key = ?1 AND at > ?2',
+  )
+    .bind(key, since)
+    .first<{ n: number; first: number | null }>()
+  if ((row?.n ?? 0) >= ASK_MAX) {
+    const wait = Math.ceil(((row?.first ?? now) + ASK_WINDOW_MS - now) / 1000)
+    return new Response(null, {
+      status: 429,
+      headers: { 'Retry-After': String(Math.max(wait, 1)) },
+    })
+  }
+
+  // Count the question, and keep its text so Matt can read what people ask.
+  const writes = [
+    env.DB.prepare('INSERT INTO ask_hits (key, at) VALUES (?1, ?2)').bind(
+      key,
+      now,
+    ),
+  ]
+  const text = typeof question === 'string' ? question.trim() : ''
+  if (text) {
+    writes.push(
+      env.DB.prepare(
+        'INSERT INTO ask_questions (at, visitor, question) VALUES (?1, ?2, ?3)',
+      ).bind(now, key, text.slice(0, QUESTION_MAX)),
+    )
+  }
+  await env.DB.batch(writes)
+
+  if (Math.random() < 0.05) {
+    ctx.waitUntil(
+      env.DB.batch([
+        env.DB.prepare('DELETE FROM ask_hits WHERE at <= ?1').bind(since),
+        env.DB.prepare('DELETE FROM ask_questions WHERE at <= ?1').bind(
+          now - QUESTION_KEEP_MS,
+        ),
+      ]),
+    )
+  }
+  return new Response(null, { status: 204 })
+}
+
 export default {
   async fetch(request, env, ctx): Promise<Response> {
     const cors = corsHeaders(request, env)
@@ -137,6 +203,10 @@ export default {
         200,
         cors,
       )
+    }
+
+    if (request.method === 'POST' && pathname === '/ask-limit') {
+      return askLimit(request, env, ctx)
     }
 
     const match = pathname.match(/^\/hit\/([^/]+)$/)

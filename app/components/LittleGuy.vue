@@ -26,8 +26,9 @@
              out around the video. -->
         <img
           v-show="!playing"
+          ref="stillFrame"
           class="little-guy__layer"
-          src="/little-guy/rest.webp"
+          :src="`/little-guy/rest${variant}.webp`"
           alt=""
           draggable="false"
         />
@@ -42,13 +43,13 @@
           <video
             ref="video"
             class="little-guy__video"
-            :src="`/little-guy/speak.${ext}`"
+            :src="`/little-guy/speak${variant}.${ext}`"
             muted
             loop
             playsinline
             preload="auto"
             aria-hidden="true"
-            @playing="playing = true"
+            @playing="onPlaying"
           />
         </div>
       </motion.div>
@@ -112,8 +113,7 @@
   import { motion, useMotionValue, useSpring } from 'motion-v'
   import { LITTLE_GUY } from '~/data/littleGuy'
 
-  type Row = (typeof LITTLE_GUY.rows)[number]
-  type Mood = Exclude<Row, 'shut'>
+  type Mood = (typeof LITTLE_GUY.rows)[number]
 
   const props = withDefaults(
     defineProps<{
@@ -121,8 +121,15 @@
       size?: number
       mood?: Mood
       label?: string
+      // Which video to use; "auto" picks by size.
+      files?: 'auto' | 'small' | 'full'
     }>(),
-    { size: 24, mood: 'idle', label: 'A small, fluffy white creature' },
+    {
+      size: 24,
+      mood: 'idle',
+      label: 'A small, fluffy white creature',
+      files: 'auto',
+    },
   )
 
   const root = useTemplateRef<HTMLElement>('root')
@@ -130,28 +137,42 @@
   const video = useTemplateRef<HTMLVideoElement>('video')
   const reduceMotion = ref(false)
   const playing = ref(false)
+  const stillFrame = useTemplateRef<HTMLImageElement>('stillFrame')
+
+  // "ready" once he can be seen as intended: the video is playing, or, when
+  // it won't (reduced motion, or autoplay refused, as in iOS Low Power
+  // Mode), the still frame has loaded. Lets a parent hold off showing him.
+  const emit = defineEmits<{ ready: [] }>()
+  let announced = false
+  function announce() {
+    if (announced) return
+    announced = true
+    emit('ready')
+  }
+  function onPlaying() {
+    playing.value = true
+    announce()
+  }
+  function settleOnStill() {
+    const img = stillFrame.value
+    if (!img || (img.complete && img.naturalWidth > 0)) announce()
+    else img.addEventListener('load', announce, { once: true })
+  }
   // Safari only plays transparent video as HEVC; everyone else gets VP9.
   const ext = ref<'mp4' | 'webm' | null>(null)
+  // Avatar sizes get the small video: decoding the full one to draw 40px
+  // would waste download and battery.
+  const variant = computed(() => {
+    if (props.files !== 'auto') return props.files === 'small' ? '-sm' : ''
+    return props.size * 10 <= LITTLE_GUY.smallUpTo ? '-sm' : ''
+  })
 
-  // Thinking moves the eyes, so switching to or from it shows the eyes-shut
-  // row for a few frames first: the eyes move behind a blink, not in view.
-  // (Idle and talking only differ in the mouth, so they switch directly.)
-  const BLINK_MS = 130
-  const shown = ref<Row>(props.mood)
-  let blinkTimer: ReturnType<typeof setTimeout> | undefined
-  watch(
-    () => props.mood,
-    (mood, previous) => {
-      clearTimeout(blinkTimer)
-      if (mood !== 'thinking' && previous !== 'thinking') {
-        shown.value = mood
-        return
-      }
-      shown.value = 'shut'
-      blinkTimer = setTimeout(() => (shown.value = props.mood), BLINK_MS)
-    },
-  )
-  const row = computed(() => Math.max(LITTLE_GUY.rows.indexOf(shown.value), 0))
+  // A new source stops playback; start it again.
+  watch(variant, async () => {
+    await nextTick()
+    if (!reduceMotion.value) video.value?.play().catch(() => {})
+  })
+  const row = computed(() => Math.max(LITTLE_GUY.rows.indexOf(props.mood), 0))
 
   // The whole body turns toward the pointer (a small 3D turn plus a lean),
   // on springs. Kept small: he's a flat render.
@@ -232,7 +253,10 @@
       '(prefers-reduced-motion: reduce)',
     ).matches
     window.addEventListener('pointermove', onPointerMove, { passive: true })
-    if (reduceMotion.value) return
+    if (reduceMotion.value) {
+      settleOnStill()
+      return
+    }
 
     const safari =
       /^((?!chrome|chromium|android|crios|fxios|edg).)*safari/i.test(
@@ -242,11 +266,11 @@
     await nextTick()
     video.value?.play().catch(() => {
       // Autoplay refused: the still frame stays.
+      settleOnStill()
     })
   })
 
   onBeforeUnmount(() => {
     window.removeEventListener('pointermove', onPointerMove)
-    clearTimeout(blinkTimer)
   })
 </script>

@@ -4,6 +4,7 @@
       ref="guy"
       :size="size"
       :mood="mood"
+      :files="files"
     />
 
     <div class="lab__controls">
@@ -23,6 +24,16 @@
         @click="guy?.hop()"
       >
         hop
+      </button>
+      <button
+        v-for="option in fileOptions"
+        :key="option"
+        type="button"
+        class="lab__button"
+        :class="{ 'is-active': files === option }"
+        @click="files = option"
+      >
+        {{ option }} files
       </button>
       <button
         v-for="option in backgrounds"
@@ -93,9 +104,11 @@
 <script setup lang="ts">
   // Prototype playground for the little guy; not linked from the site.
   const guy = useTemplateRef<{ hop: () => void }>('guy')
-  const moods = ['idle', 'thinking', 'talking'] as const
+  const moods = ['idle', 'talking'] as const
   const mood = ref<(typeof moods)[number]>('idle')
   const size = ref(24)
+  const fileOptions = ['auto', 'small', 'full'] as const
+  const files = ref<(typeof fileOptions)[number]>('auto')
   // He renders on a transparent background, so try him on a few surfaces.
   const backgrounds = [
     { name: 'dark', color: '#020809', ink: '#d2f976' },
