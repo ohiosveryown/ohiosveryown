@@ -13,6 +13,7 @@ const MAX_REPLY_KEPT = 2000
 const MAX_TURNS = 10
 // A backstop: about 70 words. The instructions ask for far less.
 const MAX_REPLY_TOKENS = 110
+const REASONING_TOKENS = 1000
 
 function readTurns(body: unknown): Turn[] {
   const messages = (body as { messages?: unknown })?.messages
@@ -113,7 +114,8 @@ export default defineEventHandler(async (event) => {
   const question = turns.at(-1)!.content
   if (/^\/test\b/i.test(question)) return testReply(event, question)
 
-  const { openaiApiKey, openaiModel } = useRuntimeConfig(event)
+  const { openaiApiKey, openaiModel, openaiReasoningEffort } =
+    useRuntimeConfig(event)
   const apiKey = openaiApiKey || process.env.OPENAI_API_KEY
   if (!apiKey) {
     throw createError({ statusCode: 503, statusMessage: 'Chat is off' })
@@ -129,8 +131,14 @@ export default defineEventHandler(async (event) => {
     body: JSON.stringify({
       model: openaiModel,
       stream: true,
-      max_tokens: MAX_REPLY_TOKENS,
-      temperature: 0.8,
+      // A reasoning model: by default no thinking for a two-sentence reply
+      // (it would only add a wait before the first word, and cost). Any
+      // thinking counts against max_completion_tokens, so it gets room on
+      // top of the reply's. Temperature isn't supported.
+      reasoning_effort: openaiReasoningEffort,
+      max_completion_tokens:
+        MAX_REPLY_TOKENS +
+        (openaiReasoningEffort === 'none' ? 0 : REASONING_TOKENS),
       messages: [
         { role: 'system', content: await mallowInstructions() },
         ...turns,

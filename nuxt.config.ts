@@ -84,7 +84,10 @@ export default defineNuxtConfig({
     // Mallow's chat (server/api/ask.post.ts). The key is read from
     // OPENAI_API_KEY too.
     openaiApiKey: '',
-    openaiModel: 'gpt-4.1-mini',
+    openaiModel: 'gpt-6.1-sol',
+    // Its lowest; a little thinking makes for a livelier reply. ('none'
+    // works on models that allow it, like gpt-6-luna.)
+    openaiReasoningEffort: 'low',
     // Shared with the counter Worker's ASK_LIMIT_SECRET.
     askLimitSecret: '',
     public: {
