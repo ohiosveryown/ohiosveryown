@@ -1606,7 +1606,7 @@
   const trick = ref<'headphones' | null>(null)
   watch(dropped, (drop) => {
     if (!drop || streaming.value) return
-    trick.value = drop.item.kind === 'track' ? 'headphones' : null
+    trick.value = drop.item.trick ?? null
     ask({
       role: 'user',
       content: dropLine(drop.item),

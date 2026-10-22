@@ -11,6 +11,8 @@ export type AskDropItem = {
   image?: string | null
   // What Mallow is actually asked.
   prompt: string
+  // A clip he plays in the reply (see LittleGuy's `trick`).
+  trick?: 'headphones'
 }
 
 // The ask bar's element. Client-only, and there's one bar per page.

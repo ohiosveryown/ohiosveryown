@@ -14,6 +14,8 @@
       image: track.cover,
       kind: 'track',
       name: track.title,
+      // An easter egg: he puts on headphones.
+      trick: 'headphones',
       prompt: `Matt's been listening to “${track.title}” by ${track.artist}. What do you make of it?`,
     }"
   />

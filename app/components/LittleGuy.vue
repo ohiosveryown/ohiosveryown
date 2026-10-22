@@ -59,6 +59,7 @@
         <video
           v-if="tricking && ext"
           class="little-guy__trick"
+          :class="`is-${trick}`"
           :src="`/little-guy/${trick}.${ext}`"
           muted
           playsinline
@@ -120,13 +121,17 @@
     width: 127.5%;
     height: 141.7%;
     max-width: none;
-    // The headphones drop in from above the clip's frame (and are lifted
-    // back out), cut off by its top edge. While they cross it, that edge
-    // fades instead; while he's wearing them there's no fade, so the band
-    // isn't touched. Timed to headphones.webm (10s: in by 3.5s, off from 8s).
+    // The headphones cross the clip's top edge (dropping in, lifted out),
+    // so that edge fades instead of cutting them off.
     mask-image: linear-gradient(to bottom, transparent, #000 var(--trick-fade));
-    animation: little-guy-trick-fade 10.04s linear forwards;
     pointer-events: none;
+
+    // Only while they cross it; while he's wearing them there's no fade, so
+    // the band isn't touched. Timed to headphones.webm (10s: in by 3.5s,
+    // off from 8s).
+    &.is-headphones {
+      animation: little-guy-trick-fade 10.04s linear forwards;
+    }
   }
 
   @property --trick-fade {
