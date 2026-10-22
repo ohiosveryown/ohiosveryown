@@ -540,7 +540,7 @@
     align-items: center;
     position: absolute;
     inset: 0;
-    color: #d2f976;
+    color: #fff;
     font-family: var(--system-font);
     font-size: 1.6rem;
     font-weight: 550;

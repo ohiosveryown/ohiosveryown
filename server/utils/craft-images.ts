@@ -101,17 +101,20 @@ async function syncOne(block: CraftBlock & { url: string }) {
   } satisfies SyncedImage
 }
 
-// A failed image is left out of the map (the caller falls back to the Craft
+// A failed block is left out of the map (the caller falls back to the Craft
 // URL) and retried on the next refresh; it never fails the whole response.
-export async function syncImages(blocks: (CraftBlock & { url: string })[]) {
-  const synced = new Map<string, SyncedImage>()
+async function syncAll<T>(
+  blocks: (CraftBlock & { url: string })[],
+  syncBlock: (block: CraftBlock & { url: string }) => Promise<T>,
+) {
+  const synced = new Map<string, T>()
   if (!isR2Configured()) return synced
 
   const queue = [...blocks]
   async function worker() {
     for (let block = queue.shift(); block; block = queue.shift()) {
       try {
-        synced.set(block.id, await syncOne(block))
+        synced.set(block.id, await syncBlock(block))
       } catch (error) {
         console.error(`[craft-images] ${block.id} skipped`, error)
       }
@@ -119,4 +122,82 @@ export async function syncImages(blocks: (CraftBlock & { url: string })[]) {
   }
   await Promise.all(Array.from({ length: CONCURRENCY }, worker))
   return synced
+}
+
+export function syncImages(blocks: (CraftBlock & { url: string })[]) {
+  return syncAll(blocks, syncOne)
+}
+
+// Videos are copied as they are (encode them small before adding them to
+// Craft). Their size comes from the MP4 itself, so the panel can hold
+// their space before they load.
+export type SyncedVideo = { src: string; aspectRatio?: number }
+
+// The size from the MP4's own structure: moov > trak > tkhd, whose last 8
+// bytes are the track's width and height (16.16 fixed point). Walked box by
+// box; the video track is the one with a size (audio tracks are 0 × 0).
+function mp4Size(bytes: Uint8Array) {
+  const view = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength)
+  const type = (at: number) =>
+    String.fromCharCode(...bytes.subarray(at + 4, at + 8))
+  function walk(
+    from: number,
+    to: number,
+  ): { width: number; height: number } | null {
+    for (let at = from; at + 8 <= to;) {
+      let size = view.getUint32(at)
+      let header = 8
+      if (size === 1) {
+        size = Number(view.getBigUint64(at + 8))
+        header = 16
+      } else if (size === 0) size = to - at
+      if (size < header || at + size > to) return null
+      const box = type(at)
+      if (box === 'moov' || box === 'trak') {
+        const found = walk(at + header, at + size)
+        if (found) return found
+      } else if (box === 'tkhd') {
+        const width = view.getUint32(at + size - 8) / 65536
+        const height = view.getUint32(at + size - 4) / 65536
+        if (width && height) return { width, height }
+      }
+      at += size
+    }
+    return null
+  }
+  return walk(0, bytes.length)
+}
+
+async function syncVideo(block: CraftBlock & { url: string }) {
+  const version = await versionOf(block.url)
+  let bytes: Uint8Array | undefined
+  const download = async () => {
+    const res = await fetch(block.url)
+    if (!res.ok) throw new Error(`Craft GET ${block.url}: ${res.status}`)
+    return new Uint8Array(await res.arrayBuffer())
+  }
+  if (!version) bytes = await download()
+  // (clip.mp4: copies named video.mp4 were stored with a misread size.)
+  const key = `craft/${block.id}-${version ?? short(bytes!)}/clip.mp4`
+
+  let size = await r2Head(key)
+  if (!size) {
+    bytes ??= await download()
+    const found = mp4Size(bytes)
+    size = found
+      ? { width: String(found.width), height: String(found.height) }
+      : {}
+    await r2Put(key, bytes, 'video/mp4', size)
+  }
+  return {
+    src: r2PublicUrl(key)!,
+    aspectRatio:
+      size.width && size.height
+        ? Number(size.width) / Number(size.height)
+        : undefined,
+  } satisfies SyncedVideo
+}
+
+export function syncVideos(blocks: (CraftBlock & { url: string })[]) {
+  return syncAll(blocks, syncVideo)
 }

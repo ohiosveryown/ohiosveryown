@@ -26,7 +26,7 @@ function describe(study: CaseStudy) {
   if (study.link) lines.push(`Link: ${study.link.replace(/^https?:\/\//, '')}`)
   if (study.intro) lines.push(study.intro)
   for (const node of study.body) {
-    if (node.kind === 'img') continue
+    if (node.kind === 'img' || node.kind === 'video') continue
     const text = plain(node.html)
     if (!text) continue
     lines.push(node.kind === 'p' ? text : `### ${text}`)

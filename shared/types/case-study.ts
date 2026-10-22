@@ -2,6 +2,7 @@
 export type BodyNode =
   | { kind: 'h3' | 'h4' | 'p'; html: string }
   | { kind: 'img'; src: string; alt: string; aspectRatio?: number }
+  | { kind: 'video'; src: string; aspectRatio?: number }
 
 export type CaseStudyImage = {
   src: string

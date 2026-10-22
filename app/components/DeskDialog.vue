@@ -93,6 +93,25 @@
                   loading="lazy"
                   decoding="async"
                 />
+                <!-- Silent loops: muted, looping, playing inline. With
+                     reduced motion they wait, with controls, to be played. -->
+                <video
+                  v-else-if="node.kind === 'video'"
+                  class="desk-dialog__image"
+                  :src="node.src"
+                  :style="
+                    node.aspectRatio
+                      ? { aspectRatio: node.aspectRatio }
+                      : undefined
+                  "
+                  :autoplay="!reduceMotion"
+                  :controls="reduceMotion"
+                  muted
+                  loop
+                  playsinline
+                  preload="metadata"
+                  :aria-hidden="!reduceMotion"
+                />
                 <h3
                   v-else-if="node.kind === 'h3'"
                   class="desk-dialog__h3"

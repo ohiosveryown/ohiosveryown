@@ -1,7 +1,7 @@
 import type { CaseStudy } from '#shared/types/case-study'
 import type { CraftBlock, CraftItem } from './craft'
 import { toBody } from './craft-body'
-import type { SyncedImage } from './craft-images'
+import type { SyncedImage, SyncedVideo } from './craft-images'
 
 function text(value: unknown): string | undefined {
   return typeof value === 'string' && value.trim() ? value.trim() : undefined
@@ -19,6 +19,7 @@ function strings(value: unknown): string[] {
 
 type ImageBlock = CraftBlock & { url: string }
 type Images = Map<string, SyncedImage>
+type Videos = Map<string, SyncedVideo>
 
 export function isPublished(item: CraftItem) {
   return item.properties.published === true && !!text(item.properties.slug)
@@ -28,6 +29,13 @@ export function isPublished(item: CraftItem) {
 export function imageBlocksOf(item: CraftItem): ImageBlock[] {
   return (item.content ?? []).filter(
     (block): block is ImageBlock => block.type === 'image' && !!block.url,
+  )
+}
+
+// Videos in the body, synced the same way.
+export function videoBlocksOf(item: CraftItem): ImageBlock[] {
+  return (item.content ?? []).filter(
+    (block): block is ImageBlock => block.type === 'video' && !!block.url,
   )
 }
 
@@ -41,7 +49,11 @@ export function imageFor(block: ImageBlock, images: Images) {
   }
 }
 
-export function toCaseStudy(item: CraftItem, images: Images): CaseStudy | null {
+export function toCaseStudy(
+  item: CraftItem,
+  images: Images,
+  videos: Videos = new Map(),
+): CaseStudy | null {
   const p = item.properties
   const slug = text(p.slug)
   if (!isPublished(item) || !slug) return null
@@ -75,8 +87,14 @@ export function toCaseStudy(item: CraftItem, images: Images): CaseStudy | null {
       ? position
       : undefined,
     // The hero is shown above the details, so it isn't repeated in the body.
-    body: toBody(item.content ?? [], heroBlock?.id, (block) =>
-      imageFor(block, images),
+    body: toBody(
+      item.content ?? [],
+      heroBlock?.id,
+      (block) => imageFor(block, images),
+      (block) => ({
+        src: videos.get(block.id)?.src ?? block.url,
+        aspectRatio: videos.get(block.id)?.aspectRatio,
+      }),
     ),
   }
 }

@@ -45,12 +45,17 @@ const TEXT_KINDS: Record<string, 'h3' | 'h4' | 'p'> = {
   body: 'p',
 }
 
-// Whitelist: headings, subheadings, paragraphs and images. Everything else
-// (lists, captions, pages, cards, tables, code, video, files…) is dropped.
+// Whitelist: headings, subheadings, paragraphs, images and videos.
+// Everything else (lists, captions, pages, cards, tables, code, files…) is
+// dropped.
 export function toBody(
   blocks: CraftBlock[],
   skip: string | undefined,
   imageFor: (block: CraftBlock & { url: string }) => {
+    src: string
+    aspectRatio?: number
+  },
+  videoFor: (block: CraftBlock & { url: string }) => {
     src: string
     aspectRatio?: number
   },
@@ -61,8 +66,19 @@ export function toBody(
 
     if (block.type === 'image') {
       if (!block.url) continue
-      const { src, aspectRatio } = imageFor(block as CraftBlock & { url: string })
+      const { src, aspectRatio } = imageFor(
+        block as CraftBlock & { url: string },
+      )
       body.push({ kind: 'img', src, alt: block.altText ?? '', aspectRatio })
+      continue
+    }
+
+    if (block.type === 'video') {
+      if (!block.url) continue
+      const { src, aspectRatio } = videoFor(
+        block as CraftBlock & { url: string },
+      )
+      body.push({ kind: 'video', src, aspectRatio })
       continue
     }
 
