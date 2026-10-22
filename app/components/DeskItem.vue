@@ -29,6 +29,8 @@
     @drag-end="onDragEnd"
     @pointerdown.capture="onGrab"
     @click.capture="onClick"
+    @keydown="onKeydown"
+    @focusout="raisedByKeys = false"
     @dragstart.capture.prevent
   >
     <!-- Its own element for the drop fade: the item itself has motion's
@@ -179,6 +181,64 @@
       y.set(pickedUp.y)
       requestAnimationFrame(() => (away.value = false))
     }, FADE_MS)
+  }
+
+  // The arrow keys move a focused item (Shift for bigger steps), inside
+  // the desk like a drag. Repeated presses add up from where the last one
+  // was heading, not from wherever the glide has got to.
+  // A short glide, not a spring: a spring restarted on every press carries
+  // its speed into the next, and held arrow keys (key repeat) wound it up
+  // until it flew off.
+  const NUDGE = { duration: 0.18, ease: [0.22, 1, 0.36, 1] } as const
+  const NUDGE_PX = { small: 10, large: 50 }
+  const ARROWS: Record<string, [number, number]> = {
+    ArrowLeft: [-1, 0],
+    ArrowRight: [1, 0],
+    ArrowUp: [0, -1],
+    ArrowDown: [0, 1],
+  }
+  let nudgedTo: { x: number; y: number } | null = null
+  // Brought to the front once per focus, not on every press.
+  let raisedByKeys = false
+  function onKeydown(event: KeyboardEvent) {
+    const arrow = ARROWS[event.key]
+    const desk = surface.value
+    if (!arrow || !desk || event.metaKey || event.ctrlKey || event.altKey)
+      return
+    event.preventDefault()
+    if (!raisedByKeys) {
+      layer.value = raise()
+      raisedByKeys = true
+    }
+    dismissTooltip()
+
+    const item = event.currentTarget as HTMLElement
+    const step = event.shiftKey ? NUDGE_PX.large : NUDGE_PX.small
+    const moving = x.isAnimating() || y.isAnimating()
+    const from = (moving && nudgedTo) || { x: x.get(), y: y.get() }
+    const clamp = (value: number, min: number, max: number) =>
+      Math.min(Math.max(value, min), Math.max(min, max))
+    // offsetLeft/Top are its spot in the layout; x/y move it from there.
+    const to = {
+      x: clamp(
+        from.x + arrow[0] * step,
+        -item.offsetLeft,
+        desk.clientWidth - item.offsetLeft - item.offsetWidth,
+      ),
+      y: clamp(
+        from.y + arrow[1] * step,
+        -item.offsetTop,
+        desk.clientHeight - item.offsetTop - item.offsetHeight,
+      ),
+    }
+    nudgedTo = to
+    if (reduceMotion.value) {
+      x.set(to.x)
+      y.set(to.y)
+      return
+    }
+    animate(x, to.x, NUDGE)
+    animate(y, to.y, NUDGE)
   }
 
   function onClick(event: MouseEvent) {

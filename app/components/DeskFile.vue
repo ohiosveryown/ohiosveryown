@@ -21,6 +21,7 @@
       :data-tooltip="tooltipText"
       :data-tooltip-image="hinting ? undefined : tooltipImage"
       :aria-label="label"
+      :aria-describedby="moveHintId"
       @mousedown="onMouseDown"
       @click="onClick"
       @focus="onFocus"
@@ -80,6 +81,13 @@
         </AnimatePresence>
       </span>
     </component>
+    <!-- Read after its name by screen readers (DeskItem moves it with the
+         arrow keys). -->
+    <span
+      :id="moveHintId"
+      hidden
+      >Use the arrow keys to move</span
+    >
   </DeskItem>
 </template>
 
@@ -207,6 +215,8 @@
 <script setup lang="ts">
   import type { AskDropItem } from '~/composables/useAskDrop'
   import { motion, AnimatePresence } from 'motion-v'
+
+  const moveHintId = useId()
 
   const props = withDefaults(
     defineProps<{
