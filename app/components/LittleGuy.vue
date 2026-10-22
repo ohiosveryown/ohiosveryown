@@ -25,7 +25,7 @@
              motion is reduced. Hidden once he moves, or its edge would peek
              out around the video. -->
         <img
-          v-show="!playing"
+          v-show="!playing && !tricking"
           ref="stillFrame"
           class="little-guy__layer"
           :src="`/little-guy/rest${variant}.webp`"
@@ -38,6 +38,7 @@
              another row: instant, and always in sync. -->
         <div
           v-if="ext"
+          v-show="!tricking"
           class="little-guy__layer little-guy__window"
         >
           <video
@@ -52,6 +53,20 @@
             @playing="onPlaying"
           />
         </div>
+        <!-- A one-off clip in place of his loop (see `trick`), framed to
+             match it, with room around him for what he's holding. It starts
+             and ends looking like his loop, so the swaps don't show. -->
+        <video
+          v-if="tricking && ext"
+          class="little-guy__trick"
+          :src="`/little-guy/${trick}.${ext}`"
+          muted
+          playsinline
+          autoplay
+          aria-hidden="true"
+          @ended="endTrick"
+          @error="endTrick"
+        />
       </motion.div>
     </div>
   </div>
@@ -95,6 +110,48 @@
     overflow: hidden;
   }
 
+  // The trick clips are square, with him smaller in frame than in his loop:
+  // sized and offset so his body lands exactly where it is in the loop.
+  .little-guy__trick {
+    display: block;
+    position: absolute;
+    top: -16.8%;
+    left: -16.25%;
+    width: 127.5%;
+    height: 141.7%;
+    max-width: none;
+    // The headphones drop in from above the clip's frame (and are lifted
+    // back out), cut off by its top edge. While they cross it, that edge
+    // fades instead; while he's wearing them there's no fade, so the band
+    // isn't touched. Timed to headphones.webm (10s: in by 3.5s, off from 8s).
+    mask-image: linear-gradient(to bottom, transparent, #000 var(--trick-fade));
+    animation: little-guy-trick-fade 10.04s linear forwards;
+    pointer-events: none;
+  }
+
+  @property --trick-fade {
+    syntax: '<percentage>';
+    inherits: false;
+    initial-value: 0%;
+  }
+
+  @keyframes little-guy-trick-fade {
+    0%,
+    33% {
+      --trick-fade: 20%;
+    }
+
+    36%,
+    78% {
+      --trick-fade: 0%;
+    }
+
+    82%,
+    100% {
+      --trick-fade: 20%;
+    }
+  }
+
   // As tall as all the rows; shifted up to show the current one.
   .little-guy__video {
     display: block;
@@ -123,12 +180,16 @@
       label?: string
       // Which video to use; "auto" picks by size.
       files?: 'auto' | 'small' | 'full'
+      // A one-off clip to play in place of his loop, once (public/little-guy/
+      // <trick>.webm and .mp4). Emits "trick-done" when it's over.
+      trick?: 'headphones' | null
     }>(),
     {
       size: 24,
       mood: 'idle',
       label: 'A small, fluffy white creature',
       files: 'auto',
+      trick: null,
     },
   )
 
@@ -142,7 +203,22 @@
   // "ready" once he can be seen as intended: the video is playing, or, when
   // it won't (reduced motion, or autoplay refused, as in iOS Low Power
   // Mode), the still frame has loaded. Lets a parent hold off showing him.
-  const emit = defineEmits<{ ready: [] }>()
+  const emit = defineEmits<{ ready: []; 'trick-done': [] }>()
+
+  // Not with reduced motion, or before his own video is chosen.
+  const tricking = computed(
+    () => !!props.trick && !!ext.value && !reduceMotion.value,
+  )
+  function endTrick() {
+    emit('trick-done')
+  }
+  // Skipped altogether, it's still over.
+  watch(
+    () => props.trick,
+    (trick) => {
+      if (trick && reduceMotion.value) endTrick()
+    },
+  )
   let announced = false
   function announce() {
     if (announced) return

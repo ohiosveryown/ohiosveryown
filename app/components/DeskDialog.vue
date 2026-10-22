@@ -433,7 +433,7 @@
     text-box-edge: cap alphabetic;
     text-box-trim: trim-both;
     @include breakpoint(md) {
-      width: 18rem;
+      width: 14rem;
     }
   }
 

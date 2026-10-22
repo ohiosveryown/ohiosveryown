@@ -63,20 +63,57 @@
               <span class="ask-bar__face" />
               <p class="ask-bar__reply">
                 <template v-if="message.parts?.length">
-                  <!-- Each reveal step is its own span, so it can unblur in. -->
-                  <span
+                  <!-- Each reveal step is its own span, so it can unblur in;
+                       paragraph breaks and case study links are steps of
+                       their own (see typeInto). -->
+                  <template
                     v-for="(part, step) in message.parts"
                     :key="step"
-                    class="ask-bar__char"
-                    >{{ part }}</span
                   >
+                    <span
+                      v-if="part === PARA"
+                      class="ask-bar__break"
+                    />
+                    <a
+                      v-else-if="typeof part === 'object'"
+                      class="ask-bar__link ask-bar__char"
+                      :href="`/work/${part.slug}`"
+                      @click.prevent="openCaseStudy(part.slug)"
+                      >{{ part.text }}</a
+                    >
+                    <span
+                      v-else
+                      class="ask-bar__char"
+                      >{{ part }}</span
+                    >
+                  </template>
                 </template>
                 <span
                   v-else-if="!message.content"
                   class="ask-bar__thinking"
                   >{{ message.thinking ?? THINKING[0] }}</span
                 >
-                <template v-else>{{ message.content }}</template>
+                <template v-else>
+                  <span
+                    v-for="(paragraph, index) in paragraphsOf(message.content)"
+                    :key="index"
+                    class="ask-bar__para"
+                  >
+                    <template
+                      v-for="(bit, at) in paragraph"
+                      :key="at"
+                    >
+                      <a
+                        v-if="bit.slug"
+                        class="ask-bar__link"
+                        :href="`/work/${bit.slug}`"
+                        @click.prevent="openCaseStudy(bit.slug)"
+                        >{{ bit.text }}</a
+                      >
+                      <template v-else>{{ bit.text }}</template>
+                    </template>
+                  </span>
+                </template>
               </p>
             </template>
           </li>
@@ -94,7 +131,9 @@
               <LittleGuy
                 :size="3.2"
                 :mood="streaming ? 'talking' : 'idle'"
+                :trick="trick"
                 label=""
+                @trick-done="trick = null"
               />
             </span>
           </motion.li>
@@ -432,6 +471,31 @@
     color: #fff;
     line-height: 1.38;
     white-space: pre-wrap;
+  }
+
+  // A reply's paragraphs: as it types, a break between them; once it's
+  // done, each its own block. The same gap either way.
+  .ask-bar__break {
+    display: block;
+    height: 0.8rem;
+  }
+
+  .ask-bar__para {
+    display: block;
+    font-weight: inherit;
+
+    & + & {
+      margin-top: 0.8rem;
+    }
+  }
+
+  // Opens that case study's panel.
+  .ask-bar__link {
+    color: inherit;
+    font-weight: inherit;
+    text-decoration: underline dotted;
+    text-underline-offset: 0.3em;
+    cursor: pointer;
   }
 
   // While Mallow waits on the reply: a light that sweeps across the words,
@@ -1057,7 +1121,7 @@
     role: 'user' | 'assistant'
     content: string
     // A reply as it was revealed, piece by piece (for the unblur).
-    parts?: string[]
+    parts?: ReplyPart[]
     // What Mallow says while the reply is on its way.
     thinking?: string
     // Asked by dropping a desk item on him: the item, and what he's really
@@ -1234,7 +1298,9 @@
   const hints = computed(() =>
     draggable.value ? HINTS : HINTS.filter((line) => !line.startsWith('Drag')),
   )
-  const hint = computed(() => hints.value[hintIndex.value % hints.value.length])
+  const hint = computed(
+    () => hints.value[hintIndex.value % hints.value.length] ?? HINTS[0]!,
+  )
   const showHints = computed(() => !open.value && !question.value)
   let hintTimer: ReturnType<typeof setInterval> | undefined
   // Also paused while a desk file is held over the bar, about to be dropped.
@@ -1267,15 +1333,37 @@
       : (text: string) => Array.from(text)
 
   function typeInto(message: Message) {
-    let queue: string[] = []
+    let queue: ReplyPart[] = []
     let timer: ReturnType<typeof setInterval> | undefined
     let drained: (() => void) | undefined
+    // Text held back: a link still arriving ("[here](bl") or line breaks
+    // that may turn out to be a paragraph break.
+    let pending = ''
+
+    function add(part: ReplyPart) {
+      message.content +=
+        part === PARA
+          ? '\n\n'
+          : typeof part === 'object'
+            ? `[${part.text}](${part.slug})`
+            : part
+      message.parts?.push(part)
+    }
     function step() {
-      const count = Math.max(1, Math.ceil(queue.length / 40))
-      const piece = queue.slice(0, count).join('')
-      message.content += piece
-      message.parts?.push(piece)
-      queue = queue.slice(count)
+      const first = queue[0]
+      if (first === PARA || typeof first === 'object') {
+        // A paragraph break or a link is a step of its own.
+        add(queue.shift()!)
+      } else {
+        const count = Math.max(1, Math.ceil(queue.length / 40))
+        let piece = ''
+        for (let i = 0; i < count; i++) {
+          const next = queue[0]
+          if (typeof next !== 'string' || next === PARA) break
+          piece += queue.shift()
+        }
+        add(piece)
+      }
       scrollToEnd()
       if (!queue.length) {
         clearInterval(timer)
@@ -1283,21 +1371,49 @@
         drained?.()
       }
     }
+    function enqueue(text: string) {
+      for (const paragraph of paragraphsOf(text, true)) {
+        for (const bit of paragraph) {
+          if (bit.slug) queue.push({ text: bit.text, slug: bit.slug })
+          else if (bit.text === PARA) queue.push(PARA)
+          else queue.push(...graphemes(bit.text))
+        }
+      }
+      if (queue.length) timer ??= setInterval(step, CHAR_MS)
+    }
     return {
       push(text: string) {
         // A reply can open with a blank line or two; the reply keeps line
         // breaks (pre-wrap), so they'd show as extra space above it.
-        if (!message.content && !queue.length) text = text.trimStart()
+        if (!message.content && !queue.length && !pending) {
+          text = text.trimStart()
+        }
         if (!text) return
         if (reduceMotion.value) {
           message.content += text
           scrollToEnd()
           return
         }
-        queue.push(...graphemes(text))
-        timer ??= setInterval(step, CHAR_MS)
+        pending += text
+        let cut = pending.length
+        const open = pending.lastIndexOf('[')
+        if (
+          open !== -1 &&
+          !LINK_AT_START.test(pending.slice(open)) &&
+          pending.length - open < 200
+        ) {
+          cut = open
+        }
+        const breaks = pending.slice(0, cut).match(/\n+$/)
+        if (breaks) cut -= breaks[0].length
+        enqueue(pending.slice(0, cut))
+        pending = pending.slice(cut)
       },
       done() {
+        if (pending && !reduceMotion.value) {
+          enqueue(pending)
+          pending = ''
+        }
         return queue.length
           ? new Promise<void>((r) => (drained = r))
           : undefined
@@ -1305,8 +1421,56 @@
       stop() {
         clearInterval(timer)
         queue = []
+        pending = ''
       },
     }
+  }
+
+  // Replies come in paragraphs (a blank line between) and can link a case
+  // study as [words](slug) (see about.md), which opens its panel. Only slugs
+  // of real case studies become links; anything else stays as its words.
+  const PARA = '\u2029'
+  type ReplyLink = { text: string; slug: string }
+  type ReplyPart = string | ReplyLink
+  type ReplyBit = { text: string; slug?: string }
+  const LINK = /\[([^\]\n]+)\]\(([^)\s]+)\)/g
+  const LINK_AT_START = /^\[[^\]\n]*\]\([^)\s]*\)/
+  const { data: caseStudies } = useCaseStudies()
+  // By slug, or by its file label (blush.otf), which he sometimes uses.
+  function slugOf(target: string) {
+    const name = target
+      .replace(/^\/?(?:work\/)?/, '')
+      .replace(/\/$/, '')
+      .toLowerCase()
+    return caseStudies.value.find(
+      (study) => study.slug === name || study.label.toLowerCase() === name,
+    )?.slug
+  }
+  // Paragraphs of text and links. While typing (keepBreaks), the breaks
+  // between paragraphs are kept as PARA bits instead.
+  function paragraphsOf(text: string, keepBreaks = false): ReplyBit[][] {
+    const paragraphs = text.split(/\n{2,}/).map((paragraph) => {
+      const bits: ReplyBit[] = []
+      let at = 0
+      for (const match of paragraph.matchAll(LINK)) {
+        if (match.index > at)
+          bits.push({ text: paragraph.slice(at, match.index) })
+        bits.push({ text: match[1]!, slug: slugOf(match[2]!) })
+        at = match.index + match[0].length
+      }
+      if (at < paragraph.length) bits.push({ text: paragraph.slice(at) })
+      return bits
+    })
+    if (!keepBreaks) return paragraphs
+    return [
+      paragraphs.flatMap((bits, index) =>
+        index ? [{ text: PARA }, ...bits] : bits,
+      ),
+    ]
+  }
+  const router = useRouter()
+  function openCaseStudy(slug: string) {
+    router.push(`/work/${slug}`)
   }
 
   function submit() {
@@ -1410,7 +1574,7 @@
   })
   // The visitor's line under a dropped item's picture, so a run of drops
   // doesn't read "Tell me about…" every time (never the same twice in a row).
-  const DROP_LINES = {
+  const DROP_LINES: Record<AskDropItem['kind'], readonly string[]> = {
     study: [
       'Tell me about {name}',
       "What's the story with {name}?",
@@ -1425,7 +1589,7 @@
       'Is {name} any good?',
       "Why's Matt listening to {name}?",
     ],
-  } as const
+  }
   let lastDropLine = ''
   function dropLine(item: AskDropItem) {
     const lines = DROP_LINES[item.kind]
@@ -1437,8 +1601,12 @@
     return line.replace('{name}', item.name)
   }
 
+  // An easter egg: drop the Last Played track on him and he puts on a pair
+  // of headphones (once, in the reply), then takes them off again.
+  const trick = ref<'headphones' | null>(null)
   watch(dropped, (drop) => {
     if (!drop || streaming.value) return
+    trick.value = drop.item.kind === 'track' ? 'headphones' : null
     ask({
       role: 'user',
       content: dropLine(drop.item),

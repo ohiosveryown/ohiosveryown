@@ -18,7 +18,7 @@ function plain(html: string) {
 }
 
 function describe(study: CaseStudy) {
-  const lines = [`## ${study.title} (${study.label})`]
+  const lines = [`## ${study.title} (${study.label})`, `Slug: ${study.slug}`]
   if (study.date) lines.push(`Date: ${study.date}`)
   if (study.disciplines.length) {
     lines.push(`Disciplines: ${study.disciplines.join(', ')}`)
