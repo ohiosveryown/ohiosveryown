@@ -122,7 +122,7 @@
     height: 5.6rem;
     border: 3px solid #fff;
     border-radius: 2px;
-    background: #d2f976;
+    background: #fff;
     box-shadow: 0 0.4rem 1.2rem 0 rgba(0, 0, 0, 0.19);
     overflow: hidden;
 
