@@ -310,6 +310,11 @@
   }
 
   .desk-dialog__body {
+    // The rhythm of everything after the cover: between the intro, details
+    // and copy, and between paragraphs, images and headings. The gap below
+    // the cover is a step bigger.
+    --flow: 2.8rem;
+
     display: flex;
     flex-direction: column;
     gap: 2rem;
@@ -394,26 +399,26 @@
   .desk-dialog__details {
     display: flex;
     flex-direction: column;
-    gap: 1.2rem;
+    gap: 1.4rem;
     margin: 0;
-    padding: 1.6rem 0;
+    padding: var(--flow) 0;
   }
 
   .desk-dialog__row {
     display: flex;
     align-items: flex-start;
     gap: 1.8rem;
-    padding-top: 1.2rem;
+    padding-top: 1.4rem;
     background: repeating-linear-gradient(
         to right,
         #fff 0 1px,
         transparent 1px 3px
       )
       top / 100% 0.5px no-repeat;
-    font-size: 1.3rem;
+    font-size: 1.4rem;
 
     &:last-child {
-      padding-bottom: 1.2rem;
+      padding-bottom: 1.4rem;
       background:
         repeating-linear-gradient(to right, #fff 0 1px, transparent 1px 3px)
           top / 100% 0.5px no-repeat,
@@ -458,7 +463,12 @@
   .desk-dialog__article {
     display: flex;
     flex-direction: column;
-    gap: 1.6rem;
+    gap: var(--flow);
+  }
+
+  // Below the cover: 1.25 × the flow (3.5rem), on top of the body's gap.
+  .desk-dialog__figure + .desk-dialog__article {
+    margin-top: calc(var(--flow) * 1.25 - 2rem);
   }
 
   .desk-dialog__figure {
@@ -493,7 +503,7 @@
   .desk-dialog__copy {
     display: flex;
     flex-direction: column;
-    gap: 1.6rem;
+    gap: var(--flow);
   }
 
   .desk-dialog__h3,
@@ -503,18 +513,25 @@
     text-wrap: balance;
 
     &:not(:first-child) {
-      margin-top: 1.6rem;
+      margin-top: var(--flow);
     }
   }
 
+  // A heading sits close to the text it introduces: a tighter gap than the
+  // flow between blocks (the copy's gap, pulled in).
+  .desk-dialog__h3 + .desk-dialog__para,
+  .desk-dialog__h4 + .desk-dialog__para {
+    margin-top: calc(1.2rem - var(--flow));
+  }
+
   .desk-dialog__h3 {
-    font-size: 2rem;
+    font-size: 2.3rem;
     letter-spacing: -0.03rem;
     line-height: 1.3;
   }
 
   .desk-dialog__h4 {
-    font-size: 1.7rem;
+    font-size: 2rem;
     letter-spacing: -0.01em;
     line-height: 1.4;
   }
@@ -528,6 +545,7 @@
     line-height: 1.5;
     @include breakpoint(md) {
       text-wrap: pretty;
+      font-size: 2rem;
     }
   }
 
