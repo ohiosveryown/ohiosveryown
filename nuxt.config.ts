@@ -118,6 +118,14 @@ export default defineNuxtConfig({
     '~/style/type.scss',
     '~/style/reset.scss',
   ],
+  // All CSS inline in the page, including the global files above (by
+  // default only components' styles are): no stylesheet to wait for before
+  // the first paint. It's a few KB, so not worth a separate request.
+  features: {
+    // Every module's CSS, the global files included (the leftover links
+    // are dropped by server/plugins/inlined-css.ts).
+    inlineStyles: () => true,
+  },
   vite: {
     css: {
       preprocessorOptions: {
