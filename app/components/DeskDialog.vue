@@ -691,6 +691,7 @@
       font-size: 1.8rem;
     }
   }
+  // A paragraph bold all the way through in Craft: in the site's lime.
 
   // Body HTML comes from v-html, so scoped classes can't reach its links.
   .desk-dialog__para :deep(a),
