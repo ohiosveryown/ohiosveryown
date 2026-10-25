@@ -167,7 +167,7 @@
           @click="fadeInputEdges"
           type="text"
           name="question"
-          :placeholder="open ? 'Ask a follow-up...' : showHints ? '' : HINTS[0]"
+          :placeholder="open ? followUp : showHints ? '' : HINTS[0]"
           aria-label="Ask Mallow anything"
           autocomplete="off"
           enterkeyhint="send"
@@ -1436,6 +1436,35 @@
   const LINK = /\[([^\]\n]+)\]\(([^)\s]+)\)/g
   const LINK_AT_START = /^\[[^\]\n]*\]\([^)\s]*\)/
   const { data: caseStudies } = useCaseStudies()
+
+  // The open panel's placeholder, picked after each reply so it isn't the
+  // same line every time: about the case study he just linked if there is
+  // one, otherwise one of a few general nudges (never the same twice in a
+  // row).
+  const FOLLOW_UPS = [
+    'Ask a follow-up…',
+    'What else?',
+    'Go on, ask me more…',
+    'Anything else about Matt?',
+    'Keep going…',
+  ]
+  const STUDY_FOLLOW_UPS = [
+    'Tell me more about {title}…',
+    "What's the story behind {title}?",
+    'How did {title} come together?',
+  ]
+  const followUp = ref(FOLLOW_UPS[0]!)
+  function followUpFor(reply: string) {
+    const linked = [...reply.matchAll(LINK)]
+      .map((match) => slugOf(match[2]!))
+      .find(Boolean)
+    const study = caseStudies.value.find((item) => item.slug === linked)
+    const lines = study
+      ? STUDY_FOLLOW_UPS.map((line) => line.replace('{title}', study.title))
+      : FOLLOW_UPS
+    const options = lines.filter((line) => line !== followUp.value)
+    return options[Math.floor(Math.random() * options.length)] ?? lines[0]!
+  }
   // By slug, or by its file label (blush.otf), which he sometimes uses.
   function slugOf(target: string) {
     const name = target
@@ -1534,6 +1563,7 @@
     } finally {
       // Likewise a trailing line break, as space below it.
       reply.content = reply.content.trimEnd()
+      followUp.value = followUpFor(reply.content)
       streaming.value = false
       controller = undefined
       scrollToEnd()

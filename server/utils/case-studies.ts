@@ -1,6 +1,6 @@
 import type { CaseStudy } from '#shared/types/case-study'
 import type { CraftBlock, CraftItem } from './craft'
-import { toBody } from './craft-body'
+import { captionOf, toBody } from './craft-body'
 import type { SyncedImage, SyncedVideo } from './craft-images'
 
 function text(value: unknown): string | undefined {
@@ -61,6 +61,14 @@ export function toCaseStudy(
   // Collection-item covers aren't exposed by Craft's API, so by convention
   // the first image in the body is the hero.
   const heroBlock = imageBlocksOf(item)[0]
+  // An italic line right after it is its caption, shown under it.
+  const content = (item.content ?? []).filter(
+    (block) => block.type !== 'text' || (block.markdown ?? '').trim(),
+  )
+  const afterHero = heroBlock
+    ? content[content.findIndex((block) => block.id === heroBlock.id) + 1]
+    : undefined
+  const heroCaption = captionOf(afterHero)
   const tooltip = text(p.tooltip)
   const position = {
     x: number(p.x),
@@ -81,15 +89,17 @@ export function toCaseStudy(
     hero: heroBlock && {
       ...imageFor(heroBlock, images),
       alt: heroBlock.altText ?? '',
+      caption: heroCaption,
     },
     tooltip: tooltip ? { text: tooltip } : undefined,
     position: Object.values(position).some((value) => value != null)
       ? position
       : undefined,
-    // The hero is shown above the details, so it isn't repeated in the body.
+    // The hero (and its caption) is shown above the details, so it isn't
+    // repeated in the body.
     body: toBody(
       item.content ?? [],
-      heroBlock?.id,
+      [heroBlock?.id, heroCaption ? afterHero?.id : undefined],
       (block) => imageFor(block, images),
       (block) => ({
         src: videos.get(block.id)?.src ?? block.url,

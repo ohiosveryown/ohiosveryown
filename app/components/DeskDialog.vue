@@ -45,6 +45,12 @@
               :src="study.hero.src"
               :alt="study.hero.alt"
             />
+            <!-- html is rendered and sanitized on the server -->
+            <figcaption
+              v-if="study.hero.caption"
+              class="desk-dialog__caption"
+              v-html="study.hero.caption"
+            />
           </figure>
 
           <article class="desk-dialog__article">
@@ -120,6 +126,21 @@
                 <h4
                   v-else-if="node.kind === 'h4'"
                   class="desk-dialog__h4"
+                  v-html="node.html"
+                />
+                <!-- Three dots between sections. -->
+                <hr
+                  v-else-if="node.kind === 'break'"
+                  class="desk-dialog__break"
+                />
+                <p
+                  v-else-if="node.kind === 'caption'"
+                  class="desk-dialog__caption desk-dialog__caption--body"
+                  v-html="node.html"
+                />
+                <blockquote
+                  v-else-if="node.kind === 'quote'"
+                  class="desk-dialog__quote"
                   v-html="node.html"
                 />
                 <p
@@ -472,7 +493,25 @@
   }
 
   .desk-dialog__figure {
-    display: block;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+  }
+
+  // Under the cover, and under images in the body (an italic line right
+  // after one in Craft).
+  .desk-dialog__caption {
+    margin-top: 1.4rem;
+    opacity: 0.6;
+    font-family: var(--system-font);
+    font-size: 1.4rem;
+    font-style: italic;
+    line-height: 1.4;
+  }
+
+  // In the body, pulled up under its image (past the flow's gap).
+  .desk-dialog__caption--body {
+    margin: calc(1.4rem - var(--flow)) 0 0;
   }
 
   .desk-dialog__image {
@@ -536,13 +575,45 @@
     line-height: 1.4;
   }
 
+  // Three dots, centred: one dot repeated across a box three steps wide.
+  .desk-dialog__break {
+    align-self: center;
+    width: 3.6rem;
+    height: 0.4rem;
+    margin: 0;
+    border: 0;
+    background: radial-gradient(
+        circle,
+        rgba(255, 255, 255, 0.35) 0.2rem,
+        transparent 0.22rem
+      )
+      0 0 / 1.2rem 0.4rem repeat-x;
+  }
+
+  // A pull quote: the paragraph's type, set off by a rule on its left.
+  .desk-dialog__quote {
+    margin: 0;
+    padding-left: 1.6rem;
+    border-left: 2px solid rgba(255, 255, 255, 0.4);
+    font-family: var(--system-font);
+    font-size: 1.7rem;
+    font-style: italic;
+    letter-spacing: -0.003em;
+    line-height: 1.5;
+
+    @include breakpoint(md) {
+      text-wrap: pretty;
+      font-size: 2rem;
+    }
+  }
+
   .desk-dialog__para {
     margin: 0;
     opacity: 0.9;
     font-family: var(--system-font);
     font-size: 1.7rem;
     letter-spacing: -0.003em;
-    line-height: 1.5;
+    line-height: 1.35;
     @include breakpoint(md) {
       text-wrap: pretty;
       font-size: 2rem;

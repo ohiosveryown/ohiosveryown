@@ -8,6 +8,7 @@ export type CraftBlock = {
   title?: string
   textStyle?: string
   listStyle?: string
+  decorations?: string[]
   markdown?: string
   url?: string
   altText?: string

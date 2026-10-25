@@ -1,8 +1,10 @@
 // The only shapes the client receives; Craft's raw blocks stay on the server.
 export type BodyNode =
-  | { kind: 'h3' | 'h4' | 'p'; html: string }
+  | { kind: 'h3' | 'h4' | 'p' | 'quote' | 'caption'; html: string }
   | { kind: 'img'; src: string; alt: string; aspectRatio?: number }
   | { kind: 'video'; src: string; aspectRatio?: number }
+  // A section break (Craft's divider).
+  | { kind: 'break' }
 
 export type CaseStudyImage = {
   src: string
@@ -20,7 +22,7 @@ export type CaseStudy = {
   date?: string
   link?: string
   disciplines: string[]
-  hero?: CaseStudyImage & { thumb: string }
+  hero?: CaseStudyImage & { thumb: string; caption?: string }
   tooltip?: { text: string }
   // Icon's top-left corner. Desktop: % of the desk. Mobile: x in %, y in svh.
   position?: { x?: number; y?: number; mobileX?: number; mobileY?: number }

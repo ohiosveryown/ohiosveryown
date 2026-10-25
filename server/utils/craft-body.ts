@@ -25,6 +25,15 @@ const CRAFT_TAGS = /<\/?(?:highlight|caption|callout|comment)\b[^>]*>/g
 const INTERNAL_LINKS = /\[([^\]]*)\]\((?:block|date):\/\/[^)]*\)/g
 // textStyle already gives the level.
 const HEADING_MARKS = /^#{1,6}\s+/
+// The decoration already says it's a quote.
+const QUOTE_MARK = /^>\s?/
+
+// A paragraph that's all italics, the way image captions are written.
+export function captionOf(block: CraftBlock | undefined) {
+  if (block?.type !== 'text' || block.textStyle) return undefined
+  const match = (block.markdown ?? '').trim().match(/^\*([^*]+)\*$/)
+  return match ? renderInline(match[1]!) : undefined
+}
 
 function renderInline(markdown: string) {
   return md
@@ -45,12 +54,13 @@ const TEXT_KINDS: Record<string, 'h3' | 'h4' | 'p'> = {
   body: 'p',
 }
 
-// Whitelist: headings, subheadings, paragraphs, images and videos.
+// Whitelist: headings, subheadings, paragraphs, quotes, images, videos and
+// dividers.
 // Everything else (lists, captions, pages, cards, tables, code, files…) is
 // dropped.
 export function toBody(
   blocks: CraftBlock[],
-  skip: string | undefined,
+  skip: (string | undefined)[],
   imageFor: (block: CraftBlock & { url: string }) => {
     src: string
     aspectRatio?: number
@@ -62,7 +72,7 @@ export function toBody(
 ): BodyNode[] {
   const body: BodyNode[] = []
   for (const block of blocks) {
-    if (block.id === skip) continue
+    if (skip.includes(block.id)) continue
 
     if (block.type === 'image') {
       if (!block.url) continue
@@ -70,6 +80,15 @@ export function toBody(
         block as CraftBlock & { url: string },
       )
       body.push({ kind: 'img', src, alt: block.altText ?? '', aspectRatio })
+      continue
+    }
+
+    // Dividers, as a break between sections. Not at the very start, or
+    // twice in a row.
+    if (block.type === 'line') {
+      if (body.length && body.at(-1)!.kind !== 'break') {
+        body.push({ kind: 'break' })
+      }
       continue
     }
 
@@ -86,8 +105,23 @@ export function toBody(
     if (block.listStyle && block.listStyle !== 'none') continue
     const kind = TEXT_KINDS[block.textStyle ?? 'body']
     if (!kind) continue
-    const html = renderInline(block.markdown ?? '')
-    if (html) body.push({ kind, html })
+    // A quote block's markdown starts with "> " (its decoration says so too).
+    const quote =
+      kind === 'p' && (block.decorations?.includes('quote') ?? false)
+    // An italic line right under an image is its caption.
+    const caption =
+      kind === 'p' && !quote && body.at(-1)?.kind === 'img'
+        ? captionOf(block)
+        : undefined
+    if (caption) {
+      body.push({ kind: 'caption', html: caption })
+      continue
+    }
+    const markdown = (block.markdown ?? '').replace(quote ? QUOTE_MARK : '', '')
+    const html = renderInline(markdown)
+    if (html) body.push({ kind: quote ? 'quote' : kind, html })
   }
+  // Nor at the very end.
+  if (body.at(-1)?.kind === 'break') body.pop()
   return body
 }
