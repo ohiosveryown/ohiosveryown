@@ -3,6 +3,8 @@ export type BodyNode =
   | { kind: 'h3' | 'h4' | 'p' | 'quote' | 'caption'; html: string }
   | { kind: 'img'; src: string; alt: string; aspectRatio?: number }
   | { kind: 'video'; src: string; aspectRatio?: number }
+  // A note, "[1] …" in Craft, which markers like [^1] in the text link to.
+  | { kind: 'note'; n: number; html: string }
   // A section break (Craft's divider).
   | { kind: 'break' }
 

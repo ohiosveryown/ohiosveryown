@@ -31,7 +31,10 @@ function describe(study: CaseStudy) {
     const text = plain(node.html)
     if (!text) continue
     lines.push(
-      node.kind === 'p' || node.kind === 'quote' || node.kind === 'caption'
+      node.kind === 'p' ||
+        node.kind === 'quote' ||
+        node.kind === 'caption' ||
+        node.kind === 'note'
         ? text
         : `### ${text}`,
     )

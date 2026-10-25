@@ -80,7 +80,10 @@
                 </dd>
               </div>
             </dl>
-            <div class="desk-dialog__copy">
+            <div
+              class="desk-dialog__copy"
+              @click="followFootnote"
+            >
               <!-- html is rendered and sanitized on the server -->
               <template
                 v-for="(node, index) in study.body"
@@ -133,6 +136,20 @@
                   v-else-if="node.kind === 'break'"
                   class="desk-dialog__break"
                 />
+                <p
+                  v-else-if="node.kind === 'note'"
+                  :id="`fn-${node.n}`"
+                  class="desk-dialog__note"
+                >
+                  <a
+                    class="desk-dialog__note-back"
+                    :href="`#fnref-${node.n}`"
+                    :data-fn-back="node.n"
+                    :aria-label="`Back to note ${node.n} in the text`"
+                    >{{ node.n }}</a
+                  >
+                  <span v-html="node.html" />
+                </p>
                 <p
                   v-else-if="node.kind === 'caption'"
                   class="desk-dialog__caption desk-dialog__caption--body"
@@ -267,7 +284,19 @@
 </template>
 
 <style scoped lang="scss">
+  // The panel's text face: Geist (Vercel, OFL; the Latin variable file),
+  // with Blush for the file name and labels. Only downloaded once a panel
+  // opens, since nothing on the home page uses it.
+  @font-face {
+    font-family: 'geist';
+    src: url('~/assets/type/geist.woff2') format('woff2');
+    font-weight: 100 900;
+    font-display: swap;
+  }
+
   .desk-dialog {
+    --text-font: 'geist', var(--system-font);
+
     display: flex;
     flex-direction: column;
     position: fixed;
@@ -405,7 +434,7 @@
   }
 
   .desk-dialog__title {
-    font-family: var(--system-font);
+    font-family: var(--text-font);
     font-size: 2.6rem;
     font-weight: 600;
     letter-spacing: -0.03rem;
@@ -467,7 +496,7 @@
     flex: 1 0 0;
     min-width: 0;
     margin: 0;
-    font-family: var(--system-font);
+    font-family: var(--text-font);
     font-weight: 500;
     letter-spacing: -0.01em;
     line-height: 1.11;
@@ -501,17 +530,18 @@
   // Under the cover, and under images in the body (an italic line right
   // after one in Craft).
   .desk-dialog__caption {
-    margin-top: 1.4rem;
+    margin: 1rem auto 0;
+    max-width: 72%;
+    text-align: center;
     opacity: 0.6;
-    font-family: var(--system-font);
+    font-family: var(--text-font);
     font-size: 1.4rem;
-    font-style: italic;
     line-height: 1.4;
   }
 
   // In the body, pulled up under its image (past the flow's gap).
   .desk-dialog__caption--body {
-    margin: calc(1.4rem - var(--flow)) 0 0;
+    margin: calc(1rem - var(--flow)) auto 0;
   }
 
   .desk-dialog__image {
@@ -529,11 +559,11 @@
 
   .desk-dialog__intro {
     padding: 0.8rem 0;
-    font-family: var(--system-font);
+    font-family: var(--text-font);
     font-size: 2.4rem;
     font-weight: 600;
     letter-spacing: -0.04rem;
-    line-height: 1.12;
+    line-height: 1.2;
     text-wrap: pretty;
     text-box-edge: cap alphabetic;
     text-box-trim: trim-both;
@@ -547,7 +577,7 @@
 
   .desk-dialog__h3,
   .desk-dialog__h4 {
-    font-family: var(--system-font);
+    font-family: var(--text-font);
     font-weight: 600;
     text-wrap: balance;
 
@@ -575,6 +605,43 @@
     line-height: 1.4;
   }
 
+  // Footnote markers in the text (rendered on the server, so :deep).
+  .desk-dialog__copy :deep(.fn-ref) {
+    margin-left: 0.1em;
+    font-size: 0.65em;
+    line-height: 0;
+    vertical-align: super;
+  }
+
+  .desk-dialog__copy :deep(.fn-ref a) {
+    padding: 0 0.1em;
+    color: #d2f976;
+    text-decoration: none;
+  }
+
+  // The notes they link to: small and muted, numbered, closely spaced.
+  .desk-dialog__note {
+    display: flex;
+    gap: 0.8rem;
+    margin: 0;
+    opacity: 0.6;
+    font-family: var(--text-font);
+    font-size: 1.4rem;
+    line-height: 1.45;
+
+    & + & {
+      margin-top: calc(1rem - var(--flow));
+    }
+  }
+
+  .desk-dialog__note-back {
+    flex-shrink: 0;
+    min-width: 1.6rem;
+    color: #d2f976;
+    text-decoration: none;
+    font-variant-numeric: tabular-nums;
+  }
+
   // Three dots, centred: one dot repeated across a box three steps wide.
   .desk-dialog__break {
     align-self: center;
@@ -590,33 +657,38 @@
       0 0 / 1.2rem 0.4rem repeat-x;
   }
 
-  // A pull quote: the paragraph's type, set off by a rule on its left.
+  // A pull quote: dimmer than the body, set off by a rule on its left.
   .desk-dialog__quote {
     margin: 0;
     padding-left: 1.6rem;
     border-left: 2px solid rgba(255, 255, 255, 0.4);
-    font-family: var(--system-font);
-    font-size: 1.7rem;
-    font-style: italic;
-    letter-spacing: -0.003em;
-    line-height: 1.5;
+    // Dimmer than the body (0.9), so it reads as quoted, not as Matt.
+    color: rgba(255, 255, 255, 0.7);
+    font-family: var(--text-font);
+    font-size: 1.5rem;
+    // A touch heavier than regular: light text on black reads thin.
+    font-weight: 450;
+    letter-spacing: -0.005em;
+    line-height: 1.4;
 
     @include breakpoint(md) {
       text-wrap: pretty;
-      font-size: 2rem;
+      font-size: 1.7rem;
     }
   }
 
   .desk-dialog__para {
     margin: 0;
     opacity: 0.9;
-    font-family: var(--system-font);
-    font-size: 1.7rem;
-    letter-spacing: -0.003em;
+    font-family: var(--text-font);
+    font-size: 1.6rem;
+    // A touch heavier than regular: light text on black reads thin.
+    font-weight: 450;
+    letter-spacing: -0.005em;
     line-height: 1.35;
     @include breakpoint(md) {
       text-wrap: pretty;
-      font-size: 2rem;
+      font-size: 1.8rem;
     }
   }
 
@@ -699,6 +771,26 @@
 
   const ease = [0.8, 0, 0.16, 1] as const
   const reduceMotion = ref(false)
+
+  // Footnotes: a marker in the text scrolls to its note, and a note's number
+  // back to the marker. Within the panel, not by URL hash, which would move
+  // the page and change the route.
+  function followFootnote(event: MouseEvent) {
+    const link = (event.target as Element).closest<HTMLAnchorElement>(
+      'a[data-fn], a[data-fn-back]',
+    )
+    const copy = event.currentTarget as HTMLElement
+    if (!link) return
+    event.preventDefault()
+    const n = link.dataset.fn ?? link.dataset.fnBack
+    const target = link.dataset.fn
+      ? copy.querySelector(`#fn-${n}`)
+      : copy.querySelector(`a[data-fn="${n}"]`)
+    target?.scrollIntoView({
+      block: 'center',
+      behavior: reduceMotion.value ? 'auto' : 'smooth',
+    })
+  }
   const closeButton = useTemplateRef<HTMLButtonElement>('closeButton')
   const autoFocused = ref(false)
   const body = useTemplateRef<HTMLElement>('body')

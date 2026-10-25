@@ -25,6 +25,11 @@ const CRAFT_TAGS = /<\/?(?:highlight|caption|callout|comment)\b[^>]*>/g
 const INTERNAL_LINKS = /\[([^\]]*)\]\((?:block|date):\/\/[^)]*\)/g
 // textStyle already gives the level.
 const HEADING_MARKS = /^#{1,6}\s+/
+// Footnotes: "[^1]" in the text (markdown-it leaves it as is) links to the
+// note that starts "[1] ".
+const FOOTNOTE_MARK = /\[\^(\d{1,3})\]/g
+const NOTE_START = /^\[(\d{1,3})\]\s+/
+
 // The decoration already says it's a quote.
 const QUOTE_MARK = /^>\s?/
 
@@ -44,6 +49,10 @@ function renderInline(markdown: string) {
         .replace(HEADING_MARKS, ''),
     )
     .trim()
+    .replace(
+      FOOTNOTE_MARK,
+      '<sup class="fn-ref"><a href="#fn-$1" data-fn="$1">$1</a></sup>',
+    )
 }
 
 const TEXT_KINDS: Record<string, 'h3' | 'h4' | 'p'> = {
@@ -118,6 +127,12 @@ export function toBody(
       continue
     }
     const markdown = (block.markdown ?? '').replace(quote ? QUOTE_MARK : '', '')
+    const note = kind === 'p' && !quote ? markdown.match(NOTE_START) : null
+    if (note) {
+      const html = renderInline(markdown.slice(note[0].length))
+      if (html) body.push({ kind: 'note', n: Number(note[1]), html })
+      continue
+    }
     const html = renderInline(markdown)
     if (html) body.push({ kind: quote ? 'quote' : kind, html })
   }
