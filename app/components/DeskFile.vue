@@ -302,11 +302,11 @@
     }
     if (!keyboard) {
       clearTimeout(hintTimer)
-      if (!learned.value) {
-        learned.value = true
-        dismissTooltip()
-      }
+      learned.value = true
     }
+    // It's opening: the panel covers the item, but with the pointer still,
+    // no mouseout comes to take the tooltip away.
+    dismissTooltip()
     if (!props.href) emit('open', art.value)
   }
 

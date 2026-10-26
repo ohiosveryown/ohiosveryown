@@ -284,19 +284,20 @@
 </template>
 
 <style scoped lang="scss">
-  // The panel's text face: Blush Text, Blush's long-form reading cut (wght
-  // 300–700, plus a GRAD axis from -100 to 50), with Blush for the file name
-  // and labels. Only downloaded once a panel opens, since nothing on the
-  // home page uses it.
+  // The panel's text face: Instrument Sans (OFL; Latin subset, fixed at full
+  // width, wght 400–700), with Blush for the file name and labels. Only
+  // downloaded once a panel opens, since nothing on the home page uses it.
+  // No italic file: the few italics are slanted by the browser instead.
   @font-face {
-    font-family: 'blush-text';
-    src: url('~/assets/type/blush-text.woff2') format('woff2');
-    font-weight: 300 700;
+    font-family: 'instrument-sans';
+    src: url('~/assets/type/instrument-sans.woff2') format('woff2');
+    font-weight: 400 700;
+    font-style: normal;
     font-display: swap;
   }
 
   .desk-dialog {
-    --text-font: 'blush-text', var(--system-font);
+    --text-font: 'instrument-sans', var(--system-font);
 
     display: flex;
     flex-direction: column;
@@ -310,10 +311,6 @@
     border: 0.5px solid rgba(255, 255, 255, 0.26);
     border-radius: 3.5rem;
     color: #fff;
-    // The same glow as the Mallow bar (AskBar): from the top centre, fading
-    // to black. The panel is tall, so the glow has a fixed depth rather
-    // than stretching down the whole panel. (Not min(): gradient sizes
-    // don't take it, and the whole background is dropped.)
     background: radial-gradient(
       100% 48rem at 50% 0%,
       #3a3a3a 0%,
@@ -652,7 +649,7 @@
     align-self: center;
     width: 3.6rem;
     height: 0.4rem;
-    margin: 0;
+    margin: 0.5rem auto;
     border: 0;
     background: radial-gradient(
         circle,
@@ -681,14 +678,13 @@
 
   .desk-dialog__para {
     margin: 0;
-    opacity: 0.9;
     font-family: var(--text-font);
-    text-wrap: pretty;
     font-size: 1.6rem;
     line-height: 1.45;
-    letter-spacing: -0.005em;
+    text-wrap: balance;
     @include breakpoint(md) {
-      font-size: 1.8rem;
+      font-size: 1.7rem;
+      line-height: 1.5;
     }
   }
   // A paragraph bold all the way through in Craft: in the site's lime.
@@ -710,7 +706,7 @@
   }
 
   .desk-dialog__para :deep(strong) {
-    font-weight: 700;
+    font-weight: 600;
     letter-spacing: -0.005em;
   }
 
@@ -1104,11 +1100,26 @@
     },
   })
 
+  // While the panel grows out of its item, it passes in and out from under a
+  // still pointer, and the item's tooltip comes back each time the item is
+  // under it; once the panel covers it, Safari sends nothing to take the
+  // tooltip away again. So none show until it has opened.
+  let tooltipTimer: ReturnType<typeof setTimeout> | undefined
+  function holdTooltips() {
+    suppressTooltip(true)
+    clearTimeout(tooltipTimer)
+    tooltipTimer = setTimeout(
+      () => suppressTooltip(false),
+      reduceMotion.value ? 0 : 800,
+    )
+  }
+
   watch(
     () => props.study,
     async (study, previous) => {
       if (study && !previous) {
         openedAt = performance.now()
+        holdTooltips()
         returnFocus =
           triggerOf(props.origin) ??
           (document.activeElement as HTMLElement | null)
@@ -1139,6 +1150,10 @@
 
   onBeforeUnmount(() => {
     clearTimeout(idleTimer)
+    if (tooltipTimer) {
+      clearTimeout(tooltipTimer)
+      suppressTooltip(false)
+    }
     onResizeUp()
     fineQuery?.removeEventListener('change', onFineChange)
     window.removeEventListener('keydown', onKeydown)
