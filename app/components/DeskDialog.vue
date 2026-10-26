@@ -8,7 +8,7 @@
       :class="{ 'is-resized': height != null }"
       role="dialog"
       aria-modal="true"
-      :aria-labelledby="`${study.slug}-title`"
+      :aria-label="study.title"
       :style="shellStyle"
       :variants="variants"
       initial="hidden"
@@ -28,12 +28,6 @@
         >
           <header class="desk-dialog__header">
             <p class="desk-dialog__name blush">{{ study.label }}</p>
-            <h2
-              :id="`${study.slug}-title`"
-              class="desk-dialog__title"
-            >
-              {{ study.title }}
-            </h2>
           </header>
 
           <figure
@@ -311,13 +305,7 @@
     border: 0.5px solid rgba(255, 255, 255, 0.26);
     border-radius: 3.5rem;
     color: #fff;
-    background: radial-gradient(
-      100% 48rem at 50% 0%,
-      #3a3a3a 0%,
-      #1f1f1f 34%,
-      #0e0e0e 52%,
-      #000 70%
-    );
+    background: #000;
     box-shadow:
       0 7.3rem 8rem 0 rgba(0, 0, 0, 0.2),
       0 1.6rem 1.7rem 0 rgba(0, 0, 0, 0.12),
@@ -331,6 +319,28 @@
       width: min(58rem, calc(100% - 3.2rem));
       min-height: 0;
       aspect-ratio: 4 / 3.45;
+    }
+
+    // Centred on the page, and wider, with images at full width and the
+    // text in a narrower column (see the inset rule below). Insets all round
+    // plus auto margins centre it without a transform (motion owns the
+    // transform for the open/close FLIP). That needs a set height: just tall
+    // enough for the cover (always 408 / 280) to sit as far from the bottom
+    // as from the sides. 7.31rem is where the cover starts (top padding,
+    // file name and gap), 2.45rem the side inset (padding plus border), and
+    // the cover is the width less both side insets. Half the screen wide,
+    // between 72rem and 100rem, so it grows on very large screens.
+    @include breakpoint(lg) {
+      --dialog-width: min(clamp(72rem, 50vw, 100rem), 100vw - 3.2rem);
+
+      inset: 0;
+      margin: auto;
+      width: var(--dialog-width);
+      height: calc(
+        7.31rem + (var(--dialog-width) - 4.9rem) * 280 / 408 + 2.45rem
+      );
+      max-height: calc(100% - 1.6rem);
+      aspect-ratio: auto;
     }
 
     &.is-resized {
@@ -414,6 +424,9 @@
     display: flex;
     flex-direction: column;
     gap: 1.2rem;
+    // With the body's 2rem gap, 3.1rem from the file name's baseline to the
+    // cover, as in the Figma dialog.
+    margin-bottom: 1.1rem;
     padding-right: 4rem;
   }
 
@@ -429,19 +442,6 @@
     text-box-edge: cap alphabetic;
     text-box-trim: trim-both;
     overflow: hidden;
-  }
-
-  .desk-dialog__title {
-    font-family: var(--text-font);
-    font-size: 2.6rem;
-    font-weight: 600;
-    letter-spacing: -0.04rem;
-    line-height: 1;
-    text-wrap: balance;
-    @include breakpoint(md) {
-      margin-bottom: 1.2rem;
-      font-size: 3.2rem;
-    }
   }
 
   .desk-dialog__details {
@@ -536,7 +536,7 @@
     font-size: 1.2rem;
     line-height: 1.3;
     @include breakpoint(md) {
-      max-width: 76%;
+      max-width: 80%;
       font-size: 1.4rem;
     }
   }
@@ -611,9 +611,11 @@
   // Footnote markers in the text (rendered on the server, so :deep).
   .desk-dialog__copy :deep(.fn-ref) {
     margin-left: 0.1em;
-    font-size: 0.65em;
+    font-size: 0.72em;
     line-height: 0;
     vertical-align: super;
+    color: rgba(255, 255, 255, 0.64);
+    opacity: 1 !important;
   }
 
   .desk-dialog__copy :deep(.fn-ref a) {
@@ -639,7 +641,7 @@
   .desk-dialog__note-back {
     flex-shrink: 0;
     min-width: 1.6rem;
-    color: #d2f976;
+    color: #fff;
     text-decoration: none;
     font-variant-numeric: tabular-nums;
   }
@@ -682,9 +684,10 @@
     font-size: 1.6rem;
     line-height: 1.45;
     text-wrap: balance;
+    opacity: 0.88;
     @include breakpoint(md) {
-      font-size: 1.7rem;
-      line-height: 1.5;
+      font-weight: 420;
+      font-size: 1.8rem;
     }
   }
   // A paragraph bold all the way through in Craft: in the site's lime.
@@ -708,6 +711,27 @@
   .desk-dialog__para :deep(strong) {
     font-weight: 600;
     letter-spacing: -0.005em;
+  }
+
+  // On the wider centred dialog, images and video run the full width and
+  // the text sits in a narrower column inside them: 56.7rem wide on a 72rem
+  // dialog (inset 5.2rem each side). As the dialog grows, the column grows
+  // by a quarter as much, so lines stay a comfortable length (63.7rem at
+  // the 100rem maximum). 100% is the full inner width.
+  .desk-dialog__intro,
+  .desk-dialog__details,
+  .desk-dialog__h3,
+  .desk-dialog__h4,
+  .desk-dialog__para,
+  .desk-dialog__quote,
+  .desk-dialog__note,
+  .desk-dialog__caption--body {
+    @include breakpoint(lg) {
+      --text-width: calc(56.7rem + (var(--dialog-width) - 72rem) / 4);
+
+      margin-right: max(5.2rem, calc((100% - var(--text-width)) / 2));
+      margin-left: max(5.2rem, calc((100% - var(--text-width)) / 2));
+    }
   }
 
   .desk-dialog__close {
@@ -734,7 +758,7 @@
 </style>
 
 <script setup lang="ts">
-  import { motion, AnimatePresence } from 'motion-v'
+  import { motion, AnimatePresence, animate, motionValue } from 'motion-v'
   import type { ComponentPublicInstance } from 'vue'
   import type { CaseStudy } from '#shared/types/case-study'
 
@@ -760,7 +784,7 @@
     }
     if (study.disciplines.length) {
       rows.push({
-        label: 'Discipline(s)',
+        label: 'Topic(s)',
         value: study.disciplines.join(', '),
       })
     }
@@ -832,6 +856,75 @@
   function onScroll() {
     measure()
     reveal()
+    if (!hinting) rememberScrolled()
+  }
+
+  // The cover can fill the panel exactly, so it may not look scrollable.
+  // Until someone has scrolled a panel themselves (since the page last
+  // loaded), each one nudges its content up a little after opening, then
+  // settles back. Any input during the nudge stops it where it is.
+  const HINT_PX = 64
+  const HINT_DELAY_MS = 900
+  // Shared app state, not storage: kept across panels and route changes,
+  // reset by a reload.
+  const scrolledOnce = useState('desk-dialog:scrolled', () => false)
+  let hinting = false
+  let hintTimer: ReturnType<typeof setTimeout> | undefined
+  let hintAnimation: ReturnType<typeof animate> | undefined
+  const HINT_STOPPERS = ['wheel', 'touchstart', 'pointerdown', 'keydown']
+
+  function rememberScrolled() {
+    scrolledOnce.value = true
+  }
+
+  function scheduleHint() {
+    clearTimeout(hintTimer)
+    if (reduceMotion.value || scrolledOnce.value) return
+    hintTimer = setTimeout(hintScroll, HINT_DELAY_MS)
+  }
+
+  function hintScroll() {
+    const el = body.value
+    if (!el || el.scrollTop > 0) return
+    if (el.scrollHeight - el.clientHeight < HINT_PX) return
+
+    hinting = true
+    const offset = motionValue(0)
+    offset.on('change', (value) => (el.scrollTop = value))
+    hintAnimation = animate(offset, [0, HINT_PX, HINT_PX, 0], {
+      duration: 1.5,
+      times: [0, 0.35, 0.5, 1],
+      ease: 'easeInOut',
+      onComplete: endHint,
+    })
+    for (const type of HINT_STOPPERS)
+      el.addEventListener(type, stopHint, { passive: true })
+  }
+
+  function stopHint() {
+    hintAnimation?.stop()
+    endHint()
+  }
+
+  function endHint() {
+    hintAnimation = undefined
+    for (const type of HINT_STOPPERS)
+      body.value?.removeEventListener(type, stopHint)
+    // The last scroll events of the nudge arrive a frame after it ends.
+    requestAnimationFrame(() =>
+      requestAnimationFrame(() => {
+        hinting = false
+      }),
+    )
+  }
+
+  function cancelHint() {
+    clearTimeout(hintTimer)
+    hintAnimation?.stop()
+    hintAnimation = undefined
+    hinting = false
+    for (const type of HINT_STOPPERS)
+      body.value?.removeEventListener(type, stopHint)
   }
 
   function scrollPerPixel() {
@@ -906,10 +999,20 @@
   let resizeStart = { y: 0, height: 0 }
   let fineQuery: MediaQueryList | undefined
 
+  // Large screens centre the dialog (see the lg styles), so it grows from
+  // the middle, both ways.
+  function isCentered() {
+    return window.matchMedia('(min-width: 1200px)').matches
+  }
+
   function measureHeightBounds() {
     if (!dialog) return
-    // Max height leaves the same gap below as the dialog has above.
-    const top = Number.parseFloat(getComputedStyle(dialog).top) || 0
+    // Max height leaves the same gap below as the dialog has above (0.8rem
+    // each way when centred, matching its CSS max-height).
+    const top = isCentered()
+      ? Number.parseFloat(getComputedStyle(document.documentElement).fontSize) *
+        0.8
+      : Number.parseFloat(getComputedStyle(dialog).top) || 0
     maxHeight.value = Math.max(0, window.innerHeight - top * 2)
 
     // offsetHeight is the layout size (ignores the FLIP transform). While the
@@ -939,7 +1042,10 @@
 
   function onResizeMove(event: PointerEvent) {
     if (!dialog) return
-    const next = resizeStart.height + (event.clientY - resizeStart.y)
+    // Centred, the bottom edge only moves half as far as the height changes,
+    // so double it to keep the edge under the pointer.
+    const pull = (event.clientY - resizeStart.y) * (isCentered() ? 2 : 1)
+    const next = resizeStart.height + pull
     height.value = Math.min(Math.max(next, minHeight.value), maxHeight.value)
   }
 
@@ -970,6 +1076,7 @@
 
   watch(shell, (instance) => {
     if (!instance) {
+      cancelHint()
       phase.value = 'hidden'
       height.value = null
       minHeight.value = 0
@@ -980,6 +1087,7 @@
     from = invert()
     phase.value = 'visible'
     nextTick(measureHeightBounds)
+    scheduleHint()
   })
 
   const variants = {
@@ -1150,6 +1258,7 @@
 
   onBeforeUnmount(() => {
     clearTimeout(idleTimer)
+    cancelHint()
     if (tooltipTimer) {
       clearTimeout(tooltipTimer)
       suppressTooltip(false)

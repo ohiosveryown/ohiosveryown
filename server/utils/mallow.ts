@@ -21,7 +21,7 @@ function describe(study: CaseStudy) {
   const lines = [`## ${study.title} (${study.label})`, `Slug: ${study.slug}`]
   if (study.date) lines.push(`Date: ${study.date}`)
   if (study.disciplines.length) {
-    lines.push(`Disciplines: ${study.disciplines.join(', ')}`)
+    lines.push(`Topics: ${study.disciplines.join(', ')}`)
   }
   if (study.link) lines.push(`Link: ${study.link.replace(/^https?:\/\//, '')}`)
   if (study.intro) lines.push(study.intro)
