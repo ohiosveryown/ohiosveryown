@@ -560,13 +560,14 @@
   .desk-dialog__intro {
     padding: 0.8rem 0;
     font-family: var(--text-font);
-    font-size: 2.4rem;
+    font-size: 2.1rem;
     font-weight: 600;
     letter-spacing: -0.04rem;
     line-height: 1.2;
     text-wrap: pretty;
-    text-box-edge: cap alphabetic;
-    text-box-trim: trim-both;
+    @include breakpoint(md) {
+      font-size: 2.4rem;
+    }
   }
 
   .desk-dialog__copy {
@@ -615,7 +616,6 @@
 
   .desk-dialog__copy :deep(.fn-ref a) {
     padding: 0 0.1em;
-    color: #d2f976;
     text-decoration: none;
   }
 
@@ -681,14 +681,13 @@
     margin: 0;
     opacity: 0.9;
     font-family: var(--text-font);
-    font-size: 1.6rem;
+    font-size: 1.8rem;
     // A touch heavier than regular: light text on black reads thin.
     font-weight: 450;
     letter-spacing: -0.005em;
     line-height: 1.35;
     @include breakpoint(md) {
       text-wrap: pretty;
-      font-size: 1.8rem;
     }
   }
   // A paragraph bold all the way through in Craft: in the site's lime.
