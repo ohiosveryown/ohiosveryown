@@ -670,11 +670,13 @@
 
   .desk-dialog__para {
     margin: 0;
+    // Dimmed by colour, not opacity: opacity fades the whole paragraph as one
+    // layer, so nothing inside it (like bold text) could be brighter.
+    color: rgba(255, 255, 255, 0.88);
     font-family: var(--text-font);
     font-size: 1.6rem;
     line-height: 1.45;
     text-wrap: balance;
-    opacity: 0.88;
     @include breakpoint(md) {
       font-weight: 430;
       font-size: 1.8rem;
@@ -700,6 +702,7 @@
 
   .desk-dialog__para :deep(strong) {
     font-weight: 600;
+    color: #fff;
     letter-spacing: -0.005em;
   }
 
