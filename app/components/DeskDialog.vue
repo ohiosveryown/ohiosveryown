@@ -314,20 +314,22 @@
     // Centred on the page, and wider, with images at full width and the
     // text in a narrower column (see the inset rule below). Insets all round
     // plus auto margins centre it without a transform (motion owns the
-    // transform for the open/close FLIP). That needs a set height: just tall
-    // enough for the cover (always 408 / 280) to sit as far from the bottom
-    // as from the sides. 7.31rem is where the cover starts (top padding,
-    // file name and gap), 2.45rem the side inset (padding plus border), and
-    // the cover is the width less both side insets. Half the screen wide,
-    // between 72rem and 100rem, so it grows on very large screens.
+    // transform for the open/close FLIP). That needs a set height: most of
+    // the screen (88svh), and never less than enough for the cover (always
+    // 408 / 280) to sit as far from the bottom as from the sides. 7.31rem
+    // is where the cover starts (top padding, file name and gap), 2.45rem
+    // the side inset (padding plus border), and the cover is the width less
+    // both side insets. Half the screen wide, between 72rem and 100rem, so
+    // it grows on very large screens.
     @include breakpoint(lg) {
       --dialog-width: min(clamp(72rem, 50vw, 100rem), 100vw - 3.2rem);
 
       inset: 0;
       margin: auto;
       width: var(--dialog-width);
-      height: calc(
-        7.31rem + (var(--dialog-width) - 4.9rem) * 280 / 408 + 2.45rem
+      height: max(
+        88svh,
+        calc(7.31rem + (var(--dialog-width) - 4.9rem) * 280 / 408 + 2.45rem)
       );
       max-height: calc(100% - 1.6rem);
       aspect-ratio: auto;
