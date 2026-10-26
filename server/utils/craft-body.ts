@@ -30,6 +30,16 @@ const HEADING_MARKS = /^#{1,6}\s+/
 const FOOTNOTE_MARK = /\[\^(\d{1,3})\]/g
 const NOTE_START = /^\[(\d{1,3})\]\s+/
 
+// Craft keeps a space selected along with the text inside the markers
+// ("*National Treasure, *Nicolas"), and markdown won't close emphasis on a
+// space, so the asterisks would show. Move the space outside them. Only
+// where the text on the other side is tight against its marker, so a lone
+// "2 * 3" is left alone.
+const SPACE_BEFORE_CLOSE =
+  /(?<!\*)(\*{1,2})(?=[^*\s])([^*]*?[^*\s])(\s+)\1(?=[^*\s])/g
+const SPACE_AFTER_OPEN =
+  /(?<=[^*\s]|^)(\*{1,2})(\s+)(?=[^*\s])([^*]*?[^*\s])\1(?!\*)/g
+
 // The decoration already says it's a quote.
 const QUOTE_MARK = /^>\s?/
 
@@ -46,7 +56,9 @@ function renderInline(markdown: string) {
       markdown
         .replace(CRAFT_TAGS, '')
         .replace(INTERNAL_LINKS, '$1')
-        .replace(HEADING_MARKS, ''),
+        .replace(HEADING_MARKS, '')
+        .replace(SPACE_BEFORE_CLOSE, '$1$2$1$3')
+        .replace(SPACE_AFTER_OPEN, '$2$1$3$1'),
     )
     .trim()
     .replace(
