@@ -681,11 +681,8 @@
     margin: 0;
     opacity: 0.9;
     font-family: var(--text-font);
-    font-size: 1.8rem;
-    // A touch heavier than regular: light text on black reads thin.
-    font-weight: 450;
-    letter-spacing: -0.005em;
-    line-height: 1.35;
+    font-size: 1.7rem;
+    line-height: 1.4;
     @include breakpoint(md) {
       text-wrap: pretty;
     }
