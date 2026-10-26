@@ -284,18 +284,19 @@
 </template>
 
 <style scoped lang="scss">
-  // The panel's text face: Geist (Vercel, OFL; the Latin variable file),
-  // with Blush for the file name and labels. Only downloaded once a panel
-  // opens, since nothing on the home page uses it.
+  // The panel's text face: Blush Text, Blush's long-form reading cut (wght
+  // 300–700, plus a GRAD axis from -100 to 50), with Blush for the file name
+  // and labels. Only downloaded once a panel opens, since nothing on the
+  // home page uses it.
   @font-face {
-    font-family: 'geist';
-    src: url('~/assets/type/geist.woff2') format('woff2');
-    font-weight: 100 900;
+    font-family: 'blush-text';
+    src: url('~/assets/type/blush-text.woff2') format('woff2');
+    font-weight: 300 700;
     font-display: swap;
   }
 
   .desk-dialog {
-    --text-font: 'geist', var(--system-font);
+    --text-font: 'blush-text', var(--system-font);
 
     display: flex;
     flex-direction: column;
@@ -330,7 +331,7 @@
 
     @include breakpoint(md) {
       left: auto;
-      width: min(62rem, calc(100% - 3.2rem));
+      width: min(58rem, calc(100% - 3.2rem));
       min-height: 0;
       aspect-ratio: 4 / 3.45;
     }
@@ -363,7 +364,7 @@
     // The rhythm of everything after the cover: between the intro, details
     // and copy, and between paragraphs, images and headings. The gap below
     // the cover is a step bigger.
-    --flow: 2.8rem;
+    --flow: 2rem;
 
     display: flex;
     flex-direction: column;
@@ -437,7 +438,7 @@
     font-family: var(--text-font);
     font-size: 2.6rem;
     font-weight: 600;
-    letter-spacing: -0.03rem;
+    letter-spacing: -0.04rem;
     line-height: 1;
     text-wrap: balance;
     @include breakpoint(md) {
@@ -498,9 +499,9 @@
     margin: 0;
     font-family: var(--text-font);
     font-weight: 500;
-    letter-spacing: -0.01em;
+    letter-spacing: 0.01em;
     line-height: 1.11;
-    text-transform: capitalize;
+    text-transform: uppercase;
     text-box-edge: cap alphabetic;
     text-box-trim: trim-both;
   }
@@ -531,12 +532,16 @@
   // after one in Craft).
   .desk-dialog__caption {
     margin: 1rem auto 0;
-    max-width: 72%;
+    max-width: 100%;
     text-align: center;
     opacity: 0.6;
     font-family: var(--text-font);
-    font-size: 1.4rem;
-    line-height: 1.4;
+    font-size: 1.2rem;
+    line-height: 1.3;
+    @include breakpoint(md) {
+      max-width: 76%;
+      font-size: 1.4rem;
+    }
   }
 
   // In the body, pulled up under its image (past the flow's gap).
@@ -657,16 +662,13 @@
       0 0 / 1.2rem 0.4rem repeat-x;
   }
 
-  // A pull quote: dimmer than the body, set off by a rule on its left.
   .desk-dialog__quote {
     margin: 0;
     padding-left: 1.6rem;
     border-left: 2px solid rgba(255, 255, 255, 0.4);
-    // Dimmer than the body (0.9), so it reads as quoted, not as Matt.
     color: rgba(255, 255, 255, 0.7);
     font-family: var(--text-font);
     font-size: 1.5rem;
-    // A touch heavier than regular: light text on black reads thin.
     font-weight: 450;
     letter-spacing: -0.005em;
     line-height: 1.4;
@@ -681,10 +683,12 @@
     margin: 0;
     opacity: 0.9;
     font-family: var(--text-font);
-    font-size: 1.7rem;
-    line-height: 1.4;
+    text-wrap: pretty;
+    font-size: 1.6rem;
+    line-height: 1.45;
+    letter-spacing: -0.005em;
     @include breakpoint(md) {
-      text-wrap: pretty;
+      font-size: 1.8rem;
     }
   }
   // A paragraph bold all the way through in Craft: in the site's lime.
@@ -706,7 +710,8 @@
   }
 
   .desk-dialog__para :deep(strong) {
-    font-weight: 600;
+    font-weight: 700;
+    letter-spacing: -0.005em;
   }
 
   .desk-dialog__close {
