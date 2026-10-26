@@ -278,20 +278,10 @@
 </template>
 
 <style scoped lang="scss">
-  // The panel's text face: Instrument Sans (OFL; Latin subset, fixed at full
-  // width, wght 400–700), with Blush for the file name and labels. Only
-  // downloaded once a panel opens, since nothing on the home page uses it.
-  // No italic file: the few italics are slanted by the browser instead.
-  @font-face {
-    font-family: 'instrument-sans';
-    src: url('~/assets/type/instrument-sans.woff2') format('woff2');
-    font-weight: 400 700;
-    font-style: normal;
-    font-display: swap;
-  }
-
   .desk-dialog {
-    --text-font: 'instrument-sans', var(--system-font);
+    // The system stack: San Francisco on Apple devices, Segoe UI on
+    // Windows, Roboto on Android. Nothing to download, and real italics.
+    --text-font: var(--system-font);
 
     display: flex;
     flex-direction: column;
@@ -686,7 +676,7 @@
     text-wrap: balance;
     opacity: 0.88;
     @include breakpoint(md) {
-      font-weight: 420;
+      font-weight: 430;
       font-size: 1.8rem;
     }
   }
