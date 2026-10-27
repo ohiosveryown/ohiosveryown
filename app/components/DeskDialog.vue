@@ -78,18 +78,21 @@
           </figure>
 
           <article class="desk-dialog__article">
-            <h3
+            <!-- The open post is the page's main content, so its title is
+                 the h1 (pages/index.vue drops its own while one is open).
+                 The intro is a standfirst, not a heading. -->
+            <p
               v-if="study.intro"
               class="desk-dialog__intro"
             >
               {{ study.intro }}
-            </h3>
-            <h2
+            </p>
+            <h1
               :id="`${study.slug}-title`"
               class="desk-dialog__overline"
             >
               {{ study.title }}
-            </h2>
+            </h1>
             <dl class="desk-dialog__details">
               <div
                 v-for="detail in details"
@@ -151,12 +154,15 @@
                   preload="metadata"
                   :aria-hidden="!reduceMotion"
                 />
-                <h3
+                <!-- One level under the title: Craft's Heading is an h2,
+                     its Subheading an h3 (the classes keep the data's
+                     names). -->
+                <h2
                   v-else-if="node.kind === 'h3'"
                   class="desk-dialog__h3"
                   v-html="node.html"
                 />
-                <h4
+                <h3
                   v-else-if="node.kind === 'h4'"
                   class="desk-dialog__h4"
                   v-html="node.html"

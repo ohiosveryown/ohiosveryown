@@ -5,18 +5,20 @@
     :ask="ask"
   >
     <component
-      :is="href ? 'a' : 'button'"
+      :is="href || to ? 'a' : 'button'"
       ref="file"
       class="desk-file"
       :class="{ 'has-tooltip': tooltipText }"
       v-bind="
         href
           ? { href, target: '_blank', rel: 'noopener' }
-          : {
-              type: 'button',
-              'aria-haspopup': 'dialog',
-              'aria-expanded': expanded,
-            }
+          : to
+            ? { href: to, 'aria-haspopup': 'dialog', 'aria-expanded': expanded }
+            : {
+                type: 'button',
+                'aria-haspopup': 'dialog',
+                'aria-expanded': expanded,
+              }
       "
       :data-tooltip="tooltipText"
       :data-tooltip-image="hinting ? undefined : tooltipImage"
@@ -222,7 +224,12 @@
     defineProps<{
       name: string
       image?: string | null
+      // An outside link, opened in a new tab.
       href?: string | null
+      // A page of the site's own that this opens in place (a case study's
+      // /work page): a real link for search engines and new tabs, but a
+      // plain click opens it like a button (the `open` event).
+      to?: string | null
       tooltip?: string
       tooltipImage?: string
       label?: string
@@ -236,6 +243,7 @@
     {
       image: null,
       href: null,
+      to: null,
       tooltip: undefined,
       tooltipImage: undefined,
       label: undefined,
@@ -292,6 +300,12 @@
   }
 
   function onClick(event: MouseEvent) {
+    // Cmd/Ctrl/Shift/Alt-click on a page link: the browser's own (a new tab
+    // or window), not the panel.
+    const modified =
+      event.metaKey || event.ctrlKey || event.shiftKey || event.altKey
+    if (props.to && modified) return
+    if (props.to) event.preventDefault()
     const keyboard = event.detail === 0
     const ignored = matchMedia('(pointer: coarse)').matches
       ? event.detail > 1

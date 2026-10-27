@@ -74,7 +74,11 @@ export default defineEventHandler(async (event) => {
   const studies = await $fetch<CaseStudy[]>(`${origin}/api/case-studies`)
 
   // The pages (their data is inline: payload extraction is off).
-  const pages = ['/', ...studies.map((study) => `/work/${study.slug}`)]
+  const pages = [
+    '/',
+    '/sitemap.xml',
+    ...studies.map((study) => `/work/${study.slug}`),
+  ]
   const results = await Promise.all(pages.map((path) => revalidate(path)))
   const failed = results.filter((ok) => !ok).length
 

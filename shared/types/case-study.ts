@@ -23,10 +23,15 @@ export type CaseStudy = {
   label: string
   title: string
   intro?: string
+  // Shown as is ("Jan 2020 – Present").
   date?: string
+  // When the post went up, "YYYY-MM-DD" (Craft's "Published on"), for
+  // search engines' structured data.
+  publishedOn?: string
   link?: string
   disciplines: string[]
-  hero?: CaseStudyImage & { thumb: string; caption?: string }
+  // `og`: the cover cropped as a 1200 × 630 JPEG for link previews.
+  hero?: CaseStudyImage & { thumb: string; og?: string; caption?: string }
   tooltip?: { text: string }
   // Icon's top-left corner. Desktop: % of the desk. Mobile: x in %, y in svh.
   position?: { x?: number; y?: number; mobileX?: number; mobileY?: number }

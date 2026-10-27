@@ -11,6 +11,12 @@ function number(value: unknown): number | undefined {
   return typeof value === 'number' && Number.isFinite(value) ? value : undefined
 }
 
+// Craft's date properties come as "YYYY-MM-DD" (possibly with a time).
+function isoDate(value: unknown): string | undefined {
+  const match = typeof value === 'string' && value.match(/^\d{4}-\d{2}-\d{2}/)
+  return match ? match[0] : undefined
+}
+
 function strings(value: unknown): string[] {
   return Array.isArray(value)
     ? value.filter((item): item is string => typeof item === 'string')
@@ -45,6 +51,7 @@ export function imageFor(block: ImageBlock, images: Images) {
   return {
     src: synced?.src ?? block.url,
     thumb: synced?.thumb ?? block.url,
+    og: synced?.og,
     aspectRatio: synced?.aspectRatio ?? block.aspectRatio,
   }
 }
@@ -84,6 +91,7 @@ export function toCaseStudy(
     title: item.title,
     intro: text(p.intro),
     date: text(p.date),
+    publishedOn: isoDate(p.published_on),
     link: text(p.link),
     disciplines: strings(p.disciplines),
     hero: heroBlock && {

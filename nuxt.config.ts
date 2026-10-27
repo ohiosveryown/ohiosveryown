@@ -74,6 +74,7 @@ export default defineNuxtConfig({
       '/': { isr: { expiration: 60, allowQuery: [] } },
       '/work/**': { isr: { expiration: 60, allowQuery: [] } },
       '/api/case-studies': { isr: { expiration: 60, allowQuery: [] } },
+      '/sitemap.xml': { isr: { expiration: 3600, allowQuery: [] } },
     },
   },
   // Lets /api/refresh regenerate ISR pages on demand (Vercel on-demand

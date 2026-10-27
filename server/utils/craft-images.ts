@@ -10,6 +10,7 @@ export type SyncedImage = {
   src: string // panel size, for the hero and body
   thumb: string // icon size
   aspectRatio: number
+  og?: string // link-preview card, covers only
 }
 
 // The thumb is the desk icon, shown 72px wide: 216 is sharp on 3x screens.
@@ -17,6 +18,11 @@ export type SyncedImage = {
 // before get theirs on the next refresh).
 const SIZES = { thumb: 216, panel: 1400 } as const
 const THUMB = `thumb-${SIZES.thumb}.webp`
+// A post's cover as its link preview (og:image): the card size social
+// sites ask for, cropped from the middle, and JPEG, which every one of them
+// reads (some don't take WebP). The first frame of an animated one.
+export const OG = { width: 1200, height: 630 } as const
+const OG_FILE = `og-${OG.width}x${OG.height}.jpg`
 const CONCURRENCY = 4
 
 function short(value: string | Uint8Array) {
@@ -69,7 +75,16 @@ async function upload(base: string, bytes: Uint8Array) {
   return dimensions
 }
 
-async function syncOne(block: CraftBlock & { url: string }) {
+function ogCard(bytes: Uint8Array) {
+  return sharp(bytes)
+    .rotate()
+    .resize({ ...OG, fit: 'cover' })
+    .flatten({ background: '#000' })
+    .jpeg({ quality: 82, mozjpeg: true })
+    .toBuffer()
+}
+
+async function syncOne(block: CraftBlock & { url: string }, cover: boolean) {
   let version = await versionOf(block.url)
   let bytes: Uint8Array | undefined
   if (!version) {
@@ -93,11 +108,16 @@ async function syncOne(block: CraftBlock & { url: string }) {
     const sized = resizer(bytes, isAnimated(await sharp(bytes).metadata()))
     await r2Put(`${base}/${THUMB}`, await sized(SIZES.thumb), 'image/webp')
   }
+  if (cover && !(await r2Head(`${base}/${OG_FILE}`))) {
+    bytes ??= await download()
+    await r2Put(`${base}/${OG_FILE}`, await ogCard(bytes), 'image/jpeg')
+  }
 
   return {
     src: r2PublicUrl(`${base}/panel.webp`)!,
     thumb: r2PublicUrl(`${base}/${THUMB}`)!,
     aspectRatio: Number(dimensions.width) / Number(dimensions.height),
+    og: cover ? r2PublicUrl(`${base}/${OG_FILE}`)! : undefined,
   } satisfies SyncedImage
 }
 
@@ -124,8 +144,13 @@ async function syncAll<T>(
   return synced
 }
 
-export function syncImages(blocks: (CraftBlock & { url: string })[]) {
-  return syncAll(blocks, syncOne)
+// `covers`: the blocks that are a post's cover, which also get a link
+// preview card.
+export function syncImages(
+  blocks: (CraftBlock & { url: string })[],
+  covers: ReadonlySet<string> = new Set(),
+) {
+  return syncAll(blocks, (block) => syncOne(block, covers.has(block.id)))
 }
 
 // Videos are copied as they are (encode them small before adding them to

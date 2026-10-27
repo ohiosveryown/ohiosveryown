@@ -49,6 +49,7 @@
       class="home__study"
       :style="placement(study, index)"
       :name="study.label"
+      :to="`/work/${study.slug}`"
       :image="study.hero?.thumb"
       :tooltip="study.tooltip?.text"
       :expanded="openStudy?.id === study.id"
@@ -89,7 +90,13 @@
       class="home__panel"
       :class="{ 'is-behind': openStudy }"
     >
-      <h1 class="home__title">Matthew Pence</h1>
+      <!-- The page's h1, except while a post is open: then the post's title
+           is (see DeskDialog). -->
+      <component
+        :is="openStudy ? 'p' : 'h1'"
+        class="home__title"
+        >Matthew Pence</component
+      >
 
       <div
         class="roles"
@@ -1149,5 +1156,8 @@
         crossorigin: 'anonymous',
       },
     ],
+    // Who Matt is, for search engines (utils/structuredData). Posts add
+    // their own on top.
+    script: [jsonLd(siteGraph(), 'ld-site')],
   })
 </script>
