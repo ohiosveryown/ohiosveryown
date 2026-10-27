@@ -1,4 +1,24 @@
 <template>
+  <!-- The page behind, dimmed and out of reach while a panel is open;
+       clicking it closes. -->
+  <AnimatePresence>
+    <motion.div
+      v-if="study"
+      class="desk-dialog__scrim"
+      aria-hidden="true"
+      @click="emit('close')"
+      :initial="{ opacity: 0 }"
+      :animate="{ opacity: 1, transition: { duration: reduceMotion ? 0.01 : 0.4 } }"
+      :exit="{
+        opacity: 0,
+        transition: {
+          duration: reduceMotion ? 0.01 : 0.3,
+          delay: reduceMotion ? 0 : 0.25,
+        },
+      }"
+    />
+  </AnimatePresence>
+
   <AnimatePresence>
     <motion.section
       v-if="study"
@@ -21,21 +41,22 @@
         class="desk-dialog__content"
         :variants="content"
       >
+        <button
+          ref="closeButton"
+          class="desk-dialog__close"
+          type="button"
+          aria-label="Close"
+          :class="{ 'is-focused': autoFocused }"
+          @blur="autoFocused = false"
+          @click="emit('close')"
+        >
+          <span class="desk-dialog__close-label">Close</span>
+        </button>
         <div
           ref="body"
           class="desk-dialog__body"
           @scroll.passive="onScroll"
         >
-          <header class="desk-dialog__header">
-            <p class="desk-dialog__name blush">{{ study.label }}</p>
-            <h2
-              :id="`${study.slug}-title`"
-              class="desk-dialog__title"
-            >
-              {{ study.title }}
-            </h2>
-          </header>
-
           <figure
             v-if="study.hero"
             class="desk-dialog__figure"
@@ -54,6 +75,12 @@
           </figure>
 
           <article class="desk-dialog__article">
+            <h2
+              :id="`${study.slug}-title`"
+              class="desk-dialog__overline"
+            >
+              {{ study.title }}
+            </h2>
             <h3
               v-if="study.intro"
               class="desk-dialog__intro"
@@ -66,7 +93,7 @@
                 :key="detail.label"
                 class="desk-dialog__row"
               >
-                <dt class="desk-dialog__label blush">{{ detail.label }}</dt>
+                <dt class="desk-dialog__label">{{ detail.label }}</dt>
                 <dd class="desk-dialog__value">
                   <a
                     v-if="detail.href"
@@ -91,7 +118,7 @@
               >
                 <img
                   v-if="node.kind === 'img'"
-                  class="desk-dialog__image"
+                  class="desk-dialog__image desk-dialog__image--body"
                   :src="node.src"
                   :alt="node.alt"
                   :style="
@@ -106,7 +133,7 @@
                      reduced motion they wait, with controls, to be played. -->
                 <video
                   v-else-if="node.kind === 'video'"
-                  class="desk-dialog__image"
+                  class="desk-dialog__image desk-dialog__image--body"
                   :src="node.src"
                   :style="
                     node.aspectRatio
@@ -131,10 +158,12 @@
                   class="desk-dialog__h4"
                   v-html="node.html"
                 />
-                <!-- Three dots between sections. -->
+                <!-- Three dots between sections; a solid rule before the
+                     notes. -->
                 <hr
                   v-else-if="node.kind === 'break'"
                   class="desk-dialog__break"
+                  :class="{ 'is-rule': opensNotes(study.body, index) }"
                 />
                 <p
                   v-else-if="node.kind === 'note'"
@@ -204,81 +233,6 @@
           @pointerdown="onResizeDown"
         />
 
-        <button
-          ref="closeButton"
-          class="desk-dialog__close"
-          type="button"
-          aria-label="Close"
-          :class="{ 'is-focused': autoFocused }"
-          @blur="autoFocused = false"
-          @click="emit('close')"
-        >
-          <svg
-            class="desk-dialog__close-icon"
-            width="43.6357"
-            height="43.6357"
-            viewBox="0 0 43.6357 43.6357"
-            fill="none"
-            aria-hidden="true"
-          >
-            <g filter="url(#desk-dialog-close-shadow)">
-              <rect
-                x="1.81819"
-                width="39.9994"
-                height="39.9994"
-                rx="19.9997"
-                fill="black"
-              />
-              <path
-                d="M25.7202 14.8121C26.0751 14.4572 26.6503 14.4573 27.0053 14.8121C27.3603 15.1672 27.3603 15.7423 27.0053 16.0973L23.103 19.9996L27.0063 23.903C27.3609 24.2579 27.361 24.8332 27.0063 25.1881C26.6514 25.543 26.0762 25.5428 25.7211 25.1881L21.8178 21.2848L17.9145 25.1881C17.5595 25.5429 16.9843 25.543 16.6293 25.1881C16.2746 24.8332 16.2747 24.2579 16.6293 23.903L20.5327 19.9996L16.6303 16.0973C16.2753 15.7423 16.2753 15.1672 16.6303 14.8121C16.9854 14.4573 17.5605 14.4572 17.9155 14.8121L21.8178 18.7145L25.7202 14.8121Z"
-                fill="white"
-              />
-            </g>
-            <defs>
-              <filter
-                id="desk-dialog-close-shadow"
-                x="0"
-                y="0"
-                width="43.6357"
-                height="43.6357"
-                filterUnits="userSpaceOnUse"
-                color-interpolation-filters="sRGB"
-              >
-                <feFlood
-                  flood-opacity="0"
-                  result="BackgroundImageFix"
-                />
-                <feColorMatrix
-                  in="SourceAlpha"
-                  type="matrix"
-                  values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-                  result="hardAlpha"
-                />
-                <feOffset dy="1.81819" />
-                <feGaussianBlur stdDeviation="0.909095" />
-                <feComposite
-                  in2="hardAlpha"
-                  operator="out"
-                />
-                <feColorMatrix
-                  type="matrix"
-                  values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.06 0"
-                />
-                <feBlend
-                  mode="normal"
-                  in2="BackgroundImageFix"
-                  result="effect1_dropShadow"
-                />
-                <feBlend
-                  mode="normal"
-                  in="SourceGraphic"
-                  in2="effect1_dropShadow"
-                  result="shape"
-                />
-              </filter>
-            </defs>
-          </svg>
-        </button>
       </motion.div>
     </motion.section>
   </AnimatePresence>
@@ -313,30 +267,29 @@
 
     @include breakpoint(md) {
       left: auto;
-      width: min(58rem, calc(100% - 3.2rem));
+      width: min(66rem, calc(100% - 3.2rem));
       min-height: 0;
       aspect-ratio: 4 / 3.45;
     }
 
-    // Centred on the page, and wider, with images at full width and the
-    // text in a narrower column (see the inset rule below). Insets all round
-    // plus auto margins centre it without a transform (motion owns the
-    // transform for the open/close FLIP). That needs a set height: most of
-    // the screen (88svh), and never less than enough for the cover (16 / 10
-    // here) to sit as far from the bottom as from the sides. 7.31rem
-    // is where the cover starts (top padding, file name and gap), 2.45rem
-    // the side inset (padding plus border), and the cover is the width less
-    // both side insets. Half the screen wide, between 72rem and 100rem, so
-    // it grows on very large screens.
+    // Centred on the page, as in the Figma dialog (94rem wide at 1440).
+    // Insets all round plus auto margins centre it without a transform
+    // (motion owns the transform for the open/close FLIP). That needs a set
+    // height: most of the screen (88svh), and never less than enough for
+    // the cover (16 / 10) to sit as far from the bottom as from the sides.
+    // 6.85rem is where the cover starts (padding, close button and gap) and
+    // the cover is 87% of the width (the body's side padding, below), so
+    // 6.1rem each side. 65% of the screen wide, between 80rem and 112rem,
+    // so it grows on very large screens.
     @include breakpoint(lg) {
-      --dialog-width: min(clamp(72rem, 50vw, 100rem), 100vw - 3.2rem);
+      --dialog-width: min(clamp(80rem, 65.3vw, 112rem), 100vw - 3.2rem);
 
       inset: 0;
       margin: auto;
       width: var(--dialog-width);
       height: max(
         88svh,
-        calc(7.31rem + (var(--dialog-width) - 4.9rem) * 10 / 16 + 2.45rem)
+        calc(6.85rem + var(--dialog-width) * 0.87 * 10 / 16 + 6.1rem)
       );
       max-height: calc(100% - 1.6rem);
       aspect-ratio: auto;
@@ -344,6 +297,19 @@
 
     &.is-resized {
       aspect-ratio: auto;
+    }
+  }
+
+  // Clear on phones, where the panel nearly fills the screen and the bright
+  // desk around it marks its edge; it still keeps taps off the desk.
+  .desk-dialog__scrim {
+    position: fixed;
+    inset: 0;
+    z-index: calc(var(--zmax) - 2);
+    cursor: var(--cursor);
+
+    @include breakpoint(md) {
+      background: rgba(0, 0, 0, 0.5);
     }
   }
 
@@ -371,14 +337,23 @@
     // and copy, and between paragraphs, images and headings. The gap below
     // the cover is a step bigger.
     --flow: 2rem;
+    // Extra room above and below images in the body, on top of the flow.
+    --around-image: 1.6rem;
 
     display: flex;
     flex-direction: column;
     gap: 2rem;
-    padding: 3.2rem 2.4rem 2.8rem;
+    // The top clears the close button (2rem down, 2.8rem tall) by the gap.
+    padding: 6.8rem 2.4rem 8rem;
     scrollbar-width: none;
     overflow-y: auto;
     overscroll-behavior: contain;
+
+    // Images run 87% of the dialog's width (818 of 940 in Figma), centred.
+    @include breakpoint(md) {
+      padding-right: 6.5%;
+      padding-left: 6.5%;
+    }
 
     &::-webkit-scrollbar {
       display: none;
@@ -419,70 +394,29 @@
     }
   }
 
-  .desk-dialog__header {
-    display: flex;
-    flex-direction: column;
-    gap: 1.2rem;
-    // With the body's 2rem gap, 3.1rem from the file name's baseline to the
-    // cover, as in the Figma dialog.
-    margin-bottom: 1.1rem;
-    padding-right: 4rem;
-  }
-
-  .desk-dialog__name {
-    opacity: 0.6;
-    font-size: 1.3rem;
-    font-weight: 500;
-    letter-spacing: 0.07em;
-    line-height: 1.11;
-    text-transform: uppercase;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    text-box-edge: cap alphabetic;
-    text-box-trim: trim-both;
-    overflow: hidden;
-
-    // No file name on the full-screen dialog, as in the Figma frame.
-    @include breakpoint(lg) {
-      display: none;
-    }
-  }
-
-  .desk-dialog__title {
-    font-family: var(--text-font);
-    font-size: 2.2rem;
-    font-weight: 600;
-    letter-spacing: -0.04rem;
-    line-height: 1;
-    text-wrap: balance;
-    @include breakpoint(md) {
-      font-size: 2.4rem;
-    }
-  }
-
   .desk-dialog__details {
     display: flex;
     flex-direction: column;
-    gap: 1.4rem;
+    gap: 1.2rem;
     margin: 0;
-    padding: var(--flow) 0;
+    padding: 0.4rem 0;
   }
 
   .desk-dialog__row {
     display: flex;
     align-items: flex-start;
-    gap: 1.8rem;
-    padding-top: 1.4rem;
+    gap: 1.2rem;
+    padding-top: 1.2rem;
     background: repeating-linear-gradient(
         to right,
         #fff 0 1px,
         transparent 1px 3px
       )
       top / 100% 0.5px no-repeat;
-    font-size: 1.4rem;
+    font-size: 1.3rem;
 
     &:last-child {
-      padding-bottom: 1.4rem;
+      padding-bottom: 1.2rem;
       background:
         repeating-linear-gradient(to right, #fff 0 1px, transparent 1px 3px)
           top / 100% 0.5px no-repeat,
@@ -495,14 +429,14 @@
     flex-shrink: 0;
     width: 10rem;
     opacity: 0.8;
-    font-weight: 500;
-    letter-spacing: 0.05em;
+    font-family: var(--text-font);
+    font-weight: 400;
     line-height: 1.11;
     text-transform: uppercase;
     text-box-edge: cap alphabetic;
     text-box-trim: trim-both;
     @include breakpoint(md) {
-      width: 14rem;
+      width: 17.4rem;
     }
   }
 
@@ -512,9 +446,9 @@
     margin: 0;
     font-family: var(--text-font);
     font-weight: 500;
-    letter-spacing: 0.01em;
+    letter-spacing: -0.013rem;
     line-height: 1.11;
-    text-transform: uppercase;
+    text-transform: capitalize;
     text-box-edge: cap alphabetic;
     text-box-trim: trim-both;
   }
@@ -530,9 +464,9 @@
     gap: var(--flow);
   }
 
-  // Below the cover: 1.25 × the flow (2.5rem), counting the body's gap.
+  // Below the cover: 5.6rem from the caption, counting the body's gap.
   .desk-dialog__figure + .desk-dialog__article {
-    margin-top: calc(var(--flow) * 1.25 - 2rem);
+    margin-top: 3.6rem;
   }
 
   .desk-dialog__figure {
@@ -544,29 +478,46 @@
   // Under the cover, and under images in the body (an italic line right
   // after one in Craft).
   .desk-dialog__caption {
-    margin: 1rem auto 0;
+    margin: 1.6rem auto 0;
     max-width: 100%;
-    text-align: center;
-    opacity: 0.6;
+    opacity: 0.8;
     font-family: var(--text-font);
     font-size: 1.2rem;
-    line-height: 1.3;
+    letter-spacing: -0.014rem;
+    line-height: 1.5;
+    text-align: center;
+    text-box-edge: cap alphabetic;
+    text-box-trim: trim-both;
     @include breakpoint(md) {
       max-width: 80%;
       font-size: 1.4rem;
     }
   }
 
-  // In the body, pulled up under its image (past the flow's gap).
+  // Under its image (past the flow's gap and the image's extra room),
+  // keeping that extra room below it instead.
   .desk-dialog__caption--body {
-    margin: calc(1rem - var(--flow)) auto 0;
+    margin: calc(1.6rem - var(--flow) - var(--around-image)) auto
+      var(--around-image);
   }
 
   .desk-dialog__image {
     width: 100%;
     height: auto;
-    border-radius: 1.7rem;
+    border-radius: 1.5rem;
     background: rgba(255, 255, 255, 0.06);
+  }
+
+  // Images and video in the body get more room than the flow between text
+  // blocks, so text doesn't crowd them.
+  .desk-dialog__image--body {
+    margin: var(--around-image) 0;
+
+    // Back to back, the room between them counts once (flex margins don't
+    // collapse).
+    & + & {
+      margin-top: 0;
+    }
   }
 
   .desk-dialog__image--hero {
@@ -580,16 +531,30 @@
     }
   }
 
+  // The study's title, small, over the intro.
+  .desk-dialog__overline {
+    font-family: var(--text-font);
+    font-size: 1.3rem;
+    font-weight: 500;
+    letter-spacing: -0.013rem;
+    line-height: 1.11;
+    text-transform: capitalize;
+    text-box-edge: cap alphabetic;
+    text-box-trim: trim-both;
+  }
+
   .desk-dialog__intro {
     padding: 0.8rem 0;
     font-family: var(--text-font);
     font-size: 1.9rem;
     font-weight: 600;
-    letter-spacing: -0.04rem;
-    line-height: 1.25;
+    letter-spacing: -0.0875rem;
+    line-height: 1.3;
     text-wrap: pretty;
+    text-box-edge: cap alphabetic;
+    text-box-trim: trim-both;
     @include breakpoint(md) {
-      font-size: 2.2rem;
+      font-size: 2.5rem;
     }
   }
 
@@ -680,6 +645,16 @@
         transparent 0.22rem
       )
       0 0 / 1.2rem 0.4rem repeat-x;
+
+    // Before the notes: a hairline across the text column instead.
+    &.is-rule {
+      align-self: stretch;
+      width: auto;
+      height: 0;
+      margin: 0.5rem 0;
+      border-top: 0.5px solid rgba(255, 255, 255, 0.35);
+      background: none;
+    }
   }
 
   .desk-dialog__quote {
@@ -701,13 +676,13 @@
 
   .desk-dialog__para {
     margin: 0;
-    color: rgba(255, 255, 255, 0.92);
+    color: rgba(255, 255, 255, 0.9);
     font-family: var(--text-font);
     font-size: 1.6rem;
-    line-height: 1.45;
-    text-wrap: balance;
+    letter-spacing: -0.018rem;
+    line-height: 1.5;
+    text-wrap: pretty;
     @include breakpoint(md) {
-      font-weight: 430;
       font-size: 1.8rem;
     }
 
@@ -739,11 +714,9 @@
     letter-spacing: -0.005em;
   }
 
-  // On the wider centred dialog, images and video run the full width and
-  // the text sits in a narrower column inside them: 56.7rem wide on a 72rem
-  // dialog (inset 5.2rem each side). As the dialog grows, the column grows
-  // by a quarter as much, so lines stay a comfortable length (63.7rem at
-  // the 100rem maximum). 100% is the full inner width.
+  // From md, images and video run the body's full width and the text sits
+  // in a centred column inside them: 651 of 818 in Figma.
+  .desk-dialog__overline,
   .desk-dialog__intro,
   .desk-dialog__details,
   .desk-dialog__h3,
@@ -751,29 +724,41 @@
   .desk-dialog__para,
   .desk-dialog__quote,
   .desk-dialog__note,
+  .desk-dialog__break.is-rule,
   .desk-dialog__caption--body {
-    @include breakpoint(lg) {
-      --text-width: calc(56.7rem + (var(--dialog-width) - 72rem) / 4);
+    @include breakpoint(md) {
+      --text-width: 79.6%;
 
-      margin-right: max(5.2rem, calc((100% - var(--text-width)) / 2));
-      margin-left: max(5.2rem, calc((100% - var(--text-width)) / 2));
+      margin-right: max(0rem, calc((100% - var(--text-width)) / 2));
+      margin-left: max(0rem, calc((100% - var(--text-width)) / 2));
     }
   }
 
+  // A "Close" pill (the label), centred at the top, over a band of black
+  // that fades out below it, so the copy scrolls away under it.
   .desk-dialog__close {
     display: block;
     position: absolute;
-    top: 1.25rem;
-    right: 1.24rem;
-    width: 4rem;
-    height: 4rem;
+    top: 2rem;
+    left: 50%;
+    z-index: var(--z2);
+    color: #fff;
+    transform: translateX(-50%);
     cursor: var(--cursor);
 
-    // On the centred dialog, level with the title (centred on its line) and
-    // flush with the cover's right edge, as the title is with its left.
-    @include breakpoint(lg) {
-      top: 2.4rem;
-      right: 2.45rem;
+    // The band: wider than any dialog (the dialog clips it to its corners),
+    // from the dialog's top edge down past the pill.
+    &::before {
+      content: '';
+      position: absolute;
+      top: -2rem;
+      left: 50%;
+      z-index: -1;
+      width: 100vw;
+      height: 8rem;
+      background: linear-gradient(#000 60%, transparent);
+      transform: translateX(-50%);
+      pointer-events: none;
     }
 
     &:focus-visible,
@@ -784,16 +769,25 @@
     }
   }
 
-  .desk-dialog__close-icon {
+  .desk-dialog__close-label {
     display: block;
-    margin-left: -0.18rem;
+    padding: 0.8rem 1.2rem;
+    border: 1px solid rgba(255, 255, 255, 0.56);
+    border-radius: 100rem;
+    background: #000;
+    font-family: var(--text-font);
+    font-size: 1.4rem;
+    letter-spacing: -0.014rem;
+    line-height: 1.5;
+    text-box-edge: cap alphabetic;
+    text-box-trim: trim-both;
   }
 </style>
 
 <script setup lang="ts">
   import { motion, AnimatePresence } from 'motion-v'
   import type { ComponentPublicInstance } from 'vue'
-  import type { CaseStudy } from '#shared/types/case-study'
+  import type { BodyNode, CaseStudy } from '#shared/types/case-study'
 
   const props = defineProps<{
     study: CaseStudy | null
@@ -826,6 +820,15 @@
 
   const ease = [0.8, 0, 0.16, 1] as const
   const reduceMotion = ref(false)
+
+  // A break that leads into the notes: the next thing is a note, or a
+  // heading (like "Notes & references") right before one.
+  function opensNotes(body: BodyNode[], index: number) {
+    const next = body[index + 1]
+    if (next?.kind === 'note') return true
+    const heading = next?.kind === 'h3' || next?.kind === 'h4'
+    return heading && body[index + 2]?.kind === 'note'
+  }
 
   // One <strong> wrapping the whole paragraph.
   function isAllBold(html: string) {
@@ -1127,8 +1130,8 @@
   const FOCUSABLE =
     'a[href], button:not([disabled]), input, select, textarea, [tabindex]:not([tabindex="-1"])'
 
-  // Keep Tab inside the panel. Pointer users can still reach the desk behind
-  // it (clicking another icon switches panels); keyboard users leave with Esc.
+  // Keep Tab inside the panel. The scrim keeps pointers off the desk behind
+  // it; everyone leaves with Esc, the close button or a click on the scrim.
   function trapTab(event: KeyboardEvent) {
     if (!dialog) return
     const focusables = Array.from(
