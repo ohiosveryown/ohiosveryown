@@ -55,6 +55,11 @@
       :count="countOf(study)"
       :label="countLabel(study)"
       :delay="0.5 + index * 0.1"
+      :sort="{
+        name: study.label,
+        date: dateOf(study),
+        opens: countOf(study) ?? undefined,
+      }"
       :ask="{
         label: study.label,
         image: study.hero?.thumb,
@@ -1015,6 +1020,16 @@
     return counts.value ? (counts.value[study.id] ?? 0) : null
   }
 
+  // For Sort By ▸ Date: when it started, from the Date field ("Oct 2026",
+  // "Jan 2020 – Present", "2016 – Present"); a year alone is its January.
+  const MONTHS = 'jan feb mar apr may jun jul aug sep oct nov dec'.split(' ')
+  function dateOf(study: CaseStudy) {
+    const match = study.date?.match(/(?:([a-z]{3})[a-z]*\.?\s+)?(\d{4})/i)
+    if (!match) return undefined
+    const month = Math.max(0, MONTHS.indexOf(match[1]?.toLowerCase() ?? ''))
+    return Date.UTC(Number(match[2]), month)
+  }
+
   // The pill is decorative (aria-hidden); the icon's name carries the count.
   function countLabel(study: CaseStudy) {
     const count = countOf(study)
@@ -1098,11 +1113,15 @@
     return router.replace('/').finally(() => (requested.value = undefined))
   }
 
-  // A post's "ask Mallow" button: the post closes and Mallow answers.
+  // A post's "ask Mallow" button: the post closes, then Mallow answers.
+  // The chat waits for the panel to finish fading out (DeskDialog's exit:
+  // about half a second), so the two don't play over each other.
+  const ASK_AFTER_CLOSE_MS = 500
   const { ask: askMallow } = useAskDrop()
   function askFromStudy(question: string) {
     closeStudy()
-    askMallow(question)
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    setTimeout(() => askMallow(question), reduce ? 0 : ASK_AFTER_CLOSE_MS)
   }
 
   // The same button's link, followed from elsewhere (/?ask=…): asked once

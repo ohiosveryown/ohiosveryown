@@ -9,6 +9,10 @@
     :tooltip-image="tooltipImage"
     :label="`${tooltipText}: ${track.title} by ${track.artist}`"
     :delay="0.6"
+    :sort="{
+      name: fileName,
+      date: track.playedAt ? Date.parse(track.playedAt) : Date.now(),
+    }"
     :ask="{
       label: fileName,
       image: track.cover,

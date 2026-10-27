@@ -2,10 +2,16 @@ import type { InjectionKey, Ref } from 'vue'
 
 type Surface = Readonly<Ref<HTMLElement | null>>
 
+// What Sort By orders items by. `date` is a timestamp; an item without
+// one (or without an open count) goes last.
+export type DeskSort = 'date' | 'opens' | 'name'
+export type DeskSortKeys = { name: string; date?: number; opens?: number }
+
 // An item on the desk, as Clean Up sees it: its element (laid out where
-// Craft put it) and a way to move it from there.
+// Craft put it), what it sorts by, and a way to move it from there.
 export type DeskPiece = {
   el: () => HTMLElement | null
+  sortKeys: () => DeskSortKeys | undefined
   moveTo: (x: number, y: number, delay: number) => void
 }
 
@@ -13,7 +19,7 @@ type Desk = {
   surface: Surface
   raise: () => number
   register: (piece: DeskPiece) => () => void
-  cleanUp: () => void
+  cleanUp: (by?: DeskSort) => void
 }
 
 const deskKey: InjectionKey<Desk> = Symbol('desk')
@@ -38,10 +44,24 @@ export function provideDesk(surface: Surface) {
     return () => pieces.delete(piece)
   }
 
+  // Newest, most opened, or A to Z first; ties keep page order.
+  const byKey: Record<
+    DeskSort,
+    (a: DeskSortKeys | undefined, b: DeskSortKeys | undefined) => number
+  > = {
+    date: (a, b) => (b?.date ?? 0) - (a?.date ?? 0),
+    opens: (a, b) => (b?.opens ?? -1) - (a?.opens ?? -1),
+    name: (a, b) =>
+      (a?.name ?? '').localeCompare(b?.name ?? '', undefined, {
+        numeric: true,
+        sensitivity: 'base',
+      }),
+  }
+
   // Like a desktop's icons: stacked in a tight column from the top-left
-  // corner, in page order, starting a new column to the right when the
-  // next spot is taken by the copy or runs off the bottom.
-  function cleanUp() {
+  // corner, in page order (or sorted `by`), starting a new column to the
+  // right when the next spot is taken by the copy or runs off the bottom.
+  function cleanUp(by?: DeskSort) {
     const desk = surface.value
     if (!desk) return
     const items = [...pieces]
@@ -54,6 +74,9 @@ export function provideDesk(surface: Surface) {
           ? -1
           : 1,
       )
+    if (by) {
+      items.sort((a, b) => byKey[by](a.piece.sortKeys(), b.piece.sortKeys()))
+    }
     if (!items.length) return
 
     const rem = parseFloat(getComputedStyle(document.documentElement).fontSize)

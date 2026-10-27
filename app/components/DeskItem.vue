@@ -69,14 +69,17 @@
 <script setup lang="ts">
   import { animate, motion, useMotionValue } from 'motion-v'
   import type { AskDropItem } from '~/composables/useAskDrop'
+  import type { DeskSortKeys } from '~/composables/useDesk'
 
   const props = withDefaults(
     defineProps<{
       delay?: number
       // What Mallow is asked if this is dropped on him (see useAskDrop).
       ask?: AskDropItem
+      // What the desk's Sort By orders it by.
+      sort?: DeskSortKeys
     }>(),
-    { delay: 0, ask: undefined },
+    { delay: 0, ask: undefined, sort: undefined },
   )
 
   const { surface, raise, register } = useDesk()
@@ -249,11 +252,12 @@
     dragged = false
   }
 
-  // Clean Up (the desk's right-click menu) moves it to a spot on a grid,
+  // Clean Up and Sort By (the desk's right-click menu) move it to a spot on a grid,
   // with the same spring as an Escape mid-drag.
   const root = useTemplateRef<{ $el: HTMLElement }>('root')
   const unregister = register({
     el: () => root.value?.$el ?? null,
+    sortKeys: () => props.sort,
     moveTo(toX, toY, delay) {
       if (reduceMotion.value) {
         x.set(toX)
