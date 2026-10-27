@@ -315,8 +315,8 @@
     // text in a narrower column (see the inset rule below). Insets all round
     // plus auto margins centre it without a transform (motion owns the
     // transform for the open/close FLIP). That needs a set height: most of
-    // the screen (88svh), and never less than enough for the cover (always
-    // 408 / 280) to sit as far from the bottom as from the sides. 7.31rem
+    // the screen (88svh), and never less than enough for the cover (16 / 10
+    // here) to sit as far from the bottom as from the sides. 7.31rem
     // is where the cover starts (top padding, file name and gap), 2.45rem
     // the side inset (padding plus border), and the cover is the width less
     // both side insets. Half the screen wide, between 72rem and 100rem, so
@@ -329,7 +329,7 @@
       width: var(--dialog-width);
       height: max(
         88svh,
-        calc(7.31rem + (var(--dialog-width) - 4.9rem) * 280 / 408 + 2.45rem)
+        calc(7.31rem + (var(--dialog-width) - 4.9rem) * 10 / 16 + 2.45rem)
       );
       max-height: calc(100% - 1.6rem);
       aspect-ratio: auto;
@@ -549,6 +549,11 @@
     background: #fff;
     aspect-ratio: 408 / 280;
     object-fit: cover;
+
+    // A touch flatter in the wide, centred panel.
+    @include breakpoint(lg) {
+      aspect-ratio: 16 / 10;
+    }
   }
 
   .desk-dialog__intro {
@@ -560,7 +565,7 @@
     line-height: 1.2;
     text-wrap: pretty;
     @include breakpoint(md) {
-      font-size: 2.4rem;
+      font-size: 2.7rem;
     }
   }
 
@@ -753,7 +758,7 @@
 </style>
 
 <script setup lang="ts">
-  import { motion, AnimatePresence, animate, motionValue } from 'motion-v'
+  import { motion, AnimatePresence } from 'motion-v'
   import type { ComponentPublicInstance } from 'vue'
   import type { CaseStudy } from '#shared/types/case-study'
 
@@ -851,75 +856,6 @@
   function onScroll() {
     measure()
     reveal()
-    if (!hinting) rememberScrolled()
-  }
-
-  // The cover can fill the panel exactly, so it may not look scrollable.
-  // Until someone has scrolled a panel themselves (since the page last
-  // loaded), each one nudges its content up a little after opening, then
-  // settles back. Any input during the nudge stops it where it is.
-  const HINT_PX = 64
-  const HINT_DELAY_MS = 900
-  // Shared app state, not storage: kept across panels and route changes,
-  // reset by a reload.
-  const scrolledOnce = useState('desk-dialog:scrolled', () => false)
-  let hinting = false
-  let hintTimer: ReturnType<typeof setTimeout> | undefined
-  let hintAnimation: ReturnType<typeof animate> | undefined
-  const HINT_STOPPERS = ['wheel', 'touchstart', 'pointerdown', 'keydown']
-
-  function rememberScrolled() {
-    scrolledOnce.value = true
-  }
-
-  function scheduleHint() {
-    clearTimeout(hintTimer)
-    if (reduceMotion.value || scrolledOnce.value) return
-    hintTimer = setTimeout(hintScroll, HINT_DELAY_MS)
-  }
-
-  function hintScroll() {
-    const el = body.value
-    if (!el || el.scrollTop > 0) return
-    if (el.scrollHeight - el.clientHeight < HINT_PX) return
-
-    hinting = true
-    const offset = motionValue(0)
-    offset.on('change', (value) => (el.scrollTop = value))
-    hintAnimation = animate(offset, [0, HINT_PX, HINT_PX, 0], {
-      duration: 1.5,
-      times: [0, 0.35, 0.5, 1],
-      ease: 'easeInOut',
-      onComplete: endHint,
-    })
-    for (const type of HINT_STOPPERS)
-      el.addEventListener(type, stopHint, { passive: true })
-  }
-
-  function stopHint() {
-    hintAnimation?.stop()
-    endHint()
-  }
-
-  function endHint() {
-    hintAnimation = undefined
-    for (const type of HINT_STOPPERS)
-      body.value?.removeEventListener(type, stopHint)
-    // The last scroll events of the nudge arrive a frame after it ends.
-    requestAnimationFrame(() =>
-      requestAnimationFrame(() => {
-        hinting = false
-      }),
-    )
-  }
-
-  function cancelHint() {
-    clearTimeout(hintTimer)
-    hintAnimation?.stop()
-    hintAnimation = undefined
-    hinting = false
-    for (const type of HINT_STOPPERS)
-      body.value?.removeEventListener(type, stopHint)
   }
 
   function scrollPerPixel() {
@@ -1071,7 +1007,6 @@
 
   watch(shell, (instance) => {
     if (!instance) {
-      cancelHint()
       phase.value = 'hidden'
       height.value = null
       minHeight.value = 0
@@ -1082,7 +1017,6 @@
     from = invert()
     phase.value = 'visible'
     nextTick(measureHeightBounds)
-    scheduleHint()
   })
 
   const variants = {
@@ -1253,7 +1187,6 @@
 
   onBeforeUnmount(() => {
     clearTimeout(idleTimer)
-    cancelHint()
     if (tooltipTimer) {
       clearTimeout(tooltipTimer)
       suppressTooltip(false)
