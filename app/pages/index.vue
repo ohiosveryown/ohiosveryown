@@ -67,11 +67,16 @@
       @focusin="preload(study)"
     />
     <LastPlayed />
-    <AskBar class="home__ask" />
+    <AskBar
+      class="home__ask"
+      data-desk-keep-out
+    />
+    <DeskMenu :disabled="!!openStudy" />
     <DeskDialog
       :study="openStudy"
       :origin="origin"
       @close="closeStudy"
+      @ask="askFromStudy"
     />
     <NuxtPage />
 
@@ -81,7 +86,10 @@
     >
       <h1 class="home__title">Matthew Pence</h1>
 
-      <div class="roles">
+      <div
+        class="roles"
+        data-desk-keep-out
+      >
         <div class="roles__line">
           <div
             class="roles__item home__beat"
@@ -325,7 +333,10 @@
         </svg>
       </div>
 
-      <div class="home__copy">
+      <div
+        class="home__copy"
+        data-desk-keep-out
+      >
         <p
           class="home__prose home__lead home__beat"
           style="--beat: 0; --beat-wide: 4"
@@ -1087,8 +1098,22 @@
     return router.replace('/').finally(() => (requested.value = undefined))
   }
 
+  // A post's "ask Mallow" button: the post closes and Mallow answers.
+  const { ask: askMallow } = useAskDrop()
+  function askFromStudy(question: string) {
+    closeStudy()
+    askMallow(question)
+  }
+
+  // The same button's link, followed from elsewhere (/?ask=…): asked once
+  // on arrival, then dropped from the URL so a reload doesn't ask again.
   onMounted(() => {
     loadCounts()
+    const question = route.query.ask
+    if (typeof question !== 'string' || !question.trim()) return
+    const { ask: _, ...query } = route.query
+    router.replace({ query })
+    askMallow(question.trim().slice(0, 500))
   })
 
   useHead({

@@ -1,5 +1,6 @@
 <template>
   <motion.div
+    ref="root"
     class="desk-item"
     :style="{ zIndex: carrying ? 'calc(var(--zmax) - 1)' : 2 + layer, x, y }"
     drag
@@ -78,7 +79,7 @@
     { delay: 0, ask: undefined },
   )
 
-  const { surface, raise } = useDesk()
+  const { surface, raise, register } = useDesk()
 
   const ease = [0.8, 0, 0.16, 1] as const
   const reduceMotion = ref(false)
@@ -248,7 +249,24 @@
     dragged = false
   }
 
+  // Clean Up (the desk's right-click menu) moves it to a spot on a grid,
+  // with the same spring as an Escape mid-drag.
+  const root = useTemplateRef<{ $el: HTMLElement }>('root')
+  const unregister = register({
+    el: () => root.value?.$el ?? null,
+    moveTo(toX, toY, delay) {
+      if (reduceMotion.value) {
+        x.set(toX)
+        y.set(toY)
+        return
+      }
+      animate(x, toX, { ...SPRING_BACK, delay })
+      animate(y, toY, { ...SPRING_BACK, delay })
+    },
+  })
+
   onBeforeUnmount(() => {
+    unregister()
     window.removeEventListener('keydown', onDragKey)
     if (dragged) suppressTooltip(false)
     window.removeEventListener('resize', beforeResize, { capture: true })

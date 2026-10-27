@@ -7,6 +7,8 @@ export type BodyNode =
   | { kind: 'note'; n: number; html: string }
   // A section break (Craft's divider).
   | { kind: 'break' }
+  // A button that closes the post and asks Mallow `question`.
+  | { kind: 'ask'; label: string; question: string }
 
 export type CaseStudyImage = {
   src: string

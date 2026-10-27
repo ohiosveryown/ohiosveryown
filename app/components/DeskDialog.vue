@@ -187,6 +187,21 @@
                   class="desk-dialog__caption desk-dialog__caption--body"
                   v-html="node.html"
                 />
+                <!-- Closes the post and asks Mallow (Craft: a link to the
+                     site with ?ask=). -->
+                <button
+                  v-else-if="node.kind === 'ask'"
+                  class="desk-dialog__ask"
+                  type="button"
+                  @click="emit('ask', node.question)"
+                >
+                  <img
+                    class="desk-dialog__ask-guy"
+                    src="/little-guy/rest-sm.webp"
+                    alt=""
+                  />
+                  {{ node.label }}
+                </button>
                 <blockquote
                   v-else-if="node.kind === 'quote'"
                   class="desk-dialog__quote"
@@ -689,6 +704,7 @@
     @include breakpoint(md) {
       font-weight: 440;
       font-size: 1.8rem;
+      line-height: 1.4;
     }
 
     // Bold all the way through in Craft: set tighter, like a heading.
@@ -737,6 +753,38 @@
       margin-right: max(0rem, calc((100% - var(--text-width)) / 2));
       margin-left: max(0rem, calc((100% - var(--text-width)) / 2));
     }
+  }
+
+  // Asks Mallow, at the end of a post: a grey pill with Mallow in it,
+  // centred.
+  .desk-dialog__ask {
+    display: flex;
+    align-items: center;
+    align-self: flex-start;
+    gap: 0.8rem;
+    margin: 0.8rem auto 0;
+    padding: 0.6rem 1.6rem 0.6rem 1.2rem;
+    border-radius: 100rem;
+    color: #fff;
+    background: #323232;
+    font-family: var(--text-font);
+    font-size: 1.6rem;
+    font-weight: 500;
+    letter-spacing: -0.016rem;
+    line-height: 1.3;
+    transition: background var(--ease);
+    cursor: var(--cursor);
+
+    &:hover,
+    &:focus-visible {
+      background: #404040;
+    }
+  }
+
+  .desk-dialog__ask-guy {
+    width: 3.2rem;
+    height: 3.2rem;
+    object-fit: contain;
   }
 
   // A "Close" pill (the label), centred at the top, over a band of black
@@ -821,7 +869,7 @@
     study: CaseStudy | null
     origin?: HTMLElement | null
   }>()
-  const emit = defineEmits<{ close: [] }>()
+  const emit = defineEmits<{ close: []; ask: [question: string] }>()
 
   type Detail = { label: string; value: string; href?: string }
 

@@ -40,6 +40,28 @@ const SPACE_BEFORE_CLOSE =
 const SPACE_AFTER_OPEN =
   /(?<=[^*\s]|^)(\*{1,2})(\s+)(?=[^*\s])([^*]*?[^*\s])\1(?!\*)/g
 
+// A paragraph that's only a link to the site with ?ask=…, written in Craft
+// as [Tell Mallow](https://ohiosveryown.co/?ask=Mallow%2C%20hi), is a button
+// that asks Mallow that question. (The link itself works too: the home page
+// asks it on arrival.)
+const ASK_LINK =
+  /^\[([^\]]+)\]\((?:https?:\/\/(?:www\.)?ohiosveryown\.co)?\/?\?ask=([^)\s]+)\)$/
+const MAX_QUESTION = 500
+
+function askOf(markdown: string) {
+  const match = markdown.trim().match(ASK_LINK)
+  if (!match) return undefined
+  let question: string
+  try {
+    question = decodeURIComponent(match[2]!.replace(/\+/g, ' ')).trim()
+  } catch {
+    return undefined
+  }
+  const label = renderInline(match[1]!).replace(/<[^>]*>/g, '')
+  if (!question || !label || question.length > MAX_QUESTION) return undefined
+  return { label, question }
+}
+
 // The decoration already says it's a quote.
 const QUOTE_MARK = /^>\s?/
 
@@ -139,6 +161,11 @@ export function toBody(
       continue
     }
     const markdown = (block.markdown ?? '').replace(quote ? QUOTE_MARK : '', '')
+    const asks = kind === 'p' && !quote ? askOf(markdown) : undefined
+    if (asks) {
+      body.push({ kind: 'ask', ...asks })
+      continue
+    }
     const note = kind === 'p' && !quote ? markdown.match(NOTE_START) : null
     if (note) {
       const html = renderInline(markdown.slice(note[0].length))

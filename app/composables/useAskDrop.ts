@@ -30,10 +30,20 @@ export function useAskDrop() {
     'ask-drop',
     () => null,
   )
+  // A question put to Mallow from elsewhere on the page (a button at the
+  // end of a post), asked as if the visitor had typed it.
+  const asked = useState<{ text: string; at: number } | null>(
+    'ask-question',
+    () => null,
+  )
 
   return {
     over,
     dropped,
+    asked,
+    ask(text: string) {
+      asked.value = { text, at: Date.now() }
+    },
     setTarget(el: HTMLElement | null) {
       target = el
     },

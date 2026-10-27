@@ -1559,6 +1559,7 @@
   const {
     over: dropOver,
     dropped,
+    asked,
     setTarget,
     targetRect: dropTargetRect,
   } = useAskDrop()
@@ -1619,6 +1620,11 @@
       chip: { label: drop.item.label, image: drop.item.image },
       prompt: drop.item.prompt,
     })
+  })
+  // Asked from elsewhere on the page (useAskDrop's ask), like typing it.
+  watch(asked, (question) => {
+    if (!question || streaming.value) return
+    ask({ role: 'user', content: question.text })
   })
   onMounted(() => setTarget(formEl()))
   onBeforeUnmount(() => setTarget(null))
