@@ -163,6 +163,7 @@
                 <p
                   v-else
                   class="desk-dialog__para"
+                  :class="{ 'is-bold': isAllBold(node.html) }"
                   v-html="node.html"
                 />
               </template>
@@ -317,16 +318,26 @@
       aspect-ratio: 4 / 3.45;
     }
 
-    // Nearly full screen and centred, as in the Figma "__lg" frame, with
-    // the same 3.2rem gap to the screen edge on all four sides. Insets all
-    // round plus auto margins centre it without a transform (motion owns
-    // the transform for the open/close FLIP), which needs a set width and
-    // height.
+    // Centred on the page, and wider, with images at full width and the
+    // text in a narrower column (see the inset rule below). Insets all round
+    // plus auto margins centre it without a transform (motion owns the
+    // transform for the open/close FLIP). That needs a set height: most of
+    // the screen (88svh), and never less than enough for the cover (16 / 10
+    // here) to sit as far from the bottom as from the sides. 7.31rem
+    // is where the cover starts (top padding, file name and gap), 2.45rem
+    // the side inset (padding plus border), and the cover is the width less
+    // both side insets. Half the screen wide, between 72rem and 100rem, so
+    // it grows on very large screens.
     @include breakpoint(lg) {
+      --dialog-width: min(clamp(72rem, 50vw, 100rem), 100vw - 3.2rem);
+
       inset: 0;
       margin: auto;
-      width: calc(100vw - 6.4rem);
-      height: calc(100svh - 6.4rem);
+      width: var(--dialog-width);
+      height: max(
+        88svh,
+        calc(7.31rem + (var(--dialog-width) - 4.9rem) * 10 / 16 + 2.45rem)
+      );
       max-height: calc(100% - 1.6rem);
       aspect-ratio: auto;
     }
@@ -368,11 +379,6 @@
     scrollbar-width: none;
     overflow-y: auto;
     overscroll-behavior: contain;
-
-    // On the full-screen dialog, media runs 65% of the width, centred.
-    @include breakpoint(lg) {
-      padding: 4.8rem 17.5%;
-    }
 
     &::-webkit-scrollbar {
       display: none;
@@ -444,13 +450,13 @@
 
   .desk-dialog__title {
     font-family: var(--text-font);
-    font-size: 2.6rem;
+    font-size: 2.2rem;
     font-weight: 600;
     letter-spacing: -0.04rem;
     line-height: 1;
     text-wrap: balance;
     @include breakpoint(md) {
-      font-size: 3.2rem;
+      font-size: 2.4rem;
     }
   }
 
@@ -568,7 +574,7 @@
     aspect-ratio: 408 / 280;
     object-fit: cover;
 
-    // A touch flatter on the full-screen dialog.
+    // A touch flatter in the wide, centred panel.
     @include breakpoint(lg) {
       aspect-ratio: 16 / 10;
     }
@@ -577,13 +583,13 @@
   .desk-dialog__intro {
     padding: 0.8rem 0;
     font-family: var(--text-font);
-    font-size: 2.1rem;
+    font-size: 1.9rem;
     font-weight: 600;
     letter-spacing: -0.04rem;
-    line-height: 1.2;
+    line-height: 1.25;
     text-wrap: pretty;
     @include breakpoint(md) {
-      font-size: 2.7rem;
+      font-size: 2.2rem;
     }
   }
 
@@ -695,9 +701,7 @@
 
   .desk-dialog__para {
     margin: 0;
-    // Dimmed by colour, not opacity: opacity fades the whole paragraph as one
-    // layer, so nothing inside it (like bold text) could be brighter.
-    color: rgba(255, 255, 255, 0.88);
+    color: rgba(255, 255, 255, 0.92);
     font-family: var(--text-font);
     font-size: 1.6rem;
     line-height: 1.45;
@@ -706,8 +710,12 @@
       font-weight: 430;
       font-size: 1.8rem;
     }
+
+    // Bold all the way through in Craft: set tighter, like a heading.
+    &.is-bold {
+      line-height: 1.3;
+    }
   }
-  // A paragraph bold all the way through in Craft: in the site's lime.
 
   // Body HTML comes from v-html, so scoped classes can't reach its links.
   .desk-dialog__para :deep(a),
@@ -731,9 +739,11 @@
     letter-spacing: -0.005em;
   }
 
-  // On the full-screen dialog, images and video run the full width of the
-  // body and the text sits in a centred column inside them, about 52% of
-  // the dialog's width. 100% is the body's inner width.
+  // On the wider centred dialog, images and video run the full width and
+  // the text sits in a narrower column inside them: 56.7rem wide on a 72rem
+  // dialog (inset 5.2rem each side). As the dialog grows, the column grows
+  // by a quarter as much, so lines stay a comfortable length (63.7rem at
+  // the 100rem maximum). 100% is the full inner width.
   .desk-dialog__intro,
   .desk-dialog__details,
   .desk-dialog__h3,
@@ -743,8 +753,10 @@
   .desk-dialog__note,
   .desk-dialog__caption--body {
     @include breakpoint(lg) {
-      margin-right: 10%;
-      margin-left: 10%;
+      --text-width: calc(56.7rem + (var(--dialog-width) - 72rem) / 4);
+
+      margin-right: max(5.2rem, calc((100% - var(--text-width)) / 2));
+      margin-left: max(5.2rem, calc((100% - var(--text-width)) / 2));
     }
   }
 
@@ -756,6 +768,13 @@
     width: 4rem;
     height: 4rem;
     cursor: var(--cursor);
+
+    // On the centred dialog, level with the title (centred on its line) and
+    // flush with the cover's right edge, as the title is with its left.
+    @include breakpoint(lg) {
+      top: 2.4rem;
+      right: 2.45rem;
+    }
 
     &:focus-visible,
     &.is-focused {
@@ -807,6 +826,11 @@
 
   const ease = [0.8, 0, 0.16, 1] as const
   const reduceMotion = ref(false)
+
+  // One <strong> wrapping the whole paragraph.
+  function isAllBold(html: string) {
+    return /^<strong>(?:(?!<\/?strong>)[\s\S])*<\/strong>$/.test(html.trim())
+  }
 
   // Footnotes: a marker in the text scrolls to its note, and a note's number
   // back to the marker. Within the panel, not by URL hash, which would move
