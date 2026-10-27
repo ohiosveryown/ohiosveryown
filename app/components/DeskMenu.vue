@@ -6,6 +6,7 @@
     <motion.div
       v-if="at"
       ref="layer"
+      class="desk-menu-layer"
       :initial="{ opacity: 0 }"
       :animate="{ opacity: 1, transition: { duration: 0.12 } }"
       :exit="{ opacity: 0, transition: { duration: 0.1 } }"
@@ -16,39 +17,49 @@
         class="desk-menu"
         role="menu"
         aria-label="Desktop"
+        tabindex="-1"
         :style="{ left: `${at.x}px`, top: `${at.y}px` }"
+        @pointerleave="unhighlight"
       >
-        <button
+        <template
           v-for="item in items"
           :key="item.label"
-          class="desk-menu__item"
-          :class="{ 'is-open': item.children && sub === item }"
-          type="button"
-          role="menuitem"
-          :aria-haspopup="item.children ? 'menu' : undefined"
-          :aria-expanded="item.children ? sub === item : undefined"
-          @pointerenter="hover(item, $event)"
-          @click="choose(item, $event)"
         >
-          {{ item.label }}
-          <svg
-            v-if="item.children"
-            class="desk-menu__chevron"
-            width="6"
-            height="10"
-            viewBox="0 0 6 10"
-            fill="none"
-            aria-hidden="true"
+          <hr
+            v-if="item.divided"
+            class="desk-menu__divider"
+            role="separator"
+          />
+          <button
+            class="desk-menu__item"
+            :class="{ 'is-open': item.children && sub === item }"
+            type="button"
+            role="menuitem"
+            :aria-haspopup="item.children ? 'menu' : undefined"
+            :aria-expanded="item.children ? sub === item : undefined"
+            @pointerenter="hover(item, $event)"
+            @click="choose(item, $event)"
           >
-            <path
-              d="M1 1l4 4-4 4"
-              stroke="currentColor"
-              stroke-width="1.5"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-          </svg>
-        </button>
+            {{ item.label }}
+            <svg
+              v-if="item.children"
+              class="desk-menu__chevron"
+              width="6"
+              height="10"
+              viewBox="0 0 6 10"
+              fill="none"
+              aria-hidden="true"
+            >
+              <path
+                d="M1 1l4 4-4 4"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </button>
+        </template>
       </div>
 
       <div
@@ -56,7 +67,9 @@
         ref="subMenu"
         class="desk-menu"
         role="menu"
+        tabindex="-1"
         :aria-label="sub.label"
+        @pointerleave="unhighlight"
         :style="{ left: `${subAt.x}px`, top: `${subAt.y}px` }"
       >
         <button
@@ -65,6 +78,7 @@
           class="desk-menu__item"
           type="button"
           role="menuitem"
+          @pointerenter="highlight"
           @click="choose(child, $event)"
         >
           {{ child.label }}
@@ -75,6 +89,14 @@
 </template>
 
 <style scoped lang="scss">
+  // While it fades, its opacity makes it a layer of its own, stacked where
+  // it sits in the page: under the desk items (which have z-indexes) unless
+  // it has one too. Relative, not fixed, so it takes no room or clicks.
+  .desk-menu-layer {
+    position: relative;
+    z-index: var(--zmax);
+  }
+
   .desk-menu {
     display: flex;
     flex-direction: column;
@@ -89,6 +111,10 @@
     box-shadow: 0 1.2rem 3.2rem rgba(0, 0, 0, 0.32);
     backdrop-filter: blur(2rem) saturate(1.6);
     -webkit-backdrop-filter: blur(2rem) saturate(1.6);
+
+    &:focus {
+      outline: none;
+    }
   }
 
   .desk-menu__item {
@@ -108,12 +134,21 @@
     text-align: left;
     cursor: var(--cursor);
 
-    &:hover,
-    &:focus-visible,
+    // One highlight at a time: the pointer and the arrow keys both move
+    // focus (see highlight), so focus is the highlight. An item whose
+    // submenu is open stays lit.
+    &:focus,
     &.is-open {
       background: rgba(255, 255, 255, 0.14);
       outline: none;
     }
+  }
+
+  .desk-menu__divider {
+    margin: 0.5rem 1.2rem;
+    height: 0;
+    border: 0;
+    border-top: 0.5px solid rgba(255, 255, 255, 0.16);
   }
 
   .desk-menu__chevron {
@@ -133,10 +168,17 @@
     disabled?: boolean
   }>()
 
-  const { surface, cleanUp } = useDesk()
+  const { surface, cleanUp, restore } = useDesk()
+  const { focus: focusMallow } = useAskDrop()
 
-  // An item runs something, or opens a submenu of its own.
-  type Item = { label: string; run?: () => void; children?: Item[] }
+  // An item runs something, or opens a submenu of its own. `divided` puts a
+  // rule above it.
+  type Item = {
+    label: string
+    run?: () => void
+    children?: Item[]
+    divided?: boolean
+  }
   const items: Item[] = [
     { label: 'Clean Up', run: () => cleanUp() },
     {
@@ -145,8 +187,11 @@
         { label: 'Date', run: () => cleanUp('date') },
         { label: 'Most Opened', run: () => cleanUp('opens') },
         { label: 'Name', run: () => cleanUp('name') },
+        // Always last: everything back where Craft put it.
+        { label: 'Sicko Mode', run: restore },
       ],
     },
+    { label: 'Ask Mallow…', run: focusMallow, divided: true },
   ]
 
   // Where it's open (viewport px), or null when closed; likewise the open
@@ -199,7 +244,9 @@
           ? Math.max(EDGE, event.clientY - height)
           : event.clientY,
     }
-    focusFirst(el)
+    // Nothing lit until the pointer or an arrow key picks an item, but
+    // focused, so the keys work straight away.
+    el.focus({ preventScroll: true })
   }
 
   function close() {
@@ -239,17 +286,34 @@
     }
   }
 
-  // Pointing at an item with a submenu opens it; at any other closes it.
+  // Pointing at an item lights it; one with a submenu opens it, any
+  // other closes it.
   function hover(item: Item, event: PointerEvent) {
-    const row = event.currentTarget as HTMLElement
+    const row = highlight(event)
     if (item.children) openSub(item, row)
     else closeSub()
+  }
+
+  function highlight(event: PointerEvent) {
+    const row = event.currentTarget as HTMLElement
+    row.focus({ preventScroll: true })
+    return row
+  }
+
+  // Off an item and out of its menu: nothing lit (the menu keeps focus for
+  // the keys), except an open submenu's item.
+  function unhighlight(event: PointerEvent) {
+    const list = event.currentTarget as HTMLElement
+    if (list.contains(document.activeElement)) {
+      list.focus({ preventScroll: true })
+    }
   }
 
   async function choose(item: Item, event: MouseEvent) {
     if (item.children) {
       await openSub(item, event.currentTarget as HTMLElement)
-      if (subMenu.value) focusFirst(subMenu.value)
+      // From the keyboard (Enter or Space), into it.
+      if (event.detail === 0 && subMenu.value) focusFirst(subMenu.value)
       return
     }
     close()
@@ -293,8 +357,15 @@
     }
     if (event.key !== 'ArrowDown' && event.key !== 'ArrowUp') return
     event.preventDefault()
-    const step = event.key === 'ArrowDown' ? 1 : -1
-    buttons.at((index + step) % buttons.length)?.focus()
+    const down = event.key === 'ArrowDown'
+    // From nothing lit, down starts at the top and up at the bottom.
+    const next =
+      index < 0
+        ? down
+          ? 0
+          : buttons.length - 1
+        : (index + (down ? 1 : -1) + buttons.length) % buttons.length
+    buttons[next]?.focus()
   }
 
   // Any press outside it, a scroll, a resize or leaving the window closes it.

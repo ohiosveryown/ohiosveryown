@@ -36,6 +36,9 @@ export function useAskDrop() {
     'ask-question',
     () => null,
   )
+  // Asked to take a question (the desk's right-click menu): the bar's text
+  // field gets focus.
+  const focusing = useState<number>('ask-focus', () => 0)
 
   return {
     over,
@@ -43,6 +46,10 @@ export function useAskDrop() {
     asked,
     ask(text: string) {
       asked.value = { text, at: Date.now() }
+    },
+    focusing,
+    focus() {
+      focusing.value++
     },
     setTarget(el: HTMLElement | null) {
       target = el

@@ -20,6 +20,7 @@ type Desk = {
   raise: () => number
   register: (piece: DeskPiece) => () => void
   cleanUp: (by?: DeskSort) => void
+  restore: () => void
 }
 
 const deskKey: InjectionKey<Desk> = Symbol('desk')
@@ -130,11 +131,18 @@ export function provideDesk(surface: Surface) {
     }
   }
 
+  // Back where Craft put everything: every item undragged.
+  function restore() {
+    let order = 0
+    for (const piece of pieces) piece.moveTo(0, 0, order++ * STAGGER)
+  }
+
   provide(deskKey, {
     surface,
     raise: () => ++top,
     register,
     cleanUp,
+    restore,
   })
 }
 

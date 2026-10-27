@@ -1560,6 +1560,7 @@
     over: dropOver,
     dropped,
     asked,
+    focusing,
     setTarget,
     targetRect: dropTargetRect,
   } = useAskDrop()
@@ -1621,6 +1622,22 @@
       prompt: drop.item.prompt,
     })
   })
+  // Asked to take a question (useAskDrop's focus): he hops, and the text
+  // field takes the typing (reopening the conversation, if there is one).
+  // So it's plain where the typing goes: the bar bounces, he hops and the
+  // hint asks for a question.
+  const CALLED_HINT = 'Psst, ask me anything'
+  watch(focusing, () => {
+    if (!ready.value) return
+    const index = hints.value.indexOf(CALLED_HINT)
+    if (index >= 0) hintIndex.value = index
+    if (!open.value && !reduceMotion.value) {
+      pillGuy.value?.hop()
+      animate(scale, [1, 1.08, 1], { duration: 0.45, ease: 'easeOut' })
+    }
+    input.value?.focus({ preventScroll: true })
+  })
+
   // Asked from elsewhere on the page (useAskDrop's ask), like typing it.
   watch(asked, (question) => {
     if (!question || streaming.value) return
