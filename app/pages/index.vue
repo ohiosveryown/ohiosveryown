@@ -67,10 +67,7 @@
       @focusin="preload(study)"
     />
     <LastPlayed />
-    <AskBar
-      class="home__ask"
-      :covered="!!openStudy"
-    />
+    <AskBar class="home__ask" />
     <DeskDialog
       :study="openStudy"
       :origin="origin"

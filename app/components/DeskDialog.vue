@@ -8,7 +8,10 @@
       aria-hidden="true"
       @click="emit('close')"
       :initial="{ opacity: 0 }"
-      :animate="{ opacity: 1, transition: { duration: reduceMotion ? 0.01 : 0.4 } }"
+      :animate="{
+        opacity: 1,
+        transition: { duration: reduceMotion ? 0.01 : 0.4 },
+      }"
       :exit="{
         opacity: 0,
         transition: {
@@ -46,7 +49,7 @@
           class="desk-dialog__close"
           type="button"
           aria-label="Close"
-          :class="{ 'is-focused': autoFocused }"
+          :class="{ 'is-focused': autoFocused, 'is-scrolled': scrolled }"
           @blur="autoFocused = false"
           @click="emit('close')"
         >
@@ -232,7 +235,6 @@
           :aria-valuenow="height ?? minHeight"
           @pointerdown="onResizeDown"
         />
-
       </motion.div>
     </motion.section>
   </AnimatePresence>
@@ -683,6 +685,7 @@
     line-height: 1.5;
     text-wrap: pretty;
     @include breakpoint(md) {
+      font-weight: 440;
       font-size: 1.8rem;
     }
 
@@ -709,7 +712,7 @@
   }
 
   .desk-dialog__para :deep(strong) {
-    font-weight: 600;
+    font-weight: 500;
     color: #fff;
     letter-spacing: -0.005em;
   }
@@ -747,7 +750,8 @@
     cursor: var(--cursor);
 
     // The band: wider than any dialog (the dialog clips it to its corners),
-    // from the dialog's top edge down past the pill.
+    // from the dialog's top edge down past the pill. Only once the copy has
+    // scrolled; at the top it would just shade the cover.
     &::before {
       content: '';
       position: absolute;
@@ -755,10 +759,32 @@
       left: 50%;
       z-index: -1;
       width: 100vw;
-      height: 8rem;
-      background: linear-gradient(#000 60%, transparent);
+      height: 11rem;
+      opacity: 0;
+      // Solid behind the pill, then an eased fade (a smoothstep-like curve
+      // in stops) so it doesn't end in a hard edge.
+      background: linear-gradient(
+        #000 44%,
+        rgba(0, 0, 0, 0.738) 51.4%,
+        rgba(0, 0, 0, 0.541) 60.4%,
+        rgba(0, 0, 0, 0.382) 68.2%,
+        rgba(0, 0, 0, 0.278) 73.9%,
+        rgba(0, 0, 0, 0.194) 79%,
+        rgba(0, 0, 0, 0.126) 83.8%,
+        rgba(0, 0, 0, 0.075) 88.1%,
+        rgba(0, 0, 0, 0.042) 91.7%,
+        rgba(0, 0, 0, 0.021) 94.6%,
+        rgba(0, 0, 0, 0.008) 97.1%,
+        rgba(0, 0, 0, 0.002) 98.9%,
+        transparent
+      );
       transform: translateX(-50%);
+      transition: opacity var(--ease);
       pointer-events: none;
+    }
+
+    &.is-scrolled::before {
+      opacity: 1;
     }
 
     &:focus-visible,
@@ -865,6 +891,7 @@
   const thumb = reactive({ size: 0, offset: 0 })
   const scrollable = ref(false)
   const scrolling = ref(false)
+  const scrolled = ref(false)
   const dragging = ref(false)
 
   let idleTimer: ReturnType<typeof setTimeout> | undefined
@@ -897,6 +924,7 @@
   function onScroll() {
     measure()
     reveal()
+    scrolled.value = (body.value?.scrollTop ?? 0) > 0
   }
 
   function scrollPerPixel() {
@@ -1049,6 +1077,7 @@
   watch(shell, (instance) => {
     if (!instance) {
       phase.value = 'hidden'
+      scrolled.value = false
       height.value = null
       minHeight.value = 0
       maxHeight.value = 0

@@ -5,7 +5,7 @@
   <motion.form
     class="ask-bar"
     aria-label="Ask Mallow"
-    :inert="!ready || tucked"
+    :inert="!ready"
     :initial="{ opacity: 0, filter: 'blur(10px)' }"
     :animate="reveal"
     :class="{ 'is-open': open, 'is-drop-target': dropOver }"
@@ -886,35 +886,19 @@
   const ready = ref(false)
   const reduceMotion = ref(false)
 
-  // On desktop an open case study covers the top right, where the bar sits
-  // until it's dragged away. While it's there it fades out under the panel,
-  // and back when the panel closes; dragged elsewhere, it stays.
-  const props = defineProps<{ covered?: boolean }>()
-  const wide = ref(false)
-  const atHome = ref(true)
-  const tucked = computed(() => props.covered && wide.value && atHome.value)
   // The bar's fade in. A computed, not an object in the template, so it's
   // the same object across re-renders.
   const reveal = computed(() =>
-    tucked.value
+    ready.value
       ? {
-          opacity: 0,
-          filter: 'blur(10px)',
-          // A beat after the panel starts opening over it.
-          transition: reduceMotion.value
-            ? { duration: 0.01 }
-            : { duration: 0.3, delay: 0.12, ease },
+          opacity: 1,
+          filter: 'blur(0px)',
+          // Any filter left on, even blur(0px), stops the bar's own
+          // backdrop-filter from seeing the page behind it.
+          transitionEnd: { filter: 'none' },
+          transition: { duration: reduceMotion.value ? 0.01 : 0.6, ease },
         }
-      : ready.value
-        ? {
-            opacity: 1,
-            filter: 'blur(0px)',
-            // Any filter left on, even blur(0px), stops the bar's own
-            // backdrop-filter from seeing the page behind it.
-            transitionEnd: { filter: 'none' },
-            transition: { duration: reduceMotion.value ? 0.01 : 0.6, ease },
-          }
-        : { opacity: 0, filter: 'blur(10px)' },
+      : { opacity: 0, filter: 'blur(10px)' },
   )
 
   // With a mouse or trackpad the bar drags around the desk like the icons
@@ -932,11 +916,6 @@
   const x = useMotionValue(0)
   const y = useMotionValue(0)
   const scale = useMotionValue(1)
-  // Still in its place in the layout (see `tucked`).
-  const trackHome = () =>
-    (atHome.value = Math.abs(x.get()) < 1 && Math.abs(y.get()) < 1)
-  x.on('change', trackHome)
-  y.on('change', trackHome)
   const bounds = ref({ top: 0, left: 0, right: 0, bottom: 0 })
 
   function formEl() {
@@ -1110,9 +1089,6 @@
       '(prefers-reduced-motion: reduce)',
     ).matches
     draggable.value = window.matchMedia('(pointer: fine)').matches
-    const wideQuery = window.matchMedia('(min-width: 700px)')
-    wide.value = wideQuery.matches
-    wideQuery.addEventListener('change', (e) => (wide.value = e.matches))
   })
 
   // Mallow's chat (server/api/ask.post.ts): the pill grows into a panel with
