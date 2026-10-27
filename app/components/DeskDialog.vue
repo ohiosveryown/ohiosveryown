@@ -78,18 +78,18 @@
           </figure>
 
           <article class="desk-dialog__article">
-            <h2
-              :id="`${study.slug}-title`"
-              class="desk-dialog__overline"
-            >
-              {{ study.title }}
-            </h2>
             <h3
               v-if="study.intro"
               class="desk-dialog__intro"
             >
               {{ study.intro }}
             </h3>
+            <h2
+              :id="`${study.slug}-title`"
+              class="desk-dialog__overline"
+            >
+              {{ study.title }}
+            </h2>
             <dl class="desk-dialog__details">
               <div
                 v-for="detail in details"
@@ -401,7 +401,7 @@
     flex-direction: column;
     gap: 1.2rem;
     margin: 0;
-    padding: 0.4rem 0;
+    padding: 0.4rem 0 0.8rem;
   }
 
   .desk-dialog__row {
@@ -533,20 +533,21 @@
     }
   }
 
-  // The study's title, small, over the intro.
+  // Heads the detail rows, as in the Figma dialog: 3.6rem under the intro
+  // and 1.2rem over the first rule (the flow's gap, and the rows' top
+  // padding, pulled in).
   .desk-dialog__overline {
+    margin: calc(3.6rem - var(--flow)) 0 calc(1.2rem - var(--flow) - 0.4rem);
     font-family: var(--text-font);
-    font-size: 1.3rem;
+    font-size: 1.4rem;
     font-weight: 500;
-    letter-spacing: -0.013rem;
-    line-height: 1.11;
-    text-transform: capitalize;
+    letter-spacing: -0.014rem;
+    line-height: 1.5;
     text-box-edge: cap alphabetic;
     text-box-trim: trim-both;
   }
 
   .desk-dialog__intro {
-    padding: 0.8rem 0;
     font-family: var(--text-font);
     font-size: 1.9rem;
     font-weight: 600;
