@@ -8,7 +8,7 @@
       :class="{ 'is-resized': height != null }"
       role="dialog"
       aria-modal="true"
-      :aria-label="study.title"
+      :aria-labelledby="`${study.slug}-title`"
       :style="shellStyle"
       :variants="variants"
       initial="hidden"
@@ -28,6 +28,12 @@
         >
           <header class="desk-dialog__header">
             <p class="desk-dialog__name blush">{{ study.label }}</p>
+            <h2
+              :id="`${study.slug}-title`"
+              class="desk-dialog__title"
+            >
+              {{ study.title }}
+            </h2>
           </header>
 
           <figure
@@ -311,26 +317,16 @@
       aspect-ratio: 4 / 3.45;
     }
 
-    // Centred on the page, and wider, with images at full width and the
-    // text in a narrower column (see the inset rule below). Insets all round
-    // plus auto margins centre it without a transform (motion owns the
-    // transform for the open/close FLIP). That needs a set height: most of
-    // the screen (88svh), and never less than enough for the cover (16 / 10
-    // here) to sit as far from the bottom as from the sides. 7.31rem
-    // is where the cover starts (top padding, file name and gap), 2.45rem
-    // the side inset (padding plus border), and the cover is the width less
-    // both side insets. Half the screen wide, between 72rem and 100rem, so
-    // it grows on very large screens.
+    // Nearly full screen and centred, as in the Figma "__lg" frame, with
+    // the same 3.2rem gap to the screen edge on all four sides. Insets all
+    // round plus auto margins centre it without a transform (motion owns
+    // the transform for the open/close FLIP), which needs a set width and
+    // height.
     @include breakpoint(lg) {
-      --dialog-width: min(clamp(72rem, 50vw, 100rem), 100vw - 3.2rem);
-
       inset: 0;
       margin: auto;
-      width: var(--dialog-width);
-      height: max(
-        88svh,
-        calc(7.31rem + (var(--dialog-width) - 4.9rem) * 10 / 16 + 2.45rem)
-      );
+      width: calc(100vw - 6.4rem);
+      height: calc(100svh - 6.4rem);
       max-height: calc(100% - 1.6rem);
       aspect-ratio: auto;
     }
@@ -372,6 +368,11 @@
     scrollbar-width: none;
     overflow-y: auto;
     overscroll-behavior: contain;
+
+    // On the full-screen dialog, media runs 65% of the width, centred.
+    @include breakpoint(lg) {
+      padding: 4.8rem 17.5%;
+    }
 
     &::-webkit-scrollbar {
       display: none;
@@ -434,6 +435,23 @@
     text-box-edge: cap alphabetic;
     text-box-trim: trim-both;
     overflow: hidden;
+
+    // No file name on the full-screen dialog, as in the Figma frame.
+    @include breakpoint(lg) {
+      display: none;
+    }
+  }
+
+  .desk-dialog__title {
+    font-family: var(--text-font);
+    font-size: 2.6rem;
+    font-weight: 600;
+    letter-spacing: -0.04rem;
+    line-height: 1;
+    text-wrap: balance;
+    @include breakpoint(md) {
+      font-size: 3.2rem;
+    }
   }
 
   .desk-dialog__details {
@@ -506,7 +524,7 @@
     gap: var(--flow);
   }
 
-  // Below the cover: 1.25 × the flow (3.5rem), on top of the body's gap.
+  // Below the cover: 1.25 × the flow (2.5rem), counting the body's gap.
   .desk-dialog__figure + .desk-dialog__article {
     margin-top: calc(var(--flow) * 1.25 - 2rem);
   }
@@ -550,7 +568,7 @@
     aspect-ratio: 408 / 280;
     object-fit: cover;
 
-    // A touch flatter in the wide, centred panel.
+    // A touch flatter on the full-screen dialog.
     @include breakpoint(lg) {
       aspect-ratio: 16 / 10;
     }
@@ -713,11 +731,9 @@
     letter-spacing: -0.005em;
   }
 
-  // On the wider centred dialog, images and video run the full width and
-  // the text sits in a narrower column inside them: 56.7rem wide on a 72rem
-  // dialog (inset 5.2rem each side). As the dialog grows, the column grows
-  // by a quarter as much, so lines stay a comfortable length (63.7rem at
-  // the 100rem maximum). 100% is the full inner width.
+  // On the full-screen dialog, images and video run the full width of the
+  // body and the text sits in a centred column inside them, about 52% of
+  // the dialog's width. 100% is the body's inner width.
   .desk-dialog__intro,
   .desk-dialog__details,
   .desk-dialog__h3,
@@ -727,10 +743,8 @@
   .desk-dialog__note,
   .desk-dialog__caption--body {
     @include breakpoint(lg) {
-      --text-width: calc(56.7rem + (var(--dialog-width) - 72rem) / 4);
-
-      margin-right: max(5.2rem, calc((100% - var(--text-width)) / 2));
-      margin-left: max(5.2rem, calc((100% - var(--text-width)) / 2));
+      margin-right: 10%;
+      margin-left: 10%;
     }
   }
 
