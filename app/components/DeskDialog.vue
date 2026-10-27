@@ -558,6 +558,7 @@
     text-box-trim: trim-both;
     @include breakpoint(md) {
       font-size: 2.5rem;
+      line-height: 1.16;
     }
   }
 
@@ -760,7 +761,7 @@
       left: 50%;
       z-index: -1;
       width: 100vw;
-      height: 11rem;
+      height: 14rem;
       opacity: 0;
       // Solid behind the pill, then an eased fade (a smoothstep-like curve
       // in stops) so it doesn't end in a hard edge.
