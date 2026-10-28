@@ -174,9 +174,10 @@ export function toBody(
     // A quote block's markdown starts with "> " (its decoration says so too).
     const quote =
       kind === 'p' && (block.decorations?.includes('quote') ?? false)
-    // An italic line right under an image is its caption.
+    // An italic line right under an image or video is its caption.
+    const under = body.at(-1)?.kind
     const caption =
-      kind === 'p' && !quote && body.at(-1)?.kind === 'img'
+      kind === 'p' && !quote && (under === 'img' || under === 'video')
         ? captionOf(block)
         : undefined
     if (caption) {

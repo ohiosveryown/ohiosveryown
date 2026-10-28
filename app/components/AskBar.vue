@@ -934,7 +934,7 @@
     const rem = Number.parseFloat(
       getComputedStyle(document.documentElement).fontSize,
     )
-    const edge = draggable.value ? EDGE_REM * rem : 0
+    const edge = draggable.value ? DESK_EDGE_REM * rem : 0
     // offsetLeft/Top ignore the drag transform: the bar's spot in the layout.
     bounds.value = {
       left: -form.offsetLeft + edge,
@@ -943,7 +943,6 @@
       bottom: desk.clientHeight - form.offsetTop - form.offsetHeight - edge,
     }
   }
-  const EDGE_REM = 1.2
 
   // When it grows (opening, a longer reply) or the window shrinks, glide
   // back inside if it now hangs off an edge. Not while it's being dragged.
@@ -1474,7 +1473,19 @@
     ]
   }
   const router = useRouter()
+  // A case study opening folds the panel back into the pill, however it was
+  // opened (a link in a reply, the keyboard), so it isn't left over the
+  // study. Clicks elsewhere on the page already fold it.
+  const route = useRoute()
+  watch(
+    () => route.path,
+    (path) => {
+      if (path.startsWith('/work/')) open.value = false
+    },
+  )
   function openCaseStudy(slug: string) {
+    // Folded now, not when the navigation lands.
+    open.value = false
     router.push(`/work/${slug}`)
   }
 

@@ -11,9 +11,14 @@
       :class="{ 'has-tooltip': tooltipText }"
       v-bind="
         href
-          ? { href, target: '_blank', rel: 'noopener' }
+          ? { href, target: '_blank', rel: 'noopener', tabindex: 0 }
           : to
-            ? { href: to, 'aria-haspopup': 'dialog', 'aria-expanded': expanded }
+            ? {
+                href: to,
+                tabindex: 0,
+                'aria-haspopup': 'dialog',
+                'aria-expanded': expanded,
+              }
             : {
                 type: 'button',
                 'aria-haspopup': 'dialog',
@@ -224,6 +229,9 @@
     defineProps<{
       name: string
       image?: string | null
+      // A link (`href` or `to`) is given tabindex 0: Safari leaves links out
+      // of the Tab order by default, so the file couldn't be reached to move
+      // it with the arrow keys.
       // An outside link, opened in a new tab.
       href?: string | null
       // A page of the site's own that this opens in place (a case study's

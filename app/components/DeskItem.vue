@@ -4,7 +4,7 @@
     class="desk-item"
     :style="{ zIndex: carrying ? 'calc(var(--zmax) - 1)' : 2 + layer, x, y }"
     drag
-    :drag-constraints="surface ?? false"
+    :drag-constraints="bounds"
     :drag-elastic="0.12"
     :drag-transition="{ power: 0.18, timeConstant: 220 }"
     :while-drag="{ scale: 1.04 }"
@@ -69,7 +69,7 @@
 <script setup lang="ts">
   import { animate, motion, useMotionValue } from 'motion-v'
   import type { AskDropItem } from '~/composables/useAskDrop'
-  import type { DeskSortKeys } from '~/composables/useDesk'
+  import { DESK_EDGE_REM, type DeskSortKeys } from '~/composables/useDesk'
 
   const props = withDefaults(
     defineProps<{
@@ -108,11 +108,59 @@
     if (before && window.innerWidth === before.width) {
       x.set(before.x)
       y.set(before.y)
+    } else {
+      // A narrower window: back inside the margin, if it now hangs past it.
+      const limits = measureBounds()
+      if (limits) {
+        x.set(
+          Math.min(
+            Math.max(x.get(), limits.left),
+            Math.max(limits.left, limits.right),
+          ),
+        )
+        y.set(
+          Math.min(
+            Math.max(y.get(), limits.top),
+            Math.max(limits.top, limits.bottom),
+          ),
+        )
+      }
     }
     before = undefined
   }
 
+  // Where it can be dragged and thrown: the desk, less a margin along every
+  // edge (the same as Mallow's bar), as offsets from its spot in the layout.
+  // Measured when it's picked up, and on resizes.
+  const bounds = ref<
+    | {
+        left: number
+        right: number
+        top: number
+        bottom: number
+      }
+    | false
+  >(false)
+  function measureBounds() {
+    const desk = surface.value
+    const item = root.value?.$el
+    if (!desk || !item) return null
+    const edge =
+      DESK_EDGE_REM *
+      Number.parseFloat(getComputedStyle(document.documentElement).fontSize)
+    // offsetLeft/Top are its spot in the layout; x/y move it from there.
+    const measured = {
+      left: -item.offsetLeft + edge,
+      top: -item.offsetTop + edge,
+      right: desk.clientWidth - item.offsetLeft - item.offsetWidth - edge,
+      bottom: desk.clientHeight - item.offsetTop - item.offsetHeight - edge,
+    }
+    bounds.value = measured
+    return measured
+  }
+
   function onGrab() {
+    measureBounds()
     dragged = false
     layer.value = raise()
     // On press: motion reports the drag start only after it has moved.
@@ -216,24 +264,16 @@
     }
     dismissTooltip()
 
-    const item = event.currentTarget as HTMLElement
+    const limits = measureBounds()
+    if (!limits) return
     const step = event.shiftKey ? NUDGE_PX.large : NUDGE_PX.small
     const moving = x.isAnimating() || y.isAnimating()
     const from = (moving && nudgedTo) || { x: x.get(), y: y.get() }
     const clamp = (value: number, min: number, max: number) =>
       Math.min(Math.max(value, min), Math.max(min, max))
-    // offsetLeft/Top are its spot in the layout; x/y move it from there.
     const to = {
-      x: clamp(
-        from.x + arrow[0] * step,
-        -item.offsetLeft,
-        desk.clientWidth - item.offsetLeft - item.offsetWidth,
-      ),
-      y: clamp(
-        from.y + arrow[1] * step,
-        -item.offsetTop,
-        desk.clientHeight - item.offsetTop - item.offsetHeight,
-      ),
+      x: clamp(from.x + arrow[0] * step, limits.left, limits.right),
+      y: clamp(from.y + arrow[1] * step, limits.top, limits.bottom),
     }
     nudgedTo = to
     if (reduceMotion.value) {

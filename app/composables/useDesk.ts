@@ -25,6 +25,10 @@ type Desk = {
 
 const deskKey: InjectionKey<Desk> = Symbol('desk')
 
+// How far in from the desk's edges things can be dragged (rem): the desk
+// items and Mallow's bar, so nothing sits flush against the screen.
+export const DESK_EDGE_REM = 1.2
+
 // Clean Up's grid (rem): in from the desk's top-left corner, and between
 // rows and columns.
 const MARGIN_REM = 3.2
