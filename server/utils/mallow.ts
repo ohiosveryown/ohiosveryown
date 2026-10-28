@@ -13,6 +13,7 @@ function describe(study: CaseStudy) {
   }
   if (study.link) lines.push(`Link: ${study.link.replace(/^https?:\/\//, '')}`)
   if (study.intro) lines.push(study.intro)
+  if (study.summary) lines.push(`Summary: ${study.summary}`)
   for (const node of study.body) {
     if (
       node.kind === 'img' ||

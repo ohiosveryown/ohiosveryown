@@ -23,6 +23,8 @@ export type CaseStudy = {
   label: string
   title: string
   intro?: string
+  // A short summary of the post (Craft's "Summary"), shown with the details.
+  summary?: string
   // Shown as is ("Jan 2020 – Present").
   date?: string
   // When the post went up, "YYYY-MM-DD" (Craft's "Published on"), for

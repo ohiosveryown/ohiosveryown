@@ -100,7 +100,27 @@
                 class="desk-dialog__row"
               >
                 <dt class="desk-dialog__label">{{ detail.label }}</dt>
-                <dd class="desk-dialog__value">
+                <!-- The summary: cut short with a "More" that shows the rest
+                     (and "Less" to put it back). -->
+                <dd
+                  v-if="detail.summary"
+                  class="desk-dialog__value desk-dialog__summary"
+                >
+                  {{ summaryOpen ? detail.value : shortSummary }}
+                  <button
+                    v-if="shortSummary !== detail.value"
+                    class="desk-dialog__more"
+                    type="button"
+                    :aria-expanded="summaryOpen"
+                    @click="summaryOpen = !summaryOpen"
+                  >
+                    {{ summaryOpen ? 'Less' : 'More' }}
+                  </button>
+                </dd>
+                <dd
+                  v-else
+                  class="desk-dialog__value"
+                >
                   <a
                     v-if="detail.href"
                     class="desk-dialog__link"
@@ -484,6 +504,22 @@
     text-box-trim: trim-both;
   }
 
+  // Sentence case and looser lines than the other values: it's prose.
+  .desk-dialog__summary {
+    line-height: 1.38;
+    text-transform: none;
+  }
+
+  .desk-dialog__more {
+    padding: 0;
+    color: inherit;
+    background: none;
+    font: inherit;
+    text-decoration-line: underline;
+    text-underline-offset: 0.15em;
+    cursor: var(--cursor);
+  }
+
   .desk-dialog__link {
     text-transform: none;
     cursor: var(--cursor);
@@ -718,7 +754,7 @@
     @include breakpoint(md) {
       font-weight: 440;
       font-size: 1.8rem;
-      line-height: 1.33;
+      line-height: 1.35;
     }
 
     // Bold all the way through in Craft: set tighter, like a heading.
@@ -885,7 +921,12 @@
   }>()
   const emit = defineEmits<{ close: []; ask: [question: string] }>()
 
-  type Detail = { label: string; value: string; href?: string }
+  type Detail = {
+    label: string
+    value: string
+    href?: string
+    summary?: boolean
+  }
 
   const details = computed<Detail[]>(() => {
     const study = props.study
@@ -905,8 +946,26 @@
         value: study.disciplines.join(', '),
       })
     }
+    if (study.summary) {
+      rows.push({ label: 'Summary', value: study.summary, summary: true })
+    }
     return rows
   })
+
+  // About three lines of the summary at full width, cut at a word, until
+  // "More" shows the rest. Closed again for each post.
+  const SUMMARY_CHARS = 200
+  const summaryOpen = ref(false)
+  const shortSummary = computed(() => {
+    const text = props.study?.summary ?? ''
+    if (text.length <= SUMMARY_CHARS) return text
+    const cut = text.slice(0, SUMMARY_CHARS)
+    return `${cut.slice(0, cut.lastIndexOf(' ')).replace(/[,;:.\s]+$/, '')}…`
+  })
+  watch(
+    () => props.study?.id,
+    () => (summaryOpen.value = false),
+  )
 
   const ease = [0.8, 0, 0.16, 1] as const
   const reduceMotion = ref(false)

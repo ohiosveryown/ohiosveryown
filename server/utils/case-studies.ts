@@ -90,6 +90,7 @@ export function toCaseStudy(
     label: text(p.label) ?? slug,
     title: item.title,
     intro: text(p.intro),
+    summary: text(p.summary),
     date: text(p.date),
     publishedOn: isoDate(p.published_on),
     link: text(p.link),
