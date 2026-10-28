@@ -220,6 +220,14 @@
                   v-html="node.html"
                 />
               </template>
+              <!-- On every post, below everything else (the footnotes,
+                   usually): a rule like the one above them, then how the
+                   post was made. -->
+              <hr class="desk-dialog__break is-rule" />
+              <p class="desk-dialog__note">
+                The ideas and opinions in this post are mine. Claude helps with
+                research.
+              </p>
             </div>
           </article>
         </div>
@@ -710,7 +718,7 @@
     @include breakpoint(md) {
       font-weight: 440;
       font-size: 1.8rem;
-      line-height: 1.4;
+      line-height: 1.33;
     }
 
     // Bold all the way through in Craft: set tighter, like a heading.
