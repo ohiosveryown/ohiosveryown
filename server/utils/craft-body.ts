@@ -65,6 +65,29 @@ function askOf(markdown: string) {
 // The decoration already says it's a quote.
 const QUOTE_MARK = /^>\s?/
 
+// Rendered HTML as plain text (tags dropped, entities decoded).
+export function plainText(html: string) {
+  return html
+    .replace(/<[^>]+>/g, '')
+    .replace(/&nbsp;/g, ' ')
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+    .replace(/\s+/g, ' ')
+    .trim()
+}
+
+// An image's alt text from Craft, unless it's the "Image" Craft fills in
+// for one that has none (then the caption under it stands in; see toBody
+// and the hero in case-studies).
+const PLACEHOLDER_ALT = /^(?:image|img|photo|picture)?$/i
+export function altOf(block: CraftBlock) {
+  const alt = (block.altText ?? '').trim()
+  return PLACEHOLDER_ALT.test(alt) ? '' : alt
+}
+
 // A paragraph that's all italics, the way image captions are written.
 export function captionOf(block: CraftBlock | undefined) {
   if (block?.type !== 'text' || block.textStyle) return undefined
@@ -122,7 +145,7 @@ export function toBody(
       const { src, aspectRatio } = imageFor(
         block as CraftBlock & { url: string },
       )
-      body.push({ kind: 'img', src, alt: block.altText ?? '', aspectRatio })
+      body.push({ kind: 'img', src, alt: altOf(block), aspectRatio })
       continue
     }
 
@@ -157,6 +180,9 @@ export function toBody(
         ? captionOf(block)
         : undefined
     if (caption) {
+      // Without alt text of its own, the image is described by its caption.
+      const image = body.at(-1)
+      if (image?.kind === 'img' && !image.alt) image.alt = plainText(caption)
       body.push({ kind: 'caption', html: caption })
       continue
     }

@@ -1,6 +1,6 @@
 import type { CaseStudy } from '#shared/types/case-study'
 import type { CraftBlock, CraftItem } from './craft'
-import { captionOf, toBody } from './craft-body'
+import { altOf, captionOf, plainText, toBody } from './craft-body'
 import type { SyncedImage, SyncedVideo } from './craft-images'
 
 function text(value: unknown): string | undefined {
@@ -96,7 +96,7 @@ export function toCaseStudy(
     disciplines: strings(p.disciplines),
     hero: heroBlock && {
       ...imageFor(heroBlock, images),
-      alt: heroBlock.altText ?? '',
+      alt: altOf(heroBlock) || (heroCaption ? plainText(heroCaption) : ''),
       caption: heroCaption,
     },
     tooltip: tooltip ? { text: tooltip } : undefined,

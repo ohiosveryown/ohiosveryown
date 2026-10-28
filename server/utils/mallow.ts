@@ -4,18 +4,6 @@ import type { CaseStudy } from '#shared/types/case-study'
 // bio, roles and CV (server/assets/mallow/about.md), and the published case
 // studies from Craft. Server-only; none of it is sent to the browser.
 
-function plain(html: string) {
-  return html
-    .replace(/<[^>]+>/g, '')
-    .replace(/&nbsp;/g, ' ')
-    .replace(/&amp;/g, '&')
-    .replace(/&lt;/g, '<')
-    .replace(/&gt;/g, '>')
-    .replace(/&quot;/g, '"')
-    .replace(/&#39;/g, "'")
-    .replace(/\s+/g, ' ')
-    .trim()
-}
 
 function describe(study: CaseStudy) {
   const lines = [`## ${study.title} (${study.label})`, `Slug: ${study.slug}`]
@@ -33,7 +21,7 @@ function describe(study: CaseStudy) {
       node.kind === 'ask'
     )
       continue
-    const text = plain(node.html)
+    const text = plainText(node.html)
     if (!text) continue
     lines.push(
       node.kind === 'p' ||
