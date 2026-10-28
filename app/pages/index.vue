@@ -731,7 +731,7 @@
       container-type: normal;
       // Everything inside (type, icons, gaps) a touch smaller, in
       // proportion, without retuning each clamp().
-      zoom: 0.86;
+      zoom: 0.8;
     }
   }
 
