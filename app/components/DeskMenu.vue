@@ -38,6 +38,7 @@
             :aria-haspopup="item.children ? 'menu' : undefined"
             :aria-expanded="item.children ? sub === item : undefined"
             @pointerenter="hover(item, $event)"
+            @pointermove="move(item, $event)"
             @click="choose(item, $event)"
           >
             {{ item.label }}
@@ -70,18 +71,46 @@
         tabindex="-1"
         :aria-label="sub.label"
         @pointerleave="unhighlight"
+        @pointerenter="cancelAim"
         :style="{ left: `${subAt.x}px`, top: `${subAt.y}px` }"
       >
         <button
           v-for="child in sub.children"
           :key="child.label"
           class="desk-menu__item"
+          :class="{ 'has-image': child.image }"
           type="button"
-          role="menuitem"
+          :role="child.checked ? 'menuitemradio' : 'menuitem'"
+          :aria-checked="child.checked ? child.checked() : undefined"
           @pointerenter="highlight"
           @click="choose(child, $event)"
         >
-          {{ child.label }}
+          <img
+            v-if="child.image"
+            class="desk-menu__image"
+            :src="child.image"
+            alt=""
+            width="32"
+            height="24"
+          />
+          <span class="desk-menu__label">{{ child.label }}</span>
+          <svg
+            v-if="child.checked?.()"
+            class="desk-menu__check"
+            width="10"
+            height="8"
+            viewBox="0 0 10 8"
+            fill="none"
+            aria-hidden="true"
+          >
+            <path
+              d="M1 4.2l2.6 2.6L9 1.2"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
         </button>
       </div>
     </motion.div>
@@ -151,6 +180,31 @@
     border-top: 0.5px solid rgba(255, 255, 255, 0.16);
   }
 
+  // With a picture (the wallpapers): the picture first, close to the
+  // edge, then the label taking the room, then the check.
+  .desk-menu__item.has-image {
+    justify-content: flex-start;
+    gap: 0.8rem;
+    padding: 0.4rem 1.2rem 0.4rem 0.6rem;
+  }
+
+  .desk-menu__image {
+    flex-shrink: 0;
+    width: 3.2rem;
+    height: 2.4rem;
+    border-radius: 0.4rem;
+    object-fit: cover;
+  }
+
+  .desk-menu__label {
+    flex: 1 0 0;
+    min-width: 0;
+  }
+
+  .desk-menu__check {
+    flex-shrink: 0;
+  }
+
   .desk-menu__chevron {
     flex-shrink: 0;
     opacity: 0.6;
@@ -170,6 +224,11 @@
 
   const { surface, cleanUp, restore } = useDesk()
   const { focus: focusMallow } = useAskDrop()
+  const {
+    wallpapers,
+    current: currentWallpaper,
+    choose: chooseWallpaper,
+  } = useWallpaper()
 
   // An item runs something, or opens a submenu of its own. `divided` puts a
   // rule above it.
@@ -178,6 +237,10 @@
     run?: () => void
     children?: Item[]
     divided?: boolean
+    // For a choice among several (a wallpaper): whether it's the current one.
+    checked?: () => boolean
+    // A picture beside the label (a wallpaper's).
+    image?: string
   }
   const items: Item[] = [
     { label: 'Clean Up', run: () => cleanUp() },
@@ -190,6 +253,15 @@
         // Always last: everything back where Craft put it.
         { label: 'Sicko Mode', run: restore },
       ],
+    },
+    {
+      label: 'Change Wallpaper',
+      children: wallpapers.map((wallpaper) => ({
+        label: wallpaper.name,
+        image: `/field/${wallpaper.id}-thumb.webp`,
+        run: () => chooseWallpaper(wallpaper.id),
+        checked: () => currentWallpaper.value.id === wallpaper.id,
+      })),
     },
     { label: 'Ask Mallow…', run: focusMallow, divided: true },
   ]
@@ -255,6 +327,8 @@
   }
 
   function closeSub() {
+    cancelAim()
+    aimFrom = null
     sub.value = null
     subAt.value = null
   }
@@ -287,11 +361,73 @@
   }
 
   // Pointing at an item lights it; one with a submenu opens it, any
-  // other closes it.
+  // other closes it. Except on the way to an open submenu: a pointer
+  // heading for it diagonally crosses the items below (or above) its own,
+  // and switching to them would snatch the submenu away. So while the
+  // pointer is inside the triangle from where it last was on the open
+  // item to the submenu's near edge, the switch waits; it happens if the
+  // pointer leaves the triangle, or stays put for AIM_MS.
+  const AIM_MS = 300
+  let aimFrom: { x: number; y: number } | null = null
+  let aimTimer: ReturnType<typeof setTimeout> | undefined
+  let waiting: Item | null = null
+
   function hover(item: Item, event: PointerEvent) {
-    const row = highlight(event)
+    const row = event.currentTarget as HTMLElement
+    if (sub.value && item !== sub.value && aiming(event)) {
+      waiting = item
+      clearTimeout(aimTimer)
+      aimTimer = setTimeout(() => apply(item, row), AIM_MS)
+      return
+    }
+    apply(item, row)
+  }
+
+  function move(item: Item, event: PointerEvent) {
+    const point = { x: event.clientX, y: event.clientY }
+    if (item === sub.value) aimFrom = point
+    else if (waiting === item && !aiming(event)) {
+      apply(item, event.currentTarget as HTMLElement)
+    }
+  }
+
+  function apply(item: Item, row: HTMLElement) {
+    cancelAim()
+    row.focus({ preventScroll: true })
     if (item.children) openSub(item, row)
     else closeSub()
+  }
+
+  function cancelAim() {
+    clearTimeout(aimTimer)
+    waiting = null
+  }
+
+  // Inside the triangle from aimFrom to the submenu's near corners (with a
+  // little slack above and below)?
+  function aiming(event: PointerEvent) {
+    const el = subMenu.value
+    const parent = menu.value
+    if (!el || !parent || !aimFrom) return false
+    const box = el.getBoundingClientRect()
+    const onRight = box.left >= parent.getBoundingClientRect().left
+    const edge = onRight ? box.left : box.right
+    const slack = 12
+    const a = aimFrom
+    const b = { x: edge, y: box.top - slack }
+    const c = { x: edge, y: box.bottom + slack }
+    const p = { x: event.clientX, y: event.clientY }
+    const side = (
+      u: { x: number; y: number },
+      v: { x: number; y: number },
+      w: { x: number; y: number },
+    ) => (v.x - u.x) * (w.y - u.y) - (v.y - u.y) * (w.x - u.x)
+    const d1 = side(a, b, p)
+    const d2 = side(b, c, p)
+    const d3 = side(c, a, p)
+    const negative = d1 < 0 || d2 < 0 || d3 < 0
+    const positive = d1 > 0 || d2 > 0 || d3 > 0
+    return !(negative && positive)
   }
 
   function highlight(event: PointerEvent) {

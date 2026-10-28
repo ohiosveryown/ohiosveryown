@@ -49,7 +49,7 @@ html {
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility !important;
   min-height: 100%;
-  background: #fff;
+  background: #000;
   cursor: var(--cursor);
 
   @include breakpoint(md) {

@@ -12,21 +12,51 @@
            under a shade doesn't need the screen's full density), so a phone
            gets a few hundred KB, not the 1MB original. Covering a tall page
            on a phone, it's drawn wider than the screen, hence the svh. -->
-      <picture>
+      <!-- The wallpaper (useWallpaper; Change Wallpaper in the desk's
+           right-click menu). On a change the old one stays put underneath
+           while the new one fades in over it, then goes, so there's always
+           a photo behind (not the placeholder green and the shade). -->
+      <picture
+        v-if="previous"
+        class="home__picture"
+      >
         <source
           type="image/avif"
-          :srcset="field.avif"
-          :sizes="field.sizes"
+          :srcset="previous.avif"
+          :sizes="WALLPAPER_SIZES"
         />
         <img
           class="home__photo"
-          :src="field.fallback"
-          :srcset="field.webp"
-          :sizes="field.sizes"
+          :src="previous.fallback"
+          :srcset="previous.webp"
+          :sizes="WALLPAPER_SIZES"
+          alt=""
+        />
+      </picture>
+      <motion.picture
+        :key="wallpaper.id"
+        class="home__picture"
+        :initial="previous ? { opacity: 0 } : false"
+        :animate="{
+          opacity: 1,
+          transition: { duration: WALLPAPER_FADE_S, ease },
+        }"
+        @animation-complete="previous = null"
+      >
+        <source
+          type="image/avif"
+          :srcset="photo.avif"
+          :sizes="WALLPAPER_SIZES"
+        />
+        <img
+          class="home__photo"
+          :src="photo.fallback"
+          :srcset="photo.webp"
+          :sizes="WALLPAPER_SIZES"
           alt=""
           decoding="async"
         />
-      </picture>
+      </motion.picture>
       <div class="home__shade" />
     </div>
 
@@ -407,7 +437,7 @@
     // background rather than this placeholder (shown until the photo loads).
     border-radius: var(--sheet-radius) var(--sheet-radius) 0 0;
     color: #d2f976;
-    background: #6f8d7a;
+    background: #000;
     overflow-x: clip;
 
     @include breakpoint(md) {
@@ -441,6 +471,11 @@
     @include breakpoint(md) {
       border-radius: 0;
     }
+  }
+
+  .home__picture {
+    position: absolute;
+    inset: 0;
   }
 
   .home__photo {
@@ -949,6 +984,7 @@
 
 <script setup lang="ts">
   import type { CaseStudy } from '#shared/types/case-study'
+  import { motion } from 'motion-v'
   import blushWoff2 from '~/assets/type/blush.woff2'
 
   // The background photo (see the <picture> in the template). The sizes
@@ -956,14 +992,29 @@
   // Nuxt prefetches every asset the page's script imports, which fetched
   // all six. Cached for a year (routeRules), so a new photo needs new
   // filenames.
-  const fieldSet = (ext: string) =>
-    [1280, 1920, 2544].map((w) => `/field/field-${w}.${ext} ${w}w`).join(', ')
-  const field = {
-    avif: fieldSet('avif'),
-    webp: fieldSet('webp'),
-    fallback: '/field/field-1920.webp',
-    sizes: 'max(50vw, 67svh)',
-  }
+  const { current: wallpaper, restore: restoreWallpaper } = useWallpaper()
+  const photo = computed(() => wallpaperSources(wallpaper.value))
+  const ease = [0.8, 0, 0.16, 1] as const
+  const WALLPAPER_FADE_S = 0.8
+  // The wallpaper being faded over, kept until the new one has finished
+  // fading in (its animation-complete), so it never goes first. A backstop
+  // a couple of seconds after the fade, in case that event never comes.
+  const previous = shallowRef<ReturnType<typeof wallpaperSources> | null>(null)
+  let previousTimer: ReturnType<typeof setTimeout> | undefined
+  watch(
+    () => wallpaper.value.id,
+    (_id, before) => {
+      const old = WALLPAPERS.find((option) => option.id === before)
+      previous.value = old ? wallpaperSources(old) : null
+      clearTimeout(previousTimer)
+      previousTimer = setTimeout(
+        () => (previous.value = null),
+        (WALLPAPER_FADE_S + 2) * 1000,
+      )
+    },
+  )
+  onBeforeUnmount(() => clearTimeout(previousTimer))
+  onMounted(() => restoreWallpaper())
 
   // iOS Safari paints the status bar, its toolbar fades, and the strip
   // under its toolbar with the html background color, never the page
