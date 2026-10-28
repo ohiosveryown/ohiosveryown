@@ -1,8 +1,9 @@
 import { AwsClient } from 'aws4fetch'
 
-// Cloudflare R2 through its S3-compatible API. Server-only credentials; the
-// bucket itself is public (NUXT_R2_PUBLIC_URL) so browsers load images
-// straight from it.
+// Cloudflare R2 through its S3-compatible API. Server-only credentials.
+// Images are served from the site itself (/img, see server/routes/img) when
+// NUXT_R2_IMAGE_URL is set; videos, and images without it, come straight
+// from the bucket's public address (NUXT_R2_PUBLIC_URL).
 
 let client: AwsClient | undefined
 
@@ -43,6 +44,23 @@ export function isR2Configured() {
 export function r2PublicUrl(key: string) {
   const r2 = config()
   return r2 ? `${r2.publicUrl}/${key}` : null
+}
+
+// Where browsers load an image from: the site's own /img when configured
+// (https://ohiosveryown.co/img in production), else the bucket's address.
+export function r2ImageUrl(key: string) {
+  const base = useRuntimeConfig().r2ImageUrl?.replace(/\/$/, '')
+  return base && isR2Configured() ? `${base}/${key}` : r2PublicUrl(key)
+}
+
+// The object itself, streamed (for /img). Null if it doesn't exist.
+export async function r2Get(key: string) {
+  const r2 = config()
+  if (!r2) return null
+  const res = await r2.client.fetch(`${r2.endpoint}/${key}`)
+  if (res.status === 404) return null
+  if (!res.ok) throw new Error(`R2 GET ${key}: ${res.status}`)
+  return res
 }
 
 // Returns the object's custom metadata, or null if it doesn't exist.

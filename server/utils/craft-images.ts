@@ -114,10 +114,10 @@ async function syncOne(block: CraftBlock & { url: string }, cover: boolean) {
   }
 
   return {
-    src: r2PublicUrl(`${base}/panel.webp`)!,
-    thumb: r2PublicUrl(`${base}/${THUMB}`)!,
+    src: r2ImageUrl(`${base}/panel.webp`)!,
+    thumb: r2ImageUrl(`${base}/${THUMB}`)!,
     aspectRatio: Number(dimensions.width) / Number(dimensions.height),
-    og: cover ? r2PublicUrl(`${base}/${OG_FILE}`)! : undefined,
+    og: cover ? r2ImageUrl(`${base}/${OG_FILE}`)! : undefined,
   } satisfies SyncedImage
 }
 

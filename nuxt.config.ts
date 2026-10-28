@@ -96,6 +96,9 @@ export default defineNuxtConfig({
     r2SecretAccessKey: '',
     r2Bucket: '',
     r2PublicUrl: '',
+    // Images through the site (server/routes/img); unset, they load from
+    // r2PublicUrl.
+    r2ImageUrl: '',
     isrBypassToken: '',
     refreshKey: '',
     // Mallow's chat (server/api/ask.post.ts). The key is read from
