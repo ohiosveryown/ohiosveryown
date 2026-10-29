@@ -707,18 +707,36 @@
   }
 
   // Three dots, centred: one dot repeated across a box three steps wide.
+  // Craft's divider: three Blush asterisks, as in Figma. An <hr> still,
+  // for screen readers; the asterisks are drawn in it.
   .desk-dialog__break {
+    display: flex;
+    justify-content: center;
     align-self: center;
-    width: 3.6rem;
-    height: 0.4rem;
     margin: 0.5rem auto;
+    width: auto;
+    height: auto;
     border: 0;
-    background: radial-gradient(
-        circle,
-        rgba(255, 255, 255, 0.35) 0.2rem,
-        transparent 0.22rem
-      )
-      0 0 / 1.2rem 0.4rem repeat-x;
+    overflow: visible;
+
+    // The blush mixin isn't injected into components (only grid.scss is),
+    // and a pseudo-element can't take the .blush class: its stack as is,
+    // like ContactButton's.
+    &::before {
+      content: '***';
+      font-family: 'blush', var(--system-font);
+      font-synthesis: none;
+      color: rgba(255, 255, 255, 0.5);
+      font-size: 2.4rem;
+      font-weight: 500;
+      letter-spacing: 0.06rem;
+      line-height: 0.8;
+      text-box-edge: cap alphabetic;
+      text-box-trim: trim-both;
+      font-variation-settings:
+        'wdth' 100,
+        'HGHT' 0;
+    }
 
     // Before the notes: a hairline across the text column instead.
     &.is-rule {
@@ -728,6 +746,10 @@
       margin: 0.5rem 0;
       border-top: 0.5px solid rgba(255, 255, 255, 0.35);
       background: none;
+
+      &::before {
+        content: none;
+      }
     }
   }
 
