@@ -1,9 +1,9 @@
 // The desk's background photo, picked from the right-click menu's Change
 // Wallpaper. Each is in public/field in three widths, as AVIF and WebP
 // (cached for a year there, so a new photo needs new filenames). The
-// choice isn't remembered: every visit starts on the field. While the
-// page is open it moves on to the next photo every few minutes (see
-// useWallpaperRotation).
+// choice isn't remembered: every visit starts on a random one (see
+// wallpaperPickScript). While the page is open it moves on to the next
+// photo every few minutes (see useWallpaperRotation).
 
 // `accent`: the color of the copy, the contact button and Mallow's send
 // button over this photo (--accent, set by the page). Light enough for
@@ -68,8 +68,74 @@ export function wallpaperSources(wallpaper: Wallpaper) {
   }
 }
 
+// The home page is cached at the CDN, so a visit's wallpaper is picked in
+// the browser: this runs in the page's <head>, before anything is drawn.
+// It picks one at random, sets its accent, and picks its width the way
+// WALLPAPER_SIZES would (the screen's share times its density, the
+// smallest file at least that wide). It paints that file as the desk's
+// backdrop (--wallpaper-first) so it shows as soon as it loads, before
+// the page is running; the page's first <img> then uses the same file,
+// so it's one download (see firstWallpaper).
+export function wallpaperPickScript() {
+  const options = WALLPAPERS.map((wallpaper) => ({
+    id: wallpaper.id,
+    accent: wallpaper.accent,
+    widths: wallpaper.widths,
+  }))
+  return `(() => {
+  const options = ${JSON.stringify(options)}
+  const pick = options[Math.floor(Math.random() * options.length)]
+  const needed =
+    Math.max(innerWidth * 0.5, innerHeight * 0.67) * (devicePixelRatio || 1)
+  const width =
+    pick.widths.find((w) => w >= needed) ?? pick.widths[pick.widths.length - 1]
+  const file = '/field/' + pick.id + '-' + width
+  window.__ovoWallpaper = { id: pick.id, file }
+  const root = document.documentElement.style
+  root.setProperty('--accent', pick.accent)
+  root.setProperty(
+    '--wallpaper-first',
+    'image-set(url(' + file + '.avif) type("image/avif"), url(' + file +
+      '.webp) type("image/webp"))',
+  )
+  const link = document.createElement('link')
+  link.rel = 'preload'
+  link.as = 'image'
+  link.type = 'image/avif'
+  link.fetchPriority = 'high'
+  link.href = file + '.avif'
+  document.head.append(link)
+})()`
+}
+
+// The visit's first photo as single files (the pick script's), for the
+// page's first <img>: the same file the backdrop has already loaded.
+export function firstWallpaper() {
+  if (!import.meta.client) return null
+  const pick = (window as { __ovoWallpaper?: { id: string; file: string } })
+    .__ovoWallpaper
+  if (!pick || !WALLPAPERS.some((wallpaper) => wallpaper.id === pick.id)) {
+    return null
+  }
+  return {
+    id: pick.id,
+    avif: `${pick.file}.avif`,
+    webp: `${pick.file}.webp`,
+    fallback: `${pick.file}.webp`,
+  }
+}
+
 export function useWallpaper() {
   const id = useState('wallpaper', () => WALLPAPERS[0]!.id)
+  // Set to the visit's pick (wallpaperPickScript) once, on the page's first
+  // load; going to a post and back keeps whatever is showing.
+  const started = useState('wallpaper-started', () => false)
+  function start() {
+    if (started.value || !import.meta.client) return
+    started.value = true
+    const pick = firstWallpaper()
+    if (pick) id.value = pick.id
+  }
   const current = computed(() =>
     WALLPAPERS.find((wallpaper) => wallpaper.id === id.value)!,
   )
@@ -107,7 +173,7 @@ export function useWallpaper() {
     return show(next)
   }
 
-  return { wallpapers: WALLPAPERS, current, choose }
+  return { wallpapers: WALLPAPERS, current, choose, start }
 }
 
 // The next photo in the list every ROTATE_MS the page is open (a hidden

@@ -34,6 +34,7 @@
         />
       </picture>
       <motion.picture
+        v-if="painted"
         :key="wallpaper.id"
         class="home__picture"
         :initial="previous ? { opacity: 0 } : false"
@@ -461,11 +462,14 @@
   // On phones the top corners are rounded, so the page reads as a sheet
   // under Safari's black status bar (the html background shows in the
   // corners). Desktop has no status bar band.
+  // --wallpaper-first: the visit's photo, painted by the pick script
+  // (useWallpaper) before the page is running, cropped like .home__photo.
   .home__bg {
     position: absolute;
     z-index: 0;
     inset: 0;
     border-radius: var(--sheet-radius) var(--sheet-radius) 0 0;
+    background: var(--wallpaper-first, none) center / cover no-repeat;
     overflow: hidden;
     // Scenery only: no image drag, save or select on the photo.
     pointer-events: none;
@@ -995,9 +999,22 @@
   // Nuxt prefetches every asset the page's script imports, which fetched
   // all six. Cached for a year (routeRules), so a new photo needs new
   // filenames.
-  const { current: wallpaper } = useWallpaper()
+  // The visit's random pick, before anything below watches for changes.
+  // The server can't know it, so the photo is drawn once the page is
+  // running (`painted`); the pick script has it loading by then.
+  const { current: wallpaper, start: startWallpaper } = useWallpaper()
+  startWallpaper()
+  const painted = ref(false)
+  onMounted(() => (painted.value = true))
   useWallpaperRotation()
-  const photo = computed(() => wallpaperSources(wallpaper.value))
+  // The first photo is the exact file the pick script painted as the
+  // backdrop (one download); after a change, the usual srcset.
+  const first = shallowRef(firstWallpaper())
+  const photo = computed(() =>
+    first.value?.id === wallpaper.value.id
+      ? first.value
+      : wallpaperSources(wallpaper.value),
+  )
   const ease = [0.8, 0, 0.16, 1] as const
   const WALLPAPER_FADE_S = 0.8
   // The wallpaper being faded over, kept until the new one has finished
@@ -1008,8 +1025,16 @@
   watch(
     () => wallpaper.value.id,
     (_id, before) => {
+      // The first photo fades out as the file it was (not a new srcset),
+      // and the backdrop's work is done.
       const old = WALLPAPERS.find((option) => option.id === before)
-      previous.value = old ? wallpaperSources(old) : null
+      previous.value =
+        first.value?.id === before
+          ? first.value
+          : old
+            ? wallpaperSources(old)
+            : null
+      first.value = null
       clearTimeout(previousTimer)
       previousTimer = setTimeout(
         () => (previous.value = null),
@@ -1204,13 +1229,17 @@
     askMallow(question.trim().slice(0, 500))
   })
 
-  // The accent fades with the wallpaper (WALLPAPER_FADE_S).
+  // The accent fades with the wallpaper (WALLPAPER_FADE_S). The first
+  // photo's backdrop (from the pick script) is kept here too: this style
+  // replaces the one the script set.
   useHead({
     htmlAttrs: {
-      style: computed(
-        () =>
-          `background-color: ${CHROME}; --accent: ${wallpaper.value.accent}; transition: --accent ${WALLPAPER_FADE_S}s ease`,
-      ),
+      style: computed(() => {
+        const backdrop = first.value
+          ? `; --wallpaper-first: image-set(url(${first.value.avif}) type("image/avif"), url(${first.value.webp}) type("image/webp"))`
+          : ''
+        return `background-color: ${CHROME}; --accent: ${wallpaper.value.accent}; transition: --accent ${WALLPAPER_FADE_S}s ease${backdrop}`
+      }),
     },
     meta: [{ name: 'theme-color', content: CHROME }],
     link: [
@@ -1223,7 +1252,11 @@
       },
     ],
     // Who Matt is, for search engines (utils/structuredData). Posts add
-    // their own on top.
-    script: [jsonLd(siteGraph(), 'ld-site')],
+    // their own on top. And the visit's wallpaper, picked before the first
+    // paint (useWallpaper).
+    script: [
+      jsonLd(siteGraph(), 'ld-site'),
+      { key: 'wallpaper-pick', innerHTML: wallpaperPickScript() },
+    ],
   })
 </script>
