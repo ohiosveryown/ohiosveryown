@@ -992,7 +992,7 @@
   // Nuxt prefetches every asset the page's script imports, which fetched
   // all six. Cached for a year (routeRules), so a new photo needs new
   // filenames.
-  const { current: wallpaper, restore: restoreWallpaper } = useWallpaper()
+  const { current: wallpaper } = useWallpaper()
   const photo = computed(() => wallpaperSources(wallpaper.value))
   const ease = [0.8, 0, 0.16, 1] as const
   const WALLPAPER_FADE_S = 0.8
@@ -1014,7 +1014,6 @@
     },
   )
   onBeforeUnmount(() => clearTimeout(previousTimer))
-  onMounted(() => restoreWallpaper())
 
   // iOS Safari paints the status bar, its toolbar fades, and the strip
   // under its toolbar with the html background color, never the page

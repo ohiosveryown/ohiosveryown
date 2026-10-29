@@ -1,8 +1,7 @@
 // The desk's background photo, picked from the right-click menu's Change
 // Wallpaper. Each is in public/field in three widths, as AVIF and WebP
 // (cached for a year there, so a new photo needs new filenames). The
-// choice is remembered in this browser only; the page always renders the
-// field first, then switches once it knows.
+// choice isn't remembered: every visit starts on the field.
 
 export type Wallpaper = { id: string; name: string; widths: number[] }
 
@@ -14,7 +13,6 @@ export const WALLPAPERS: Wallpaper[] = [
   { id: 'outpost', name: 'Outpost', widths: [1280, 1920, 2464] },
 ]
 
-const STORAGE_KEY = 'ovo-wallpaper'
 // How long a new photo gets to load before it's shown regardless.
 const LOAD_TIMEOUT_MS = 4000
 
@@ -69,23 +67,8 @@ export function useWallpaper() {
   }
 
   function choose(next: string) {
-    try {
-      localStorage.setItem(STORAGE_KEY, next)
-    } catch {
-      // Private windows and blocked storage: it just isn't remembered.
-    }
     return show(next)
   }
 
-  // The remembered choice, once the page is in the browser.
-  function restore() {
-    try {
-      const saved = localStorage.getItem(STORAGE_KEY)
-      if (saved) return show(saved)
-    } catch {
-      // As above.
-    }
-  }
-
-  return { wallpapers: WALLPAPERS, current, choose, restore }
+  return { wallpapers: WALLPAPERS, current, choose }
 }
