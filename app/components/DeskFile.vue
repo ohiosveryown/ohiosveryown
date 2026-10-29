@@ -192,12 +192,19 @@
     min-width: 0;
   }
 
+  // Small screens have no desk menu, and so no key to the colors: the name
+  // gets the room instead.
   .desk-file__dot {
+    display: none;
     flex-shrink: 0;
     width: 0.8rem;
     height: 0.8rem;
     border-radius: 50%;
     box-shadow: 0 0.4rem 0.4rem rgba(0, 0, 0, 0.25);
+
+    @include breakpoint(md) {
+      display: block;
+    }
   }
 
   .desk-file__name {
