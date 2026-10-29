@@ -18,7 +18,7 @@
         rotate: 0,
         x: '-50%',
         y: '-90%',
-        filter: 'blur(0)',
+        filter: 'blur(0rem)',
         transition: { duration: 0.25 },
       }"
       :exit="{
@@ -53,7 +53,7 @@
       :animate="{
         opacity: 1,
         scale: 1,
-        filter: 'blur(0)',
+        filter: 'blur(0rem)',
         rotate: 0,
         transition: { duration: 0.3 },
       }"
