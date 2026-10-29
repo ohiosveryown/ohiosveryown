@@ -59,6 +59,8 @@
             v-if="labelled"
             class="desk-file__dot"
             :style="{ background: labelled.color }"
+            :data-tooltip="labelled.one"
+            :data-tooltip-dot="labelled.color"
             aria-hidden="true"
           />
           <span class="desk-file__name blush">{{ displayName }}</span>
@@ -199,6 +201,7 @@
   .desk-file__dot {
     display: none;
     flex-shrink: 0;
+    position: relative;
     width: 0.8rem;
     height: 0.8rem;
     border-radius: 50%;
@@ -206,6 +209,14 @@
 
     @include breakpoint(md) {
       display: block;
+    }
+
+    // Easier to land on for its tooltip: a little room around it, short of
+    // the name.
+    &::after {
+      content: '';
+      position: absolute;
+      inset: -0.6rem -0.2rem -0.6rem -0.6rem;
     }
   }
 
@@ -322,7 +333,8 @@
     return labelled.value ? `${name}, ${labelled.value.name}` : props.label
   })
 
-  // The tooltip over the count (see TooltipLabel's contentAt).
+  // The tooltip over the count (see TooltipLabel's sourceAt); the dot's
+  // says what its label is.
   const countTooltip = computed(() => {
     const count = props.count ?? 0
     if (count === 0) return 'Not opened yet'

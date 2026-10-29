@@ -72,14 +72,18 @@
       >
         <AnimatePresence :initial="false">
           <motion.span
-            :key="content"
+            :key="`${dot}${content}`"
             class="tooltip-label__line"
             :initial="{ opacity: 0, filter: 'blur(4px)' }"
             :animate="{ opacity: 1, filter: 'blur(0px)' }"
             :exit="{ opacity: 0, filter: 'blur(4px)' }"
             :transition="{ duration: 0.2 }"
           >
-            {{ content }}
+            <span
+              v-if="dot"
+              class="tooltip-label__dot"
+              :style="{ background: dot }"
+            />{{ content }}
           </motion.span>
         </AnimatePresence>
       </motion.span>
@@ -87,7 +91,10 @@
         ref="measure"
         class="tooltip-label__measure"
         aria-hidden="true"
-        >{{ content }}</span
+        ><span
+          v-if="dot"
+          class="tooltip-label__dot"
+        />{{ content }}</span
       >
     </motion.div>
   </AnimatePresence>
@@ -128,6 +135,17 @@
     justify-self: start;
     font-weight: inherit;
     white-space: nowrap;
+  }
+
+  // A label's color, before what the label is (a desk file's dot).
+  .tooltip-label__dot {
+    display: inline-block;
+    margin-right: 0.6rem;
+    width: 0.8rem;
+    height: 0.8rem;
+    border-radius: 50%;
+    box-shadow: 0 0.2rem 0.4rem rgba(0, 0, 0, 0.4);
+    vertical-align: 0.05em;
   }
 
   .tooltip-label__measure {
@@ -189,11 +207,13 @@
 
   const visible = ref(false)
   const content = ref('')
+  // A colored dot before it (data-tooltip-dot), or empty.
+  const dot = ref('')
   const measure = useTemplateRef<HTMLElement>('measure')
   const textWidth = ref<number | null>(null)
 
   watch(
-    [content, measure],
+    [content, dot, measure],
     () => (textWidth.value = measure.value?.offsetWidth ?? null),
     { flush: 'post' },
   )
@@ -226,13 +246,16 @@
   // A part of the target with a tooltip of its own (a desk file's open
   // count) says that while the pointer is over it; the line swaps with the
   // text's crossfade.
-  function contentAt(el: HTMLElement): string {
+  function sourceAt(el: HTMLElement) {
     const part = el.closest<HTMLElement>('[data-tooltip]')
-    const source =
-      part && part !== currentTarget && currentTarget?.contains(part)
-        ? part
-        : currentTarget
-    return source ? getTooltipContent(source) : content.value
+    return part && part !== currentTarget && currentTarget?.contains(part)
+      ? part
+      : currentTarget
+  }
+
+  function say(source: HTMLElement) {
+    content.value = getTooltipContent(source)
+    dot.value = source.dataset.tooltipDot ?? ''
   }
 
   function getTooltipImage(el: HTMLElement): string {
@@ -268,7 +291,7 @@
     }
 
     if (currentTarget) {
-      content.value = contentAt(event.target as HTMLElement)
+      say(sourceAt(event.target as HTMLElement) ?? currentTarget)
 
       const rect = currentTarget.getBoundingClientRect()
       const relX =
@@ -305,7 +328,7 @@
     if (isCoarsePointer() || isTooltipSuppressed()) return
     currentTarget = target
     updateAnchor(target)
-    content.value = getTooltipContent(target)
+    say(target)
     image.value = getTooltipImage(target)
     visible.value = true
   }
