@@ -510,9 +510,11 @@
     text-transform: none;
   }
 
+  // The light grey of the labels and captions (white at 0.8, as a color
+  // here so the underline matches).
   .desk-dialog__more {
     padding: 0;
-    color: inherit;
+    color: rgba(255, 255, 255, 0.8);
     background: none;
     font: inherit;
     text-decoration-line: underline;
