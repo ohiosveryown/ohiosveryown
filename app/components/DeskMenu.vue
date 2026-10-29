@@ -367,8 +367,10 @@
 
   // A mouse and room for the desk (md up); phones have no right-click.
   let wide: MediaQueryList | undefined
+  // Room for the desk, for Shift+F10 (a keyboard may come with any pointer).
+  let roomy: MediaQueryList | undefined
 
-  async function onContextMenu(event: MouseEvent) {
+  function onContextMenu(event: MouseEvent) {
     const target = event.target as Element | null
     if (
       props.disabled ||
@@ -380,32 +382,66 @@
       return
     }
     event.preventDefault()
+    open(event.clientX, event.clientY)
+  }
+
+  // Shift+F10 (and the Menu key), the keyboard's right-click: opens it by
+  // the focused desk item, or near the desk's top-left corner, with its
+  // first item lit. Not while typing, where the field keeps its own menu,
+  // or with focus outside the desk. Closing it puts focus back.
+  let returnFocus: HTMLElement | null = null
+  function onWindowKeydown(event: KeyboardEvent) {
+    const shortcut =
+      (event.key === 'F10' && event.shiftKey) || event.key === 'ContextMenu'
+    const desk = surface.value
+    if (!shortcut || props.disabled || !roomy?.matches || !desk) return
+    const focused = document.activeElement as HTMLElement | null
+    const onDesk =
+      !focused || focused === document.body || desk.contains(focused)
+    if (!onDesk || focused?.closest('input, textarea, [contenteditable]')) {
+      return
+    }
+    event.preventDefault()
+    const item = focused?.closest<HTMLElement>('.desk-item')
+    const box = (item ?? desk).getBoundingClientRect()
+    returnFocus = focused
+    open(
+      item ? box.left + box.width / 2 : box.left + 4 * EDGE,
+      item ? box.bottom : box.top + 4 * EDGE,
+      true,
+    )
+  }
+
+  async function open(x: number, y: number, fromKeys = false) {
     dismissTooltip()
     closeSub()
-    at.value = { x: event.clientX, y: event.clientY }
+    at.value = { x, y }
     await nextTick()
     const el = menu.value
     if (!el) return
     // Kept on screen: flips left or up at the edges, like the system menu.
     const { width, height } = el.getBoundingClientRect()
     at.value = {
-      x:
-        event.clientX + width + EDGE > window.innerWidth
-          ? Math.max(EDGE, event.clientX - width)
-          : event.clientX,
+      x: x + width + EDGE > window.innerWidth ? Math.max(EDGE, x - width) : x,
       y:
-        event.clientY + height + EDGE > window.innerHeight
-          ? Math.max(EDGE, event.clientY - height)
-          : event.clientY,
+        y + height + EDGE > window.innerHeight
+          ? Math.max(EDGE, y - height)
+          : y,
     }
     // Nothing lit until the pointer or an arrow key picks an item, but
-    // focused, so the keys work straight away.
-    el.focus({ preventScroll: true })
+    // focused, so the keys work straight away. From the keys, the first
+    // item is lit.
+    if (fromKeys) focusFirst(el)
+    else el.focus({ preventScroll: true })
   }
 
   function close() {
+    // Back to where Shift+F10 came from, unless focus has moved on.
+    const inside = layer.value?.$el.contains(document.activeElement)
     at.value = null
     closeSub()
+    if (returnFocus && inside) returnFocus.focus({ preventScroll: true })
+    returnFocus = null
   }
 
   function closeSub() {
@@ -604,6 +640,8 @@
 
   onMounted(() => {
     wide = window.matchMedia('(min-width: 700px) and (pointer: fine)')
+    roomy = window.matchMedia('(min-width: 700px)')
+    window.addEventListener('keydown', onWindowKeydown)
     surface.value?.addEventListener('contextmenu', onContextMenu)
     surface.value?.addEventListener('scroll', close, { passive: true })
     window.addEventListener('pointerdown', onPointerDown, { capture: true })
@@ -613,6 +651,7 @@
 
   onBeforeUnmount(() => {
     surface.value?.removeEventListener('contextmenu', onContextMenu)
+    window.removeEventListener('keydown', onWindowKeydown)
     surface.value?.removeEventListener('scroll', close)
     window.removeEventListener('pointerdown', onPointerDown, { capture: true })
     window.removeEventListener('resize', close)
