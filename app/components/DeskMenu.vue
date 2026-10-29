@@ -91,6 +91,8 @@
           :role="child.checked ? 'menuitemradio' : 'menuitem'"
           :aria-checked="child.checked ? child.checked() : undefined"
           @pointerenter="highlight"
+          @focus="child.lit?.(true)"
+          @blur="child.lit?.(false)"
           @click="choose(child, $event)"
         >
           <img
@@ -300,6 +302,8 @@
     dot?: string
     // An icon before it (the top level's), as SVG markup.
     icon?: string
+    // Called as it's lit (by the pointer or the arrow keys) and unlit.
+    lit?: (on: boolean) => void
   }
   const items: Item[] = [
     { label: 'Clean Up', icon: cleanUpIcon, run: () => cleanUp() },
@@ -325,15 +329,15 @@
         checked: () => currentWallpaper.value.id === wallpaper.id,
       })),
     },
-    // The key to the dots by the items' names. Picking one picks out its
-    // items for a moment.
+    // The key to the dots by the items' names. While one is lit, its items
+    // are picked out on the desk.
     {
       label: 'Labels',
       icon: labelsIcon,
       children: DESK_CATEGORIES.map((category) => ({
         label: category.name,
         dot: category.color,
-        run: () => spotlight(category.id),
+        lit: (on: boolean) => spotlight(on ? category.id : null),
       })),
     },
     {
@@ -405,6 +409,8 @@
   }
 
   function closeSub() {
+    // Its rows go without a blur event, so nothing stays picked out.
+    spotlight(null)
     cancelAim()
     aimFrom = null
     sub.value = null

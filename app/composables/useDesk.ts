@@ -31,10 +31,10 @@ type Desk = {
   restore: () => void
   // An item was moved by hand, so the desk is no longer tidied.
   moved: () => void
-  // A label picked from the menu's key: for a moment, everything else on
-  // the desk blurs.
+  // A label lit in the menu's key: while it is, everything else on the
+  // desk blurs. Null brings it all back.
   spotlit: Readonly<Ref<DeskCategory | null>>
-  spotlight: (category: DeskCategory) => void
+  spotlight: (category: DeskCategory | null) => void
 }
 
 const deskKey: InjectionKey<Desk> = Symbol('desk')
@@ -53,8 +53,6 @@ const COLUMN_GAP_REM = 2.4
 const KEEP_OUT = '[data-desk-keep-out]'
 // Each item starts a beat after the one before it (seconds).
 const STAGGER = 0.04
-// How long a label stays picked out before the rest comes back (ms).
-const SPOTLIGHT_MS = 1200
 
 export function provideDesk(surface: Surface) {
   let top = 0
@@ -188,11 +186,8 @@ export function provideDesk(surface: Surface) {
     })
   }
   const spotlit = ref<DeskCategory | null>(null)
-  let spotlightTimer: ReturnType<typeof setTimeout> | undefined
-  function spotlight(category: DeskCategory) {
+  function spotlight(category: DeskCategory | null) {
     spotlit.value = category
-    clearTimeout(spotlightTimer)
-    spotlightTimer = setTimeout(() => (spotlit.value = null), SPOTLIGHT_MS)
   }
 
   onMounted(() => {
@@ -201,7 +196,6 @@ export function provideDesk(surface: Surface) {
   })
   onBeforeUnmount(() => {
     cancelAnimationFrame(frame)
-    clearTimeout(spotlightTimer)
     window.removeEventListener('resize', onResize)
   })
 

@@ -120,8 +120,8 @@
       opacity 0.5s var(--ease),
       filter 0.5s var(--ease);
 
-    // Another label picked from the menu's key (see useDesk): blurred out
-    // for a moment, quicker on the way out than back.
+    // Another label lit in the menu's key (see useDesk): blurred out while
+    // it is, quicker on the way out than back.
     &.is-unlit {
       opacity: 0.5;
       filter: blur(10px);
