@@ -34,6 +34,7 @@
       :aria-describedby="moveHintId"
       @mousedown="onMouseDown"
       @click="onClick"
+      @keydown.space="onSpace"
       @focus="onFocus"
       @blur="keyboardFocus = false"
     >
@@ -391,6 +392,15 @@
     // no mouseout comes to take the tooltip away.
     dismissTooltip()
     if (!props.href) emit('open', art.value)
+  }
+
+  // Space opens it too, like Enter. A button does that itself; a link
+  // doesn't, and the page would scroll instead.
+  function onSpace(event: KeyboardEvent) {
+    if (!props.href && !props.to) return
+    if (event.metaKey || event.ctrlKey || event.altKey || event.repeat) return
+    event.preventDefault()
+    file.value?.click()
   }
 
   function onFocus(event: FocusEvent) {
