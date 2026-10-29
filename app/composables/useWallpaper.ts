@@ -1,7 +1,9 @@
 // The desk's background photo, picked from the right-click menu's Change
 // Wallpaper. Each is in public/field in three widths, as AVIF and WebP
 // (cached for a year there, so a new photo needs new filenames). The
-// choice isn't remembered: every visit starts on the field.
+// choice isn't remembered: every visit starts on the field. While the
+// page is open it moves on to the next photo every few minutes (see
+// useWallpaperRotation).
 
 export type Wallpaper = { id: string; name: string; widths: number[] }
 
@@ -15,6 +17,8 @@ export const WALLPAPERS: Wallpaper[] = [
 
 // How long a new photo gets to load before it's shown regardless.
 const LOAD_TIMEOUT_MS = 4000
+// How long each photo stays up.
+const ROTATE_MS = 5 * 60 * 1000
 
 // About one image pixel per CSS pixel (see the <picture> in pages/index).
 export const WALLPAPER_SIZES = 'max(50vw, 67svh)'
@@ -71,4 +75,26 @@ export function useWallpaper() {
   }
 
   return { wallpapers: WALLPAPERS, current, choose }
+}
+
+// The next photo in the list every ROTATE_MS the page is open (a hidden
+// tab included). Any change (one picked from the menu too) starts the
+// clock again. Call once, from the page.
+export function useWallpaperRotation() {
+  const { wallpapers, current, choose } = useWallpaper()
+  let timer: ReturnType<typeof setTimeout> | undefined
+
+  function run() {
+    clearTimeout(timer)
+    timer = setTimeout(() => {
+      const index = wallpapers.findIndex(
+        (wallpaper) => wallpaper.id === current.value.id,
+      )
+      choose(wallpapers[(index + 1) % wallpapers.length]!.id)
+    }, ROTATE_MS)
+  }
+
+  watch(() => current.value.id, run)
+  onMounted(run)
+  onBeforeUnmount(() => clearTimeout(timer))
 }

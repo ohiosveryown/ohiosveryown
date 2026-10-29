@@ -996,6 +996,7 @@
   // all six. Cached for a year (routeRules), so a new photo needs new
   // filenames.
   const { current: wallpaper } = useWallpaper()
+  useWallpaperRotation()
   const photo = computed(() => wallpaperSources(wallpaper.value))
   const ease = [0.8, 0, 0.16, 1] as const
   const WALLPAPER_FADE_S = 0.8
