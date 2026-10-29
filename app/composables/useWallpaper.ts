@@ -29,16 +29,16 @@ export const WALLPAPERS: Wallpaper[] = [
     accent: '#f4f1ea',
   },
   {
-    id: 'hillside',
-    name: 'Hillside',
-    widths: [1280, 1920, 2464],
-    accent: '#ffd6a5',
-  },
-  {
     id: 'starlight',
     name: 'Starlight',
     widths: [1280, 1920, 2464],
     accent: '#b8dcff',
+  },
+  {
+    id: 'hillside',
+    name: 'Hillside',
+    widths: [1280, 1920, 2464],
+    accent: '#ffd6a5',
   },
   {
     id: 'outpost',
