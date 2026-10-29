@@ -32,7 +32,10 @@
           />
           <button
             class="desk-menu__item"
-            :class="{ 'is-open': item.children && sub === item }"
+            :class="{
+              'is-open': item.children && sub === item,
+              'has-icon': item.icon,
+            }"
             type="button"
             role="menuitem"
             :aria-haspopup="item.children ? 'menu' : undefined"
@@ -41,7 +44,12 @@
             @pointermove="move(item, $event)"
             @click="choose(item, $event)"
           >
-            {{ item.label }}
+            <span
+              v-if="item.icon"
+              class="desk-menu__icon"
+              v-html="item.icon"
+            />
+            <span class="desk-menu__label">{{ item.label }}</span>
             <svg
               v-if="item.children"
               class="desk-menu__chevron"
@@ -179,6 +187,25 @@
     }
   }
 
+  // With an icon (the top level): the icon close to the edge, then the
+  // label taking the room, then any chevron.
+  .desk-menu__item.has-icon {
+    gap: 0.8rem;
+    padding-right: 0.8rem;
+    padding-left: 0.8rem;
+  }
+
+  .desk-menu__icon {
+    display: flex;
+    flex-shrink: 0;
+    width: 1.6rem;
+    height: 1.6rem;
+
+    :deep(svg) {
+      display: block;
+    }
+  }
+
   .desk-menu__divider {
     margin: 0.5rem 1.2rem;
     height: 0;
@@ -225,8 +252,10 @@
     flex-shrink: 0;
   }
 
+  // Room before it, past the row's gap (icon rows' gap is small).
   .desk-menu__chevron {
     flex-shrink: 0;
+    margin-left: 1.6rem;
     opacity: 0.6;
   }
 </style>
@@ -234,6 +263,11 @@
 <script setup lang="ts">
   import { AnimatePresence, motion } from 'motion-v'
   import { DESK_CATEGORIES } from '~/data/deskCategories'
+  import cleanUpIcon from '~/assets/icons/menu/clean-up.svg?raw'
+  import labelsIcon from '~/assets/icons/menu/labels.svg?raw'
+  import mallowIcon from '~/assets/icons/menu/mallow.svg?raw'
+  import sortByIcon from '~/assets/icons/menu/sort-by.svg?raw'
+  import wallpaperIcon from '~/assets/icons/menu/wallpaper.svg?raw'
 
   // AnimatePresence renders no element of its own to pass attributes to.
   defineOptions({ inheritAttrs: false })
@@ -264,11 +298,14 @@
     image?: string
     // A colored dot before it (a desk label's).
     dot?: string
+    // An icon before it (the top level's), as SVG markup.
+    icon?: string
   }
   const items: Item[] = [
-    { label: 'Clean Up', run: () => cleanUp() },
+    { label: 'Clean Up', icon: cleanUpIcon, run: () => cleanUp() },
     {
       label: 'Sort By',
+      icon: sortByIcon,
       children: [
         { label: 'Date', run: () => cleanUp('date') },
         { label: 'Most Opened', run: () => cleanUp('opens') },
@@ -280,6 +317,7 @@
     },
     {
       label: 'Change Wallpaper',
+      icon: wallpaperIcon,
       children: wallpapers.map((wallpaper) => ({
         label: wallpaper.name,
         image: `/field/${wallpaper.id}-thumb.webp`,
@@ -291,13 +329,19 @@
     // items for a moment.
     {
       label: 'Labels',
+      icon: labelsIcon,
       children: DESK_CATEGORIES.map((category) => ({
         label: category.name,
         dot: category.color,
         run: () => spotlight(category.id),
       })),
     },
-    { label: 'Ask Mallow…', run: focusMallow, divided: true },
+    {
+      label: 'Ask Mallow…',
+      icon: mallowIcon,
+      run: focusMallow,
+      divided: true,
+    },
   ]
 
   // Where it's open (viewport px), or null when closed; likewise the open
