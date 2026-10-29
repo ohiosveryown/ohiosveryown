@@ -1,4 +1,4 @@
-import type { CaseStudy } from '#shared/types/case-study'
+import type { CaseStudy, DeskCategory } from '#shared/types/case-study'
 import type { CraftBlock, CraftItem } from './craft'
 import { altOf, captionOf, plainText, toBody } from './craft-body'
 import type { SyncedImage, SyncedVideo } from './craft-images'
@@ -21,6 +21,13 @@ function strings(value: unknown): string[] {
   return Array.isArray(value)
     ? value.filter((item): item is string => typeof item === 'string')
     : []
+}
+
+// Craft's "Category" choices.
+const CATEGORIES: Record<string, DeskCategory> = {
+  Essay: 'essay',
+  'Personal Project': 'personal',
+  'Professional Project': 'professional',
 }
 
 type ImageBlock = CraftBlock & { url: string }
@@ -95,6 +102,7 @@ export function toCaseStudy(
     publishedOn: isoDate(p.published_on),
     link: text(p.link),
     disciplines: strings(p.disciplines),
+    category: CATEGORIES[text(p.category) ?? ''],
     hero: heroBlock && {
       ...imageFor(heroBlock, images),
       alt: altOf(heroBlock) || (heroCaption ? plainText(heroCaption) : ''),

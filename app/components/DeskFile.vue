@@ -8,7 +8,10 @@
       :is="href || to ? 'a' : 'button'"
       ref="file"
       class="desk-file"
-      :class="{ 'has-tooltip': tooltipText }"
+      :class="{
+        'has-tooltip': tooltipText,
+        'is-unlit': spotlit && spotlit !== category,
+      }"
       v-bind="
         href
           ? { href, target: '_blank', rel: 'noopener', tabindex: 0 }
@@ -27,7 +30,7 @@
       "
       :data-tooltip="tooltipText"
       :data-tooltip-image="hinting ? undefined : tooltipImage"
-      :aria-label="label"
+      :aria-label="accessibleLabel"
       :aria-describedby="moveHintId"
       @mousedown="onMouseDown"
       @click="onClick"
@@ -50,7 +53,15 @@
         class="desk-file__meta"
         :class="{ 'is-asking': asking }"
       >
-        <span class="desk-file__name blush">{{ displayName }}</span>
+        <span class="desk-file__title">
+          <span
+            v-if="labelled"
+            class="desk-file__dot"
+            :style="{ background: labelled.color }"
+            aria-hidden="true"
+          />
+          <span class="desk-file__name blush">{{ displayName }}</span>
+        </span>
         <AnimatePresence>
           <motion.span
             v-if="count != null"
@@ -105,6 +116,17 @@
     gap: 0.9rem;
     color: #fff;
     text-decoration: none;
+    transition:
+      opacity 0.5s var(--ease),
+      filter 0.5s var(--ease);
+
+    // Another label picked from the menu's key (see useDesk): blurred out
+    // for a moment, quicker on the way out than back.
+    &.is-unlit {
+      opacity: 0.5;
+      filter: blur(10px);
+      transition-duration: 0.25s;
+    }
 
     &:focus-visible {
       outline: none;
@@ -162,8 +184,25 @@
     }
   }
 
+  // The name, after its label's dot when it has one.
+  .desk-file__title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-width: 0;
+  }
+
+  .desk-file__dot {
+    flex-shrink: 0;
+    width: 0.8rem;
+    height: 0.8rem;
+    border-radius: 50%;
+    box-shadow: 0 0.4rem 0.4rem rgba(0, 0, 0, 0.25);
+  }
+
   .desk-file__name {
     display: block;
+    min-width: 0;
     margin: -0.8rem 0;
     padding: 0.8rem 0;
     text-shadow: 0 0.4rem 0.4rem rgba(0, 0, 0, 0.25);
@@ -221,6 +260,8 @@
 
 <script setup lang="ts">
   import type { AskDropItem } from '~/composables/useAskDrop'
+  import type { DeskCategory } from '#shared/types/case-study'
+  import { deskCategory } from '~/data/deskCategories'
   import { motion, AnimatePresence } from 'motion-v'
 
   const moveHintId = useId()
@@ -247,6 +288,8 @@
       count?: number | null
       // Dropped on Mallow, what he's asked (see useAskDrop).
       ask?: AskDropItem
+      // Its label: a colored dot by the name.
+      category?: DeskCategory
     }>(),
     {
       image: null,
@@ -258,8 +301,17 @@
       expanded: false,
       delay: 0,
       count: null,
+      category: undefined,
     },
   )
+
+  // The label is read after the name, since the dot's color is all a
+  // sighted visitor gets.
+  const labelled = computed(() => deskCategory(props.category))
+  const accessibleLabel = computed(() => {
+    const name = props.label ?? props.name
+    return labelled.value ? `${name}, ${labelled.value.name}` : props.label
+  })
 
   // Desk labels read like filenames; keep them short so they don't stretch.
   const NAME_MAX = 16
@@ -270,6 +322,8 @@
   })
 
   const reduceMotion = ref(false)
+
+  const { spotlit } = useDesk()
 
   const emit = defineEmits<{ open: [origin: HTMLElement | null] }>()
 

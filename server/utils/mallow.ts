@@ -5,8 +5,16 @@ import type { CaseStudy } from '#shared/types/case-study'
 // studies from Craft. Server-only; none of it is sent to the browser.
 
 
+// The desk's labels (its colored dots), as Mallow should name them.
+const CATEGORY_NAMES = {
+  essay: 'Essay',
+  personal: 'Personal project',
+  professional: 'Professional project',
+} as const
+
 function describe(study: CaseStudy) {
   const lines = [`## ${study.title} (${study.label})`, `Slug: ${study.slug}`]
+  if (study.category) lines.push(`Kind: ${CATEGORY_NAMES[study.category]}`)
   if (study.date) lines.push(`Date: ${study.date}`)
   if (study.disciplines.length) {
     lines.push(`Topics: ${study.disciplines.join(', ')}`)

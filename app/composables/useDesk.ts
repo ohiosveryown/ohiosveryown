@@ -1,11 +1,18 @@
 import type { InjectionKey, Ref } from 'vue'
+import type { DeskCategory } from '#shared/types/case-study'
 
 type Surface = Readonly<Ref<HTMLElement | null>>
 
-// What Sort By orders items by. `date` is a timestamp; an item without
-// one (or without an open count) goes last.
-export type DeskSort = 'date' | 'opens' | 'name'
-export type DeskSortKeys = { name: string; date?: number; opens?: number }
+// What Sort By orders items by. `date` is a timestamp; `category` is the
+// label's place in DESK_CATEGORIES. An item without one (or without an
+// open count) goes last.
+export type DeskSort = 'date' | 'opens' | 'name' | 'category'
+export type DeskSortKeys = {
+  name: string
+  date?: number
+  opens?: number
+  category?: number
+}
 
 // An item on the desk, as Clean Up sees it: its element (laid out where
 // Craft put it), what it sorts by, and a way to move it from there
@@ -24,6 +31,10 @@ type Desk = {
   restore: () => void
   // An item was moved by hand, so the desk is no longer tidied.
   moved: () => void
+  // A label picked from the menu's key: for a moment, everything else on
+  // the desk blurs.
+  spotlit: Readonly<Ref<DeskCategory | null>>
+  spotlight: (category: DeskCategory) => void
 }
 
 const deskKey: InjectionKey<Desk> = Symbol('desk')
@@ -42,6 +53,8 @@ const COLUMN_GAP_REM = 2.4
 const KEEP_OUT = '[data-desk-keep-out]'
 // Each item starts a beat after the one before it (seconds).
 const STAGGER = 0.04
+// How long a label stays picked out before the rest comes back (ms).
+const SPOTLIGHT_MS = 1200
 
 export function provideDesk(surface: Surface) {
   let top = 0
@@ -52,13 +65,16 @@ export function provideDesk(surface: Surface) {
     return () => pieces.delete(piece)
   }
 
-  // Newest, most opened, or A to Z first; ties keep page order.
+  // Newest, most opened, A to Z, or grouped by label (in the key's
+  // order); ties keep page order.
   const byKey: Record<
     DeskSort,
     (a: DeskSortKeys | undefined, b: DeskSortKeys | undefined) => number
   > = {
     date: (a, b) => (b?.date ?? 0) - (a?.date ?? 0),
     opens: (a, b) => (b?.opens ?? -1) - (a?.opens ?? -1),
+    category: (a, b) =>
+      (a?.category ?? Infinity) - (b?.category ?? Infinity) || 0,
     name: (a, b) =>
       (a?.name ?? '').localeCompare(b?.name ?? '', undefined, {
         numeric: true,
@@ -171,12 +187,21 @@ export function provideDesk(surface: Surface) {
       if (tidied) cleanUp(tidied.by, true)
     })
   }
+  const spotlit = ref<DeskCategory | null>(null)
+  let spotlightTimer: ReturnType<typeof setTimeout> | undefined
+  function spotlight(category: DeskCategory) {
+    spotlit.value = category
+    clearTimeout(spotlightTimer)
+    spotlightTimer = setTimeout(() => (spotlit.value = null), SPOTLIGHT_MS)
+  }
+
   onMounted(() => {
     width = window.innerWidth
     window.addEventListener('resize', onResize)
   })
   onBeforeUnmount(() => {
     cancelAnimationFrame(frame)
+    clearTimeout(spotlightTimer)
     window.removeEventListener('resize', onResize)
   })
 
@@ -187,6 +212,8 @@ export function provideDesk(surface: Surface) {
     cleanUp: (by) => cleanUp(by),
     restore,
     moved: () => (tidied = null),
+    spotlit: readonly(spotlit),
+    spotlight,
   })
 }
 

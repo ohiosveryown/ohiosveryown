@@ -10,6 +10,10 @@ export type BodyNode =
   // A button that closes the post and asks Mallow `question`.
   | { kind: 'ask'; label: string; question: string }
 
+// What kind of thing it is (Craft's "Category"), shown as a colored dot
+// by its name on the desk.
+export type DeskCategory = 'essay' | 'personal' | 'professional'
+
 export type CaseStudyImage = {
   src: string
   alt: string
@@ -32,6 +36,7 @@ export type CaseStudy = {
   publishedOn?: string
   link?: string
   disciplines: string[]
+  category?: DeskCategory
   // `og`: the cover cropped as a 1200 × 630 JPEG for link previews.
   hero?: CaseStudyImage & { thumb: string; og?: string; caption?: string }
   tooltip?: { text: string }

@@ -84,12 +84,14 @@
       :tooltip="study.tooltip?.text"
       :expanded="openStudy?.id === study.id"
       :count="countOf(study)"
+      :category="study.category"
       :label="countLabel(study)"
       :delay="0.5 + index * 0.1"
       :sort="{
         name: study.label,
         date: dateOf(study),
         opens: countOf(study) ?? undefined,
+        category: categoryRank(study),
       }"
       :ask="{
         label: study.label,
@@ -985,6 +987,7 @@
 <script setup lang="ts">
   import type { CaseStudy } from '#shared/types/case-study'
   import { motion } from 'motion-v'
+  import { DESK_CATEGORIES } from '~/data/deskCategories'
   import blushWoff2 from '~/assets/type/blush.woff2'
 
   // The background photo (see the <picture> in the template). The sizes
@@ -1085,6 +1088,14 @@
     if (!match) return undefined
     const month = Math.max(0, MONTHS.indexOf(match[1]?.toLowerCase() ?? ''))
     return Date.UTC(Number(match[2]), month)
+  }
+
+  // For Sort By ▸ Label: its label's place in the key; unlabelled, last.
+  function categoryRank(study: CaseStudy) {
+    const rank = DESK_CATEGORIES.findIndex(
+      (category) => category.id === study.category,
+    )
+    return rank < 0 ? undefined : rank
   }
 
   // The pill is decorative (aria-hidden); the icon's name carries the count.

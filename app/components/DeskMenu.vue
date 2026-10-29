@@ -78,7 +78,7 @@
           v-for="child in sub.children"
           :key="child.label"
           class="desk-menu__item"
-          :class="{ 'has-image': child.image }"
+          :class="{ 'has-image': child.image, 'has-dot': child.dot }"
           type="button"
           :role="child.checked ? 'menuitemradio' : 'menuitem'"
           :aria-checked="child.checked ? child.checked() : undefined"
@@ -92,6 +92,12 @@
             alt=""
             width="32"
             height="24"
+          />
+          <span
+            v-if="child.dot"
+            class="desk-menu__dot"
+            :style="{ background: child.dot }"
+            aria-hidden="true"
           />
           <span class="desk-menu__label">{{ child.label }}</span>
           <svg
@@ -196,6 +202,20 @@
     object-fit: cover;
   }
 
+  // With a dot (the labels' key): the dot, then the label.
+  .desk-menu__item.has-dot {
+    justify-content: flex-start;
+    gap: 0.8rem;
+    padding-left: 0.8rem;
+  }
+
+  .desk-menu__dot {
+    flex-shrink: 0;
+    width: 0.8rem;
+    height: 0.8rem;
+    border-radius: 50%;
+  }
+
   .desk-menu__label {
     flex: 1 0 0;
     min-width: 0;
@@ -213,6 +233,7 @@
 
 <script setup lang="ts">
   import { AnimatePresence, motion } from 'motion-v'
+  import { DESK_CATEGORIES } from '~/data/deskCategories'
 
   // AnimatePresence renders no element of its own to pass attributes to.
   defineOptions({ inheritAttrs: false })
@@ -222,7 +243,7 @@
     disabled?: boolean
   }>()
 
-  const { surface, cleanUp, restore } = useDesk()
+  const { surface, cleanUp, restore, spotlight } = useDesk()
   const { focus: focusMallow } = useAskDrop()
   const {
     wallpapers,
@@ -241,6 +262,8 @@
     checked?: () => boolean
     // A picture beside the label (a wallpaper's).
     image?: string
+    // A colored dot before it (a desk label's).
+    dot?: string
   }
   const items: Item[] = [
     { label: 'Clean Up', run: () => cleanUp() },
@@ -250,6 +273,7 @@
         { label: 'Date', run: () => cleanUp('date') },
         { label: 'Most Opened', run: () => cleanUp('opens') },
         { label: 'Name', run: () => cleanUp('name') },
+        { label: 'Label', run: () => cleanUp('category') },
         // Always last: everything back where Craft put it.
         { label: 'Sicko Mode', run: restore },
       ],
@@ -261,6 +285,16 @@
         image: `/field/${wallpaper.id}-thumb.webp`,
         run: () => chooseWallpaper(wallpaper.id),
         checked: () => currentWallpaper.value.id === wallpaper.id,
+      })),
+    },
+    // The key to the dots by the items' names. Picking one picks out its
+    // items for a moment.
+    {
+      label: 'Labels',
+      children: DESK_CATEGORIES.map((category) => ({
+        label: category.name,
+        dot: category.color,
+        run: () => spotlight(category.id),
       })),
     },
     { label: 'Ask Mallow…', run: focusMallow, divided: true },
