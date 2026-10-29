@@ -5,14 +5,47 @@
 // page is open it moves on to the next photo every few minutes (see
 // useWallpaperRotation).
 
-export type Wallpaper = { id: string; name: string; widths: number[] }
+// `accent`: the color of the copy, the contact button and Mallow's send
+// button over this photo (--accent, set by the page). Light enough for
+// the send button's dark arrow to sit on.
+export type Wallpaper = {
+  id: string
+  name: string
+  widths: number[]
+  accent: string
+}
 
 export const WALLPAPERS: Wallpaper[] = [
-  { id: 'field', name: 'Field', widths: [1280, 1920, 2544] },
-  { id: 'poplars', name: 'Poplars', widths: [1280, 1920, 2464] },
-  { id: 'hillside', name: 'Hillside', widths: [1280, 1920, 2464] },
-  { id: 'starlight', name: 'Starlight', widths: [1280, 1920, 2464] },
-  { id: 'outpost', name: 'Outpost', widths: [1280, 1920, 2464] },
+  {
+    id: 'field',
+    name: 'Field',
+    widths: [1280, 1920, 2544],
+    accent: '#d2f976',
+  },
+  {
+    id: 'poplars',
+    name: 'Poplars',
+    widths: [1280, 1920, 2464],
+    accent: '#f4f1ea',
+  },
+  {
+    id: 'hillside',
+    name: 'Hillside',
+    widths: [1280, 1920, 2464],
+    accent: '#ffd6a5',
+  },
+  {
+    id: 'starlight',
+    name: 'Starlight',
+    widths: [1280, 1920, 2464],
+    accent: '#b8dcff',
+  },
+  {
+    id: 'outpost',
+    name: 'Outpost',
+    widths: [1280, 1920, 2464],
+    accent: '#ff9f80',
+  },
 ]
 
 // How long a new photo gets to load before it's shown regardless.

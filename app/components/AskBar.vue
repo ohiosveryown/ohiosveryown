@@ -272,10 +272,10 @@
     backdrop-filter: blur(0.5526rem);
     user-select: none;
 
-    // A desk item is being dragged over him: a lime edge to drop onto.
+    // A desk item is being dragged over him: an accent edge to drop onto.
     &.is-drop-target {
       box-shadow:
-        inset 0 0 0 1px rgba(210, 249, 118, 0.7),
+        inset 0 0 0 1px color-mix(in srgb, var(--accent) 70%, transparent),
         0 6.7237rem 7.3684rem 0 rgba(0, 0, 0, 0.2),
         0 1.5018rem 1.6458rem 0 rgba(0, 0, 0, 0.12),
         0 0.4471rem 0.49rem 0 rgba(0, 0, 0, 0.08);
@@ -661,7 +661,7 @@
     user-select: text;
 
     &::placeholder {
-      color: #d2f976;
+      color: var(--accent);
       opacity: 1;
     }
 
@@ -680,7 +680,7 @@
     height: 2.8rem;
     border: 0;
     border-radius: 10rem;
-    background: #d2f976;
+    background: var(--accent);
     opacity: 0.3;
     // --ease is a whole timing (200ms ease), not just a curve.
     transition: opacity var(--ease);
@@ -691,7 +691,7 @@
     }
 
     &:focus-visible {
-      outline: 1px solid #d2f976;
+      outline: 1px solid var(--accent);
       outline-offset: 2px;
     }
   }

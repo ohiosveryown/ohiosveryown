@@ -1,4 +1,13 @@
+// The desk's accent (the field's lime until the page sets the wallpaper's).
+// Registered as a color so it fades along with the wallpaper.
+@property --accent {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #d2f976;
+}
+
 :root {
+  --accent: #d2f976;
   --system-font: -apple-system, BlinkMacSystemFont, "avenir next",
     "helvetica neue", helvetica, ubuntu, roboto, noto, "segoe ui", arial,
     sans-serif;

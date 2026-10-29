@@ -27,8 +27,8 @@
     height: auto;
     padding: 2rem 1.6rem;
     border-radius: 100rem;
-    border: 1px solid #d2f976;
-    color: #d2f976;
+    border: 1px solid var(--accent);
+    color: var(--accent);
     box-shadow: none;
     font-family: 'blush', var(--system-font);
     font-size: 2rem;
