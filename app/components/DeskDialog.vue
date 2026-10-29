@@ -104,6 +104,7 @@
                      (and "Less" to put it back). -->
                 <dd
                   v-if="detail.summary"
+                  :ref="(el) => (summaryEl = el as HTMLElement | null)"
                   class="desk-dialog__value desk-dialog__summary"
                 >
                   {{ summaryOpen ? detail.value : shortSummary }}
@@ -535,7 +536,10 @@
 
   // Below the cover: 5.6rem from the caption, counting the body's gap.
   .desk-dialog__figure + .desk-dialog__article {
-    margin-top: 3.6rem;
+    margin-top: 1.6rem;
+    @include breakpoint(md) {
+      margin-top: 3.6rem;
+    }
   }
 
   .desk-dialog__figure {
@@ -616,16 +620,15 @@
 
   .desk-dialog__intro {
     font-family: var(--text-font);
-    font-size: 1.9rem;
+    font-size: 2.2rem;
     font-weight: 600;
     letter-spacing: -0.0875rem;
-    line-height: 1.3;
+    line-height: 1.16;
     text-wrap: pretty;
     text-box-edge: cap alphabetic;
     text-box-trim: trim-both;
     @include breakpoint(md) {
-      font-size: 2.5rem;
-      line-height: 1.16;
+      font-size: 2.8rem;
     }
   }
 
@@ -955,19 +958,90 @@
   })
 
   // About three lines of the summary at full width, cut at a word, until
-  // "More" shows the rest. Closed again for each post.
+  // "More" shows the rest. Closed again for each post. Small screens'
+  // narrow column would take twice that, so there it's measured: as many
+  // words as fit in three lines, "… More" included (see fitSummary).
   const SUMMARY_CHARS = 200
+  const SUMMARY_LINES = 3
   const summaryOpen = ref(false)
+  const summaryWords = ref<number | null>(null)
+  let summaryEl: HTMLElement | null = null
   const shortSummary = computed(() => {
     const text = props.study?.summary ?? ''
+    const words = text.split(/\s+/)
+    if (summaryWords.value !== null) {
+      if (summaryWords.value >= words.length) return text
+      return cutSummary(words, summaryWords.value)
+    }
     if (text.length <= SUMMARY_CHARS) return text
     const cut = text.slice(0, SUMMARY_CHARS)
     return `${cut.slice(0, cut.lastIndexOf(' ')).replace(/[,;:.\s]+$/, '')}…`
   })
+
+  function cutSummary(words: string[], count: number) {
+    return `${words
+      .slice(0, count)
+      .join(' ')
+      .replace(/[,;:.\s]+$/, '')}…`
+  }
+
+  // Tried out in a hidden copy of the summary at its width: the whole text,
+  // or else the most words that, with "… More", stay within three lines.
+  function fitSummary() {
+    const el = summaryEl
+    const text = props.study?.summary ?? ''
+    if (window.matchMedia('(min-width: 700px)').matches || !el || !text) {
+      summaryWords.value = null
+      return
+    }
+    if (summaryOpen.value) return
+    const words = text.split(/\s+/)
+    const probe = el.cloneNode(false) as HTMLElement
+    probe.style.cssText = `position: absolute; visibility: hidden; width: ${el.clientWidth}px`
+    // Scoped styles: the button needs the component's data-v attribute.
+    const button = document.createElement('button')
+    for (const { name } of el.attributes) {
+      if (name.startsWith('data-v-')) button.setAttribute(name, '')
+    }
+    button.className = 'desk-dialog__more'
+    button.textContent = 'More'
+    const content = document.createTextNode('')
+    probe.append(content)
+    el.after(probe)
+    const max =
+      Number.parseFloat(getComputedStyle(el).lineHeight) * SUMMARY_LINES + 1
+    const fits = (shown: string, withMore: boolean) => {
+      content.textContent = withMore ? `${shown} ` : shown
+      if (withMore) probe.append(button)
+      else button.remove()
+      return probe.getBoundingClientRect().height <= max
+    }
+    let count = words.length
+    if (!fits(text, false)) {
+      let low = 0
+      let high = words.length - 1
+      while (low < high) {
+        const mid = Math.ceil((low + high) / 2)
+        if (fits(cutSummary(words, mid), true)) low = mid
+        else high = mid - 1
+      }
+      count = low
+    }
+    probe.remove()
+    summaryWords.value = count
+  }
+
   watch(
     () => props.study?.id,
-    () => (summaryOpen.value = false),
+    () => {
+      summaryOpen.value = false
+      summaryWords.value = null
+      nextTick(fitSummary)
+    },
   )
+  watch(summaryOpen, (open) => {
+    if (!open) nextTick(fitSummary)
+  })
 
   const ease = [0.8, 0, 0.16, 1] as const
   const reduceMotion = ref(false)
@@ -1372,6 +1446,8 @@
     fineQuery.addEventListener('change', onFineChange)
     window.addEventListener('keydown', onKeydown)
     window.addEventListener('resize', measureHeightBounds)
+    window.addEventListener('resize', fitSummary)
+    nextTick(fitSummary)
     // A direct link to /work/[slug] renders the panel open on the server.
     if (props.study) focusPanel()
   })
@@ -1390,5 +1466,6 @@
     fineQuery?.removeEventListener('change', onFineChange)
     window.removeEventListener('keydown', onKeydown)
     window.removeEventListener('resize', measureHeightBounds)
+    window.removeEventListener('resize', fitSummary)
   })
 </script>
