@@ -223,6 +223,18 @@
     return el.dataset.tooltip ?? el.textContent?.trim() ?? ''
   }
 
+  // A part of the target with a tooltip of its own (a desk file's open
+  // count) says that while the pointer is over it; the line swaps with the
+  // text's crossfade.
+  function contentAt(el: HTMLElement): string {
+    const part = el.closest<HTMLElement>('[data-tooltip]')
+    const source =
+      part && part !== currentTarget && currentTarget?.contains(part)
+        ? part
+        : currentTarget
+    return source ? getTooltipContent(source) : content.value
+  }
+
   function getTooltipImage(el: HTMLElement): string {
     return el.dataset.tooltipImage ?? ''
   }
@@ -256,6 +268,8 @@
     }
 
     if (currentTarget) {
+      content.value = contentAt(event.target as HTMLElement)
+
       const rect = currentTarget.getBoundingClientRect()
       const relX =
         (event.clientX - (rect.left + rect.width / 2)) / (rect.width / 2)

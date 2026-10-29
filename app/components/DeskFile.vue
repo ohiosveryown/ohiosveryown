@@ -67,6 +67,7 @@
           <motion.span
             v-if="count != null"
             class="desk-file__count"
+            :data-tooltip="countTooltip"
             aria-hidden="true"
             :initial="{
               opacity: 0,
@@ -319,6 +320,14 @@
   const accessibleLabel = computed(() => {
     const name = props.label ?? props.name
     return labelled.value ? `${name}, ${labelled.value.name}` : props.label
+  })
+
+  // The tooltip over the count (see TooltipLabel's contentAt).
+  const countTooltip = computed(() => {
+    const count = props.count ?? 0
+    if (count === 0) return 'Not opened yet'
+    if (count === 1) return 'Opened once'
+    return `Opened ${count.toLocaleString()} times`
   })
 
   // Desk labels read like filenames; keep them short so they don't stretch.
