@@ -26,19 +26,17 @@
 </template>
 
 <style scoped lang="scss">
+  // Small screens: last in the page's list, after the posts (see
+  // .home__desk).
   .last-played {
-    position: absolute;
-    // --desk-top (from the page): room for the ask bar on small screens.
-    top: calc(var(--desk-top, 0rem) + 24svh);
-    left: 50%;
-    margin-left: -3.9rem;
-    width: 22rem;
-    max-width: calc(50% + 3.9rem - 2.4rem);
+    order: 999;
+    width: calc(50% - 0.8rem);
 
     @include breakpoint(md) {
+      position: absolute;
       top: 29.33%;
       left: calc(50% + 4.5rem);
-      margin-left: 0;
+      width: 22rem;
       max-width: calc(50% - 4.5rem - 3.2rem);
     }
   }

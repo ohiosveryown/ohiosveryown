@@ -179,6 +179,9 @@ export function provideDesk(surface: Surface) {
     const touch = !window.matchMedia('(pointer: fine)').matches
     if (touch && window.innerWidth === width) return
     width = window.innerWidth
+    // Smaller than md the page lists the items instead (see DeskItem); it's
+    // tidied again on the way back.
+    if (!window.matchMedia('(min-width: 700px)').matches) return
     // A frame later, after the items' own resize handling (see DeskItem).
     cancelAnimationFrame(frame)
     frame = requestAnimationFrame(() => {

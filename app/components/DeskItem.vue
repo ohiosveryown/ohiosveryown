@@ -2,8 +2,9 @@
   <motion.div
     ref="root"
     class="desk-item"
+    :class="{ 'is-listed': !roomy }"
     :style="{ zIndex: carrying ? 'calc(var(--zmax) - 1)' : 2 + layer, x, y }"
-    drag
+    :drag="roomy"
     :drag-constraints="bounds"
     :drag-elastic="0.12"
     :drag-transition="{ power: 0.18, timeConstant: 220 }"
@@ -50,6 +51,11 @@
     user-select: none;
     touch-action: none;
     -webkit-user-drag: none;
+
+    // In the page's list (small screens): stays put, and scrolls the page.
+    &.is-listed {
+      touch-action: auto;
+    }
   }
 
   // Dropped on Mallow: it fades out where it was let go, and back in where
@@ -94,6 +100,20 @@
   const x = useMotionValue(0)
   const y = useMotionValue(0)
 
+  // Room for the desk (md up). Smaller, the page lists the items in place
+  // (see pages/index): no dragging or nudging, and none of where they'd
+  // been moved to.
+  const roomy = ref(false)
+  let roomyQuery: MediaQueryList | undefined
+  function onRoomyChange() {
+    roomy.value = !!roomyQuery?.matches
+    if (roomy.value) return
+    x.stop()
+    y.stop()
+    x.set(0)
+    y.set(0)
+  }
+
   // On every window resize, motion re-fits dragged items into the desk by
   // re-measuring both. On iOS, scrolling shows and hides the toolbar, which
   // fires resizes mid-scroll; the measurements land at different scroll
@@ -105,6 +125,10 @@
     before = { x: x.get(), y: y.get(), width: window.innerWidth }
   }
   function afterResize() {
+    if (!roomy.value) {
+      before = undefined
+      return
+    }
     if (before && window.innerWidth === before.width) {
       x.set(before.x)
       y.set(before.y)
@@ -256,7 +280,14 @@
   function onKeydown(event: KeyboardEvent) {
     const arrow = ARROWS[event.key]
     const desk = surface.value
-    if (!arrow || !desk || event.metaKey || event.ctrlKey || event.altKey)
+    if (
+      !arrow ||
+      !desk ||
+      !roomy.value ||
+      event.metaKey ||
+      event.ctrlKey ||
+      event.altKey
+    )
       return
     event.preventDefault()
     if (!raisedByKeys) {
@@ -319,9 +350,13 @@
     if (dragged) suppressTooltip(false)
     window.removeEventListener('resize', beforeResize, { capture: true })
     window.removeEventListener('resize', afterResize)
+    roomyQuery?.removeEventListener('change', onRoomyChange)
   })
 
   onMounted(() => {
+    roomyQuery = window.matchMedia('(min-width: 700px)')
+    roomyQuery.addEventListener('change', onRoomyChange)
+    onRoomyChange()
     reduceMotion.value = window.matchMedia(
       '(prefers-reduced-motion: reduce)',
     ).matches

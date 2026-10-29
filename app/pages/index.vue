@@ -74,38 +74,42 @@
       *not a portfolio of work—rather a collection of vignettes*
     </p>
 
-    <DeskFile
-      v-for="(study, index) in caseStudies"
-      :key="study.id"
-      class="home__study"
-      :style="placement(study, index)"
-      :name="study.label"
-      :to="`/work/${study.slug}`"
-      :image="study.hero?.thumb"
-      :tooltip="study.tooltip?.text"
-      :expanded="openStudy?.id === study.id"
-      :count="countOf(study)"
-      :category="study.category"
-      :label="countLabel(study)"
-      :delay="0.5 + index * 0.1"
-      :sort="{
-        name: study.label,
-        date: dateOf(study),
-        opens: countOf(study) ?? undefined,
-        category: categoryRank(study),
-      }"
-      :ask="{
-        label: study.label,
-        image: study.hero?.thumb,
-        kind: 'study',
-        name: study.title,
-        prompt: `Summarize the ${study.title} case study.`,
-      }"
-      @open="toggleStudy(study, $event)"
-      @pointerenter="preload(study)"
-      @focusin="preload(study)"
-    />
-    <LastPlayed />
+    <!-- A list in the page on small screens, newest post first (see
+         .home__desk); from md the desk, each where Craft puts it. -->
+    <div class="home__desk">
+      <DeskFile
+        v-for="(study, index) in caseStudies"
+        :key="study.id"
+        class="home__study"
+        :style="placement(study, index)"
+        :name="study.label"
+        :to="`/work/${study.slug}`"
+        :image="study.hero?.thumb"
+        :tooltip="study.tooltip?.text"
+        :expanded="openStudy?.id === study.id"
+        :count="countOf(study)"
+        :category="study.category"
+        :label="countLabel(study)"
+        :delay="0.5 + postedRank(study) * 0.1"
+        :sort="{
+          name: study.label,
+          date: dateOf(study),
+          opens: countOf(study) ?? undefined,
+          category: categoryRank(study),
+        }"
+        :ask="{
+          label: study.label,
+          image: study.hero?.thumb,
+          kind: 'study',
+          name: study.title,
+          prompt: `Summarize the ${study.title} case study.`,
+        }"
+        @open="toggleStudy(study, $event)"
+        @pointerenter="preload(study)"
+        @focusin="preload(study)"
+      />
+      <LastPlayed />
+    </div>
     <AskBar
       class="home__ask"
       data-desk-keep-out
@@ -419,10 +423,8 @@
 
 <style scoped lang="scss">
   .home {
-    // Small screens: desk positions (icons, Last played) start below the
-    // full-width ask bar, so a mobile y of 0 sits just under it (the info
-    // panel's top padding makes room for it too). The bar is 5.6rem tall;
-    // 1.2rem of air below it.
+    // Small screens: the desk's list starts below the full-width ask bar.
+    // The bar is 5.6rem tall; 1.2rem of air below it.
     // The page's rounded top corners are concentric with the bar's ends:
     // the bar's radius (half its 5.6rem height) plus its gap from the edge,
     // the same 1.2rem at the top as at the sides.
@@ -432,9 +434,8 @@
 
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
     position: relative;
-    padding: calc(60svh + 6rem) 1.6rem calc(3.7rem + var(--safe-bottom));
+    padding: var(--desk-top) 1.6rem calc(3.7rem + var(--safe-bottom));
     min-height: 100svh;
     // Rounded like `.home__bg` above it, so the corners show the black html
     // background rather than this placeholder (shown until the photo loads).
@@ -448,6 +449,7 @@
       --desk-top: 0rem;
 
       align-items: center;
+      justify-content: flex-end;
       position: fixed;
       inset: 0;
       padding: 6rem 1.6rem calc(4rem + var(--safe-bottom));
@@ -583,17 +585,35 @@
     }
   }
 
-  // Positions come from Craft (see placement()): the icon's top-left corner.
-  .home__study {
-    position: absolute;
-    top: calc(var(--desk-top) + var(--mobile-y) * 1svh);
-    left: calc(var(--mobile-x) * 1%);
-    width: 22rem;
-    max-width: calc(100% - var(--mobile-x) * 1% - 2.4rem);
+  // Small screens: two columns, newest post first (--posted, see
+  // placement()), Last Played at the end. The copy starts 60svh + 6rem
+  // down, the wallpaper showing above it, or further when the list runs
+  // longer. From md it's out of the way: the items are placed on the desk
+  // itself.
+  .home__desk {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    gap: 2.2rem 1.6rem;
+    margin-bottom: 6rem;
+    min-height: calc(60svh - var(--desk-top));
 
     @include breakpoint(md) {
+      display: contents;
+    }
+  }
+
+  // From md, positions come from Craft (see placement()): the icon's
+  // top-left corner.
+  .home__study {
+    order: var(--posted);
+    width: calc(50% - 0.8rem);
+
+    @include breakpoint(md) {
+      position: absolute;
       top: calc(var(--y) * 1%);
       left: calc(var(--x) * 1%);
+      width: 22rem;
       max-width: calc(100% - var(--x) * 1% - 2.4rem);
     }
   }
@@ -1163,26 +1183,34 @@
   }
 
   // Fallback for empty Craft positions: a loose grid in the open areas of
-  // the desk (above the copy on mobile), filled row by row in Order.
-  const FALLBACK = {
-    desktop: { x: 10, y: 13, columns: 4, dx: 20, dy: 16 },
-    mobile: { x: 6, y: 9, columns: 2, dx: 46, dy: 12 },
-  }
+  // the desk, filled row by row in Order.
+  const FALLBACK = { x: 10, y: 13, columns: 4, dx: 20, dy: 16 }
 
   function placement(study: CaseStudy, index: number) {
-    const { desktop, mobile } = FALLBACK
     const position = study.position ?? {}
     return {
-      '--x': position.x ?? desktop.x + (index % desktop.columns) * desktop.dx,
+      '--x': position.x ?? FALLBACK.x + (index % FALLBACK.columns) * FALLBACK.dx,
       '--y':
         position.y ??
-        desktop.y + Math.floor(index / desktop.columns) * desktop.dy,
-      '--mobile-x':
-        position.mobileX ?? mobile.x + (index % mobile.columns) * mobile.dx,
-      '--mobile-y':
-        position.mobileY ??
-        mobile.y + Math.floor(index / mobile.columns) * mobile.dy,
+        FALLBACK.y + Math.floor(index / FALLBACK.columns) * FALLBACK.dy,
+      '--posted': postedRank(study),
     }
+  }
+
+  // Newest post first, by Published on (posts without one last); ties keep
+  // their Order. The list's order on small screens, and the entrance's.
+  const posted = computed(() =>
+    [...caseStudies.value]
+      .map((study, index) => ({ study, index }))
+      .sort(
+        (a, b) =>
+          (b.study.publishedOn ?? '').localeCompare(a.study.publishedOn ?? '') ||
+          a.index - b.index,
+      )
+      .map(({ study }) => study.id),
+  )
+  function postedRank(study: CaseStudy) {
+    return posted.value.indexOf(study.id)
   }
 
   function toggleStudy(study: CaseStudy, from: HTMLElement | null) {
