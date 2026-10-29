@@ -39,6 +39,31 @@ function readTurns(body: unknown): Turn[] {
   return turns
 }
 
+// Mallow's {{index}} (INDEX_MARKER) becomes the list of every post as it
+// streams past. Text that could be the start of it is held back until
+// the next piece shows whether it is.
+function withIndex() {
+  const decoder = new TextDecoder()
+  const encoder = new TextEncoder()
+  let held = ''
+  return new TransformStream<Uint8Array, Uint8Array>({
+    async transform(chunk, controller) {
+      held += decoder.decode(chunk, { stream: true })
+      if (held.includes(INDEX_MARKER)) {
+        held = held.replace(INDEX_MARKER, await mallowIndex())
+      }
+      let keep = Math.min(held.length, INDEX_MARKER.length - 1)
+      while (keep && !INDEX_MARKER.startsWith(held.slice(-keep))) keep--
+      const ready = held.slice(0, held.length - keep)
+      held = held.slice(held.length - keep)
+      if (ready) controller.enqueue(encoder.encode(ready))
+    },
+    flush(controller) {
+      if (held) controller.enqueue(encoder.encode(held))
+    },
+  })
+}
+
 // OpenAI streams server-sent events; pass on just the text.
 function textStream(upstream: ReadableStream<Uint8Array>) {
   const decoder = new TextDecoder()
@@ -71,6 +96,7 @@ function textStream(upstream: ReadableStream<Uint8Array>) {
 // Streamed in bursts like a real reply, so the typing still gets exercised.
 const TEST_REPLIES: Record<string, string> = {
   '': 'Testing, testing! This is a pretend answer, so nothing was sent to OpenAI or saved. 🧪',
+  index: `Everything Matt's put on the desk, newest first:\n${INDEX_MARKER}`,
   long: "This is a longer pretend answer for checking how replies wrap and scroll. Matt is a software designer and builder in Atlanta, working across brand, product, and code. He's a Principal Product Designer at Square, and before that he designed at Slack, GitHub and Mailchimp. Outside of work he runs Proportional Design, a small furniture studio. None of this came from OpenAI.",
 }
 
@@ -87,7 +113,7 @@ function testReply(event: H3Event, command: string) {
   }
   const words = (TEST_REPLIES[variant] ?? TEST_REPLIES['']!).split(/(?<= )/)
   const encoder = new TextEncoder()
-  const stream = new ReadableStream<Uint8Array>({
+  const replies = new ReadableStream<Uint8Array>({
     async start(controller) {
       for (let i = 0; i < words.length; i += 3) {
         controller.enqueue(encoder.encode(words.slice(i, i + 3).join('')))
@@ -100,7 +126,7 @@ function testReply(event: H3Event, command: string) {
     'Content-Type': 'text/plain; charset=utf-8',
     'Cache-Control': 'no-store',
   })
-  return sendStream(event, stream)
+  return sendStream(event, replies.pipeThrough(withIndex()))
 }
 
 export default defineEventHandler(async (event) => {
@@ -161,5 +187,5 @@ export default defineEventHandler(async (event) => {
     'Content-Type': 'text/plain; charset=utf-8',
     'Cache-Control': 'no-store',
   })
-  return sendStream(event, textStream(res.body))
+  return sendStream(event, textStream(res.body).pipeThrough(withIndex()))
 })

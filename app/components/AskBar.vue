@@ -1430,10 +1430,14 @@
   ]
   const followUp = ref(FOLLOW_UPS[0]!)
   function followUpFor(reply: string) {
+    // A list of them all (Mallow's index) gets a general one.
     const linked = [...reply.matchAll(LINK)]
       .map((match) => slugOf(match[2]!))
-      .find(Boolean)
-    const study = caseStudies.value.find((item) => item.slug === linked)
+      .filter(Boolean)
+    const study =
+      linked.length === 1
+        ? caseStudies.value.find((item) => item.slug === linked[0])
+        : undefined
     const lines = study
       ? STUDY_FOLLOW_UPS.map((line) => line.replace('{title}', study.title))
       : FOLLOW_UPS
