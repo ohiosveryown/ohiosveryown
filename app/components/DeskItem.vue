@@ -82,7 +82,7 @@
     { delay: 0, ask: undefined, sort: undefined },
   )
 
-  const { surface, raise, register } = useDesk()
+  const { surface, raise, register, moved } = useDesk()
 
   const ease = [0.8, 0, 0.16, 1] as const
   const reduceMotion = ref(false)
@@ -181,6 +181,7 @@
 
   function onDragStart() {
     dragged = true
+    moved()
     suppressTooltip(true)
     carrying.value = !!props.ask && finePointer.value
     if (carrying.value) askDrop.measure()
@@ -276,6 +277,7 @@
       y: clamp(from.y + arrow[1] * step, limits.top, limits.bottom),
     }
     nudgedTo = to
+    moved()
     if (reduceMotion.value) {
       x.set(to.x)
       y.set(to.y)
@@ -298,8 +300,10 @@
   const unregister = register({
     el: () => root.value?.$el ?? null,
     sortKeys: () => props.sort,
-    moveTo(toX, toY, delay) {
-      if (reduceMotion.value) {
+    moveTo(toX, toY, delay, instant) {
+      if (instant || reduceMotion.value) {
+        x.stop()
+        y.stop()
         x.set(toX)
         y.set(toY)
         return

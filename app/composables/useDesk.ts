@@ -8,11 +8,12 @@ export type DeskSort = 'date' | 'opens' | 'name'
 export type DeskSortKeys = { name: string; date?: number; opens?: number }
 
 // An item on the desk, as Clean Up sees it: its element (laid out where
-// Craft put it), what it sorts by, and a way to move it from there.
+// Craft put it), what it sorts by, and a way to move it from there
+// (`instant`: straight there, no spring).
 export type DeskPiece = {
   el: () => HTMLElement | null
   sortKeys: () => DeskSortKeys | undefined
-  moveTo: (x: number, y: number, delay: number) => void
+  moveTo: (x: number, y: number, delay: number, instant?: boolean) => void
 }
 
 type Desk = {
@@ -21,6 +22,8 @@ type Desk = {
   register: (piece: DeskPiece) => () => void
   cleanUp: (by?: DeskSort) => void
   restore: () => void
+  // An item was moved by hand, so the desk is no longer tidied.
+  moved: () => void
 }
 
 const deskKey: InjectionKey<Desk> = Symbol('desk')
@@ -66,9 +69,10 @@ export function provideDesk(surface: Surface) {
   // Like a desktop's icons: stacked in a tight column from the top-left
   // corner, in page order (or sorted `by`), starting a new column to the
   // right when the next spot is taken by the copy or runs off the bottom.
-  function cleanUp(by?: DeskSort) {
+  function cleanUp(by?: DeskSort, instant = false) {
     const desk = surface.value
     if (!desk) return
+    tidied = { by }
     const items = [...pieces]
       .map((piece) => ({ piece, el: piece.el() }))
       .filter((item): item is { piece: DeskPiece; el: HTMLElement } =>
@@ -130,23 +134,59 @@ export function provideDesk(surface: Surface) {
         }
       }
       if (x + width > right) break
-      piece.moveTo(x - el.offsetLeft, y - el.offsetTop, order++ * STAGGER)
+      piece.moveTo(
+        x - el.offsetLeft,
+        y - el.offsetTop,
+        instant ? 0 : order++ * STAGGER,
+        instant,
+      )
       y += height + rowGap
     }
   }
 
   // Back where Craft put everything: every item undragged.
   function restore() {
+    tidied = null
     let order = 0
     for (const piece of pieces) piece.moveTo(0, 0, order++ * STAGGER)
   }
+
+  // Tidied (Clean Up or Sort By) and untouched since: a resize tidies it
+  // again for the new size, straight into place. Each item is placed as an
+  // offset from its spot in the layout, which moves with the window, so
+  // the old offsets would scatter them. A resize that only changes the
+  // height on a touch screen (the iOS toolbar showing and hiding while
+  // scrolling) is left alone, as the items do.
+  let tidied: { by?: DeskSort } | null = null
+  let frame = 0
+  let width = 0
+  function onResize() {
+    if (!tidied) return
+    const touch = !window.matchMedia('(pointer: fine)').matches
+    if (touch && window.innerWidth === width) return
+    width = window.innerWidth
+    // A frame later, after the items' own resize handling (see DeskItem).
+    cancelAnimationFrame(frame)
+    frame = requestAnimationFrame(() => {
+      if (tidied) cleanUp(tidied.by, true)
+    })
+  }
+  onMounted(() => {
+    width = window.innerWidth
+    window.addEventListener('resize', onResize)
+  })
+  onBeforeUnmount(() => {
+    cancelAnimationFrame(frame)
+    window.removeEventListener('resize', onResize)
+  })
 
   provide(deskKey, {
     surface,
     raise: () => ++top,
     register,
-    cleanUp,
+    cleanUp: (by) => cleanUp(by),
     restore,
+    moved: () => (tidied = null),
   })
 }
 
