@@ -324,8 +324,13 @@
     if (target) show(target)
   }
 
+  // The desk behind the Post Office's window stays quiet while it's open.
+  const { open: postOfficeOpen } = usePostOffice()
+  watch(postOfficeOpen, (open) => open && dismiss())
+
   function show(target: HTMLElement) {
-    if (isCoarsePointer() || isTooltipSuppressed()) return
+    if (isCoarsePointer() || isTooltipSuppressed() || postOfficeOpen.value)
+      return
     currentTarget = target
     updateAnchor(target)
     say(target)

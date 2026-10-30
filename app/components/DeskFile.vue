@@ -41,14 +41,17 @@
       <span
         ref="art"
         class="desk-file__art"
-        :class="{ 'is-selected': selected || keyboardFocus }"
+        :class="{ 'is-selected': selected || keyboardFocus, 'is-bare': bare }"
       >
-        <img
-          v-if="image"
-          class="desk-file__image"
-          :src="image"
-          alt=""
-        />
+        <!-- Its own art in place of a picture (the Post Office's stamp). -->
+        <slot name="art">
+          <img
+            v-if="image"
+            class="desk-file__image"
+            :src="image"
+            alt=""
+          />
+        </slot>
       </span>
       <span
         class="desk-file__meta"
@@ -69,7 +72,7 @@
           <motion.span
             v-if="count != null"
             class="desk-file__count"
-            :data-tooltip="countTooltip"
+            :data-tooltip="countSays"
             aria-hidden="true"
             :initial="{
               opacity: 0,
@@ -84,18 +87,22 @@
             :exit="{ opacity: 0 }"
             :transition="{ duration: reduceMotion ? 0.01 : 0.4 }"
           >
-            <svg
-              class="desk-file__count-icon"
-              width="6.644"
-              height="7.537"
-              viewBox="0 0 6.64398 7.53742"
-              fill="none"
-            >
-              <path
-                d="M3.14589 0.115172C3.21307 -0.0383908 3.4309 -0.0383906 3.49809 0.115172L6.62726 7.26756C6.69709 7.42718 6.53557 7.58991 6.37544 7.52128L3.39771 6.24511C3.34935 6.22439 3.29462 6.22439 3.24627 6.24511L0.268534 7.52128C0.108402 7.58991 -0.0531138 7.42718 0.0167163 7.26756L3.14589 0.115172Z"
-                fill="currentColor"
-              />
-            </svg>
+            <!-- What's counted (opens, by default; the Post Office's
+                 stamps). -->
+            <slot name="count-icon">
+              <svg
+                class="desk-file__count-icon"
+                width="6.644"
+                height="7.537"
+                viewBox="0 0 6.64398 7.53742"
+                fill="none"
+              >
+                <path
+                  d="M3.14589 0.115172C3.21307 -0.0383908 3.4309 -0.0383906 3.49809 0.115172L6.62726 7.26756C6.69709 7.42718 6.53557 7.58991 6.37544 7.52128L3.39771 6.24511C3.34935 6.22439 3.29462 6.22439 3.24627 6.24511L0.268534 7.52128C0.108402 7.58991 -0.0531138 7.42718 0.0167163 7.26756L3.14589 0.115172Z"
+                  fill="currentColor"
+                />
+              </svg>
+            </slot>
             <span class="desk-file__count-value blush">{{
               formatCount(count)
             }}</span>
@@ -162,6 +169,15 @@
     &.is-selected {
       outline: 2px solid #285955;
       outline-offset: 3px;
+    }
+
+    // The art draws its own edge (and shadow).
+    &.is-bare {
+      border: 0;
+      border-radius: 0;
+      background: none;
+      box-shadow: none;
+      overflow: visible;
     }
   }
 
@@ -306,10 +322,14 @@
       delay?: number
       // Times opened; null hides the pill (not loaded or Worker down).
       count?: number | null
+      // What the count's tooltip says, when it isn't opens.
+      countTooltip?: string
       // Dropped on Mallow, what he's asked (see useAskDrop).
       ask?: AskDropItem
       // Its label: a colored dot by the name.
       category?: DeskCategory
+      // Its art slot draws its own edge: no white frame round it.
+      bare?: boolean
     }>(),
     {
       image: null,
@@ -321,7 +341,9 @@
       expanded: false,
       delay: 0,
       count: null,
+      countTooltip: undefined,
       category: undefined,
+      bare: false,
     },
   )
 
@@ -335,7 +357,8 @@
 
   // The tooltip over the count (see TooltipLabel's sourceAt); the dot's
   // says what its label is.
-  const countTooltip = computed(() => {
+  const countSays = computed(() => {
+    if (props.countTooltip) return props.countTooltip
     const count = props.count ?? 0
     if (count === 0) return 'Not opened yet'
     if (count === 1) return 'Opened once'

@@ -109,18 +109,20 @@
         @focusin="preload(study)"
       />
       <LastPlayed />
+      <PostOfficeIcon />
     </div>
     <AskBar
       class="home__ask"
       data-desk-keep-out
     />
-    <DeskMenu :disabled="!!openStudy" />
+    <DeskMenu :disabled="!!openStudy || postOfficeOpen" />
     <DeskDialog
       :study="openStudy"
       :origin="origin"
       @close="closeStudy"
       @ask="askFromStudy"
     />
+    <PostOffice />
     <NuxtPage />
 
     <div
@@ -1109,6 +1111,7 @@
     () => (requested.value = undefined),
   )
   const origin = shallowRef<HTMLElement | null>(null)
+  const { open: postOfficeOpen } = usePostOffice()
 
   // Every open counts, whether from an icon or a direct /work/[slug] link.
   const { counts, load: loadCounts, recordOpen } = useOpenCounts()

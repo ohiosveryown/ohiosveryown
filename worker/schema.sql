@@ -30,3 +30,27 @@ CREATE TABLE IF NOT EXISTS ask_questions (
   question TEXT NOT NULL
 );
 CREATE INDEX IF NOT EXISTS ask_questions_at ON ask_questions (at);
+
+-- The Post Office: one row per postmark a visitor stamps. The id is the
+-- postmark's serial number. `page` is which sheet it's on (from 0; a new
+-- one starts once a sheet is about covered), `x`/`y` are where on it (0–1
+-- of its width and height), `seed` sets its tilt and how unevenly it's
+-- inked.
+-- The place comes from Cloudflare's guess at the visitor's location; the
+-- IP isn't kept, only `visitor`, the same salted hash as ask_hits (for the
+-- rate limit, and later so an eraser can only take back your own).
+CREATE TABLE IF NOT EXISTS marks (
+  id      INTEGER PRIMARY KEY AUTOINCREMENT,
+  at      INTEGER NOT NULL,
+  page    INTEGER NOT NULL DEFAULT 0,
+  type    TEXT NOT NULL,
+  x       REAL NOT NULL,
+  y       REAL NOT NULL,
+  seed    INTEGER NOT NULL,
+  city    TEXT,
+  region  TEXT,
+  country TEXT,
+  visitor TEXT NOT NULL
+);
+CREATE INDEX IF NOT EXISTS marks_visitor_at ON marks (visitor, at);
+CREATE INDEX IF NOT EXISTS marks_page ON marks (page);

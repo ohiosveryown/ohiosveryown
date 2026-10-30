@@ -7,6 +7,13 @@
 //                    Mallow's chat questions lately; allowed questions are
 //                    kept in ask_questions for 90 days. Called by the site's
 //                    server (Bearer ASK_LIMIT_SECRET), never by browsers.
+//   GET  /marks    → the Post Office: { total, states, countries, cities, pages,
+//                    page, marks, here }, the marks on one sheet (?page=N,
+//                    from 0; the newest by default), and where the visitor is
+//   POST /marks    → stamps one { type, x, y, seed } on the newest sheet,
+//                    where Cloudflare places the visitor, and returns it
+//                    with `turned` when that about covers the sheet; 429
+//                    past MARKS_MAX in MARKS_WINDOW_MS
 //
 // The browser calls this directly from the site, so CORS only allows the
 // site's own origins (ALLOWED_ORIGINS).
@@ -65,6 +72,7 @@ function corsHeaders(request: Request, env: Env): Record<string, string> {
     ? {
         'Access-Control-Allow-Origin': origin,
         'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type',
         'Access-Control-Max-Age': '86400',
         Vary: 'Origin',
       }
@@ -185,6 +193,182 @@ async function askLimit(request: Request, env: Env, ctx: ExecutionContext) {
   return new Response(null, { status: 204 })
 }
 
+// The Post Office (greetings.app). Types kept in step with
+// app/data/postmarks.ts, the limit with STAMPS_MAX/STAMPS_WINDOW_MS in
+// app/composables/usePostOffice.ts.
+// Each type's size in its art's units (POSTMARKS' width and height).
+const MARK_SIZES: Record<string, [number, number]> = {
+  stars: [48, 48],
+  dashed: [48, 48],
+  house: [48, 48],
+  banner: [55.3, 53.8],
+  triangle: [62.7, 51.6],
+  meter: [92.2, 40.6],
+  classic: [92.2, 48],
+  cancel: [94, 23],
+  hello: [70.1, 38.4],
+  burgee: [57.7, 35.5],
+}
+const MARK_TYPES = new Set(Object.keys(MARK_SIZES))
+const MARKS_SHOWN = 400
+
+// How much of a sheet a mark covers: stamped at SHEET_SCALE of its art's
+// size on a sheet SHEET_WIDTH × SHEET_HEIGHT (app/components/PostOffice.vue).
+// Once a sheet's marks add up to SHEET_FULL of it, the next one starts a
+// new sheet.
+const SHEET_SCALE = 2.1
+const SHEET_WIDTH = 812
+const SHEET_HEIGHT = 568
+const SHEET_FULL = 0.85
+function coverage(type: string) {
+  const [width, height] = MARK_SIZES[type] ?? [0, 0]
+  return (
+    (width * height * SHEET_SCALE * SHEET_SCALE) / (SHEET_WIDTH * SHEET_HEIGHT)
+  )
+}
+
+// The sheet new marks go on: the last one, or a new one after it once
+// that's about covered. `covered` is how much of it is.
+async function openSheet(env: Env) {
+  const last =
+    (
+      await env.DB.prepare('SELECT MAX(page) AS page FROM marks').first<{
+        page: number | null
+      }>()
+    )?.page ?? 0
+  const { results } = await env.DB.prepare(
+    'SELECT type FROM marks WHERE page = ?1',
+  )
+    .bind(last)
+    .all<{ type: string }>()
+  const covered = results.reduce((sum, row) => sum + coverage(row.type), 0)
+  return covered >= SHEET_FULL
+    ? { page: last + 1, covered: 0 }
+    : { page: last, covered }
+}
+const MARKS_WINDOW_MS = 10 * 60_000
+const MARKS_MAX = 8
+
+type Mark = {
+  id: number
+  at: number
+  page: number
+  type: string
+  x: number
+  y: number
+  seed: number
+  city: string | null
+  region: string | null
+  country: string | null
+}
+
+async function sheet(env: Env, asked: number | null) {
+  const open = await openSheet(env)
+  const page =
+    asked === null || !Number.isInteger(asked)
+      ? open.page
+      : Math.min(Math.max(asked, 0), open.page)
+  const [marks, totals] = await env.DB.batch([
+    env.DB.prepare(
+      `SELECT id, at, page, type, x, y, seed, city, region, country FROM marks
+       WHERE page = ?1 ORDER BY id DESC LIMIT ?2`,
+    ).bind(page, MARKS_SHOWN),
+    env.DB.prepare(
+      `SELECT COUNT(*) AS total,
+         COUNT(DISTINCT CASE WHEN country = 'US' THEN region END) AS states,
+         COUNT(DISTINCT country) AS countries,
+         COUNT(DISTINCT city || '|' || IFNULL(region, '') || '|' || IFNULL(country, '')) AS cities
+       FROM marks`,
+    ),
+  ])
+  const counts = (totals!.results[0] ?? {}) as {
+    total?: number
+    states?: number
+    countries?: number
+    cities?: number
+  }
+  return {
+    total: counts.total ?? 0,
+    states: counts.states ?? 0,
+    countries: counts.countries ?? 0,
+    cities: counts.cities ?? 0,
+    pages: open.page + 1,
+    page,
+    // Oldest first, so later ones are drawn on top.
+    marks: (marks!.results as Mark[]).reverse(),
+  }
+}
+
+// Cloudflare's guess at where the visitor is (request.cf); any of it can be
+// missing, and the stamp says so.
+function placeOf(request: Request) {
+  const cf = (request.cf ?? {}) as {
+    city?: string
+    regionCode?: string
+    country?: string
+  }
+  const clean = (value: string | undefined, max: number) =>
+    value?.trim().slice(0, max) || null
+  return {
+    city: clean(cf.city, 40),
+    region: clean(cf.regionCode, 8),
+    country: clean(cf.country, 2),
+  }
+}
+
+async function stamp(request: Request, env: Env) {
+  const body = (await request.json().catch(() => ({}))) as Partial<Mark>
+  const { type, x, y, seed } = body
+  const unit = (value: unknown): value is number =>
+    typeof value === 'number' && value >= 0 && value <= 1
+  if (
+    typeof type !== 'string' ||
+    !MARK_TYPES.has(type) ||
+    !unit(x) ||
+    !unit(y) ||
+    !Number.isInteger(seed)
+  ) {
+    return { status: 400 as const }
+  }
+
+  const ip = request.headers.get('CF-Connecting-IP') ?? 'unknown'
+  const visitor = await sha256(`${env.IP_SALT}:ask:${ip}`)
+  const now = Date.now()
+  const recent = await env.DB.prepare(
+    'SELECT COUNT(*) AS n, MIN(at) AS first FROM marks WHERE visitor = ?1 AND at > ?2',
+  )
+    .bind(visitor, now - MARKS_WINDOW_MS)
+    .first<{ n: number; first: number | null }>()
+  if ((recent?.n ?? 0) >= MARKS_MAX) {
+    const wait = ((recent?.first ?? now) + MARKS_WINDOW_MS - now) / 1000
+    return { status: 429 as const, retryAfter: Math.max(Math.ceil(wait), 1) }
+  }
+
+  const place = placeOf(request)
+  const open = await openSheet(env)
+  const mark = await env.DB.prepare(
+    `INSERT INTO marks (at, page, type, x, y, seed, city, region, country, visitor)
+     VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10)
+     RETURNING id, at, page, type, x, y, seed, city, region, country`,
+  )
+    .bind(
+      now,
+      open.page,
+      type,
+      x,
+      y,
+      Math.abs(seed!) % 2 ** 31,
+      place.city,
+      place.region,
+      place.country,
+      visitor,
+    )
+    .first<Mark>()
+  // This one about covers it: the next goes on a new sheet.
+  const turned = open.covered + coverage(type) >= SHEET_FULL
+  return { status: 200 as const, mark: { ...mark, turned } }
+}
+
 export default {
   async fetch(request, env, ctx): Promise<Response> {
     const cors = corsHeaders(request, env)
@@ -192,7 +376,7 @@ export default {
       return new Response(null, { status: 204, headers: cors })
     }
 
-    const { pathname } = new URL(request.url)
+    const { pathname, searchParams } = new URL(request.url)
 
     if (request.method === 'GET' && pathname === '/counts') {
       const { results } = await env.DB.prepare(
@@ -207,6 +391,38 @@ export default {
 
     if (request.method === 'POST' && pathname === '/ask-limit') {
       return askLimit(request, env, ctx)
+    }
+
+    if (pathname === '/marks') {
+      // `here` is where the visitor's own stamp will say, for the preview.
+      if (request.method === 'GET') {
+        const asked = searchParams.get('page')
+        return json(
+          {
+            ...(await sheet(env, asked === null ? null : Number(asked))),
+            here: placeOf(request),
+          },
+          200,
+          cors,
+        )
+      }
+      if (request.method === 'POST') {
+        // As with /hit: other sites can't stamp from their visitors.
+        if (!isAllowedOrigin(request, env)) {
+          return json({ error: 'forbidden' }, 403, cors)
+        }
+        const result = await stamp(request, env)
+        if (result.status === 429) {
+          return json({ error: 'too many' }, 429, {
+            ...cors,
+            'Retry-After': String(result.retryAfter),
+          })
+        }
+        if (result.status === 400) {
+          return json({ error: 'bad mark' }, 400, cors)
+        }
+        return json(result.mark, 200, cors)
+      }
     }
 
     const match = pathname.match(/^\/hit\/([^/]+)$/)

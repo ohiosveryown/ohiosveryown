@@ -116,6 +116,9 @@ export default defineNuxtConfig({
       // Dev shares the real database, so it only reads counts unless this is
       // set (NUXT_PUBLIC_COUNTER_IN_DEV=true) for debugging.
       counterInDev: false,
+      // The same for the Post Office's stamps, on their own: dev stamps stay
+      // on the page unless NUXT_PUBLIC_STAMPS_IN_DEV=true.
+      stampsInDev: false,
     },
   },
   css: [
