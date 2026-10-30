@@ -1080,9 +1080,11 @@
   const desk = useTemplateRef<HTMLElement>('desk')
   provideDesk(desk)
 
-  // Arriving back at / from a panel shouldn't jump the page to the top.
+  // Arriving back at / from a panel (or greetings.app) shouldn't jump the
+  // page to the top.
   definePageMeta({
-    scrollToTop: (_to, from) => !from.path.startsWith('/work/'),
+    scrollToTop: (_to, from) =>
+      !from.path.startsWith('/work/') && from.path !== '/greetings',
   })
 
   const route = useRoute()

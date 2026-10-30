@@ -73,6 +73,7 @@ export default defineNuxtConfig({
     routeRules: {
       '/': { isr: { expiration: 60, allowQuery: [] } },
       '/work/**': { isr: { expiration: 60, allowQuery: [] } },
+      '/greetings': { isr: { expiration: 60, allowQuery: [] } },
       '/api/case-studies': { isr: { expiration: 60, allowQuery: [] } },
       '/sitemap.xml': { isr: { expiration: 3600, allowQuery: [] } },
     },

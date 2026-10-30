@@ -20,6 +20,9 @@ type Sheet = {
 }
 
 let loading: Promise<void> | undefined
+// What it opened from (the desk icon's art), for the window to grow out of
+// and shrink back into. Not in useState: an element can't be serialised.
+const origin = shallowRef<HTMLElement | null>(null)
 
 // Stamps a visitor can leave in a while: the Worker's limit
 // (worker/src/index.ts, MARKS_MAX and MARKS_WINDOW_MS), kept here too so the
@@ -207,6 +210,7 @@ export function usePostOffice() {
 
   return {
     open,
+    origin,
     sheet,
     older,
     unavailable,

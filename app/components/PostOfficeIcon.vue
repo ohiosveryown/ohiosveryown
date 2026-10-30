@@ -10,7 +10,7 @@
     :count-tooltip="stampedSays"
     :delay="0.65"
     :sort="{ name: 'greetings.app' }"
-    @open="open = !open"
+    @open="toggle"
   >
     <!-- A stamp, perforated, with a few postmarks across it (Figma
          2429:6294). -->
@@ -115,7 +115,13 @@
 
   // How many postmarks there are, in the pill like a post's opens. The
   // sheet loads once the page has, so it's ready when the window opens.
-  const { open, sheet, load } = usePostOffice()
+  const { open, origin, sheet, load } = usePostOffice()
+
+  // The window grows out of this icon's art, and shrinks back into it.
+  function toggle(from: HTMLElement | null) {
+    origin.value = from
+    open.value = !open.value
+  }
   onMounted(() => {
     if (document.readyState === 'complete') load()
     else window.addEventListener('load', () => load(), { once: true })

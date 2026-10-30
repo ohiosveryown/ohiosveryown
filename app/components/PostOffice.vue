@@ -7,207 +7,238 @@
       v-if="open"
       ref="shell"
       class="post-office"
-      :class="{
-        'is-stamping': aim && !near && onLast,
-        'is-pressing': pressing,
-      }"
       role="dialog"
       aria-labelledby="post-office-title"
-      :initial="{ opacity: 0, scale: 0.97, filter: blur(10) }"
-      :animate="{
-        opacity: 1,
-        scale: 1,
-        filter: blur(0),
-        transitionEnd: { filter: 'none' },
-        transition: { duration: reduceMotion ? 0.01 : 0.45, ease },
-      }"
-      :exit="{
-        opacity: 0,
-        scale: 0.97,
-        filter: blur(10),
-        transition: { duration: reduceMotion ? 0.01 : 0.3, ease },
-      }"
+      :variants="variants"
+      initial="hidden"
+      :animate="phase"
+      exit="exit"
       @pointermove="onAim"
       @pointerleave="onLeave"
     >
-      <h2
-        id="post-office-title"
-        class="visually-hidden"
+      <!-- Grows out of the desk icon and back into it, like a post's panel
+           (DeskDialog); its contents fade in once it's open. -->
+      <motion.div
+        class="post-office__content"
+        :variants="content"
       >
-        Greetings
-      </h2>
-      <!-- The stamp, and washi tape to come (Figma 2449:12695). -->
-      <div
-        class="post-office__toolbar"
-        role="toolbar"
-        aria-label="Tools"
-      >
-        <button
-          class="post-office__tool is-selected"
-          type="button"
-          aria-pressed="true"
-          aria-label="Stamp"
+        <h2
+          id="post-office-title"
+          class="visually-hidden"
         >
-          <svg
-            viewBox="0 0 16 16"
-            aria-hidden="true"
-          >
-            <path
-              fill="#2E2F34"
-              d="M14 14a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1 0-1h11a.5.5 0 0 1 .5.5ZM13 8H9.47l.99-4.58A2 2 0 0 0 8.5 1h-1a2 2 0 0 0-1.96 2.42L6.53 8H3a1 1 0 0 0-1 1v2.5a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V9a1 1 0 0 0-1-1Z"
-            />
-          </svg>
-        </button>
-        <!-- aria-disabled, not disabled: a disabled button gets no pointer
-             events, and it needs them for its tooltip. -->
-        <button
-          class="post-office__tool"
-          type="button"
-          aria-disabled="true"
-          aria-label="Washi tape, coming soon"
-          data-tip="Coming soon: washi"
+          Greetings
+        </h2>
+        <!-- The stamp, and washi tape to come (Figma 2449:12695). -->
+        <div
+          class="post-office__toolbar"
+          role="toolbar"
+          aria-label="Tools"
         >
-          <svg
-            viewBox="0 0 16 16"
-            fill="none"
-            stroke="#2E2F34"
-            stroke-linecap="round"
-            aria-hidden="true"
+          <button
+            class="post-office__tool is-selected"
+            type="button"
+            aria-pressed="true"
+            aria-label="Stamp"
           >
-            <path d="M13.5 8a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0Z" />
-            <path d="M9.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Z" />
-            <path d="M7 14.5h7.5" />
-          </svg>
+            <svg
+              viewBox="0 0 16 16"
+              aria-hidden="true"
+            >
+              <path
+                fill="#2E2F34"
+                d="M14 14a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1 0-1h11a.5.5 0 0 1 .5.5ZM13 8H9.47l.99-4.58A2 2 0 0 0 8.5 1h-1a2 2 0 0 0-1.96 2.42L6.53 8H3a1 1 0 0 0-1 1v2.5a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V9a1 1 0 0 0-1-1Z"
+              />
+            </svg>
+          </button>
+          <!-- aria-disabled, not disabled: a disabled button gets no pointer
+               events, and it needs them for its tooltip. -->
+          <button
+            class="post-office__tool"
+            type="button"
+            aria-disabled="true"
+            aria-label="Washi tape – coming soon"
+            data-tip="Washi tape – coming soon"
+          >
+            <svg
+              viewBox="0 0 16 16"
+              fill="none"
+              stroke="#2E2F34"
+              stroke-linecap="round"
+              aria-hidden="true"
+            >
+              <path d="M13.5 8a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0Z" />
+              <path d="M9.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Z" />
+              <path d="M7 14.5h7.5" />
+            </svg>
+          </button>
+        </div>
+        <button
+          ref="closeButton"
+          class="post-office__close"
+          type="button"
+          @click="open = false"
+        >
+          Close
         </button>
-      </div>
-      <button
-        ref="closeButton"
-        class="post-office__close"
-        type="button"
-        @click="open = false"
-      >
-        Close
-      </button>
 
-      <!-- The sheets, the last being where stamps go; hovering says how
-           many there are and from where. -->
-      <div
-        v-if="sheet || unavailable"
-        class="post-office__dots"
-        role="group"
-        :aria-label="`Sheets: ${countText}`"
-        :data-tip="countText"
-      >
-        <button
-          v-for="page in dotPages"
-          :key="page"
-          class="post-office__dot"
-          :class="{ 'is-current': page === viewing }"
-          type="button"
-          :aria-label="`Sheet ${page + 1} of ${pages}`"
-          :aria-current="page === viewing ? 'page' : undefined"
-          @click="goTo(page)"
+        <!-- The sheets, the last being where stamps go; hovering says how
+             many there are and from where. -->
+        <div
+          v-if="sheet || unavailable"
+          class="post-office__dots"
+          role="group"
+          :aria-label="`Sheets: ${countText}`"
+          :data-tip="countText"
+        >
+          <button
+            v-for="page in dotPages"
+            :key="page"
+            class="post-office__dot"
+            :class="{ 'is-current': page === viewing }"
+            type="button"
+            :aria-label="`Sheet ${page + 1} of ${pages}`"
+            :aria-current="page === viewing ? 'page' : undefined"
+            @click="goTo(page)"
+          />
+        </div>
+
+        <div
+          ref="sheetEl"
+          class="post-office__sheet"
+          role="button"
+          tabindex="0"
+          :aria-label="`Stamp a ${selected.name} postmark`"
+          :aria-disabled="!sheet"
+          @pointerdown="onStamp"
+          @keydown.enter.prevent="stampSomewhere"
+          @keydown.space.prevent="stampSomewhere"
+        >
+          <!-- The stamp in hand, as the pointer: a layer of its own over the
+             sheet, shown only while stamping. Safari only updates the
+             cursor when the element under the pointer changes, not when a
+             class does, so near Close and the tools this goes and the
+             site's cursor comes back. -->
+        <div
+          v-show="aim && !near && onLast"
+          class="post-office__hand"
+          :class="{ 'is-pressing': pressing }"
+          aria-hidden="true"
         />
-      </div>
 
-      <div
-        ref="sheetEl"
-        class="post-office__sheet"
-        role="button"
-        tabindex="0"
-        :aria-label="`Stamp a ${selected.name} postmark`"
-        :aria-disabled="!sheet"
-        @pointerdown="onStamp"
-        @keydown.enter.prevent="stampSomewhere"
-        @keydown.space.prevent="stampSomewhere"
-      >
         <!-- One sheet at a time, sliding over to the next. -->
-        <AnimatePresence
-          :custom="direction"
-          :initial="false"
-        >
-          <motion.div
-            :key="viewing"
-            class="post-office__page"
+          <AnimatePresence
             :custom="direction"
-            :variants="slide"
-            initial="enter"
-            animate="center"
-            exit="exit"
+            :initial="false"
           >
             <motion.div
-              v-for="mark in shown"
-              :key="`${mark.seed}-${mark.at}`"
-              class="post-office__mark"
-              :style="markStyle(mark)"
-              :initial="
-                stampedHere.has(mark.seed)
-                  ? { opacity: 0, scale: reduceMotion ? 1 : 1.25 }
-                  : false
-              "
+              :key="viewing"
+              class="post-office__page"
+              :custom="direction"
+              :variants="slide"
+              initial="enter"
+              animate="center"
+              exit="exit"
+            >
+              <motion.div
+                v-for="mark in shown"
+                :key="`${mark.seed}-${mark.at}`"
+                class="post-office__mark"
+                :style="markStyle(mark)"
+                :initial="
+                  stampedHere.has(mark.seed)
+                    ? { opacity: 0, scale: reduceMotion ? 1 : 1.25 }
+                    : false
+                "
+                :animate="{
+                  opacity: 1,
+                  scale: 1,
+                  transition: reduceMotion
+                    ? { duration: 0.01 }
+                    : { type: 'spring', stiffness: 700, damping: 34 },
+                }"
+              >
+                <PostmarkArt
+                  :type="mark.type"
+                  :mark="mark"
+                  :serial="mark.id"
+                />
+              </motion.div>
+            </motion.div>
+          </AnimatePresence>
+
+          <!-- Where the next one would land (the pointer is the stamp),
+               trailing the pointer a little, like the desk's tooltips. -->
+          <motion.div
+            v-if="aim && sheet && onLast"
+            class="post-office__aim"
+            :style="{ x: aimX, y: aimY }"
+            aria-hidden="true"
+          >
+            <!-- Put away near Close and the tools. -->
+            <AnimatePresence>
+              <motion.span
+                v-if="!near && !full"
+                class="post-office__mark post-office__mark--ghost"
+                :style="markStyle({ type: selected.id, x: 0, y: 0, seed: 0 }, false)"
+                :initial="{ opacity: 0, scale: 0.6, filter: blur(10) }"
+                :animate="{
+                  opacity: 0.5,
+                  scale: 1,
+                  filter: blur(0),
+                  transition: { duration: reduceMotion ? 0.01 : 0.25, ease },
+                }"
+                :exit="{
+                  opacity: 0,
+                  scale: 0.6,
+                  filter: blur(10),
+                  transition: { duration: reduceMotion ? 0.01 : 0.2, ease },
+                }"
+              >
+                <PostmarkArt
+                  :type="selected.id"
+                  :mark="preview"
+                  :serial="preview.id"
+                  even
+                />
+              </motion.span>
+            </AnimatePresence>
+          </motion.div>
+
+          <!-- Past STAMPS_MAX lately: a word at the pointer, like the desk's
+               tooltips, in place of a stamp. -->
+          <AnimatePresence>
+            <motion.div
+              v-if="resting"
+              class="post-office__tip post-office__tip--rest"
+              :style="{ x: aimX, y: aimY }"
+              role="status"
+              :initial="{ opacity: 0, scale: 0.5, filter: blur(20), rotate: 10 }"
               :animate="{
                 opacity: 1,
                 scale: 1,
-                transition: reduceMotion
-                  ? { duration: 0.01 }
-                  : { type: 'spring', stiffness: 700, damping: 34 },
-              }"
-            >
-              <PostmarkArt
-                :type="mark.type"
-                :mark="mark"
-                :serial="mark.id"
-              />
-            </motion.div>
-          </motion.div>
-        </AnimatePresence>
-
-        <!-- Where the next one would land (the pointer is the stamp),
-             trailing the pointer a little, like the desk's tooltips. -->
-        <motion.div
-          v-if="aim && sheet && onLast"
-          class="post-office__aim"
-          :style="{ x: aimX, y: aimY }"
-          aria-hidden="true"
-        >
-          <!-- Put away near Close and the tools. -->
-          <AnimatePresence>
-            <motion.span
-              v-if="!near && !full"
-              class="post-office__mark post-office__mark--ghost"
-              :style="markStyle({ type: selected.id, x: 0, y: 0, seed: 0 }, false)"
-              :initial="{ opacity: 0, scale: 0.6, filter: blur(10) }"
-              :animate="{
-                opacity: 0.5,
-                scale: 1,
                 filter: blur(0),
-                transition: { duration: reduceMotion ? 0.01 : 0.25, ease },
+                rotate: 0,
+                transition: { duration: reduceMotion ? 0.01 : 0.3 },
               }"
               :exit="{
                 opacity: 0,
-                scale: 0.6,
-                filter: blur(10),
-                transition: { duration: reduceMotion ? 0.01 : 0.2, ease },
+                scale: 0.5,
+                filter: blur(20),
+                transition: { duration: reduceMotion ? 0.01 : 0.15 },
               }"
             >
-              <PostmarkArt
-                :type="selected.id"
-                :mark="preview"
-                :serial="preview.id"
-                even
-              />
-            </motion.span>
+              The ink needs to dry for a bit
+            </motion.div>
           </AnimatePresence>
-        </motion.div>
+        </div>
 
-        <!-- Past STAMPS_MAX lately: a word at the pointer, like the desk's
-             tooltips, in place of a stamp. -->
+        <!-- What a control is, at the pointer (data-tip). -->
         <AnimatePresence>
           <motion.div
-            v-if="resting"
-            class="post-office__tip post-office__tip--rest"
-            :style="{ x: aimX, y: aimY }"
-            role="status"
+            v-if="tip"
+            class="post-office__tip"
+            :style="{ left: `${tip.x}px`, top: `${tip.y}px` }"
+            aria-hidden="true"
             :initial="{ opacity: 0, scale: 0.5, filter: blur(20), rotate: 10 }"
             :animate="{
               opacity: 1,
@@ -223,77 +254,51 @@
               transition: { duration: reduceMotion ? 0.01 : 0.15 },
             }"
           >
-            The ink needs to dry for a bit
+            {{ tip.text }}
           </motion.div>
         </AnimatePresence>
-      </div>
 
-      <!-- What a control is, at the pointer (data-tip). -->
-      <AnimatePresence>
-        <motion.div
-          v-if="tip"
-          class="post-office__tip"
-          :style="{ left: `${tip.x}px`, top: `${tip.y}px` }"
-          aria-hidden="true"
-          :initial="{ opacity: 0, scale: 0.5, filter: blur(20), rotate: 10 }"
-          :animate="{
-            opacity: 1,
-            scale: 1,
-            filter: blur(0),
-            rotate: 0,
-            transition: { duration: reduceMotion ? 0.01 : 0.3 },
-          }"
-          :exit="{
-            opacity: 0,
-            scale: 0.5,
-            filter: blur(20),
-            transition: { duration: reduceMotion ? 0.01 : 0.15 },
-          }"
-        >
-          {{ tip.text }}
-        </motion.div>
-      </AnimatePresence>
-
-      <div class="post-office__tools">
-        <div
-          ref="trayEl"
-          class="post-office__tray"
-          role="radiogroup"
-          aria-label="Postmarks"
-          @pointermove="onDock"
-          @pointerleave="offDock"
-        >
-          <!-- Like the macOS Dock: the tiles near the pointer grow, pushing
-               their neighbours aside. -->
-          <button
-            v-for="(type, index) in POSTMARKS"
-            :key="type.id"
-            class="post-office__type"
-            :class="{ 'is-selected': type.id === selected.id }"
-            :style="{
-              width: `${tileSizes[index]}px`,
-              height: `${tileSizes[index]}px`,
-              '--zoom': tileSizes[index]! / TILE,
-            }"
-            type="button"
-            role="radio"
-            :aria-checked="type.id === selected.id"
-            :aria-label="type.name"
-            @click="selectedId = type.id"
+        <div class="post-office__tools">
+          <div
+            ref="trayEl"
+            class="post-office__tray"
+            role="radiogroup"
+            aria-label="Postmarks"
+            @pointermove="onDock"
+            @pointerleave="offDock"
           >
-            <span class="post-office__type-zoom">
-              <PostmarkArt
-                class="post-office__type-art"
-                :type="type.id"
-                :mark="preview"
-                :serial="preview.id"
-                :style="tileStyle(type)"
-                even
-              />
-            </span>
-          </button>
+            <!-- Like the macOS Dock: the tiles near the pointer grow, pushing
+                 their neighbours aside. -->
+            <button
+              v-for="(type, index) in POSTMARKS"
+              :key="type.id"
+              class="post-office__type"
+              :class="{ 'is-selected': type.id === selected.id }"
+              :style="{
+                width: `${tileSizes[index]}px`,
+                height: `${tileSizes[index]}px`,
+                '--zoom': tileSizes[index]! / TILE,
+              }"
+              type="button"
+              role="radio"
+              :aria-checked="type.id === selected.id"
+              :aria-label="type.name"
+              @click="selectedId = type.id"
+            >
+              <span class="post-office__type-zoom">
+                <PostmarkArt
+                  class="post-office__type-art"
+                  :type="type.id"
+                  :mark="preview"
+                  :serial="preview.id"
+                  :style="tileStyle(type)"
+                  even
+                />
+              </span>
+            </button>
+          </div>
         </div>
-      </div>
+      </motion.div>
     </motion.section>
   </AnimatePresence>
 </template>
@@ -327,15 +332,10 @@
     box-shadow:
       0 0.113rem 0.363rem rgba(0, 0, 0, 0.05),
       0 0.9rem 2.9rem rgba(0, 0, 0, 0.09);
+    // From the top-left, for the FLIP (motion owns the transform).
+    transform-origin: 0 0;
     overflow: hidden;
 
-    &.is-stamping {
-      cursor: $stamp-cursor;
-    }
-
-    &.is-stamping.is-pressing {
-      cursor: $stamp-cursor-pressed;
-    }
 
     @include breakpoint(md) {
       top: 50%;
@@ -350,6 +350,14 @@
       );
       translate: -50% -50%;
     }
+  }
+
+  // Everything inside, as one box the size of the window, so it can fade
+  // in and out over the window's own grow and shrink.
+  .post-office__content {
+    display: flex;
+    flex-direction: column;
+    position: relative;
   }
 
   .visually-hidden {
@@ -439,6 +447,17 @@
       outline: 2px solid #285955;
       outline-offset: -0.6rem;
       border-radius: 2.3rem;
+    }
+  }
+
+  .post-office__hand {
+    position: absolute;
+    z-index: var(--z1);
+    inset: 0;
+    cursor: $stamp-cursor;
+
+    &.is-pressing {
+      cursor: $stamp-cursor-pressed;
     }
   }
 
@@ -629,6 +648,7 @@
 
 <script setup lang="ts">
   import { motion, AnimatePresence, useMotionValue, useSpring } from 'motion-v'
+  import type { ComponentPublicInstance } from 'vue'
   import {
     POSTMARKS,
     postmark,
@@ -649,6 +669,7 @@
 
   const {
     open,
+    origin,
     sheet,
     older,
     unavailable,
@@ -1022,7 +1043,118 @@
     if (open.value && event.key === 'Escape') open.value = false
   }
 
-  watch(open, async (isOpen) => {
+  // FLIP, as DeskDialog's: the transform that maps the window's resting
+  // box onto the icon it opened from (`transform-origin: 0 0`), measured
+  // live since the icon can be dragged while it's open.
+  const shell = useTemplateRef<ComponentPublicInstance>('shell')
+  const phase = ref<'hidden' | 'visible'>('hidden')
+  const identity = { x: 0, y: 0, scaleX: 1, scaleY: 1 }
+  let from = identity
+  // Vue nulls the template ref as the leave starts, before `exit` runs.
+  let windowEl: HTMLElement | null = null
+
+  function invert(): typeof identity {
+    const icon = origin.value
+    if (reduceMotion.value || !windowEl || !icon?.isConnected) return identity
+    const last = windowEl.getBoundingClientRect()
+    const first = icon.getBoundingClientRect()
+    if (!last.width || !last.height) return identity
+    return {
+      x: first.left - last.left,
+      y: first.top - last.top,
+      scaleX: first.width / last.width,
+      scaleY: first.height / last.height,
+    }
+  }
+
+  watch(shell, (instance) => {
+    if (!instance) {
+      phase.value = 'hidden'
+      return
+    }
+    windowEl = instance.$el as HTMLElement
+    from = invert()
+    phase.value = 'visible'
+  })
+
+  const variants = {
+    hidden: { opacity: 0 },
+    visible: () => ({
+      opacity: [0, 1],
+      x: [from.x, 0],
+      y: [from.y, 0],
+      scaleX: [from.scaleX, 1],
+      scaleY: [from.scaleY, 1],
+      transition: {
+        duration: reduceMotion.value ? 0.01 : 0.75,
+        ease,
+        opacity: {
+          duration: reduceMotion.value ? 0.01 : 0.15,
+          delay: reduceMotion.value ? 0 : 0.2,
+        },
+      },
+    }),
+    exit: () => ({
+      ...invert(),
+      opacity: 0,
+      transition: {
+        duration: reduceMotion.value ? 0.01 : 0.5,
+        ease,
+        opacity: {
+          duration: reduceMotion.value ? 0.01 : 0.25,
+          delay: reduceMotion.value ? 0 : 0.2,
+        },
+      },
+    }),
+  }
+
+  const content = {
+    hidden: () => ({ opacity: 0, filter: blur(10) }),
+    visible: () => ({
+      opacity: 1,
+      filter: blur(0),
+      // A leftover filter would make this box the stamps' containing block
+      // for good, and blur nothing.
+      transitionEnd: { filter: 'none' },
+      transition: {
+        duration: reduceMotion.value ? 0.01 : 0.35,
+        delay: reduceMotion.value ? 0 : 0.2,
+        ease,
+      },
+    }),
+    exit: () => ({
+      opacity: 0,
+      filter: blur(10),
+      transition: { duration: reduceMotion.value ? 0.01 : 0.15, ease },
+    }),
+  }
+
+  // Its own address, /greetings (pages/index/greetings.vue), as a post's
+  // panel has /work/[slug]: the URL opens it, and opening or closing it
+  // goes there or back.
+  const ROUTE = '/greetings'
+  const route = useRoute()
+  const router = useRouter()
+  watch(
+    () => route.path,
+    (path) => (open.value = path === ROUTE),
+    { immediate: true },
+  )
+  watch(open, (isOpen) => {
+    if (import.meta.server) return
+    if (isOpen && route.path !== ROUTE) router.push(ROUTE)
+    else if (!isOpen && route.path === ROUTE) {
+      // Back when it was opened from the desk; a direct link has nothing
+      // behind it on this site, so replace instead.
+      if (window.history.state?.back === '/') router.back()
+      else router.replace('/')
+    }
+  })
+
+  watch(open, (isOpen) => opened(isOpen))
+
+  async function opened(isOpen: boolean) {
+    if (import.meta.server) return
     if (isOpen) {
       // A different postmark in hand each time it opens.
       selectedId.value =
@@ -1047,13 +1179,23 @@
       returnFocus?.focus({ preventScroll: true })
       returnFocus = null
     }
-  })
+  }
 
   onMounted(() => {
     reduceMotion.value = window.matchMedia(
       '(prefers-reduced-motion: reduce)',
     ).matches
     window.addEventListener('keydown', onKeydown)
+    // A direct link to /greetings renders it open on the server: no icon
+    // to grow from, so it fades in where it is.
+    if (open.value) {
+      if (shell.value && phase.value === 'hidden') {
+        windowEl = shell.value.$el as HTMLElement
+        from = identity
+        phase.value = 'visible'
+      }
+      opened(true)
+    }
   })
   onBeforeUnmount(() => window.removeEventListener('keydown', onKeydown))
 </script>
