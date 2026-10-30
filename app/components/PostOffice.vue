@@ -81,26 +81,45 @@
           Close
         </button>
 
-        <!-- The sheets, the last being where stamps go; hovering says how
-             many there are and from where. -->
-        <div
-          v-if="sheet || unavailable"
-          class="post-office__dots"
-          role="group"
-          :aria-label="`Sheets: ${countText}`"
-          :data-tip="countText"
-        >
-          <button
-            v-for="page in dotPages"
-            :key="page"
-            class="post-office__dot"
-            :class="{ 'is-current': page === viewing }"
-            type="button"
-            :aria-label="`Sheet ${page + 1} of ${pages}`"
-            :aria-current="page === viewing ? 'page' : undefined"
-            @click="goTo(page)"
-          />
-        </div>
+        <!-- The sheets, once there's more than one (the last being where
+             stamps go), coming in as the first fills; hovering says how
+             many stamps there are and from where. -->
+        <AnimatePresence>
+          <motion.div
+            v-if="pages > 1"
+            class="post-office__dots"
+            role="group"
+            :aria-label="`Sheets: ${countText}`"
+            :data-tip="countText"
+            :initial="{ opacity: 0, scale: 0.6, filter: blur(10) }"
+            :animate="{
+              opacity: 1,
+              scale: 1,
+              filter: blur(0),
+              transitionEnd: { filter: 'none' },
+              transition: reduceMotion
+                ? { duration: 0.01 }
+                : { type: 'spring', stiffness: 400, damping: 28 },
+            }"
+            :exit="{
+              opacity: 0,
+              scale: 0.6,
+              filter: blur(10),
+              transition: { duration: reduceMotion ? 0.01 : 0.2 },
+            }"
+          >
+            <button
+              v-for="page in dotPages"
+              :key="page"
+              class="post-office__dot"
+              :class="{ 'is-current': page === viewing }"
+              type="button"
+              :aria-label="`Sheet ${page + 1} of ${pages}`"
+              :aria-current="page === viewing ? 'page' : undefined"
+              @click="goTo(page)"
+            />
+          </motion.div>
+        </AnimatePresence>
 
         <div
           ref="sheetEl"
@@ -262,40 +281,52 @@
           <div
             ref="trayEl"
             class="post-office__tray"
-            role="radiogroup"
-            aria-label="Postmarks"
             @pointermove="onDock"
             @pointerleave="offDock"
           >
-            <!-- Like the macOS Dock: the tiles near the pointer grow, pushing
-                 their neighbours aside. -->
-            <button
-              v-for="(type, index) in POSTMARKS"
-              :key="type.id"
-              class="post-office__type"
-              :class="{ 'is-selected': type.id === selected.id }"
+            <!-- The tiles, scrolling sideways when they don't fit, fading out
+                 at an edge with more past it. Like the macOS Dock from md:
+                 the tiles near the pointer grow, pushing their neighbours
+                 aside. -->
+            <div
+              ref="trayList"
+              class="post-office__tray-list"
               :style="{
-                width: `${tileSizes[index]}px`,
-                height: `${tileSizes[index]}px`,
-                '--zoom': tileSizes[index]! / TILE,
+                '--fade-start': moreBefore ? '3.2rem' : '0px',
+                '--fade-end': moreAfter ? '3.2rem' : '0px',
               }"
-              type="button"
-              role="radio"
-              :aria-checked="type.id === selected.id"
-              :aria-label="type.name"
-              @click="selectedId = type.id"
+              role="radiogroup"
+              aria-label="Postmarks"
+              @scroll.passive="onTrayScroll"
             >
-              <span class="post-office__type-zoom">
-                <PostmarkArt
-                  class="post-office__type-art"
-                  :type="type.id"
-                  :mark="preview"
-                  :serial="preview.id"
-                  :style="tileStyle(type)"
-                  even
-                />
-              </span>
-            </button>
+              <button
+                v-for="(type, index) in POSTMARKS"
+                :key="type.id"
+                class="post-office__type"
+                :class="{ 'is-selected': type.id === selected.id }"
+                :style="{
+                  width: `${tileSizes[index]}px`,
+                  height: `${tileSizes[index]}px`,
+                  '--zoom': tileSizes[index]! / TILE,
+                }"
+                type="button"
+                role="radio"
+                :aria-checked="type.id === selected.id"
+                :aria-label="type.name"
+                @click="selectedId = type.id"
+              >
+                <span class="post-office__type-zoom">
+                  <PostmarkArt
+                    class="post-office__type-art"
+                    :type="type.id"
+                    :mark="preview"
+                    :serial="preview.id"
+                    :style="tileStyle(type)"
+                    even
+                  />
+                </span>
+              </button>
+            </div>
           </div>
         </div>
       </motion.div>
@@ -326,7 +357,10 @@
     top: 0.8rem;
     right: 0.8rem;
     left: 0.8rem;
-    border-radius: 2.3rem;
+    // Small screens: as tall and as round as a post's panel (DeskDialog),
+    // so it sits in the screen's corners the same way.
+    height: calc(100% - 1.2rem);
+    border-radius: 3.5rem;
     color: var(--ink);
     background: var(--postmark-paper);
     box-shadow:
@@ -341,6 +375,8 @@
       top: 50%;
       left: 50%;
       right: auto;
+      height: auto;
+      border-radius: 2.3rem;
       // As drawn at 1440 × 900 (812 wide), growing with bigger screens in
       // proportion: 56.4vw, or 90.2svh (568 of 900 tall, at the sheet's
       // shape), whichever is smaller. Narrower screens keep 3.2rem a side.
@@ -356,8 +392,10 @@
   // in and out over the window's own grow and shrink.
   .post-office__content {
     display: flex;
+    flex: 1 1 auto;
     flex-direction: column;
     position: relative;
+    min-height: 0;
   }
 
   .visually-hidden {
@@ -370,17 +408,22 @@
   }
 
   // Figma 2449:12262: centred at the top.
+  // Small screens: under Close, which is centred there.
   .post-office__dots {
     display: flex;
     gap: 0.4rem;
     position: absolute;
     z-index: var(--z2);
-    top: 0.8rem;
+    top: 5.5rem;
     left: 50%;
     padding: 0.4rem;
     border-radius: 100rem;
     background: #dcd8c8;
     translate: -50% 0;
+
+    @include breakpoint(md) {
+      top: 0.8rem;
+    }
   }
 
   .post-office__dot {
@@ -402,11 +445,13 @@
     }
   }
 
+  // Small screens: centred at the top, as a post's panel has it
+  // (DeskDialog). From md, the top-right corner.
   .post-office__close {
     position: absolute;
     z-index: var(--z2);
-    top: 0.8rem;
-    right: 0.8rem;
+    top: 2rem;
+    left: 50%;
     padding: 0.8rem 1.2rem;
     border: 1px solid rgba(46, 47, 52, 0.24);
     border-radius: 100rem;
@@ -419,8 +464,16 @@
     line-height: 1;
     text-box-edge: cap alphabetic;
     text-box-trim: trim-both;
+    translate: -50% 0;
     transition: background var(--ease);
     cursor: inherit;
+
+    @include breakpoint(md) {
+      top: 0.8rem;
+      right: 0.8rem;
+      left: auto;
+      translate: none;
+    }
 
     &:hover {
       background: #e9e5dc;
@@ -436,12 +489,25 @@
 
   // Everything is stamped on here; positions are 0–1 of its size, so it
   // keeps the design's shape at every width.
+  // Small screens: the room the window has above the tray, with stamps a
+  // size up (--mark-scale) since the sheet's so narrow. From md, the
+  // design's shape and size.
   .post-office__sheet {
+    --mark-scale: 1.35;
+
+    flex: 1 1 auto;
     position: relative;
     width: 100%;
-    aspect-ratio: 812 / 568;
+    min-height: 0;
     container-type: inline-size;
     overflow: hidden;
+
+    @include breakpoint(md) {
+      --mark-scale: 1;
+
+      flex: none;
+      aspect-ratio: 812 / 568;
+    }
 
     &:focus-visible {
       outline: 2px solid #285955;
@@ -539,29 +605,55 @@
     }
   }
 
+  // Small screens: the full width, scrolling sideways (centred, the start
+  // would be cut off out of reach). From md, as wide as its tiles.
+  // The bar itself; its list scrolls inside it.
   .post-office__tray {
-    display: flex;
-    flex: 0 1 auto;
-    gap: 0.4rem;
-    padding: 0.4rem;
+    flex: 1 1 auto;
     min-width: 0;
-    border-radius: 1.3rem;
+    // Small screens: concentric with the window's corners (3.5rem, 0.8rem
+    // in).
+    border-radius: 2.7rem;
     background: #fff;
     box-shadow: 0 0.2rem 0.4rem rgba(0, 0, 0, 0.22);
-    overflow-x: auto;
+    overflow: hidden;
     pointer-events: auto;
-    scrollbar-width: none;
 
     &:hover {
       --tile-dim: 1;
     }
 
+    @include breakpoint(md) {
+      flex: 0 1 auto;
+      border-radius: 1.3rem;
+      overflow: visible;
+    }
+  }
+
+  // Faded at an edge while there's more to scroll to that way
+  // (--fade-start / --fade-end), the tiles going to the bar's white.
+  .post-office__tray-list {
+    display: flex;
+    gap: 0.8rem;
+    padding: 0.4rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+    mask-image: linear-gradient(
+      to right,
+      transparent,
+      #000 var(--fade-start),
+      #000 calc(100% - var(--fade-end)),
+      transparent
+    );
+
     // Fits the window from md: the bar stays its height while the tiles
     // grow up out of it.
     @include breakpoint(md) {
       align-items: flex-end;
+      gap: 0.4rem;
       height: 4.8rem;
       overflow: visible;
+      mask-image: none;
     }
   }
 
@@ -573,12 +665,17 @@
     height: 4rem;
     border-radius: calc(0.9rem * var(--zoom, 1));
     background: #fff;
-    // Dimmed, but for the one in hand; all at full strength while the dock
-    // is hovered (--tile-dim, from .post-office__tray).
-    opacity: var(--tile-dim, 0.4);
+    // From md, dimmed but for the one in hand, and all at full strength
+    // while the dock is hovered (--tile-dim, from .post-office__tray). Small
+    // screens have no hover, so they're all at full strength.
+    opacity: 1;
     transition: opacity var(--ease);
     overflow: hidden;
     cursor: inherit;
+
+    @include breakpoint(md) {
+      opacity: var(--tile-dim, 0.4);
+    }
 
     &.is-selected {
       opacity: 1;
@@ -611,9 +708,10 @@
     transform-origin: 0 0;
   }
 
-  // Figma 2449:12695: the top-left corner.
+  // Figma 2449:12695: the top-left corner. Hidden on small screens for
+  // now: the stamp is the only tool yet.
   .post-office__toolbar {
-    display: flex;
+    display: none;
     flex-direction: column;
     gap: 0.2rem;
     position: absolute;
@@ -624,6 +722,10 @@
     border-radius: 1.3rem;
     background: #fff;
     box-shadow: 0 0.2rem 0.4rem rgba(0, 0, 0, 0.22);
+
+    @include breakpoint(md) {
+      display: flex;
+    }
   }
 
   .post-office__tool {
@@ -796,7 +898,17 @@
   const dockHover = useMotionValue(0)
   const dockXSmooth = useSpring(dockX, { stiffness: 400, damping: 40 })
   const dockHoverSmooth = useSpring(dockHover, { stiffness: 300, damping: 30 })
+  // Phones have no hover to magnify with, and a thumb to pick with: bigger
+  // tiles there (TILE_PHONE), the Dock's from md.
+  const TILE_PHONE = 56
+  const tileBase = ref(TILE)
   const tileSizes = ref(POSTMARKS.map(() => TILE))
+  let mdQuery: MediaQueryList | undefined
+  function onBreakpoint() {
+    tileBase.value = mdQuery?.matches ? TILE : TILE_PHONE
+    tileSizes.value = POSTMARKS.map(() => tileBase.value)
+    nextTick(onTrayScroll)
+  }
 
   function sizeTiles() {
     const x = dockXSmooth.get()
@@ -806,7 +918,7 @@
       const distance = Math.abs(x - (index - middle) * (TILE + TILE_GAP))
       const near =
         distance < DOCK_REACH ? Math.cos((distance / DOCK_REACH) * (Math.PI / 2)) : 0
-      return TILE + (TILE_MAX - TILE) * near * amount
+      return tileBase.value + (TILE_MAX - tileBase.value) * near * amount
     })
   }
   dockXSmooth.on('change', sizeTiles)
@@ -827,6 +939,20 @@
   function offDock() {
     dockHover.set(0)
   }
+
+  // Whether the tiles scroll on past either edge, for the fades.
+  const trayList = useTemplateRef<HTMLElement>('trayList')
+  const moreBefore = ref(false)
+  const moreAfter = ref(false)
+  function onTrayScroll() {
+    const list = trayList.value
+    if (!list) return
+    moreBefore.value = list.scrollLeft > 1
+    moreAfter.value = list.scrollLeft + list.clientWidth < list.scrollWidth - 1
+  }
+  watch(trayList, (list) => {
+    if (list) nextTick(onTrayScroll)
+  })
 
   // The tooltip at the pointer, over anything with a data-tip.
     const tip = ref<{ text: string; x: number; y: number } | null>(null)
@@ -862,7 +988,7 @@
     return {
       left: `${mark.x * 100}%`,
       top: `${mark.y * 100}%`,
-      width: `${((type.width * SHEET_SCALE) / SHEET_WIDTH) * 100}cqw`,
+      width: `calc(${((type.width * SHEET_SCALE) / SHEET_WIDTH) * 100}cqw * var(--mark-scale, 1))`,
       rotate: `${tilted ? tiltOf(mark.seed) : 0}deg`,
     }
   }
@@ -1170,10 +1296,6 @@
       viewing.value = pages.value - 1
       await nextTick()
       closeButton.value?.focus({ preventScroll: true })
-      // The tray scrolls: bring the picked one into view.
-      document
-        .querySelector('.post-office__type.is-selected')
-        ?.scrollIntoView({ block: 'nearest', inline: 'center' })
     } else {
       aim.value = null
       stampedHere.clear()
@@ -1190,6 +1312,9 @@
       '(prefers-reduced-motion: reduce)',
     ).matches
     window.addEventListener('keydown', onKeydown)
+    mdQuery = window.matchMedia('(min-width: 700px)')
+    mdQuery.addEventListener('change', onBreakpoint)
+    onBreakpoint()
     // A direct link to /greetings renders it open on the server: no icon
     // to grow from, so it fades in where it is.
     if (open.value) {
@@ -1201,5 +1326,8 @@
       opened(true)
     }
   })
-  onBeforeUnmount(() => window.removeEventListener('keydown', onKeydown))
+  onBeforeUnmount(() => {
+    window.removeEventListener('keydown', onKeydown)
+    mdQuery?.removeEventListener('change', onBreakpoint)
+  })
 </script>
