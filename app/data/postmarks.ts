@@ -43,7 +43,7 @@ export const POSTMARKS: Postmark[] = [
     tile: { sx: 1.1456, sy: 1.1456, tx: 2.309, ty: 1.963 } },
   { id: 'triangle', name: 'Arrival triangle', width: 62.7, height: 51.6, ink: '#2c4a9a',
     tile: { sx: 0.961, sy: 1.038, tx: 1.873, ty: 1.703 } },
-  { id: 'meter', name: 'Postage meter', width: 92.2, height: 40.6, ink: '#1a1a1a',
+  { id: 'meter', name: 'Postage meter', width: 92.2, height: 40.6, ink: '#2f5d46',
     tile: { sx: 1.157, sy: 1.157, tx: -28.0, ty: 1.868 } },
   { id: 'hello', name: 'Hello from', width: 70.1, height: 38.4, ink: '#b02a2a',
     tile: { sx: 1.16, sy: 1.16, tx: 2.504, ty: 2.504 } },
