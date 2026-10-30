@@ -9,7 +9,8 @@
   "observability": { "enabled": true },
   "vars": {
     // Origins allowed to call the Worker from the browser.
-    "ALLOWED_ORIGINS": "https://ohiosveryown.co,http://localhost:8080,http://192.168.1.128:8080",
+    // Private addresses on port 8080 are allowed too (LAN_DEV_ORIGIN).
+    "ALLOWED_ORIGINS": "https://ohiosveryown.co,http://localhost:8080",
     // Where the Worker reads the list of real case-study IDs.
     "SITE_URL": "https://ohiosveryown.co"
   },

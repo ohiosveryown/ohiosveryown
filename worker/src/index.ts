@@ -59,11 +59,20 @@ async function sha256(value: string) {
     .join('')
 }
 
+// The site's dev server on another device on the same network (a phone
+// on the Wi-Fi): any private address on port 8080, since the router can
+// hand the Mac a new one.
+const LAN_DEV_ORIGIN =
+  /^http:\/\/(10(\.\d{1,3}){3}|192\.168(\.\d{1,3}){2}|172\.(1[6-9]|2\d|3[01])(\.\d{1,3}){2}):8080$/
+
 function isAllowedOrigin(request: Request, env: Env) {
   const origin = request.headers.get('Origin') ?? ''
-  return env.ALLOWED_ORIGINS.split(',')
-    .map((item) => item.trim())
-    .includes(origin)
+  return (
+    LAN_DEV_ORIGIN.test(origin) ||
+    env.ALLOWED_ORIGINS.split(',')
+      .map((item) => item.trim())
+      .includes(origin)
+  )
 }
 
 function corsHeaders(request: Request, env: Env): Record<string, string> {
