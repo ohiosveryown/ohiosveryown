@@ -491,21 +491,25 @@
     pointer-events: none;
   }
 
-  // The window's tooltips (Figma 2449:12708): a small dark pill just right
+  // The window's tooltips, styled as the desk's (TooltipLabel), just right
   // of and below the pointer.
   .post-office__tip {
     position: absolute;
     z-index: var(--z3);
-    margin: 1.2rem 0 0 1.2rem;
-    padding: 0.5rem 0.9rem 0.6rem;
+    margin: 1.4rem 0 0 1.4rem;
+    padding: 0.4rem 1rem 0.5rem;
+    border: 1px solid #000;
     border-radius: 100rem;
     color: #fff;
-    background: #354138;
-    box-shadow: 0 0.2rem 0.3rem rgba(0, 0, 0, 0.32);
+    background: #000;
+    box-shadow:
+      0 1px 0 0 rgba(255, 255, 255, 0.4) inset,
+      0 2px 3px 0 rgba(0, 0, 0, 0.32);
     font-family: var(--system-font);
-    font-size: 1rem;
-    font-weight: 500;
-    line-height: 1.2;
+    font-size: 1.3rem;
+    font-weight: 600;
+    letter-spacing: -0.04rem;
+    line-height: 1.4;
     white-space: nowrap;
     pointer-events: none;
   }
