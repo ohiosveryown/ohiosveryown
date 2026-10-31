@@ -288,7 +288,7 @@
           <motion.div
             v-if="tip"
             class="post-office__tip"
-            :class="{ 'is-flipped': tip.flip }"
+            :class="{ 'is-flipped': tip.flip, 'is-up': tip.up }"
             :style="{ left: `${tip.x}px`, top: `${tip.y}px` }"
             aria-hidden="true"
             :initial="{ opacity: 0, scale: 0.5, filter: blur(20), rotate: 10 }"
@@ -368,13 +368,21 @@
                like FigJam's. -->
           <div class="post-office__menu">
             <div class="post-office__pill post-office__pill--size">
-              <svg
-                class="post-office__size-icon"
-                viewBox="0 0 16 16"
-                aria-hidden="true"
+              <!-- The small and large stamps step the size down and up. -->
+              <button
+                class="post-office__size-step"
+                type="button"
+                aria-label="Smaller"
+                @click="stepSize(-1)"
               >
-                <path d="M12 11.92a.33.33 0 0 1-.33.33H4.33a.33.33 0 0 1 0-.67h7.34c.18 0 .33.15.33.34Zm-.67-4H8.98l.66-3.06a1.33 1.33 0 0 0-1.31-1.61h-.66a1.33 1.33 0 0 0-1.31 1.61l.65 3.06H4.67a.67.67 0 0 0-.67.66v1.67c0 .37.3.67.67.67h6.66c.37 0 .67-.3.67-.67V8.58a.67.67 0 0 0-.67-.66Z" />
-              </svg>
+                <svg
+                  class="post-office__size-icon"
+                  viewBox="0 0 16 16"
+                  aria-hidden="true"
+                >
+                  <path d="M12 11.92a.33.33 0 0 1-.33.33H4.33a.33.33 0 0 1 0-.67h7.34c.18 0 .33.15.33.34Zm-.67-4H8.98l.66-3.06a1.33 1.33 0 0 0-1.31-1.61h-.66a1.33 1.33 0 0 0-1.31 1.61l.65 3.06H4.67a.67.67 0 0 0-.67.66v1.67c0 .37.3.67.67.67h6.66c.37 0 .67-.3.67-.67V8.58a.67.67 0 0 0-.67-.66Z" />
+                </svg>
+              </button>
               <div
                 ref="sizeTrack"
                 class="post-office__size-track"
@@ -392,13 +400,20 @@
                 <span class="post-office__size-fill" />
                 <span class="post-office__size-thumb" />
               </div>
-              <svg
-                class="post-office__size-icon"
-                viewBox="0 0 16 16"
-                aria-hidden="true"
+              <button
+                class="post-office__size-step"
+                type="button"
+                aria-label="Larger"
+                @click="stepSize(1)"
               >
-                <path d="M13 12.96a.42.42 0 0 1-.42.42H3.42a.42.42 0 0 1 0-.84h9.16c.23 0 .42.19.42.42Zm-.83-5H9.23l.82-3.82a1.67 1.67 0 0 0-1.63-2.01h-.84a1.67 1.67 0 0 0-1.63 2.01l.82 3.82H3.83a.83.83 0 0 0-.83.83v2.08c0 .46.37.84.83.84h8.34c.46 0 .83-.38.83-.84V8.79a.83.83 0 0 0-.83-.83Z" />
-              </svg>
+                <svg
+                  class="post-office__size-icon"
+                  viewBox="0 0 16 16"
+                  aria-hidden="true"
+                >
+                  <path d="M13 12.96a.42.42 0 0 1-.42.42H3.42a.42.42 0 0 1 0-.84h9.16c.23 0 .42.19.42.42Zm-.83-5H9.23l.82-3.82a1.67 1.67 0 0 0-1.63-2.01h-.84a1.67 1.67 0 0 0-1.63 2.01l.82 3.82H3.83a.83.83 0 0 0-.83.83v2.08c0 .46.37.84.83.84h8.34c.46 0 .83-.38.83-.84V8.79a.83.83 0 0 0-.83-.83Z" />
+                </svg>
+              </button>
             </div>
 
             <div class="post-office__pill post-office__pill--inks">
@@ -419,6 +434,23 @@
                 <span class="post-office__ink-thumb" />
               </div>
             </div>
+
+            <!-- From md: a different postmark, size and ink at random
+                 (Figma 2478:21645). -->
+            <button
+              class="post-office__pill post-office__shuffle"
+              type="button"
+              aria-label="Shuffle mark, size, and color"
+              data-tip="Shuffle mark, size, and color"
+              @click="shuffle()"
+            >
+              <svg
+                viewBox="0 0 16 16"
+                aria-hidden="true"
+              >
+                <path d="M14.85 11.15a.5.5 0 0 1 0 .7l-1.5 1.5a.5.5 0 0 1-.7-.7l.64-.65h-.73a4.5 4.5 0 0 1-3.66-1.88L6.29 6.47A3.5 3.5 0 0 0 3.44 5H2a.5.5 0 0 1 0-1h1.44a4.5 4.5 0 0 1 3.66 1.88l2.61 3.65A3.5 3.5 0 0 0 12.56 11h.73l-.64-.65a.5.5 0 0 1 .7-.7l1.5 1.5ZM8.94 6.69a.5.5 0 0 0 .7-.12l.07-.1A3.5 3.5 0 0 1 12.56 5h.73l-.64.65a.5.5 0 0 0 .7.7l1.5-1.5a.5.5 0 0 0 0-.7l-1.5-1.5a.5.5 0 0 0-.7.7l.64.65h-.73a4.5 4.5 0 0 0-3.66 1.88l-.08.1a.5.5 0 0 0 .12.71Zm-1.88 2.62a.5.5 0 0 0-.7.12l-.07.1A3.5 3.5 0 0 1 3.44 11H2a.5.5 0 0 0 0 1h1.44a4.5 4.5 0 0 0 3.66-1.88l.08-.1a.5.5 0 0 0-.12-.71Z" />
+              </svg>
+            </button>
           </div>
         </div>
       </motion.div>
@@ -729,6 +761,16 @@
       margin-left: -1.4rem;
       translate: -100% 0;
     }
+
+    // Above the pointer instead, clear of the window's bottom edge.
+    &.is-up {
+      margin-top: -1.4rem;
+      translate: 0 -100%;
+    }
+
+    &.is-flipped.is-up {
+      translate: -100% -100%;
+    }
   }
 
   // The pause, on the sheet: placed by its x/y from the top-left.
@@ -985,13 +1027,61 @@
     }
   }
 
+  // Desktop only, for now: a square pill, its icon as the size pill's.
+  .post-office__shuffle {
+    display: none;
+
+    @include breakpoint(md) {
+      display: flex;
+      flex: none;
+      justify-content: center;
+      width: var(--pill);
+      cursor: inherit;
+    }
+
+    // Darkened by its fill, not opacity: fading opacity moves it onto a
+    // layer of its own for the transition, and it jumps a pixel.
+    svg {
+      display: block;
+      width: calc(1.6rem * var(--m));
+      height: calc(1.6rem * var(--m));
+      fill: rgba(0, 0, 0, 0.5);
+      transition: fill var(--ease);
+    }
+
+    &:hover svg {
+      fill: rgba(0, 0, 0, 0.8);
+    }
+
+    &:focus-visible {
+      outline: 2px solid #285955;
+      outline-offset: 0.2rem;
+    }
+  }
+
+  .post-office__size-step {
+    display: flex;
+    flex-shrink: 0;
+    cursor: inherit;
+
+    &:hover .post-office__size-icon {
+      fill: rgba(0, 0, 0, 0.8);
+    }
+
+    &:focus-visible {
+      outline: 2px solid #285955;
+      outline-offset: 0.2rem;
+      border-radius: 0.4rem;
+    }
+  }
+
   .post-office__size-icon {
     display: block;
     flex-shrink: 0;
     width: calc(1.6rem * var(--m));
     height: calc(1.6rem * var(--m));
-    fill: #000;
-    opacity: 0.5;
+    fill: rgba(0, 0, 0, 0.5);
+    transition: fill var(--ease);
   }
 
   // The track, filled from the left up to the thumb (--size, 0–1). Taller
@@ -1288,6 +1378,18 @@
   }
 
   // Arrow keys step it by a twentieth; Home and End go to either end.
+  // A tenth of the slider a click, from the small and large stamp icons.
+  function stepSize(direction: 1 | -1) {
+    const step = (STAMP_SIZE.max - STAMP_SIZE.min) / 10
+    stampSize.value =
+      Math.round(
+        Math.min(
+          Math.max(stampSize.value + step * direction, STAMP_SIZE.min),
+          STAMP_SIZE.max,
+        ) * 100,
+      ) / 100
+  }
+
   function onSizeKey(event: KeyboardEvent) {
     const step = (STAMP_SIZE.max - STAMP_SIZE.min) / 20
     const next = {
@@ -1406,12 +1508,15 @@
   })
 
   // The tooltip at the pointer, over anything with a data-tip.
-    const TIP_ROOM = 220
+  const TIP_ROOM = 220
+  // How much room below the pointer it needs, or it opens above instead.
+  const TIP_ROOM_BELOW = 56
   const tip = ref<{
     text: string
     x: number
     y: number
     flip: boolean
+    up: boolean
   } | null>(null)
   function onTip(event: PointerEvent) {
     const target = (event.target as HTMLElement).closest<HTMLElement>(
@@ -1429,6 +1534,8 @@
       y: event.clientY - shell.top,
       // Near the right edge (the sheet dots), it goes to the pointer's left.
       flip: shell.right - event.clientX < TIP_ROOM,
+      // Near the bottom (the menu under the dock), above the pointer.
+      up: shell.bottom - event.clientY < TIP_ROOM_BELOW,
     }
   }
 
@@ -1799,20 +1906,24 @@
 
   watch(open, (isOpen) => opened(isOpen))
 
+  // A different postmark in hand (never the same one twice running), a
+  // colour anywhere along the gradient, and a size in `range`: on opening
+  // a little either side of the usual (OPEN_SIZE), so every visit's stamp
+  // is its own; from the shuffle button, anywhere on the slider.
+  function shuffle(range: { min: number; max: number } = STAMP_SIZE) {
+    const others = POSTMARKS.filter((type) => type.id !== selectedId.value)
+    selectedId.value = others[Math.floor(Math.random() * others.length)]!.id
+    ink.value = Math.round(Math.random() * 1000) / 1000
+    stampSize.value =
+      Math.round(
+        (range.min + Math.random() * (range.max - range.min)) * 100,
+      ) / 100
+  }
+
   async function opened(isOpen: boolean) {
     if (import.meta.server) return
     if (isOpen) {
-      // A different postmark in hand each time it opens.
-      selectedId.value =
-        POSTMARKS[Math.floor(Math.random() * POSTMARKS.length)]!.id
-      // And a colour anywhere along the gradient, and a size a little either
-      // side of the usual (OPEN_SIZE), so every visit's stamp is its own.
-      ink.value = Math.round(Math.random() * 1000) / 1000
-      stampSize.value =
-        Math.round(
-          (OPEN_SIZE.min + Math.random() * (OPEN_SIZE.max - OPEN_SIZE.min)) *
-            100,
-        ) / 100
+      shuffle(OPEN_SIZE)
       returnFocus = document.activeElement as HTMLElement | null
       now.value = Date.now()
       // Opens on the sheet stamps go on.
