@@ -10,6 +10,12 @@
     :count-tooltip="stampedSays"
     :delay="0.65"
     :sort="{ name: 'greetings.app' }"
+    :ask="{
+      label: 'greetings.app',
+      kind: 'app',
+      name: 'greetings.app',
+      prompt: 'What is greetings.app, and how do I leave a postmark?',
+    }"
     @open="toggle"
   >
     <!-- A stamp, perforated, with a few postmarks across it (Figma

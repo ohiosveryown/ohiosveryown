@@ -5,7 +5,7 @@
 export type AskDropItem = {
   // The visitor's bubble: the item's picture, and a line about it by name
   // (worded a little differently each time; see AskBar).
-  kind: 'study' | 'track'
+  kind: 'study' | 'track' | 'app'
   name: string
   label: string
   image?: string | null

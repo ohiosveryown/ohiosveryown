@@ -1612,6 +1612,12 @@
       'Is {name} any good?',
       "Why's Matt listening to {name}?",
     ],
+    app: [
+      "What's {name}?",
+      'Tell me about {name}',
+      'What do I do with {name}?',
+      "What's {name} for?",
+    ],
   }
   let lastDropLine = ''
   function dropLine(item: AskDropItem) {

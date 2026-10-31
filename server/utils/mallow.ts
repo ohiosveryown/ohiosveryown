@@ -83,6 +83,31 @@ export async function mallowIndex() {
   }
 }
 
+// greetings.app's numbers, from the counter Worker (GET /marks), so Mallow
+// can say how many have stamped it and from where. Cached for a minute;
+// without them, he just doesn't know.
+const greetingsNumbers = defineCachedFunction(
+  async () => {
+    const { counterUrl } = useRuntimeConfig().public
+    if (!counterUrl) return ''
+    const sheet = await $fetch<{
+      total: number
+      states: number
+      countries: number
+      cities?: number
+      pages?: number
+    }>(`${counterUrl}/marks`)
+    const parts = [
+      `${sheet.total} postmarks`,
+      sheet.cities != null ? `from ${sheet.cities} cities` : '',
+      `in ${sheet.states} US states and ${sheet.countries} countries`,
+      `over ${sheet.pages ?? 1} sheet${(sheet.pages ?? 1) === 1 ? '' : 's'}`,
+    ]
+    return parts.filter(Boolean).join(', ')
+  },
+  { name: 'mallow-greetings', maxAge: 60 },
+)
+
 export async function mallowInstructions() {
   const about =
     await useStorage('assets:server').getItem<string>('mallow/about.md')
@@ -92,10 +117,17 @@ export async function mallowInstructions() {
   } catch (error) {
     console.error('[mallow] case studies unavailable', error)
   }
+  let greetings = ''
+  try {
+    greetings = await greetingsNumbers()
+  } catch (error) {
+    console.error('[mallow] greetings.app unavailable', error)
+  }
   return [
     String(about ?? ''),
     '# Case studies on the site',
     'Each one opens as a panel on the desk.',
     studies || '(Unavailable right now.)',
+    ...(greetings ? ['# greetings.app right now', `${greetings}.`] : []),
   ].join('\n\n')
 }
