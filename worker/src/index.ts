@@ -10,7 +10,7 @@
 //   GET  /marks    → the Post Office: { total, states, countries, cities, pages,
 //                    page, marks, here }, the marks on one sheet (?page=N,
 //                    from 0; the newest by default), and where the visitor is
-//   POST /marks    → stamps one { type, x, y, seed } on the newest sheet,
+//   POST /marks    → stamps one { type, size, ink, x, y, seed } on the newest sheet,
 //                    where Cloudflare places the visitor, and returns it
 //                    with `turned` when that about covers the sheet; 429
 //                    past MARKS_MAX in MARKS_WINDOW_MS
@@ -229,10 +229,15 @@ const SHEET_SCALE = 2.1
 const SHEET_WIDTH = 812
 const SHEET_HEIGHT = 568
 const SHEET_FULL = 0.85
-function coverage(type: string) {
+// How big a visitor can make a stamp (STAMP_SIZE in app/data/postmarks.ts),
+// as a scale of the usual size.
+const STAMP_SIZE_MIN = 0.7
+const STAMP_SIZE_MAX = 1.4
+function coverage(type: string, size = 1) {
   const [width, height] = MARK_SIZES[type] ?? [0, 0]
   return (
-    (width * height * SHEET_SCALE * SHEET_SCALE) / (SHEET_WIDTH * SHEET_HEIGHT)
+    (width * height * SHEET_SCALE * SHEET_SCALE * size * size) /
+    (SHEET_WIDTH * SHEET_HEIGHT)
   )
 }
 
@@ -246,11 +251,14 @@ async function openSheet(env: Env) {
       }>()
     )?.page ?? 0
   const { results } = await env.DB.prepare(
-    'SELECT type FROM marks WHERE page = ?1',
+    'SELECT type, size FROM marks WHERE page = ?1',
   )
     .bind(last)
-    .all<{ type: string }>()
-  const covered = results.reduce((sum, row) => sum + coverage(row.type), 0)
+    .all<{ type: string; size: number }>()
+  const covered = results.reduce(
+    (sum, row) => sum + coverage(row.type, row.size),
+    0,
+  )
   return covered >= SHEET_FULL
     ? { page: last + 1, covered: 0 }
     : { page: last, covered }
@@ -263,6 +271,8 @@ type Mark = {
   at: number
   page: number
   type: string
+  size: number
+  ink: number | null
   x: number
   y: number
   seed: number
@@ -279,7 +289,7 @@ async function sheet(env: Env, asked: number | null) {
       : Math.min(Math.max(asked, 0), open.page)
   const [marks, totals] = await env.DB.batch([
     env.DB.prepare(
-      `SELECT id, at, page, type, x, y, seed, city, region, country FROM marks
+      `SELECT id, at, page, type, size, ink, x, y, seed, city, region, country FROM marks
        WHERE page = ?1 ORDER BY id DESC LIMIT ?2`,
     ).bind(page, MARKS_SHOWN),
     env.DB.prepare(
@@ -328,14 +338,26 @@ function placeOf(request: Request) {
 async function stamp(request: Request, env: Env) {
   const body = (await request.json().catch(() => ({}))) as Partial<Mark>
   const { type, x, y, seed } = body
+  const size =
+    typeof body.size === 'number' ? Math.round(body.size * 100) / 100 : 1
   const unit = (value: unknown): value is number =>
     typeof value === 'number' && value >= 0 && value <= 1
+  // Where along the ink gradient (0–1), to three places; none is the
+  // type's own ink.
+  const ink =
+    body.ink === undefined || body.ink === null
+      ? null
+      : unit(body.ink)
+        ? Math.round(body.ink * 1000) / 1000
+        : undefined
   if (
     typeof type !== 'string' ||
     !MARK_TYPES.has(type) ||
     !unit(x) ||
     !unit(y) ||
-    !Number.isInteger(seed)
+    !Number.isInteger(seed) ||
+    !(size >= STAMP_SIZE_MIN && size <= STAMP_SIZE_MAX) ||
+    ink === undefined
   ) {
     return { status: 400 as const }
   }
@@ -356,14 +378,16 @@ async function stamp(request: Request, env: Env) {
   const place = placeOf(request)
   const open = await openSheet(env)
   const mark = await env.DB.prepare(
-    `INSERT INTO marks (at, page, type, x, y, seed, city, region, country, visitor)
-     VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10)
-     RETURNING id, at, page, type, x, y, seed, city, region, country`,
+    `INSERT INTO marks (at, page, type, size, ink, x, y, seed, city, region, country, visitor)
+     VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, ?12)
+     RETURNING id, at, page, type, size, ink, x, y, seed, city, region, country`,
   )
     .bind(
       now,
       open.page,
       type,
+      size,
+      ink,
       x,
       y,
       Math.abs(seed!) % 2 ** 31,
@@ -374,7 +398,7 @@ async function stamp(request: Request, env: Env) {
     )
     .first<Mark>()
   // This one about covers it: the next goes on a new sheet.
-  const turned = open.covered + coverage(type) >= SHEET_FULL
+  const turned = open.covered + coverage(type, size) >= SHEET_FULL
   return { status: 200 as const, mark: { ...mark, turned } }
 }
 
