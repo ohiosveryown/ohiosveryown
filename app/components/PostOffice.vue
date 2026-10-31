@@ -335,7 +335,7 @@
                 :class="{ 'is-selected': type.id === selected.id }"
                 :style="{
                   '--slot': `${STICKER_SLOTS[type.id] / 10}rem`,
-                  marginLeft: `${(STICKER_ROOM[type.id] ?? 0) / 10}rem`,
+                  '--room': `${(STICKER_ROOM[type.id] ?? 0) / 10}rem`,
                 }"
                 :initial="false"
                 :animate="stickerPose(type.id)"
@@ -446,6 +446,7 @@
     z-index: calc(var(--zmax) - 2);
     inset: 0;
     background: #000;
+    touch-action: manipulation;
     cursor: var(--cursor);
 
     @include breakpoint(md) {
@@ -469,28 +470,46 @@
     // No grey flash where a tap lands: the sheet, the stickers and the
     // sliders answer for themselves.
     -webkit-tap-highlight-color: transparent;
+    // Taps in quick succession are stamps, not a double-tap zoom.
+    touch-action: manipulation;
     // From the top-left, for the FLIP (motion owns the transform).
     transform-origin: 0 0;
 
+    // From md, the size and place of a post's panel (DeskDialog), so every
+    // window on the desk opens the same: centred, and from lg 65% of the
+    // screen wide and most of its height.
     @include breakpoint(md) {
-      top: 50%;
-      left: 50%;
-      right: auto;
+      inset: 0;
+      margin: auto;
+      width: min(66rem, calc(100% - 3.2rem));
       height: auto;
+      aspect-ratio: 4 / 3.45;
       border-radius: 2.3rem;
       background: var(--postmark-paper);
       box-shadow:
         0 0.113rem 0.363rem rgba(0, 0, 0, 0.05),
         0 0.9rem 2.9rem rgba(0, 0, 0, 0.09);
       overflow: hidden;
-      // As drawn at 1440 × 900 (812 wide), growing with bigger screens in
-      // proportion: 56.4vw, or 90.2svh (568 of 900 tall, at the sheet's
-      // shape), whichever is smaller. Narrower screens keep 3.2rem a side.
-      width: min(
-        max(81.2rem, min(56.4vw, 90.2svh)),
-        calc(100% - 6.4rem)
+    }
+
+    @include breakpoint(lg) {
+      --dialog-width: min(clamp(80rem, 65.3vw, 112rem), 100vw - 3.2rem);
+
+      inset: 0;
+      margin: auto;
+      width: var(--dialog-width);
+      height: max(
+        88svh,
+        calc(6.85rem + var(--dialog-width) * 0.87 * 10 / 16 + 6.1rem)
       );
-      translate: -50% -50%;
+      max-height: calc(100% - 1.6rem);
+      aspect-ratio: auto;
+    }
+
+    // On very large screens a post's panel stops at 112rem, which leaves
+    // the sheet a narrow strip of a tall window: a little wider here.
+    @include breakpoint(xl) {
+      --dialog-width: min(clamp(112rem, 45vw, 160rem), 100vw - 3.2rem);
     }
   }
 
@@ -502,6 +521,11 @@
     flex-direction: column;
     position: relative;
     min-height: 0;
+
+    // The sheet fits inside it (see .post-office__sheet).
+    @include breakpoint(md) {
+      container-type: size;
+    }
   }
 
   .visually-hidden {
@@ -616,12 +640,16 @@
     container-type: inline-size;
     overflow: hidden;
 
+    // From md, the design's shape (812 × 568) whatever the window's, as
+    // big as fits and centred in it: the paper round it is the window's,
+    // the same colour, so it reads as one sheet.
     @include breakpoint(md) {
       --mark-scale: 1;
 
       flex: none;
+      margin: auto;
+      width: min(100cqw, 100cqh * 812 / 568);
       aspect-ratio: 812 / 568;
-      margin-bottom: 0;
       border-radius: 0;
       background: none;
     }
@@ -744,13 +772,16 @@
   // room above the bar is still the sheet's, to stamp on.
   .post-office__tray {
     // The bar's height, at the zoom: 6.5rem on screen on small screens
-    // (Figma 2469:20548); from md, Figma's 3.6rem, 6px taller.
+    // (Figma 2469:20548); from md, about 6rem (see below).
     --bar: 4.533rem;
     // How far the stickers stand up above it: 2.6rem on screen as in
     // Figma, and 1.4rem more for the one in hand, so it isn't cut off.
     --over: 2.79rem;
     // Its corners: 2.3rem on screen (Figma 2470:20785), 1.3rem from md.
     --bar-round: 1.604rem;
+    // The stickers' spacing: from md, 15% (lg 25%) wider apart, now that they
+    // stand higher and more of each shows.
+    --spread: 1;
 
     flex: 1 1 auto;
     position: relative;
@@ -777,8 +808,10 @@
     }
 
     @include breakpoint(md) {
-      --bar: 4.12rem;
-      --over: 2.8rem;
+      // 5.4rem on screen at this zoom (1.161), 6.8rem at lg's.
+      --bar: 4.686rem;
+      --over: 4.1rem;
+      --spread: 1.15;
       --bar-round: 1.3rem;
 
       flex: 0 1 auto;
@@ -792,6 +825,15 @@
         box-shadow: 0 0.2rem 0.4rem rgba(0, 0, 0, 0.22);
       }
     }
+
+    // 25% up in the bigger window from lg (a post's panel's size); the
+    // md one is too narrow for it.
+    // Wider apart again where there's room for it.
+    @include breakpoint(lg) {
+      --spread: 1.25;
+
+      zoom: 1.451;
+    }
   }
 
   // The stickers, cut off along the bar's bottom edge and its ends, with
@@ -801,7 +843,9 @@
     display: flex;
     align-items: flex-end;
     position: relative;
-    padding: 0 2.2rem;
+    // More at the end: the square stickers there reach their corners out
+    // past their slots, where the rings at the start don't.
+    padding: 0 3rem 0 2.2rem;
     height: calc(var(--bar) + var(--over));
     overflow-x: auto;
     overflow-y: hidden;
@@ -828,7 +872,8 @@
   .post-office__type {
     flex-shrink: 0;
     position: relative;
-    width: var(--slot, 4rem);
+    margin-left: calc(var(--room, 0rem) * var(--spread));
+    width: calc(var(--slot, 4rem) * var(--spread));
     height: 100%;
     background: none;
     cursor: inherit;
@@ -855,8 +900,12 @@
     pointer-events: none;
 
     // Its painted shape, not its box, so hovering the clear corners round
-    // it is the sheet's.
+    // it is the sheet's. Standing taller from md, nearly all of it showing
+    // above the bar's bottom edge.
+    // Hung from the row's foot rather than the bar's top, so the bar's
+    // height doesn't move them.
     @include breakpoint(md) {
+      top: calc(100% - 5.92rem);
       pointer-events: auto;
     }
   }
@@ -896,11 +945,16 @@
     left: 1.6rem;
     pointer-events: auto;
 
+    // From md, the desk's size; from lg, 25% up with the dock.
     @include breakpoint(md) {
       --m: 1;
-      --pill: 2.6rem;
+      --pill: calc(2.6rem * var(--m));
 
       position: static;
+    }
+
+    @include breakpoint(lg) {
+      --m: 1.25;
     }
   }
 
@@ -950,7 +1004,7 @@
 
     @include breakpoint(md) {
       flex: none;
-      width: 7.6rem;
+      width: calc(7.6rem * var(--m));
     }
     touch-action: none;
     cursor: inherit;
@@ -1008,7 +1062,7 @@
 
     @include breakpoint(md) {
       flex: none;
-      width: 11.6rem;
+      width: calc(11.6rem * var(--m));
     }
     touch-action: none;
     cursor: inherit;
@@ -1288,8 +1342,11 @@
   const STICKER_TILT = -15
   // Extra room before some (px): more after the triangle than in Figma,
   // so the burgee doesn't cover it.
+  // The hand pulled left (6px on screen at lg), the burgee after it
+  // taking that back so it and the rest stay put.
   const STICKER_ROOM: Partial<Record<PostmarkType, number>> = {
-    burgee: 21.5,
+    hand: -3.31,
+    burgee: 21.5 + 3.31,
   }
   // How far along each one's centre is from the last (px), as in Figma.
   const STICKER_SLOTS: Record<PostmarkType, number> = {
@@ -1299,6 +1356,7 @@
     classic: 42,
     banner: 29,
     triangle: 42,
+    hand: 30,
     burgee: 31,
     meter: 33,
     hello: 33,

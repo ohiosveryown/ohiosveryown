@@ -317,8 +317,11 @@
     transform-origin: 0 0;
     overflow: hidden;
 
+    // From md, centred on the page (insets all round plus auto margins,
+    // as from lg below).
     @include breakpoint(md) {
-      left: auto;
+      inset: 0;
+      margin: auto;
       width: min(66rem, calc(100% - 3.2rem));
       min-height: 0;
       aspect-ratio: 4 / 3.45;
