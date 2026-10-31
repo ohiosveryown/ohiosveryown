@@ -597,7 +597,7 @@
     flex-wrap: wrap;
     align-content: flex-start;
     gap: 2.2rem 1.6rem;
-    margin-bottom: 6rem;
+    margin: 0.8rem 0 6rem;
     min-height: calc(60svh - var(--desk-top));
 
     @include breakpoint(md) {
