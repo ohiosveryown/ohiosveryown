@@ -9,6 +9,8 @@ export type BodyNode =
   | { kind: 'break' }
   // A button that closes the post and asks Mallow `question`.
   | { kind: 'ask'; label: string; question: string }
+  // Blush to type with (BlushTester).
+  | { kind: 'tester' }
 
 // What kind of thing it is (Craft's "Category"), shown as a colored dot
 // by its name on the desk.

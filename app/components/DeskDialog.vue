@@ -139,6 +139,9 @@
               @click="followFootnote"
             >
               <!-- html is rendered and sanitized on the server -->
+              <!-- Dev only: ?tester shows the Blush tester at the top of
+                   any post, to try it before its marker is in Craft. -->
+              <BlushTester v-if="previewTester" />
               <template
                 v-for="(node, index) in study.body"
                 :key="index"
@@ -229,6 +232,7 @@
                   />
                   {{ node.label }}
                 </button>
+                <BlushTester v-else-if="node.kind === 'tester'" />
                 <blockquote
                   v-else-if="node.kind === 'quote'"
                   class="desk-dialog__quote"
@@ -944,6 +948,11 @@
   import { motion, AnimatePresence } from 'motion-v'
   import type { ComponentPublicInstance } from 'vue'
   import type { BodyNode, CaseStudy } from '#shared/types/case-study'
+
+  const route = useRoute()
+  const previewTester = computed(
+    () => import.meta.dev && route.query.tester !== undefined,
+  )
 
   const props = defineProps<{
     study: CaseStudy | null
