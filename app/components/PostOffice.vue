@@ -332,10 +332,7 @@
                 v-for="type in POSTMARKS"
                 :key="type.id"
                 class="post-office__type"
-                :class="{
-                  'is-selected': type.id === selected.id,
-                  'is-wide': type.id === 'hello' || type.id === 'cancel',
-                }"
+                :class="{ 'is-selected': type.id === selected.id }"
                 :style="{
                   '--slot': `${STICKER_SLOTS[type.id] / 10}rem`,
                   marginLeft: `${(STICKER_ROOM[type.id] ?? 0) / 10}rem`,
@@ -863,17 +860,6 @@
     }
   }
 
-  // Small screens: the short, wide ones (hello from, the line cancel) a
-  // size up, growing down from their top, so they stand as tall as the rest.
-  .post-office__type.is-wide .post-office__sticker {
-    transform-origin: 50% 0;
-    scale: 1.25;
-
-    @include breakpoint(md) {
-      scale: none;
-    }
-  }
-
   // Figma 2449:12695: the top-left corner. Hidden for now: the stamp is
   // the only tool yet.
   .post-office__toolbar {
@@ -1319,37 +1305,21 @@
   }
   const STICKER_HOVER = -8
   const STICKER_PICKED = -18
-  // The short, wide ones lift less in hand: there's less of them under
-  // the bar, so the same lift floats them clear of it.
-  const STICKER_PICKED_LOW: Partial<Record<PostmarkType, number>> = {
-    hello: -10,
-    cancel: -10,
-  }
   const hovered = ref<PostmarkType | null>(null)
 
   // Small screens zoom the dock further, so the one in hand lifts less to
   // stand as high as in Figma (2469:20592) and clear the row's top.
   const PHONE_LIFT = 0.72
-  // And the short, wide ones hang lower there, their feet below the bar as
-  // in Figma (2469:20720), rather than floating in it (px, at the zoom).
-  const PHONE_DROP: Partial<Record<PostmarkType, number>> = {
-    hello: 8,
-    cancel: 8,
-  }
 
   function stickerPose(id: PostmarkType) {
-    const drop = slidesUp.value ? 0 : (PHONE_DROP[id] ?? 0)
     if (id === selected.value.id) {
-      const lift = STICKER_PICKED_LOW[id] ?? STICKER_PICKED
       return {
-        y: drop + (slidesUp.value ? lift : lift * PHONE_LIFT),
+        y: slidesUp.value ? STICKER_PICKED : STICKER_PICKED * PHONE_LIFT,
         rotate: STICKER_TILT,
       }
     }
-    if (id === hovered.value) {
-      return { y: drop + STICKER_HOVER, rotate: STICKER_TILT }
-    }
-    return { y: drop, rotate: STICKER_TILT }
+    if (id === hovered.value) return { y: STICKER_HOVER, rotate: STICKER_TILT }
+    return { y: 0, rotate: STICKER_TILT }
   }
 
   function onSticker(event: PointerEvent, id: PostmarkType) {

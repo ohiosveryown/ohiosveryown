@@ -58,6 +58,7 @@
         :serial="serial"
         :x="type.x ?? 0"
         :y="type.y ?? 0"
+        :words-down="sticker.wordsDown"
         ink="#fff"
         even
       />
@@ -101,7 +102,8 @@
   // ink runs past it (`pad`), how big it's drawn (`scale`, px per unit),
   // and the shape grown by that padding to cut the art down to (`clip`):
   // the circle with waves to its circle, the meter to its box, the
-  // hello-from and the line cancel to their left-hand ends.
+  // hello-from and the line cancel to squares at their left-hand ends,
+  // the meter's size (40px a side).
   type Sticker = {
     shape: string
     pad: number
@@ -109,6 +111,8 @@
     clip?: string
     // The shape's bounds, before padding and border.
     box: [number, number, number, number]
+    // Its words moved down within its borders (units).
+    wordsDown?: number
   }
 
   // Drawn clockwise, as the banner's ribbon is: two shapes winding
@@ -157,26 +161,29 @@
       scale: 1.1,
       box: [2.21, 2.21, 58.28, 47.21],
     },
+    // These two with more ink round them (4px), so their own edges sit in
+    // from the cut, drawn a little smaller to stay the same size.
     meter: {
       shape: rect(27.66, 1.84, 33.2, 36.15),
-      pad: 1.6,
-      scale: 1.15,
-      clip: rect(27.66 - 1.6, 1.84 - 1.6, 33.2 + 3.2, 36.15 + 3.2),
+      pad: 3.92,
+      scale: 1.02,
+      clip: rect(27.66 - 3.92, 1.84 - 3.92, 33.2 + 7.84, 36.15 + 7.84),
       box: [27.66, 1.84, 33.2, 36.15],
     },
     hello: {
-      shape: rect(1.29, 1.29, 48.8, 35.78),
-      pad: 1.4,
-      scale: 0.834,
-      clip: rect(1.29 - 1.4, 1.29 - 1.4, 48.8 + 2.8, 35.78 + 2.8),
-      box: [1.29, 1.29, 48.8, 35.78],
+      shape: rect(1.29, 1.29, 35.78, 35.78),
+      pad: 4.01,
+      scale: 0.997,
+      clip: rect(1.29 - 4.01, 1.29 - 4.01, 35.78 + 8.02, 35.78 + 8.02),
+      box: [1.29, 1.29, 35.78, 35.78],
+      wordsDown: 2,
     },
     cancel: {
-      shape: rect(0, -0.5, 23, 16),
-      pad: 1.2,
-      scale: 1.68,
-      clip: rect(-1.2, -1.7, 25.4, 18.4),
-      box: [0, -0.5, 23, 16],
+      shape: rect(0, -4.6, 23, 23),
+      pad: 1.06,
+      scale: 40 / 23,
+      clip: rect(-1.06, -5.66, 25.12, 25.12),
+      box: [0, -4.6, 23, 23],
     },
     burgee: {
       shape: 'M51.73 6.96L37.51 17.31L36.9 17.76L37.51 18.21L51.73 28.56L1.01 34.47V1.04Z',
