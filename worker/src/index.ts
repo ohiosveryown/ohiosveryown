@@ -217,6 +217,7 @@ const MARK_SIZES: Record<string, [number, number]> = {
   cancel: [94, 23],
   hello: [70.1, 38.4],
   burgee: [57.7, 35.5],
+  hand: [71.9, 33.2],
 }
 const MARK_TYPES = new Set(Object.keys(MARK_SIZES))
 const MARKS_SHOWN = 400

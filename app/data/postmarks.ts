@@ -15,6 +15,7 @@ export type PostmarkType =
   | 'cancel'
   | 'banner'
   | 'burgee'
+  | 'hand'
 
 export type Postmark = {
   id: PostmarkType
@@ -34,6 +35,7 @@ export const POSTMARKS: Postmark[] = [
   { id: 'classic', name: 'Circle with waves', width: 92.2, height: 48, ink: '#2f5d46' },
   { id: 'banner', name: 'Banner', width: 55.3, height: 53.8, ink: '#1f2a44' },
   { id: 'triangle', name: 'Arrival triangle', width: 62.7, height: 51.6, ink: '#a8322d' },
+  { id: 'hand', name: 'Pointing hand', width: 71.9, height: 33.2, ink: '#1f2a44' },
   { id: 'burgee', name: 'Ohio burgee', width: 57.7, height: 35.5, ink: '#2c4a9a' },
   { id: 'meter', name: 'Postage meter', width: 92.2, height: 40.6, ink: '#4a3f7a' },
   { id: 'hello', name: 'Hello from', width: 70.1, height: 38.4, ink: '#2f5d46' },
@@ -194,9 +196,10 @@ export function postmarkText(mark: Pick<Mark, 'id' | 'at' | 'city' | 'region' | 
     // U.S.A. / USA under the ring
     countryDotted: us ? 'U.S.A.' : country.split('').join('.') + (country ? '.' : ''),
     countryShort: us ? 'USA' : country,
-    // 29 OCT 2026, 29 OCT, 29·X·26, 29.10.26
+    // 29 OCT 2026, 29 OCT, 2026, 29·X·26, 29.10.26
     date: `${day} ${MONTHS[month]} ${year}`,
     dayMonth: `${day} ${MONTHS[month]}`,
+    year: String(year),
     dateRoman: `${day}·${ROMAN[month]}·${String(year).slice(2)}`,
     dateDots: `${day}.${String(month + 1).padStart(2, '0')}.${String(year).slice(2)}`,
     serial6: String(serial).padStart(6, '0'),

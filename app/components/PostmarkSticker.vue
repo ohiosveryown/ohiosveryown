@@ -51,7 +51,27 @@
       :stroke-width="sticker.pad * 2"
       stroke-linejoin="round"
     />
-    <g :clip-path="sticker.clip ? `url(#${uid}-cut)` : undefined">
+    <!-- The hand stands up in the dock: its line art turned, without the
+         date and serial (Figma 2475:21443). -->
+    <template v-if="type.id === 'hand'">
+      <path
+        :d="HAND_UP"
+        fill="#fff"
+      />
+      <!-- It's narrow, so a wider edge round it, unseen, to point at. -->
+      <path
+        :d="sticker.shape"
+        fill="none"
+        stroke="transparent"
+        stroke-width="24"
+        stroke-linejoin="round"
+        pointer-events="stroke"
+      />
+    </template>
+    <g
+      v-else
+      :clip-path="sticker.clip ? `url(#${uid}-cut)` : undefined"
+    >
       <PostmarkArt
         :type="type.id"
         :mark="mark"
@@ -85,6 +105,7 @@
     type Mark,
     type PostmarkType,
   } from '~/data/postmarks'
+  import { HAND_UP, HAND_UP_OUTLINE } from '~/data/hand'
 
   const props = defineProps<{
     type: PostmarkType
@@ -185,6 +206,14 @@
       clip: rect(-1.06, -5.66, 25.12, 25.12),
       box: [0, -4.6, 23, 23],
     },
+    // Cut round its outline: the stroke's round joins fill in between the
+    // fingers and smooth the cuff, so the edge is one easy curve.
+    hand: {
+      shape: HAND_UP_OUTLINE,
+      pad: 3.8,
+      scale: 0.42,
+      box: [0, 0, 62, 148],
+    },
     burgee: {
       shape: 'M51.73 6.96L37.51 17.31L36.9 17.76L37.51 18.21L51.73 28.56L1.01 34.47V1.04Z',
       pad: 2.6,
@@ -208,6 +237,7 @@
     banner: NAVY,
     triangle: RED,
     burgee: BLUE,
+    hand: NAVY,
     meter: PURPLE,
     hello: GREEN,
     cancel: NAVY,

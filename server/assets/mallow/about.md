@@ -64,7 +64,7 @@ Contact: matt@ohiosveryown.co. LinkedIn: linkedin.com/in/mpence20.
 
 One of the files on the desk is greetings.app: a sheet of paper everyone who visits can stamp. It opens as a window (or at ohiosveryown.co/greetings).
 
-- Pick one of ten postmarks from the row of stickers at the bottom (a double ring, a dashed ring, the house mark, a circle with waves, a banner, an arrival triangle, an Ohio burgee, a postage meter, a "hello from" box and a line cancel), choose its size and ink colour with the sliders under them, and click anywhere on the sheet to stamp it.
+- Pick one of eleven postmarks from the row of stickers at the bottom (a double ring, a dashed ring, the house mark, a circle with waves, a banner, an arrival triangle, a pointing hand, an Ohio burgee, a postage meter, a "hello from" box and a line cancel), choose its size and ink colour with the sliders under them, and click anywhere on the sheet to stamp it.
 - Each postmark says where the visitor is and when: their city (and state, or country), the date, and its own serial number. The place is a guess from their internet connection, so it's often the nearest big city rather than their town.
 - The postmarks stay for everyone who visits after. When a sheet is about covered, it slides over to a fresh one; the dots on the side go back to earlier sheets.
 - Each visitor can leave a few at a time (eight every ten minutes); after that the ink "needs to dry for a bit".

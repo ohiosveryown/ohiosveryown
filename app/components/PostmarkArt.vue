@@ -586,6 +586,30 @@
         </g>
       </template>
 
+      <!-- Pointing hand (Figma 2475:21311): drawn at the sheet's size
+           (2.1 to a unit, as the Worker's SHEET_SCALE), tipped back 3°,
+           with the date and serial on the back of the hand. -->
+      <template v-else-if="type.id === 'hand'">
+        <g transform="scale(0.47619) translate(75.52 34.83) rotate(-3) translate(-74 -31)">
+          <path
+            :d="HAND"
+            fill="currentColor"
+          />
+          <g dominant-baseline="central">
+            <text
+              v-for="(line, index) in [words.dayMonth, words.year, words.serial6]"
+              :key="index"
+              class="postmark__mono"
+              x="75.8"
+              :y="24 + index * 8.4"
+              font-size="8"
+            >
+              {{ line }}
+            </text>
+          </g>
+        </g>
+      </template>
+
       <!-- Ohio burgee -->
       <template v-else-if="type.id === 'burgee'">
         <path
@@ -682,6 +706,7 @@
     type Mark,
     type PostmarkType,
   } from '~/data/postmarks'
+  import { HAND } from '~/data/hand'
 
   const props = withDefaults(
     defineProps<{
