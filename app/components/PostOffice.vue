@@ -609,8 +609,8 @@
     position: relative;
     width: 100%;
     min-height: 0;
-    // Small screens: ending 1rem short of where the dock's stickers start.
-    margin-bottom: 1rem;
+    // Small screens: ending 1.4rem short of where the dock's stickers start.
+    margin-bottom: 1.4rem;
     border-radius: 3.6rem;
     background: var(--postmark-paper);
     container-type: inline-size;
@@ -714,8 +714,8 @@
   // from md.
   // The dock, with the size and ink menu under it: below the sheet on
   // small screens, over its bottom edge from md.
-  // Small screens: the dock 0.8rem under the sheet, the stickers standing
-  // up over its foot (the row's 2.6rem above the bar, less that gap).
+  // Small screens: the dock just under the sheet, the stickers standing up
+  // over its foot (the row's 4rem above the bar, less the gap).
   .post-office__tools {
     display: flex;
     flex-direction: column;
@@ -723,7 +723,7 @@
     position: relative;
     // Over the sheet, stamps and all, where the stickers stand up into it.
     z-index: var(--z2);
-    margin-top: -1.8rem;
+    margin-top: -3.2rem;
 
     @include breakpoint(md) {
       gap: 0.8rem;
@@ -746,8 +746,9 @@
     // The bar's height, at the zoom: 6.5rem on screen on small screens
     // (Figma 2469:20548); from md, Figma's 3.6rem, 6px taller.
     --bar: 4.533rem;
-    // How far the stickers stand up above it (2.6rem on screen).
-    --over: 1.813rem;
+    // How far the stickers stand up above it: 2.6rem on screen as in
+    // Figma, and 1.4rem more for the one in hand, so it isn't cut off.
+    --over: 2.79rem;
     // Its corners: 2.3rem on screen (Figma 2470:20785), 1.3rem from md.
     --bar-round: 1.604rem;
 
@@ -891,7 +892,7 @@
     position: absolute;
     z-index: var(--z1);
     right: 1.6rem;
-    bottom: calc(100% + 0.8rem);
+    bottom: calc(100% - 0.2rem);
     left: 1.6rem;
     pointer-events: auto;
 
