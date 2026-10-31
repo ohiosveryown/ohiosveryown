@@ -2,12 +2,36 @@
   <!-- The Post Office (Figma 2449:12259): a sheet everyone stamps. Pick a
        postmark in the tray, then click the sheet; it says where you are
        and when, and stays for every visitor after. -->
+  <!-- The page behind, out of reach while it's open, as behind a post's
+       panel (DeskDialog): all black on small screens (Figma 2469:19954),
+       dimmed from md. Clicking it closes. -->
+  <AnimatePresence>
+    <motion.div
+      v-if="open"
+      class="post-office-overlay"
+      aria-hidden="true"
+      @click="open = false"
+      :initial="{ opacity: 0 }"
+      :animate="{
+        opacity: 1,
+        // Settling in as the window grows (0.75s), not ahead of it.
+        transition: reduceMotion
+          ? { duration: 0.01 }
+          : { duration: 0.6, delay: 0.2, ease },
+      }"
+      :exit="{
+        opacity: 0,
+        transition: { duration: reduceMotion ? 0.01 : 0.3, ease },
+      }"
+    />
+  </AnimatePresence>
   <AnimatePresence>
     <motion.section
       v-if="open"
       ref="shell"
       class="post-office"
       role="dialog"
+      aria-modal="true"
       aria-labelledby="post-office-title"
       :variants="variants"
       initial="hidden"
@@ -72,6 +96,7 @@
             </svg>
           </button>
         </div>
+
         <button
           ref="closeButton"
           class="post-office__close"
@@ -179,6 +204,7 @@
                 <PostmarkArt
                   :type="mark.type"
                   :mark="mark"
+                  :ink="inkOf(mark)"
                   :serial="mark.id"
                 />
               </motion.div>
@@ -198,7 +224,12 @@
               <motion.span
                 v-if="!near && !full"
                 class="post-office__mark post-office__mark--ghost"
-                :style="markStyle({ type: selected.id, x: 0, y: 0, seed: 0 }, false)"
+                :style="
+                  markStyle(
+                    { type: selected.id, size: stampSize, x: 0, y: 0, seed: 0 },
+                    false,
+                  )
+                "
                 :initial="{ opacity: 0, scale: 0.6, filter: blur(10) }"
                 :animate="{
                   opacity: 0.5,
@@ -216,6 +247,7 @@
                 <PostmarkArt
                   :type="selected.id"
                   :mark="preview"
+                  :ink="inkAt(ink)"
                   :serial="preview.id"
                   even
                 />
@@ -256,6 +288,7 @@
           <motion.div
             v-if="tip"
             class="post-office__tip"
+            :class="{ 'is-flipped': tip.flip }"
             :style="{ left: `${tip.x}px`, top: `${tip.y}px` }"
             aria-hidden="true"
             :initial="{ opacity: 0, scale: 0.5, filter: blur(20), rotate: 10 }"
@@ -278,16 +311,12 @@
         </AnimatePresence>
 
         <div class="post-office__tools">
-          <div
-            ref="trayEl"
-            class="post-office__tray"
-            @pointermove="onDock"
-            @pointerleave="offDock"
-          >
-            <!-- The tiles, scrolling sideways when they don't fit, fading out
-                 at an edge with more past it. Like the macOS Dock from md:
-                 the tiles near the pointer grow, pushing their neighbours
-                 aside. -->
+          <!-- The postmarks as die-cut stickers (Figma 2457:17679), tucked
+               into a bar along the bottom, all tilted: lifting a little
+               under the pointer, and the one in hand lifted further. Scrolls
+               sideways when they don't fit, fading at an edge with more past
+               it. -->
+          <div class="post-office__tray">
             <div
               ref="trayList"
               class="post-office__tray-list"
@@ -299,33 +328,99 @@
               aria-label="Postmarks"
               @scroll.passive="onTrayScroll"
             >
-              <button
-                v-for="(type, index) in POSTMARKS"
+              <motion.button
+                v-for="type in POSTMARKS"
                 :key="type.id"
                 class="post-office__type"
-                :class="{ 'is-selected': type.id === selected.id }"
-                :style="{
-                  width: `${tileSizes[index]}px`,
-                  height: `${tileSizes[index]}px`,
-                  '--zoom': tileSizes[index]! / TILE,
+                :class="{
+                  'is-selected': type.id === selected.id,
+                  'is-wide': type.id === 'hello' || type.id === 'cancel',
                 }"
+                :style="{
+                  '--slot': `${STICKER_SLOTS[type.id] / 10}rem`,
+                  marginLeft: `${(STICKER_ROOM[type.id] ?? 0) / 10}rem`,
+                }"
+                :initial="false"
+                :animate="stickerPose(type.id)"
+                :transition="
+                  reduceMotion
+                    ? { duration: 0.01 }
+                    : { type: 'spring', stiffness: 420, damping: 28 }
+                "
                 type="button"
                 role="radio"
                 :aria-checked="type.id === selected.id"
                 :aria-label="type.name"
+                @pointerenter="onSticker($event, type.id)"
+                @pointerleave="hovered = null"
                 @click="selectedId = type.id"
               >
-                <span class="post-office__type-zoom">
-                  <PostmarkArt
-                    class="post-office__type-art"
-                    :type="type.id"
-                    :mark="preview"
-                    :serial="preview.id"
-                    :style="tileStyle(type)"
-                    even
-                  />
-                </span>
-              </button>
+                <PostmarkSticker
+                  class="post-office__sticker"
+                  :type="type.id"
+                  :ink="ink"
+                  :mark="preview"
+                  :serial="preview.id"
+                />
+              </motion.button>
+            </div>
+          </div>
+
+          <!-- Under the dock (Figma 2465:19327): the stamp's size, a slider
+               from small to large, and its ink, a few colours to pick from
+               like FigJam's. -->
+          <div class="post-office__menu">
+            <div class="post-office__pill post-office__pill--size">
+              <svg
+                class="post-office__size-icon"
+                viewBox="0 0 16 16"
+                aria-hidden="true"
+              >
+                <path d="M12 11.92a.33.33 0 0 1-.33.33H4.33a.33.33 0 0 1 0-.67h7.34c.18 0 .33.15.33.34Zm-.67-4H8.98l.66-3.06a1.33 1.33 0 0 0-1.31-1.61h-.66a1.33 1.33 0 0 0-1.31 1.61l.65 3.06H4.67a.67.67 0 0 0-.67.66v1.67c0 .37.3.67.67.67h6.66c.37 0 .67-.3.67-.67V8.58a.67.67 0 0 0-.67-.66Z" />
+              </svg>
+              <div
+                ref="sizeTrack"
+                class="post-office__size-track"
+                role="slider"
+                tabindex="0"
+                aria-label="Stamp size"
+                :aria-valuemin="STAMP_SIZE.min"
+                :aria-valuemax="STAMP_SIZE.max"
+                :aria-valuenow="stampSize"
+                :aria-valuetext="`${Math.round(stampSize * 100)}%`"
+                :style="{ '--size': sizeShare }"
+                @pointerdown="onSizeDown"
+                @keydown="onSizeKey"
+              >
+                <span class="post-office__size-fill" />
+                <span class="post-office__size-thumb" />
+              </div>
+              <svg
+                class="post-office__size-icon"
+                viewBox="0 0 16 16"
+                aria-hidden="true"
+              >
+                <path d="M13 12.96a.42.42 0 0 1-.42.42H3.42a.42.42 0 0 1 0-.84h9.16c.23 0 .42.19.42.42Zm-.83-5H9.23l.82-3.82a1.67 1.67 0 0 0-1.63-2.01h-.84a1.67 1.67 0 0 0-1.63 2.01l.82 3.82H3.83a.83.83 0 0 0-.83.83v2.08c0 .46.37.84.83.84h8.34c.46 0 .83-.38.83-.84V8.79a.83.83 0 0 0-.83-.83Z" />
+              </svg>
+            </div>
+
+            <div class="post-office__pill post-office__pill--inks">
+              <div
+                ref="inkTrack"
+                class="post-office__ink-track"
+                role="slider"
+                tabindex="0"
+                aria-label="Ink colour"
+                aria-valuemin="0"
+                aria-valuemax="1"
+                :aria-valuenow="ink"
+                :aria-valuetext="inkAt(ink)"
+                :style="{ '--ink-place': ink, background: INK_GRADIENT }"
+                @pointerdown="onInkDown"
+                @keydown="onInkKey"
+              >
+                <span class="post-office__ink-thumb" />
+              </div>
             </div>
           </div>
         </div>
@@ -346,9 +441,24 @@
   // Pressed down: a touch smaller, while the button's held.
   $stamp-cursor-pressed: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='21' height='21' viewBox='0 0 16 16'%3E%3Cpath fill='%232E2F34' d='M14 14a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1 0-1h11a.5.5 0 0 1 .5.5ZM13 8H9.47l.99-4.58A2 2 0 0 0 8.5 1h-1a2 2 0 0 0-1.96 2.42L6.53 8H3a1 1 0 0 0-1 1v2.5a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V9a1 1 0 0 0-1-1Z'/%3E%3C/svg%3E") 10.5 10.5, crosshair;
 
+  // Small screens (Figma 2469:19725): over a black overlay, the sheet as
+  // its own card with the size and ink over its foot, and the dock, dark,
+  // under it. From md, one paper window with everything on it.
+  .post-office-overlay {
+    position: fixed;
+    z-index: calc(var(--zmax) - 2);
+    inset: 0;
+    background: #000;
+    cursor: var(--cursor);
+
+    @include breakpoint(md) {
+      background: rgba(0, 0, 0, 0.5);
+    }
+  }
+
   .post-office {
     --ink: #2e2f34;
-    --postmark-paper: #f3efe6;
+    --postmark-paper: #f0ede7;
 
     display: flex;
     flex-direction: column;
@@ -357,19 +467,13 @@
     top: 0.8rem;
     right: 0.8rem;
     left: 0.8rem;
-    // Small screens: as tall and as round as a post's panel (DeskDialog),
-    // so it sits in the screen's corners the same way.
-    height: calc(100% - 1.2rem);
-    border-radius: 3.5rem;
+    height: calc(100% - 1.6rem);
     color: var(--ink);
-    background: var(--postmark-paper);
-    box-shadow:
-      0 0.113rem 0.363rem rgba(0, 0, 0, 0.05),
-      0 0.9rem 2.9rem rgba(0, 0, 0, 0.09);
+    // No grey flash where a tap lands: the sheet, the stickers and the
+    // sliders answer for themselves.
+    -webkit-tap-highlight-color: transparent;
     // From the top-left, for the FLIP (motion owns the transform).
     transform-origin: 0 0;
-    overflow: hidden;
-
 
     @include breakpoint(md) {
       top: 50%;
@@ -377,6 +481,11 @@
       right: auto;
       height: auto;
       border-radius: 2.3rem;
+      background: var(--postmark-paper);
+      box-shadow:
+        0 0.113rem 0.363rem rgba(0, 0, 0, 0.05),
+        0 0.9rem 2.9rem rgba(0, 0, 0, 0.09);
+      overflow: hidden;
       // As drawn at 1440 × 900 (812 wide), growing with bigger screens in
       // proportion: 56.4vw, or 90.2svh (568 of 900 tall, at the sheet's
       // shape), whichever is smaller. Narrower screens keep 3.2rem a side.
@@ -414,15 +523,27 @@
     gap: 0.4rem;
     position: absolute;
     z-index: var(--z2);
-    top: 5.5rem;
+    top: 4.3rem;
     left: 50%;
     padding: 0.4rem;
     border-radius: 100rem;
     background: #dcd8c8;
     translate: -50% 0;
 
+    // The site's cursor, mirrored (public/cursor-flipped@3x.png), pointing
+    // back at the tooltip that opens to its left here. Its tip is its
+    // top-right corner.
+    cursor:
+      image-set(url('/cursor-flipped@3x.png') 3x) 17 0,
+      auto;
+
+    // From md, down the right edge, centred (Figma 2465:19123).
     @include breakpoint(md) {
-      top: 0.8rem;
+      flex-direction: column;
+      top: 50%;
+      right: 0.8rem;
+      left: auto;
+      translate: 0 -50%;
     }
   }
 
@@ -445,12 +566,11 @@
     }
   }
 
-  // Small screens: centred at the top, as a post's panel has it
-  // (DeskDialog). From md, the top-right corner.
+  // Centred at the top, as a post's panel has it (DeskDialog).
   .post-office__close {
     position: absolute;
     z-index: var(--z2);
-    top: 2rem;
+    top: 0.8rem;
     left: 50%;
     padding: 0.8rem 1.2rem;
     border: 1px solid rgba(46, 47, 52, 0.24);
@@ -467,13 +587,6 @@
     translate: -50% 0;
     transition: background var(--ease);
     cursor: inherit;
-
-    @include breakpoint(md) {
-      top: 0.8rem;
-      right: 0.8rem;
-      left: auto;
-      translate: none;
-    }
 
     &:hover {
       background: #e9e5dc;
@@ -499,6 +612,10 @@
     position: relative;
     width: 100%;
     min-height: 0;
+    // Small screens: ending 1rem short of where the dock's stickers start.
+    margin-bottom: 1rem;
+    border-radius: 3.6rem;
+    background: var(--postmark-paper);
     container-type: inline-size;
     overflow: hidden;
 
@@ -507,6 +624,9 @@
 
       flex: none;
       aspect-ratio: 812 / 568;
+      margin-bottom: 0;
+      border-radius: 0;
+      background: none;
     }
 
     &:focus-visible {
@@ -578,6 +698,12 @@
     line-height: 1.4;
     white-space: nowrap;
     pointer-events: none;
+
+    // To the pointer's left instead, clear of the mirrored arrow there.
+    &.is-flipped {
+      margin-left: -1.4rem;
+      translate: -100% 0;
+    }
   }
 
   // The pause, on the sheet: placed by its x/y from the top-left.
@@ -589,54 +715,98 @@
   // A row of postmark tiles (Figma 2449:13077), scrolling sideways when it
   // doesn't fit: under the sheet on small screens, over its bottom edge
   // from md.
+  // The dock, with the size and ink menu under it: below the sheet on
+  // small screens, over its bottom edge from md.
+  // Small screens: the dock 0.8rem under the sheet, the stickers standing
+  // up over its foot (the row's 2.6rem above the bar, less that gap).
   .post-office__tools {
     display: flex;
-    justify-content: center;
-    padding: 0 0.8rem 0.8rem;
+    flex-direction: column;
+    align-items: stretch;
+    position: relative;
+    // Over the sheet, stamps and all, where the stickers stand up into it.
+    z-index: var(--z2);
+    margin-top: -1.8rem;
 
     @include breakpoint(md) {
+      gap: 0.8rem;
       position: absolute;
       z-index: var(--z2);
       right: 0.8rem;
       bottom: 0.8rem;
       left: 0.8rem;
-      padding: 0;
+      align-items: center;
+      margin-top: 0;
       pointer-events: none;
     }
   }
 
-  // Small screens: the full width, scrolling sideways (centred, the start
-  // would be cut off out of reach). From md, as wide as its tiles.
-  // The bar itself; its list scrolls inside it.
+  // The bar (Figma 2457:17680), short, with the stickers standing up out
+  // of it. Small screens: the window's width, scrolling sideways. From md,
+  // only the bar and the stickers' own shapes take the pointer: the clear
+  // room above the bar is still the sheet's, to stamp on.
   .post-office__tray {
-    flex: 1 1 auto;
-    min-width: 0;
-    // Small screens: concentric with the window's corners (3.5rem, 0.8rem
-    // in).
-    border-radius: 2.7rem;
-    background: #fff;
-    box-shadow: 0 0.2rem 0.4rem rgba(0, 0, 0, 0.22);
-    overflow: hidden;
-    pointer-events: auto;
+    // The bar's height, at the zoom: 6.5rem on screen on small screens
+    // (Figma 2469:20548); from md, Figma's 3.6rem, 6px taller.
+    --bar: 4.533rem;
+    // How far the stickers stand up above it (2.6rem on screen).
+    --over: 1.813rem;
+    // Its corners: 2.3rem on screen (Figma 2470:20785), 1.3rem from md.
+    --bar-round: 1.604rem;
 
-    &:hover {
-      --tile-dim: 1;
+    flex: 1 1 auto;
+    position: relative;
+    min-width: 0;
+    pointer-events: auto;
+    // The bar, the stickers and how far they lift, all scaled together:
+    // Figma's phone size (stickers 80px across against 56), and from md
+    // its later desk size (2462:18198, 462 wide against 398).
+    zoom: 1.434;
+
+    // The bar itself, behind the stickers: dark on small screens, with a
+    // faint light edge all round (1px on screen).
+    &::before {
+      content: '';
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      height: var(--bar);
+      border: 0.07rem solid rgba(255, 255, 255, 0.24);
+      border-radius: var(--bar-round);
+      background: #212121;
+      pointer-events: auto;
     }
 
     @include breakpoint(md) {
+      --bar: 4.12rem;
+      --over: 2.8rem;
+      --bar-round: 1.3rem;
+
       flex: 0 1 auto;
-      border-radius: 1.3rem;
-      overflow: visible;
+      max-width: 100%;
+      pointer-events: none;
+      zoom: 1.161;
+
+      &::before {
+        border: none;
+        background: #fdfcf8;
+        box-shadow: 0 0.2rem 0.4rem rgba(0, 0, 0, 0.22);
+      }
     }
   }
 
-  // Faded at an edge while there's more to scroll to that way
-  // (--fade-start / --fade-end), the tiles going to the bar's white.
+  // The stickers, cut off along the bar's bottom edge and its ends, with
+  // room above for them to lift into. Small screens scroll it sideways, a
+  // fade at an edge with more past it (--fade-start / --fade-end).
   .post-office__tray-list {
     display: flex;
-    gap: 0.8rem;
-    padding: 0.4rem;
+    align-items: flex-end;
+    position: relative;
+    padding: 0 2.2rem;
+    height: calc(var(--bar) + var(--over));
     overflow-x: auto;
+    overflow-y: hidden;
     scrollbar-width: none;
     mask-image: linear-gradient(
       to right,
@@ -645,71 +815,67 @@
       #000 calc(100% - var(--fade-end)),
       transparent
     );
+    clip-path: inset(0 0 0 0 round 0 0 var(--bar-round) var(--bar-round));
 
-    // Fits the window from md: the bar stays its height while the tiles
-    // grow up out of it.
     @include breakpoint(md) {
-      align-items: flex-end;
-      gap: 0.4rem;
-      height: 4.8rem;
       overflow: visible;
       mask-image: none;
+      clip-path: inset(-10rem 0 0 0 round 0 0 var(--bar-round) var(--bar-round));
     }
   }
 
-  // Each postmark close up, cropped to its tile.
+  // Each sticker's place in the row (--slot, as spaced in Figma):
+  // narrower than the sticker, so they overlap, each hanging from about
+  // halfway up with its foot below the bar.
   .post-office__type {
     flex-shrink: 0;
     position: relative;
-    width: 4rem;
-    height: 4rem;
-    border-radius: calc(0.9rem * var(--zoom, 1));
-    background: #fff;
-    // From md, dimmed but for the one in hand, and all at full strength
-    // while the dock is hovered (--tile-dim, from .post-office__tray). Small
-    // screens have no hover, so they're all at full strength.
-    opacity: 1;
-    transition: opacity var(--ease);
-    overflow: hidden;
+    width: var(--slot, 4rem);
+    height: 100%;
+    background: none;
     cursor: inherit;
 
-    @include breakpoint(md) {
-      opacity: var(--tile-dim, 0.4);
-    }
-
-    &.is-selected {
-      opacity: 1;
-    }
-
     &:focus-visible {
+      outline: none;
+    }
+
+    &:focus-visible .post-office__sticker {
       outline: 2px solid #285955;
       outline-offset: 0.2rem;
+      border-radius: 0.8rem;
     }
   }
 
-  // The tile's contents at its 40px size, scaled with the tile.
-  .post-office__type-zoom {
-    display: block;
+  // Hung from just above the bar's top edge, as in Figma, whatever the
+  // row's height.
+  .post-office__sticker {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 4rem;
-    height: 4rem;
-    transform: scale(var(--zoom, 1));
-    transform-origin: 0 0;
-  }
-
-  .post-office__type-art {
-    position: absolute;
-    top: 0;
-    left: 0;
+    top: calc(100% - var(--bar) - 0.5rem);
+    left: 50%;
     max-width: none;
-    height: auto;
-    transform-origin: 0 0;
+    translate: -50% 0;
+    pointer-events: none;
+
+    // Its painted shape, not its box, so hovering the clear corners round
+    // it is the sheet's.
+    @include breakpoint(md) {
+      pointer-events: auto;
+    }
   }
 
-  // Figma 2449:12695: the top-left corner. Hidden on small screens for
-  // now: the stamp is the only tool yet.
+  // Small screens: the short, wide ones (hello from, the line cancel) a
+  // size up, growing down from their top, so they stand as tall as the rest.
+  .post-office__type.is-wide .post-office__sticker {
+    transform-origin: 50% 0;
+    scale: 1.25;
+
+    @include breakpoint(md) {
+      scale: none;
+    }
+  }
+
+  // Figma 2449:12695: the top-left corner. Hidden for now: the stamp is
+  // the only tool yet.
   .post-office__toolbar {
     display: none;
     flex-direction: column;
@@ -722,10 +888,161 @@
     border-radius: 1.3rem;
     background: #fff;
     box-shadow: 0 0.2rem 0.4rem rgba(0, 0, 0, 0.22);
+  }
+
+  // Two white pills side by side, size and ink. Small screens (Figma
+  // 2469:20751): over the sheet's foot, 1.6rem up, sharing its width and
+  // all a size up (--m); from md, under the dock.
+  .post-office__menu {
+    --m: 1.3077;
+    // The pills' height: a little taller than the design's 3.4rem on small
+    // screens, to be easier under a thumb.
+    --pill: 4rem;
+
+    display: flex;
+    justify-content: center;
+    gap: calc(0.6rem * var(--m));
+    position: absolute;
+    z-index: var(--z1);
+    right: 1.6rem;
+    bottom: calc(100% + 0.8rem);
+    left: 1.6rem;
+    pointer-events: auto;
 
     @include breakpoint(md) {
-      display: flex;
+      --m: 1;
+      --pill: 2.6rem;
+
+      position: static;
     }
+  }
+
+  .post-office__pill {
+    display: flex;
+    // Halves, padding and all, whatever's in them.
+    flex: 1 1 50%;
+    align-items: center;
+    box-sizing: border-box;
+    min-width: 0;
+    height: var(--pill);
+    border-radius: calc(1rem * var(--m));
+    background: #fff;
+    box-shadow: 0 calc(0.2rem * var(--m)) calc(0.2rem * var(--m) + 0.2rem)
+      rgba(0, 0, 0, 0.22);
+
+    @include breakpoint(md) {
+      flex: none;
+    }
+
+    &.post-office__pill--size {
+      gap: calc(0.5rem * var(--m));
+      padding: 0 calc(0.4rem * var(--m));
+    }
+
+    &.post-office__pill--inks {
+      padding: 0 calc(0.5rem * var(--m));
+    }
+  }
+
+  .post-office__size-icon {
+    display: block;
+    flex-shrink: 0;
+    width: calc(1.6rem * var(--m));
+    height: calc(1.6rem * var(--m));
+    fill: #000;
+    opacity: 0.5;
+  }
+
+  // The track, filled from the left up to the thumb (--size, 0–1). Taller
+  // than it looks, to be easy to grab.
+  // Small screens: as wide as the pill leaves it.
+  .post-office__size-track {
+    flex: 1 1 auto;
+    position: relative;
+    height: calc(1.4rem * var(--m));
+
+    @include breakpoint(md) {
+      flex: none;
+      width: 7.6rem;
+    }
+    touch-action: none;
+    cursor: inherit;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      right: 0;
+      left: 0;
+      height: calc(0.4rem * var(--m));
+      border-radius: 100rem;
+      background: linear-gradient(to right, #ebe8e0, #dedad0);
+      translate: 0 -50%;
+    }
+
+    &:focus-visible {
+      outline: 2px solid #285955;
+      outline-offset: 0.2rem;
+      border-radius: 0.6rem;
+    }
+  }
+
+  .post-office__size-fill {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: calc(var(--size) * 100%);
+    height: calc(0.4rem * var(--m));
+    border-radius: 100rem;
+    background: #404040;
+    translate: 0 -50%;
+  }
+
+  .post-office__size-thumb {
+    position: absolute;
+    top: 50%;
+    left: calc(var(--size) * 100%);
+    width: calc(1.4rem * var(--m));
+    height: calc(1.4rem * var(--m));
+    border: 0.5px solid rgba(0, 0, 0, 0.12);
+    border-radius: 50%;
+    background: radial-gradient(circle at 40% 35%, #fff, #f3f3f3);
+    box-shadow: 0.1rem 0.2rem 0.2rem rgba(0, 0, 0, 0.13);
+    translate: -50% -50%;
+  }
+
+  // The ink: a gradient through the colours (INK_GRADIENT), with a thin white
+  // handle at the place picked (--ink-place, 0–1).
+  .post-office__ink-track {
+    flex: 1 1 auto;
+    position: relative;
+    height: calc(1.6rem * var(--m));
+    border-radius: calc(0.5rem * var(--m));
+
+    @include breakpoint(md) {
+      flex: none;
+      width: 11.6rem;
+    }
+    touch-action: none;
+    cursor: inherit;
+
+    &:focus-visible {
+      outline: 2px solid #285955;
+      outline-offset: 0.2rem;
+    }
+  }
+
+  .post-office__ink-thumb {
+    position: absolute;
+    top: 50%;
+    left: calc(var(--ink-place) * 100%);
+    width: calc(0.5rem * var(--m));
+    height: calc(2rem * var(--m));
+    border: 0.5px solid #7c7c7c;
+    border-radius: calc(0.3rem * var(--m));
+    background: #fff;
+    box-shadow: 0 0 calc(0.4rem * var(--m)) rgba(0, 0, 0, 0.24);
+    translate: -50% -50%;
   }
 
   .post-office__tool {
@@ -756,7 +1073,11 @@
   import { motion, AnimatePresence, useMotionValue, useSpring } from 'motion-v'
   import type { ComponentPublicInstance } from 'vue'
   import {
+    INK_STOPS,
     POSTMARKS,
+    STAMP_SIZE,
+    inkAt,
+    inkOf,
     postmark,
     seeded,
     type Mark,
@@ -825,16 +1146,23 @@
   }
 
   // A sheet slides out one side as the next comes in from the other, on a
-  // soft spring (no bounce) so it glides rather than lurches.
+  // soft spring (no bounce) so it glides rather than lurches. The way the
+  // dots run: up and down from md (they're down the right edge), side to
+  // side on small screens (along the top).
   const SLIDE_S = 1
+  const slidesUp = ref(false)
   const slide = computed(() => {
     const transition = reduceMotion.value
       ? { duration: 0.01 }
       : { type: 'spring', duration: SLIDE_S, bounce: 0 }
+    const axis = slidesUp.value ? 'y' : 'x'
     return {
-      enter: (to: number) => ({ x: to > 0 ? '100%' : '-100%' }),
-      center: { x: 0, transition },
-      exit: (to: number) => ({ x: to > 0 ? '-100%' : '100%', transition }),
+      enter: (to: number) => ({ [axis]: to > 0 ? '100%' : '-100%' }),
+      center: { x: 0, y: 0, transition },
+      exit: (to: number) => ({
+        [axis]: to > 0 ? '-100%' : '100%',
+        transition,
+      }),
     }
   })
   // A beat after the stamp that covers the sheet lands, before turning.
@@ -842,6 +1170,100 @@
   let turnTimer: ReturnType<typeof setTimeout> | undefined
 
   const selectedId = ref<PostmarkType>(POSTMARKS[0]!.id)
+  // The ink, a place along the gradient: random on opening (see opened),
+  // after which picking another postmark leaves it be.
+  const ink = ref(0)
+  const INK_GRADIENT = `linear-gradient(to right, ${INK_STOPS.map(
+    (stop) => `${stop.hex} ${stop.at * 100}%`,
+  ).join(', ')})`
+  const inkTrack = useTemplateRef<HTMLElement>('inkTrack')
+
+  // Both sliders: a place along a track (0–1) from the pointer, dragged or
+  // pressed anywhere on it.
+  function placeOn(track: HTMLElement | null, clientX: number) {
+    const rect = track?.getBoundingClientRect()
+    if (!rect) return 0
+    return Math.min(Math.max((clientX - rect.left) / rect.width, 0), 1)
+  }
+  function drag(event: PointerEvent, set: (clientX: number) => void) {
+    const track = event.currentTarget as HTMLElement
+    track.setPointerCapture(event.pointerId)
+    set(event.clientX)
+    const move = (moved: PointerEvent) => set(moved.clientX)
+    const up = () => {
+      track.removeEventListener('pointermove', move)
+      track.removeEventListener('pointerup', up)
+      track.removeEventListener('pointercancel', up)
+    }
+    track.addEventListener('pointermove', move)
+    track.addEventListener('pointerup', up)
+    track.addEventListener('pointercancel', up)
+  }
+
+  function onInkDown(event: PointerEvent) {
+    drag(event, (clientX) => {
+      ink.value = Math.round(placeOn(inkTrack.value, clientX) * 1000) / 1000
+    })
+  }
+
+  // Arrow keys step along by a twentieth; Home and End go to either end.
+  function onInkKey(event: KeyboardEvent) {
+    const next = {
+      ArrowRight: ink.value + 0.05,
+      ArrowUp: ink.value + 0.05,
+      ArrowLeft: ink.value - 0.05,
+      ArrowDown: ink.value - 0.05,
+      Home: 0,
+      End: 1,
+    }[event.key]
+    if (next === undefined) return
+    event.preventDefault()
+    ink.value = Math.round(Math.min(Math.max(next, 0), 1) * 1000) / 1000
+  }
+
+  // The size each visit starts at, picked between these: near the usual,
+  // never a speck or a giant to open with.
+  const OPEN_SIZE = { min: 0.85, max: 1.15 }
+
+  // The stamp's size (a STAMP_SIZE scale), random on opening, and
+  // where that sits along the slider (0 small, 1 large).
+  const stampSize = ref(1)
+  const sizeShare = computed(
+    () =>
+      (stampSize.value - STAMP_SIZE.min) / (STAMP_SIZE.max - STAMP_SIZE.min),
+  )
+
+  const sizeTrack = useTemplateRef<HTMLElement>('sizeTrack')
+  function sizeAt(clientX: number) {
+    const share = placeOn(sizeTrack.value, clientX)
+    stampSize.value =
+      Math.round(
+        (STAMP_SIZE.min + share * (STAMP_SIZE.max - STAMP_SIZE.min)) * 100,
+      ) / 100
+  }
+
+  function onSizeDown(event: PointerEvent) {
+    drag(event, sizeAt)
+  }
+
+  // Arrow keys step it by a twentieth; Home and End go to either end.
+  function onSizeKey(event: KeyboardEvent) {
+    const step = (STAMP_SIZE.max - STAMP_SIZE.min) / 20
+    const next = {
+      ArrowUp: stampSize.value + step,
+      ArrowRight: stampSize.value + step,
+      ArrowDown: stampSize.value - step,
+      ArrowLeft: stampSize.value - step,
+      Home: STAMP_SIZE.min,
+      End: STAMP_SIZE.max,
+    }[event.key]
+    if (next === undefined) return
+    event.preventDefault()
+    stampSize.value =
+      Math.round(
+        Math.min(Math.max(next, STAMP_SIZE.min), STAMP_SIZE.max) * 100,
+      ) / 100
+  }
   const selected = computed(() => postmark(selectedId.value))
 
   // Stamped since the window opened: these press in; the rest are just
@@ -874,73 +1296,73 @@
     return `${plural(data.total, 'stamp', 'stamps')} across ${plural(data.cities, 'city', 'cities')}`
   })
 
-  // A postmark close up in its tile: scaled and moved as in Figma, from
-  // the art's own origin (the line cancel's box starts before it).
-  function tileStyle(type: (typeof POSTMARKS)[number]) {
-    const { sx, sy, tx, ty } = type.tile
-    return {
-      width: `${type.width}px`,
-      transform: `translate(${tx}px, ${ty}px) scale(${sx}, ${sy}) translate(${type.x ?? 0}px, ${type.y ?? 0}px)`,
-    }
+  // How each sticker stands: tilted (STICKER_TILT, as in Figma), lifted a
+  // little under the pointer, and further when it's the one in hand (px).
+  const STICKER_TILT = -15
+  // Extra room before some (px): more after the triangle than in Figma,
+  // so the burgee doesn't cover it.
+  const STICKER_ROOM: Partial<Record<PostmarkType, number>> = {
+    burgee: 21.5,
+  }
+  // How far along each one's centre is from the last (px), as in Figma.
+  const STICKER_SLOTS: Record<PostmarkType, number> = {
+    stars: 40,
+    dashed: 40,
+    house: 40,
+    classic: 42,
+    banner: 29,
+    triangle: 42,
+    burgee: 31,
+    meter: 33,
+    hello: 33,
+    cancel: 40,
+  }
+  const STICKER_HOVER = -8
+  const STICKER_PICKED = -18
+  // The short, wide ones lift less in hand: there's less of them under
+  // the bar, so the same lift floats them clear of it.
+  const STICKER_PICKED_LOW: Partial<Record<PostmarkType, number>> = {
+    hello: -10,
+    cancel: -10,
+  }
+  const hovered = ref<PostmarkType | null>(null)
+
+  // Small screens zoom the dock further, so the one in hand lifts less to
+  // stand as high as in Figma (2469:20592) and clear the row's top.
+  const PHONE_LIFT = 0.72
+  // And the short, wide ones hang lower there, their feet below the bar as
+  // in Figma (2469:20720), rather than floating in it (px, at the zoom).
+  const PHONE_DROP: Partial<Record<PostmarkType, number>> = {
+    hello: 8,
+    cancel: 8,
   }
 
-  // The Dock's magnification: each tile TILE px, up to TILE_MAX right
-  // under the pointer, falling off over DOCK_REACH px either side. Measured
-  // from the tray's centre in its resting layout (it stays centred as it
-  // grows), with the pointer and the hover each on a spring so it eases in
-  // and out like the real one.
-  const TILE = 40
-  const TILE_MAX = 64
-  const TILE_GAP = 4
-  const DOCK_REACH = 110
-  const trayEl = useTemplateRef<HTMLElement>('trayEl')
-  const dockX = useMotionValue(0)
-  const dockHover = useMotionValue(0)
-  const dockXSmooth = useSpring(dockX, { stiffness: 400, damping: 40 })
-  const dockHoverSmooth = useSpring(dockHover, { stiffness: 300, damping: 30 })
-  // Phones have no hover to magnify with, and a thumb to pick with: bigger
-  // tiles there (TILE_PHONE), the Dock's from md.
-  const TILE_PHONE = 56
-  const tileBase = ref(TILE)
-  const tileSizes = ref(POSTMARKS.map(() => TILE))
+  function stickerPose(id: PostmarkType) {
+    const drop = slidesUp.value ? 0 : (PHONE_DROP[id] ?? 0)
+    if (id === selected.value.id) {
+      const lift = STICKER_PICKED_LOW[id] ?? STICKER_PICKED
+      return {
+        y: drop + (slidesUp.value ? lift : lift * PHONE_LIFT),
+        rotate: STICKER_TILT,
+      }
+    }
+    if (id === hovered.value) {
+      return { y: drop + STICKER_HOVER, rotate: STICKER_TILT }
+    }
+    return { y: drop, rotate: STICKER_TILT }
+  }
+
+  function onSticker(event: PointerEvent, id: PostmarkType) {
+    if (event.pointerType === 'mouse') hovered.value = id
+  }
+
   let mdQuery: MediaQueryList | undefined
   function onBreakpoint() {
-    tileBase.value = mdQuery?.matches ? TILE : TILE_PHONE
-    tileSizes.value = POSTMARKS.map(() => tileBase.value)
+    slidesUp.value = !!mdQuery?.matches
     nextTick(onTrayScroll)
   }
 
-  function sizeTiles() {
-    const x = dockXSmooth.get()
-    const amount = dockHoverSmooth.get()
-    const middle = (POSTMARKS.length - 1) / 2
-    tileSizes.value = POSTMARKS.map((_, index) => {
-      const distance = Math.abs(x - (index - middle) * (TILE + TILE_GAP))
-      const near =
-        distance < DOCK_REACH ? Math.cos((distance / DOCK_REACH) * (Math.PI / 2)) : 0
-      return tileBase.value + (TILE_MAX - tileBase.value) * near * amount
-    })
-  }
-  dockXSmooth.on('change', sizeTiles)
-  dockHoverSmooth.on('change', sizeTiles)
-
-  function onDock(event: PointerEvent) {
-    const tray = trayEl.value
-    if (event.pointerType !== 'mouse' || reduceMotion.value || !tray) return
-    if (!window.matchMedia('(min-width: 700px)').matches) return
-    const rect = tray.getBoundingClientRect()
-    const x = event.clientX - (rect.left + rect.width / 2)
-    // Coming in: straight to the pointer, then follow it.
-    if (dockHover.get() === 0) dockXSmooth.jump(x)
-    dockX.set(x)
-    dockHover.set(1)
-  }
-
-  function offDock() {
-    dockHover.set(0)
-  }
-
-  // Whether the tiles scroll on past either edge, for the fades.
+  // Whether the stickers scroll on past either edge, for the fades.
   const trayList = useTemplateRef<HTMLElement>('trayList')
   const moreBefore = ref(false)
   const moreAfter = ref(false)
@@ -955,7 +1377,13 @@
   })
 
   // The tooltip at the pointer, over anything with a data-tip.
-    const tip = ref<{ text: string; x: number; y: number } | null>(null)
+    const TIP_ROOM = 220
+  const tip = ref<{
+    text: string
+    x: number
+    y: number
+    flip: boolean
+  } | null>(null)
   function onTip(event: PointerEvent) {
     const target = (event.target as HTMLElement).closest<HTMLElement>(
       '[data-tip]',
@@ -970,6 +1398,8 @@
       text,
       x: event.clientX - shell.left,
       y: event.clientY - shell.top,
+      // Near the right edge (the sheet dots), it goes to the pointer's left.
+      flip: shell.right - event.clientX < TIP_ROOM,
     }
   }
 
@@ -981,14 +1411,16 @@
   // Placed as a share of the sheet, sized against its width (cqw), tilted
   // by its seed.
   function markStyle(
-    mark: Pick<Mark, 'type' | 'x' | 'y' | 'seed'>,
+    mark: Pick<Mark, 'type' | 'x' | 'y' | 'seed'> & { size?: number },
     tilted = true,
   ) {
     const type = postmark(mark.type)
+    const width =
+      ((type.width * SHEET_SCALE) / SHEET_WIDTH) * 100 * (mark.size ?? 1)
     return {
       left: `${mark.x * 100}%`,
       top: `${mark.y * 100}%`,
-      width: `calc(${((type.width * SHEET_SCALE) / SHEET_WIDTH) * 100}cqw * var(--mark-scale, 1))`,
+      width: `calc(${width}cqw * var(--mark-scale, 1))`,
       rotate: `${tilted ? tiltOf(mark.seed) : 0}deg`,
     }
   }
@@ -1023,19 +1455,31 @@
   const TOOLS_MARGIN = 16
   const near = ref(false)
 
-  function isNear(event: PointerEvent) {
+  const ZONES: [string, number][] = [
+    ['.post-office__close', CLOSE_MARGIN],
+    ['.post-office__toolbar', TOOLS_MARGIN],
+    ['.post-office__dots', TOOLS_MARGIN],
+    ['.post-office__menu', TOOLS_MARGIN],
+  ]
+
+  // A fingertip's give: taps this close to Close or the controls are
+  // misses for them, not stamps.
+  const TOUCH_MARGIN = 32
+
+  function isNear(event: PointerEvent, touch = false) {
     const shell = sheetEl.value?.parentElement
     if (!shell) return false
-    const zones: [string, number][] = [
-      ['.post-office__close', CLOSE_MARGIN],
-      ['.post-office__tray', TOOLS_MARGIN],
-      ['.post-office__toolbar', TOOLS_MARGIN],
-      ['.post-office__dots', TOOLS_MARGIN],
-    ]
-    return zones.some(([selector, margin]) => {
+    // Right over one of them, or over the dock itself: its bar or a
+    // sticker, not the clear room above them (see .post-office__tray).
+    const target = event.target
+    const over = [...ZONES.map(([selector]) => selector), '.post-office__tray']
+    if (target instanceof Element && target.closest(over.join(','))) return true
+    return ZONES.some(([selector, own]) => {
       const rect = shell.querySelector(selector)?.getBoundingClientRect()
+      const margin = touch ? Math.max(own, TOUCH_MARGIN) : own
       return (
-        !!rect &&
+        // Not one that's hidden, measuring nothing at the corner.
+        !!rect?.width &&
         event.clientX > rect.left - margin &&
         event.clientX < rect.right + margin &&
         event.clientY > rect.top - margin &&
@@ -1087,14 +1531,55 @@
     pressing.value = false
   }
 
+  // A touch stamps only as a tap: one finger, let go quickly where it
+  // went down. A drag, a pinch or a long press is the browser's, not a
+  // stamp.
+  const TAP_SLOP = 10
+  const TAP_MS = 500
+  let tap: { id: number; x: number; y: number; at: number } | null = null
+  let fingers = 0
+
+  function onTouchDown(event: PointerEvent) {
+    fingers += 1
+    const target = event.currentTarget as HTMLElement
+    const lift = (up: PointerEvent) => {
+      if (up.pointerId !== event.pointerId) return
+      window.removeEventListener('pointerup', lift)
+      window.removeEventListener('pointercancel', lift)
+      fingers = Math.max(0, fingers - 1)
+      const down = tap
+      if (up.type !== 'pointerup' || down?.id !== up.pointerId) return
+      tap = null
+      const moved = Math.hypot(up.clientX - down.x, up.clientY - down.y)
+      if (moved > TAP_SLOP || up.timeStamp - down.at > TAP_MS) return
+      if (!target.isConnected || !sheet.value || !onLast.value) return
+      if (isNear(up, true)) return
+      const { x, y } = pointOf(up)
+      placeAim(x, y)
+      press(x, y)
+    }
+    window.addEventListener('pointerup', lift)
+    window.addEventListener('pointercancel', lift)
+    // A second finger makes it a pinch: neither is a tap.
+    tap =
+      fingers === 1
+        ? {
+            id: event.pointerId,
+            x: event.clientX,
+            y: event.clientY,
+            at: event.timeStamp,
+          }
+        : null
+  }
+
   function onStamp(event: PointerEvent) {
+    if (event.pointerType !== 'mouse') return onTouchDown(event)
     if (event.button !== 0 || !sheet.value || !onLast.value) return
-    if (event.pointerType === 'mouse' && isNear(event)) return
+    if (isNear(event)) return
     pressing.value = true
     window.addEventListener('pointerup', letGo, { once: true })
     window.addEventListener('pointercancel', letGo, { once: true })
     const { x, y } = pointOf(event)
-    if (event.pointerType !== 'mouse') placeAim(x, y)
     press(x, y)
   }
 
@@ -1136,11 +1621,13 @@
     now.value = Date.now()
     if (full.value) return rest()
     const before = sheet.value?.marks.length ?? 0
-    stamp(selected.value.id, x, y).then((result) => {
-      if (result !== 'dry') return
-      now.value = Date.now()
-      rest()
-    })
+    stamp(selected.value.id, x, y, stampSize.value, ink.value).then(
+      (result) => {
+        if (result !== 'dry') return
+        now.value = Date.now()
+        rest()
+      },
+    )
     const added = sheet.value?.marks[before]
     if (added) stampedHere.add(added.seed)
     // That about covers it: on to a blank sheet, once it's landed.
@@ -1289,6 +1776,14 @@
       // A different postmark in hand each time it opens.
       selectedId.value =
         POSTMARKS[Math.floor(Math.random() * POSTMARKS.length)]!.id
+      // And a colour anywhere along the gradient, and a size a little either
+      // side of the usual (OPEN_SIZE), so every visit's stamp is its own.
+      ink.value = Math.round(Math.random() * 1000) / 1000
+      stampSize.value =
+        Math.round(
+          (OPEN_SIZE.min + Math.random() * (OPEN_SIZE.max - OPEN_SIZE.min)) *
+            100,
+        ) / 100
       returnFocus = document.activeElement as HTMLElement | null
       now.value = Date.now()
       // Opens on the sheet stamps go on.

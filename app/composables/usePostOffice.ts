@@ -1,4 +1,8 @@
-import { isCovered, type Mark, type PostmarkType } from '~/data/postmarks'
+import {
+  isCovered,
+  type Mark,
+  type PostmarkType,
+} from '~/data/postmarks'
 
 // The Post Office's sheets, from the counter Worker (worker/, GET/POST
 // /marks). The newest sheet loads with the page; older ones when asked
@@ -147,6 +151,8 @@ export function usePostOffice() {
     type: PostmarkType,
     x: number,
     y: number,
+    size = 1,
+    ink?: number,
   ): Promise<'dry' | void> {
     const current = sheet.value
     if (!current || !counterUrl) return
@@ -158,6 +164,8 @@ export function usePostOffice() {
       at: stampedAt,
       page: current.pages - 1,
       type,
+      size,
+      ink,
       x,
       y,
       seed: Math.floor(Math.random() * 2 ** 31),
@@ -192,7 +200,7 @@ export function usePostOffice() {
     try {
       const { turned: _, ...saved } = await $fetch<Mark & { turned?: boolean }>(
         `${counterUrl}/marks`,
-        { method: 'POST', body: { type, x, y, seed: pending.seed } },
+        { method: 'POST', body: { type, size, ink, x, y, seed: pending.seed } },
       )
       Object.assign(pending, saved)
     } catch (error) {

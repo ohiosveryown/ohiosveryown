@@ -2,7 +2,7 @@
 // order. Ids are stored with each mark, so keep them, and the Worker's
 // MARK_TYPES, in step.
 // `width`/`height` are the art's own units (the Figma tray, 2414:3858),
-// `ink` its color.
+// `ink` its color, the same as its sticker in the dock (PostmarkSticker).
 
 export type PostmarkType =
   | 'classic'
@@ -25,32 +25,19 @@ export type Postmark = {
   // Where the art's box starts, when some of it sits above or left of 0.
   x?: number
   y?: number
-  // Its tile in the tray (Figma 2449:13077, 40 × 40 px): zoomed in and
-  // cropped, the art scaled by `sx`/`sy` and moved by `tx`/`ty` (px).
-  tile: { sx: number; sy: number; tx: number; ty: number }
 }
 
 export const POSTMARKS: Postmark[] = [
-  { id: 'stars', name: 'Double ring', width: 48, height: 48, ink: '#a8322d',
-    tile: { sx: 1.2867, sy: 1.2867, tx: 1.153, ty: 1.153 } },
-  { id: 'dashed', name: 'Dashed ring', width: 48, height: 48, ink: '#2c4a9a',
-    tile: { sx: 1.3058, sy: 1.3058, tx: 0.812, ty: 2.257 } },
-  { id: 'house', name: 'House mark', width: 48, height: 48, ink: '#4a3f7a',
-    tile: { sx: 1.2933, sy: 1.2933, tx: 0.995, ty: 0.995 } },
-  { id: 'classic', name: 'Circle with waves', width: 92.2, height: 48, ink: '#1f2a44',
-    tile: { sx: 1.2171, sy: 1.2171, tx: 2.116, ty: 0.768 } },
-  { id: 'banner', name: 'Banner', width: 55.3, height: 53.8, ink: '#1a1a1a',
-    tile: { sx: 1.1456, sy: 1.1456, tx: 2.309, ty: 1.963 } },
-  { id: 'triangle', name: 'Arrival triangle', width: 62.7, height: 51.6, ink: '#2c4a9a',
-    tile: { sx: 0.961, sy: 1.038, tx: 1.873, ty: 1.703 } },
-  { id: 'meter', name: 'Postage meter', width: 92.2, height: 40.6, ink: '#2f5d46',
-    tile: { sx: 1.157, sy: 1.157, tx: -28.0, ty: 1.868 } },
-  { id: 'hello', name: 'Hello from', width: 70.1, height: 38.4, ink: '#b02a2a',
-    tile: { sx: 1.16, sy: 1.16, tx: 2.504, ty: 2.504 } },
-  { id: 'cancel', name: 'Line cancel', width: 94, height: 23, x: -4.6, y: -4.6, ink: '#1a1a1a',
-    tile: { sx: 1.8365, sy: 1.8365, tx: 12.125, ty: 10.78 } },
-  { id: 'burgee', name: 'Ohio burgee', width: 57.7, height: 35.5, ink: '#a8322d',
-    tile: { sx: 1.32, sy: 1.32, tx: 2.666, ty: 2.621 } },
+  { id: 'stars', name: 'Double ring', width: 48, height: 48, ink: '#a8322d' },
+  { id: 'dashed', name: 'Dashed ring', width: 48, height: 48, ink: '#2c4a9a' },
+  { id: 'house', name: 'House mark', width: 48, height: 48, ink: '#4a3f7a' },
+  { id: 'classic', name: 'Circle with waves', width: 92.2, height: 48, ink: '#2f5d46' },
+  { id: 'banner', name: 'Banner', width: 55.3, height: 53.8, ink: '#1f2a44' },
+  { id: 'triangle', name: 'Arrival triangle', width: 62.7, height: 51.6, ink: '#a8322d' },
+  { id: 'burgee', name: 'Ohio burgee', width: 57.7, height: 35.5, ink: '#2c4a9a' },
+  { id: 'meter', name: 'Postage meter', width: 92.2, height: 40.6, ink: '#4a3f7a' },
+  { id: 'hello', name: 'Hello from', width: 70.1, height: 38.4, ink: '#2f5d46' },
+  { id: 'cancel', name: 'Line cancel', width: 94, height: 23, x: -4.6, y: -4.6, ink: '#1f2a44' },
 ]
 
 export function postmark(id: string) {
@@ -67,26 +54,78 @@ export const SHEET_SCALE = 2.1
 // the window can turn the page without waiting.
 export const SHEET_FULL = 0.85
 
-// How much of the sheet a mark of this type covers (overlaps counted
-// twice, so a busy sheet reads as fuller than it is: about right).
-export function coverage(type: PostmarkType) {
+// The ink: anywhere along a gradient (the colour slider, Figma 2465:19426),
+// kept as a place on it (0–1) so its colours can change later for every
+// mark already stamped.
+export const INK_STOPS = [
+  { at: 0, hex: '#9b3b33' },
+  { at: 0.25, hex: '#0e6714' },
+  { at: 0.5, hex: '#214c85' },
+  { at: 0.75, hex: '#38127f' },
+  { at: 1, hex: '#160534' },
+] as const
+
+const channels = (hex: string) =>
+  [1, 3, 5].map((at) => Number.parseInt(hex.slice(at, at + 2), 16))
+const toHex = (values: number[]) =>
+  `#${values.map((value) => Math.round(value).toString(16).padStart(2, '0')).join('')}`
+
+// The colour at a place along the ink gradient.
+export function inkAt(place: number) {
+  const t = Math.min(Math.max(place, 0), 1)
+  const after = INK_STOPS.findIndex((stop) => stop.at >= t)
+  const to = INK_STOPS[Math.max(after, 0)]!
+  const from = INK_STOPS[Math.max(after - 1, 0)]!
+  const share = to.at === from.at ? 0 : (t - from.at) / (to.at - from.at)
+  const a = channels(from.hex)
+  const b = channels(to.hex)
+  return toHex(a.map((value, index) => value + (b[index]! - value) * share))
+}
+
+// The same, darker: the far side of a sticker's gradient.
+export function inkDarker(hex: string, by = 0.6) {
+  return toHex(channels(hex).map((value) => value * by))
+}
+
+// A mark's ink: where it was picked along the gradient, or its postmark's
+// own colour for marks from before.
+export function inkOf(mark: Pick<Mark, 'type' | 'ink'>) {
+  return typeof mark.ink === 'number' ? inkAt(mark.ink) : postmark(mark.type).ink
+}
+
+// How big a stamp can be, as a scale of the usual one (the size slider):
+// never so small it's a speck, nor so big it buries the rest. The Worker
+// only takes sizes in between (STAMP_SIZE_MIN/MAX), to two places.
+export const STAMP_SIZE = { min: 0.7, max: 1.4 }
+
+// How much of the sheet a mark of this type and size covers (overlaps
+// counted twice, so a busy sheet reads as fuller than it is: about right).
+export function coverage(type: PostmarkType, size = 1) {
   const { width, height } = postmark(type)
   return (
-    (width * height * SHEET_SCALE * SHEET_SCALE) / (SHEET_WIDTH * SHEET_HEIGHT)
+    (width * height * SHEET_SCALE * SHEET_SCALE * size * size) /
+    (SHEET_WIDTH * SHEET_HEIGHT)
   )
 }
 
-export function isCovered(marks: Pick<Mark, 'type'>[]) {
-  return marks.reduce((sum, mark) => sum + coverage(mark.type), 0) >= SHEET_FULL
+export function isCovered(marks: Pick<Mark, 'type' | 'size'>[]) {
+  return (
+    marks.reduce((sum, mark) => sum + coverage(mark.type, mark.size), 0) >=
+    SHEET_FULL
+  )
 }
 
 // A mark as the Worker keeps it (worker/src/index.ts): `page` is its
-// sheet, `x`/`y` are 0–1 of it, `id` is its serial number.
+// sheet, `size` its STAMP_SIZE scale, `x`/`y` are 0–1 of it, `id` is its
+// serial number.
 export type Mark = {
   id: number
   at: number
   page: number
   type: PostmarkType
+  size: number
+  // A place along the ink gradient (0–1); marks from before have none.
+  ink?: number
   x: number
   y: number
   seed: number
