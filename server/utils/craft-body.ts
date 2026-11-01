@@ -48,6 +48,10 @@ const ASK_LINK =
   /^\[([^\]]+)\]\((?:https?:\/\/(?:www\.)?ohiosveryown\.co)?\/?\?ask=([^)\s]+)\)$/
 const MAX_QUESTION = 500
 
+// A paragraph that's only "[[type tester]]" is Blush to type with (Craft
+// may escape the brackets).
+const TESTER = /^\\?\[\\?\[\s*type tester\s*\\?\]\\?\]$/i
+
 function askOf(markdown: string) {
   const match = markdown.trim().match(ASK_LINK)
   if (!match) return undefined
@@ -188,6 +192,10 @@ export function toBody(
       continue
     }
     const markdown = (block.markdown ?? '').replace(quote ? QUOTE_MARK : '', '')
+    if (kind === 'p' && !quote && TESTER.test(markdown.trim())) {
+      body.push({ kind: 'tester' })
+      continue
+    }
     const asks = kind === 'p' && !quote ? askOf(markdown) : undefined
     if (asks) {
       body.push({ kind: 'ask', ...asks })
