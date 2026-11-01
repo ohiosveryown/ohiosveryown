@@ -76,24 +76,34 @@
     margin: var(--around-image, 1.6rem) 0;
   }
 
+  // Narrow: the line, then the sliders under it. From md, Figma's box,
+  // the line across its middle and the sliders along its bottom.
   .blush-tester__box {
+    display: flex;
+    flex-direction: column;
     position: relative;
-    aspect-ratio: 817 / 510;
     border-radius: 1.5rem;
     background: rgba(255, 255, 255, 0.08);
     overflow: hidden;
+
+    @include breakpoint(md) {
+      display: block;
+      aspect-ratio: 817 / 510;
+    }
   }
 
-  // The line, across the middle, in from the sides: above the sliders'
-  // two rows when narrow.
   .blush-tester__line {
     display: flex;
     align-items: center;
-    position: absolute;
-    inset: 0 2rem 7.2rem;
+    position: relative;
+    margin: 0 2rem;
+    height: 16rem;
 
     @include breakpoint(md) {
+      position: absolute;
       inset: 0 4rem;
+      margin: 0;
+      height: auto;
     }
   }
 
@@ -152,47 +162,44 @@
     pointer-events: none;
   }
 
-  // Along the bottom: two by two when narrow, then in a row.
+  // Two by two when narrow, then in a row along the bottom.
   .blush-tester__controls {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    gap: 1.2rem 2rem;
-    position: absolute;
-    right: 2rem;
-    bottom: 1.6rem;
-    left: 2rem;
+    gap: 1.6rem 2rem;
+    padding: 0 2rem 2rem;
 
     @include breakpoint(md) {
       flex-wrap: nowrap;
+      position: absolute;
+      right: 2rem;
       bottom: 4.85rem;
+      left: 2rem;
+      padding: 0;
     }
   }
 
+  // Free to shrink past a range input's own width (or each takes a row).
   .blush-tester__control {
     display: flex;
-    flex: 1 1 40%;
+    flex: 1 1 calc(50% - 1rem);
     align-items: center;
     gap: 0.8rem;
+    min-width: 0;
 
     @include breakpoint(md) {
       flex: 0 1 auto;
-      min-width: 0;
     }
   }
 
   .blush-tester__label {
     flex-shrink: 0;
-    width: 4.4rem;
     color: rgba(255, 255, 255, 0.6);
     font-family: var(--system-font);
     font-size: 1.3rem;
     font-weight: 500;
     letter-spacing: -0.013rem;
-
-    @include breakpoint(md) {
-      width: auto;
-    }
   }
 
   // White up to the thumb's middle, dark grey past it (Figma's slider).
@@ -315,9 +322,12 @@
   function fit() {
     const line = measure.value?.parentElement
     if (!box.value || !line || !measure.value) return
-    const wide = measure.value.getBoundingClientRect().width
+    // Layout widths, not the drawn ones: the post's panel opens with a
+    // grow, and measured mid-way the words would come out too small.
+    const wide = measure.value.offsetWidth
     if (!wide) return
-    const fill = (line.clientWidth / wide) * MEASURE_PX
+    // A hair under the line, so rounding never clips the last letter.
+    const fill = ((line.clientWidth - 2) / wide) * MEASURE_PX
     size.value = Math.max(
       MIN_PX,
       Math.min(fill, box.value.clientHeight * MAX_SHARE),
