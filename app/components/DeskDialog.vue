@@ -242,7 +242,11 @@
                   v-else
                   class="desk-dialog__para"
                   :class="{ 'is-bold': isAllBold(node.html) }"
-                  v-html="node.html"
+                  v-html="
+                    opensSection(study.body, index)
+                      ? withLeadIn(node.html)
+                      : node.html
+                  "
                 />
               </template>
               <!-- On every post, below everything else (the footnotes,
@@ -797,6 +801,17 @@
     }
   }
 
+  // A section's opening words (withLeadIn): Blush, in capitals, a touch
+  // smaller and spaced out, in full white against the body's 0.9.
+  .desk-dialog__para :deep(.desk-dialog__lead-in) {
+    color: #fff;
+    font-family: 'blush', var(--system-font);
+    font-weight: 600;
+    font-size: 0.9em;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
   // Body HTML comes from v-html, so scoped classes can't reach its links.
   .desk-dialog__para :deep(a),
   .desk-dialog__h3 :deep(a),
@@ -1087,6 +1102,48 @@
     if (next?.kind === 'note') return true
     const heading = next?.kind === 'h3' || next?.kind === 'h4'
     return heading && body[index + 2]?.kind === 'note'
+  }
+
+  // The first paragraph of the body, and the first after each break (bar
+  // the one before the notes): these open with a lead-in.
+  function opensSection(body: BodyNode[], index: number) {
+    const node = body[index]
+    if (node?.kind !== 'p' || isAllBold(node.html)) return false
+    // Back past any pictures (and their captions) to what came before.
+    let at = index - 1
+    while (['img', 'video', 'caption', 'tester'].includes(body[at]?.kind ?? '')) at--
+    if (body[at]?.kind === 'break') return !opensNotes(body, at)
+    return !body.slice(0, index).some((other) => other.kind === 'p')
+  }
+
+  // The opening words set apart, as magazines do: up to the first comma
+  // or stop within five words, else three, not ending on a little word
+  // or running into brackets.
+  const LITTLE = /^(a|an|the|of|and|or|to|in|on|at|for|by|with)$/i
+  function withLeadIn(html: string) {
+    const lead = /^[^<]+/.exec(html)?.[0]
+    if (!lead) return html
+    const words = lead.split(/(\s+)/).filter((part) => part.trim())
+    // A comma before a number is inside a date ("July 15, 2009"): read on.
+    let count =
+      words.findIndex(
+        (word, n) =>
+          /[,:;.!?—]$/.test(word) &&
+          !(word.endsWith(',') && /^\d/.test(words[n + 1] ?? '')),
+      ) + 1
+    if (count === 0 || count > 5) count = Math.min(3, words.length)
+    while (count < words.length && LITTLE.test(words[count - 1]!)) count++
+    // Never into an aside: stop before a word that opens a bracket.
+    const aside = words.findIndex((word) => /^[([]/.test(word))
+    if (aside > 0 && aside < count) count = aside
+    if (count >= words.length && lead === html) return html
+    let at = 0
+    for (let n = 0; n < count; n++) {
+      at = lead.indexOf(words[n]!, at) + words[n]!.length
+    }
+    // Its stop stays outside, in the body's type.
+    const end = /[,:;.!?—]$/.test(lead.slice(0, at)) ? at - 1 : at
+    return `<span class="desk-dialog__lead-in">${html.slice(0, end)}</span>${html.slice(end)}`
   }
 
   // One <strong> wrapping the whole paragraph.
