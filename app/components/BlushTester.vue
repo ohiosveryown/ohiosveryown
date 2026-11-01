@@ -16,23 +16,17 @@
           v-model="text"
           class="blush-tester__text"
           :class="{ 'is-empty': !text }"
-          :style="{ fontSize: `${size}px`, fontVariationSettings: axes }"
+          :style="{
+            fontSize: `${size}px`,
+            fontVariationSettings: axes,
+            paddingLeft: text ? undefined : `${inset}px`,
+          }"
           type="text"
-          :placeholder="PLACEHOLDER"
+          :placeholder="prompt"
           spellcheck="false"
           autocomplete="off"
           autocapitalize="off"
           aria-label="Type something in Blush"
-          @focus="focused = true"
-          @blur="focused = false"
-        />
-        <!-- A caret, blinking, at the start of the words, until you type
-             (then the field's own). -->
-        <span
-          v-if="!focused"
-          class="blush-tester__caret"
-          :style="{ fontSize: `${size}px`, left: `${start}px` }"
-          aria-hidden="true"
         />
         <!-- The same words, unseen, at a set size: how wide they set, to
              scale the field's size from. -->
@@ -41,7 +35,7 @@
           class="blush-tester__measure"
           :style="{ fontSize: `${MEASURE_PX}px`, fontVariationSettings: axes }"
           aria-hidden="true"
-          >{{ text || PLACEHOLDER }}</span
+          >{{ text || prompt }}</span
         >
       </div>
 
@@ -109,6 +103,7 @@
 
   .blush-tester__text {
     display: block;
+    box-sizing: border-box;
     width: 100%;
     padding: 0;
     border: none;
@@ -121,33 +116,18 @@
     outline: none;
     caret-color: #fff;
 
-    // Nothing typed: from the left, where the caret waits.
+    // Nothing typed: from the left, padded in to where the centred prompt
+    // starts (inset), so the caret waits at its first letter, not mid-way.
     &.is-empty {
       text-align: left;
     }
 
+    // The prompt reads as the sample, in full white, until you type.
+    // (Chrome doesn't pass the axes down to it on its own.)
     &::placeholder {
-      color: rgba(255, 255, 255, 0.3);
-    }
-  }
-
-  // Taller than the capitals, centred on them (Figma's caret), just left
-  // of the first letter.
-  .blush-tester__caret {
-    position: absolute;
-    top: 50%;
-    width: 0.2rem;
-    height: 1.17em;
-    margin-left: -0.04em;
-    background: #fff;
-    transform: translate(-50%, -50%);
-    animation: blush-tester-blink 1.06s steps(1) infinite;
-    pointer-events: none;
-  }
-
-  @keyframes blush-tester-blink {
-    50% {
-      opacity: 0;
+      color: #fff;
+      opacity: 1;
+      font-variation-settings: inherit;
     }
   }
 
@@ -284,8 +264,9 @@
 </style>
 
 <script setup lang="ts">
-  const SAMPLE = 'Blush is nice...'
-  const PLACEHOLDER = 'Type something'
+  // What it says before anything's typed, by how you'd go about it: a
+  // pointer clicks, a finger taps.
+  const prompt = ref('Click to type...')
 
   // Blush's axes (from the font's fvar table), in Figma's order.
   const AXES = [
@@ -298,7 +279,7 @@
   ] as const
   type Axis = (typeof AXES)[number]['key']
 
-  const text = ref(SAMPLE)
+  const text = ref('')
   const values = Object.fromEntries(
     AXES.map((axis) => [axis.key, ref<number>(axis.start)]),
   ) as Record<Axis, Ref<number>>
@@ -315,9 +296,8 @@
   const box = useTemplateRef<HTMLElement>('box')
   const measure = useTemplateRef<HTMLElement>('measure')
   const size = ref(MEASURE_PX)
-  // Where the words start in the line (px), for the caret.
-  const start = ref(0)
-  const focused = ref(false)
+  // How far in the prompt starts, centred (px).
+  const inset = ref(0)
 
   function fit() {
     const line = measure.value?.parentElement
@@ -332,17 +312,15 @@
       MIN_PX,
       Math.min(fill, box.value.clientHeight * MAX_SHARE),
     )
-    // Centred, so in by half of what's left; at the left with nothing
-    // typed, before the placeholder (sized to fit the same way).
-    const set = (wide * size.value) / MEASURE_PX
-    start.value = text.value ? Math.max(0, (line.clientWidth - set) / 2) : 0
+    inset.value = Math.max(0, (line.clientWidth - (wide * size.value) / MEASURE_PX) / 2)
   }
 
-  // Once the words or the axes have changed and been drawn.
-  watch([text, axes], () => nextTick(fit))
+  // Once the words, the prompt or the axes have changed and been drawn.
+  watch([text, prompt, axes], () => nextTick(fit))
 
   let resized: ResizeObserver | undefined
   onMounted(() => {
+    if (matchMedia('(pointer: coarse)').matches) prompt.value = 'Tap to type...'
     fit()
     // Again once Blush has loaded, as the fallback sets wider or narrower.
     document.fonts?.ready.then(fit)
