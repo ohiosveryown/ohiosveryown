@@ -812,9 +812,17 @@
   // of it. Small screens: the window's width, scrolling sideways. From md,
   // only the bar and the stickers' own shapes take the pointer: the clear
   // room above the bar is still the sheet's, to stamp on.
+  // No CSS zoom here: Safari leaves lengths that come through custom
+  // properties unzoomed and Chrome doesn't, so the two drew different docks.
+  // Instead --z scales the stickers and the few set lengths, by hand, to
+  // what was tuned in Safari: the bar, its corners, the room above it,
+  // where the stickers hang from and their spacing as they are; the
+  // stickers, their lift and the row's ends at --z.
   .post-office__tray {
-    // The bar's height, at the zoom: 6.5rem on screen on small screens
-    // (Figma 2469:20548); from md, about 6rem (see below).
+    // The stickers' scale: Figma's phone size (80px across against 56),
+    // and from md its later desk size, a size up again from lg.
+    --z: 1.434;
+    // The bar's height.
     --bar: 4.533rem;
     // How far the stickers stand up above it: 2.6rem on screen as in
     // Figma, and 1.4rem more for the one in hand, so it isn't cut off.
@@ -829,13 +837,9 @@
     position: relative;
     min-width: 0;
     pointer-events: auto;
-    // The bar, the stickers and how far they lift, all scaled together:
-    // Figma's phone size (stickers 80px across against 56), and from md
-    // its later desk size (2462:18198, 462 wide against 398).
-    zoom: 1.434;
 
     // The bar itself, behind the stickers: dark on small screens, with a
-    // faint light edge all round (1px on screen).
+    // faint light edge all round.
     &::before {
       content: '';
       position: absolute;
@@ -843,15 +847,15 @@
       bottom: 0;
       left: 0;
       height: var(--bar);
-      border: 0.07rem solid rgba(255, 255, 255, 0.24);
+      border: 1px solid rgba(255, 255, 255, 0.24);
       border-radius: var(--bar-round);
       background: #212121;
       pointer-events: auto;
     }
 
     @include breakpoint(md) {
-      // 5.4rem on screen at this zoom (1.161), 6.8rem at lg's.
-      --bar: 4.686rem;
+      --z: 1.161;
+      --bar: 5.086rem;
       --over: 4.1rem;
       --spread: 1.15;
       --bar-round: 1.3rem;
@@ -859,22 +863,20 @@
       flex: 0 1 auto;
       max-width: 100%;
       pointer-events: none;
-      zoom: 1.161;
 
       &::before {
         border: none;
         background: #fdfcf8;
-        box-shadow: 0 0.2rem 0.4rem rgba(0, 0, 0, 0.22);
+        box-shadow: 0 calc(0.2rem * var(--z)) calc(0.4rem * var(--z))
+          rgba(0, 0, 0, 0.22);
       }
     }
 
-    // 25% up in the bigger window from lg (a post's panel's size); the
-    // md one is too narrow for it.
-    // Wider apart again where there's room for it.
+    // A size up in the bigger window from lg (a post's panel's size), and
+    // wider apart again where there's room for it.
     @include breakpoint(lg) {
+      --z: 1.451;
       --spread: 1.25;
-
-      zoom: 1.451;
     }
   }
 
@@ -887,7 +889,7 @@
     position: relative;
     // More at the end: the square stickers there reach their corners out
     // past their slots, where the rings at the start don't.
-    padding: 0 3rem 0 2.2rem;
+    padding: 0 calc(3rem * var(--z)) 0 calc(2.2rem * var(--z));
     height: calc(var(--bar) + var(--over));
     overflow-x: auto;
     overflow-y: hidden;
@@ -933,12 +935,15 @@
 
   // Hung from just above the bar's top edge, as in Figma, whatever the
   // row's height.
+  // Drawn at --z from its top centre, where it hangs.
   .post-office__sticker {
     position: absolute;
     top: calc(100% - var(--bar) - 0.5rem);
     left: 50%;
     max-width: none;
     translate: -50% 0;
+    scale: var(--z);
+    transform-origin: 50% 0;
     pointer-events: none;
 
     // Its painted shape, not its box, so hovering the clear corners round
@@ -1472,14 +1477,17 @@
   // stand as high as in Figma (2469:20592) and clear the row's top.
   const PHONE_LIFT = 0.72
 
+  // The lifts are at the stickers' own size, so scaled with them (--z).
+  const stickerZ = ref(1)
+
   function stickerPose(id: PostmarkType) {
     if (id === selected.value.id) {
-      return {
-        y: slidesUp.value ? STICKER_PICKED : STICKER_PICKED * PHONE_LIFT,
-        rotate: STICKER_TILT,
-      }
+      const lift = slidesUp.value ? STICKER_PICKED : STICKER_PICKED * PHONE_LIFT
+      return { y: lift * stickerZ.value, rotate: STICKER_TILT }
     }
-    if (id === hovered.value) return { y: STICKER_HOVER, rotate: STICKER_TILT }
+    if (id === hovered.value) {
+      return { y: STICKER_HOVER * stickerZ.value, rotate: STICKER_TILT }
+    }
     return { y: 0, rotate: STICKER_TILT }
   }
 
@@ -1488,9 +1496,18 @@
   }
 
   let mdQuery: MediaQueryList | undefined
+  let lgQuery: MediaQueryList | undefined
   function onBreakpoint() {
     slidesUp.value = !!mdQuery?.matches
-    nextTick(onTrayScroll)
+    nextTick(() => {
+      onTrayScroll()
+      // The dock's --z at this width, from its styles.
+      const list = trayList.value
+      if (list) {
+        stickerZ.value =
+          parseFloat(getComputedStyle(list).getPropertyValue('--z')) || 1
+      }
+    })
   }
 
   // Whether the stickers scroll on past either edge, for the fades.
@@ -1504,7 +1521,7 @@
     moreAfter.value = list.scrollLeft + list.clientWidth < list.scrollWidth - 1
   }
   watch(trayList, (list) => {
-    if (list) nextTick(onTrayScroll)
+    if (list) onBreakpoint()
   })
 
   // The tooltip at the pointer, over anything with a data-tip.
@@ -1949,6 +1966,8 @@
     window.addEventListener('keydown', onKeydown)
     mdQuery = window.matchMedia('(min-width: 700px)')
     mdQuery.addEventListener('change', onBreakpoint)
+    lgQuery = window.matchMedia('(min-width: 1200px)')
+    lgQuery.addEventListener('change', onBreakpoint)
     onBreakpoint()
     // A direct link to /greetings renders it open on the server: no icon
     // to grow from, so it fades in where it is.
@@ -1964,5 +1983,6 @@
   onBeforeUnmount(() => {
     window.removeEventListener('keydown', onKeydown)
     mdQuery?.removeEventListener('change', onBreakpoint)
+    lgQuery?.removeEventListener('change', onBreakpoint)
   })
 </script>
