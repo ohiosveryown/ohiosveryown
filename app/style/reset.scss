@@ -34,10 +34,9 @@
   --safe-bottom: env(safe-area-inset-bottom, 0px);
   --safe-left: constant(safe-area-inset-left);
   --safe-left: env(safe-area-inset-left, 0px);
-  // cursor
-  --cursor: image-set(
-      url('https://res.cloudinary.com/dskbwusdb/image/upload/v1778870320/cursor_3x_jfgcop.webp') 3x
-    ) 0 0, auto;
+  // cursor (public/cursor@3x.webp): from the site itself, so the first
+  // paint doesn't wait on a connection to another domain.
+  --cursor: image-set(url('/cursor@3x.webp') 3x) 0 0, auto;
 }
 
 *,
