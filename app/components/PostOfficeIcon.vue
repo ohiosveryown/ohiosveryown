@@ -40,6 +40,7 @@
             :ink="mark.ink"
             :mark="{ ...SAMPLE, seed: mark.seed }"
             :serial="1"
+            plain
           />
         </span>
       </span>

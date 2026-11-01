@@ -81,6 +81,7 @@
         :words-down="sticker.wordsDown"
         ink="#fff"
         even
+        plain
       />
     </g>
   </svg>

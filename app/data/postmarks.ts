@@ -95,6 +95,36 @@ export function inkOf(mark: Pick<Mark, 'type' | 'ink'>) {
   return typeof mark.ink === 'number' ? inkAt(mark.ink) : postmark(mark.type).ink
 }
 
+// Milestone serials come out in gold: the first, every hundredth, the
+// same digit over and over (111, 2222), and a count up (1234). Worked out
+// from the serial, so it's never stored.
+export function isMilestone(serial: number) {
+  const digits = String(serial)
+  return (
+    serial === 1 ||
+    serial % 100 === 0 ||
+    (digits.length >= 3 && /^(\d)\1+$/.test(digits)) ||
+    (digits.length >= 4 && '123456789'.startsWith(digits))
+  )
+}
+
+// Some days, a mark comes with a little picture by it, like a post
+// office's pictorial cancel. By the day it was stamped, wherever it's seen
+// from (as its date reads, postmarkText).
+export type Occasion = 'sparkle' | 'heart' | 'star' | 'cake' | 'pumpkin' | 'snowflake'
+const OCCASIONS: Record<string, Occasion> = {
+  '1-1': 'sparkle', // New Year's Day
+  '2-14': 'heart', // Valentine's Day
+  '7-4': 'star', // Independence Day
+  '10-29': 'cake', // greetings.app opened, 2026
+  '10-31': 'pumpkin', // Halloween
+  '12-25': 'snowflake', // Christmas
+}
+export function occasionOf(at: number): Occasion | undefined {
+  const date = new Date(at)
+  return OCCASIONS[`${date.getMonth() + 1}-${date.getDate()}`]
+}
+
 // How big a stamp can be, as a scale of the usual one (the size slider):
 // never so small it's a speck, nor so big it buries the rest. The Worker
 // only takes sizes in between (STAMP_SIZE_MIN/MAX), to two places.
