@@ -98,7 +98,7 @@ export function inkOf(mark: Pick<Mark, 'type' | 'ink'>) {
 // How big a stamp can be, as a scale of the usual one (the size slider):
 // never so small it's a speck, nor so big it buries the rest. The Worker
 // only takes sizes in between (STAMP_SIZE_MIN/MAX), to two places.
-export const STAMP_SIZE = { min: 0.7, max: 1.4 }
+export const STAMP_SIZE = { min: 0.7, max: 1.15 }
 
 // How much of the sheet a mark of this type and size covers (overlaps
 // counted twice, so a busy sheet reads as fuller than it is: about right).
