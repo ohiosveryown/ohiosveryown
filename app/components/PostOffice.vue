@@ -1783,6 +1783,8 @@
     )
     const added = sheet.value?.marks[before]
     if (added) stampedHere.add(added.seed)
+    // A fresh postmark, ink and size in hand for the next one.
+    shuffle()
     // That about covers it: on to a blank sheet, once it's landed.
     if (turnIfCovered()) {
       aim.value = null
@@ -1926,7 +1928,8 @@
   // A different postmark in hand (never the same one twice running), a
   // colour anywhere along the gradient, and a size in `range`: on opening
   // a little either side of the usual (OPEN_SIZE), so every visit's stamp
-  // is its own; from the shuffle button, anywhere on the slider.
+  // is its own; from the shuffle button or after each stamp, anywhere on
+  // the slider.
   function shuffle(range: { min: number; max: number } = STAMP_SIZE) {
     const others = POSTMARKS.filter((type) => type.id !== selectedId.value)
     selectedId.value = others[Math.floor(Math.random() * others.length)]!.id
