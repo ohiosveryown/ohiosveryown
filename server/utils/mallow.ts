@@ -23,13 +23,11 @@ function describe(study: CaseStudy) {
   if (study.intro) lines.push(study.intro)
   if (study.summary) lines.push(`Summary: ${study.summary}`)
   for (const node of study.body) {
-    if (
-      node.kind === 'img' ||
-      node.kind === 'video' ||
-      node.kind === 'break' ||
-      node.kind === 'ask'
-    )
-      continue
+    // Only the blocks with words (not images, videos, breaks, the ask
+    // button or the type tester). Checked by what it has rather than a
+    // list of kinds: one without html once threw here and left Mallow
+    // knowing no posts at all.
+    if (!('html' in node)) continue
     const text = plainText(node.html)
     if (!text) continue
     lines.push(
