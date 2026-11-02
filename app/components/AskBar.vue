@@ -175,7 +175,10 @@
     <div class="ask-bar__row">
       <span
         v-show="!open"
-        class="ask-bar__avatar"
+        class="ask-bar__avatar has-tooltip"
+        :data-tooltip="pokeLine"
+        @pointerenter="nextPokeLine"
+        @click="showForms"
       >
         <span class="ask-bar__guy">
           <LittleGuy
@@ -269,6 +272,45 @@
         </motion.span>
       </AnimatePresence>
     </Teleport>
+    <!-- Clicked, Mallow shows its other forms once through, down and to
+         the left of the click (the pill sits up in the corner), then
+         fades. On <body>, so the bar's scale and clipping don't touch it. -->
+    <Teleport to="body">
+      <AnimatePresence>
+        <motion.div
+          v-if="formsKey"
+          :key="formsKey"
+          class="ask-bar__flash"
+          :style="{ x: formsX, y: formsY }"
+          aria-hidden="true"
+          :initial="{ opacity: 0, scale: 0.9, filter: 'blur(10px)' }"
+          :animate="{ opacity: 1, scale: 1, filter: 'blur(0px)' }"
+          :exit="{ opacity: 0, filter: 'blur(10px)' }"
+          :transition="{ duration: 0.35, ease }"
+        >
+          <span class="ask-bar__flash-shadow">
+            <video
+              class="ask-bar__flash-video"
+              poster="/mallow/forms.webp"
+              muted
+              autoplay
+              playsinline
+              preload="auto"
+              @ended="hideForms"
+            >
+              <source
+                src="/mallow/forms.webm"
+                type="video/webm"
+              />
+              <source
+                src="/mallow/forms.mp4"
+                type="video/mp4"
+              />
+            </video>
+          </span>
+        </motion.div>
+      </AnimatePresence>
+    </Teleport>
   </motion.form>
 </template>
 
@@ -334,6 +376,37 @@
     // `translate`, not transform: motion animates the transform.
     translate: -50% 0;
     pointer-events: none;
+  }
+
+  // Placed by showForms. A whole number of pixels each way, and nothing
+  // behind the video: at a fraction, a sliver of a fill or hairline
+  // showed along the bottom.
+  .ask-bar__flash {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: var(--zmax);
+    pointer-events: none;
+  }
+
+  // The shadow on its own layer: motion animates the flash's filter, and
+  // the video's mask would clip a box-shadow.
+  .ask-bar__flash-shadow {
+    display: block;
+    filter: drop-shadow(0 0.4rem 1.6rem rgba(0, 0, 0, 0.32));
+  }
+
+  // The tooltip images' squircle (TooltipLabel), its corners kept round
+  // on this taller box.
+  .ask-bar__flash-video {
+    --squircle: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 128'><path d='M43.58,0 L52.42,0 C70.8,0 77.62,0 83.06,2.31 C88.51,5.04 90.96,7.49 93.69,12.94 C96,18.38 96,25.2 96,43.58 L96,84.42 C96,102.8 96,109.62 93.69,115.06 C90.96,120.51 88.51,122.96 83.06,125.69 C77.62,128 70.8,128 52.42,128 L43.58,128 C25.2,128 18.38,128 12.94,125.69 C7.49,122.96 5.04,120.51 2.31,115.06 C0,109.62 0,102.8 0,84.42 L0,43.58 C0,25.2 0,18.38 2.31,12.94 C5.04,7.49 7.49,5.04 12.94,2.31 C18.38,0 25.2,0 43.58,0 Z'/></svg>");
+
+    display: block;
+    width: 9.6rem;
+    height: 12.8rem;
+    object-fit: cover;
+    -webkit-mask: var(--squircle) center / 100% 100% no-repeat;
+    mask: var(--squircle) center / 100% 100% no-repeat;
   }
 
   .ask-bar__asked {
@@ -762,7 +835,13 @@
 
 <script setup lang="ts">
   import type { AskDropItem } from '~/composables/useAskDrop'
-  import { AnimatePresence, animate, motion, useMotionValue } from 'motion-v'
+  import {
+    AnimatePresence,
+    animate,
+    motion,
+    useMotionValue,
+    useSpring,
+  } from 'motion-v'
   import arrow from '~/assets/icons/send-arrow.svg'
 
   const ease = [0.8, 0, 0.16, 1] as const
@@ -1085,6 +1164,8 @@
       if (!dragging) {
         if (Math.hypot(dx, dy) < DRAG_THRESHOLD) return
         dragging = dragged = true
+        // No tooltip from Mallow while the bar is carried about.
+        suppressTooltip(true)
         x.stop()
         y.stop()
         measureBounds()
@@ -1101,6 +1182,7 @@
       root.classList.remove('is-dragging-ask-bar')
       if (!dragging) return
       dragging = false
+      if (!formsKey.value) suppressTooltip(false)
       animate(scale, 1, LIFT)
       throwInside()
     }
@@ -1668,6 +1750,115 @@
     targetRect: dropTargetRect,
   } = useAskDrop()
   const pillGuy = useTemplateRef<{ hop: () => void }>('pillGuy')
+  // Mallow's reel, shown once through when the pill's Mallow is clicked:
+  // its top left corner just down and right of the click (down and left
+  // where there's no room, as with the pill near a wide screen's right
+  // edge), kept on screen. It follows the pointer while it plays, on the
+  // side it started on, and the desk's tooltips stay quiet till it's gone.
+  // Another click anywhere (Mallow too) fades it early. Not with reduced
+  // motion (it's all motion).
+  // Mallow's tooltip, a different one each time the pointer comes onto it
+  // (never the same twice running). Set on the element straight away too:
+  // the tooltip reads it on the mouseover that follows, before Vue would.
+  const POKE_LINES = [
+    'Ask me anything. Or poke me.',
+    'Ask away. Or give me a poke.',
+    'Questions welcome. Pokes too.',
+    'Ask me something. Or poke and see.',
+    'Type a question. Or just poke me.',
+    'I take questions. And pokes.',
+    'Ask me about Matt. Or poke me.',
+    'Go on, ask. Or poke.',
+  ]
+  const pokeLine = ref(POKE_LINES[0])
+  function nextPokeLine(event: PointerEvent) {
+    const others = POKE_LINES.filter((line) => line !== pokeLine.value)
+    pokeLine.value = others[Math.floor(Math.random() * others.length)]!
+    const avatar = event.currentTarget as HTMLElement
+    avatar.dataset.tooltip = pokeLine.value
+  }
+
+  const FLASH_W = 96
+  const FLASH_H = (FLASH_W * 4) / 3
+  const FLASH_GAP = 8
+  // From the pointer, as the tooltips sit (TooltipLabel's OFFSET_X/Y).
+  const FLASH_OFFSET = 14
+  // Sprung as the tooltips are (TooltipLabel's SPRING), so it trails the
+  // pointer the same way.
+  const FORMS_SPRING = { stiffness: 220, damping: 22, mass: 0.6 }
+  const formsKey = ref<number | null>(null)
+  const formsTargetX = useMotionValue(0)
+  const formsTargetY = useMotionValue(0)
+  const formsX = useSpring(formsTargetX, FORMS_SPRING)
+  const formsY = useSpring(formsTargetY, FORMS_SPRING)
+  let formsLeftward = false
+  let pointerX = 0
+  let pointerY = 0
+  function placeForms(x: number, y: number, jump = false) {
+    const left = Math.max(
+      FLASH_GAP,
+      Math.min(
+        formsLeftward ? x - FLASH_OFFSET - FLASH_W : x + FLASH_OFFSET,
+        window.innerWidth - FLASH_W - FLASH_GAP,
+      ),
+    )
+    const top = Math.max(
+      FLASH_GAP,
+      Math.min(y + FLASH_OFFSET, window.innerHeight - FLASH_H - FLASH_GAP),
+    )
+    formsTargetX.set(left)
+    formsTargetY.set(top)
+    if (jump) {
+      formsX.jump(left)
+      formsY.jump(top)
+    }
+  }
+  function followForms(event: PointerEvent) {
+    pointerX = event.clientX
+    pointerY = event.clientY
+    placeForms(pointerX, pointerY)
+  }
+  function showForms(event: MouseEvent) {
+    if (reduceMotion.value) return
+    if (formsKey.value) return hideForms()
+    pointerX = event.clientX
+    pointerY = event.clientY
+    formsLeftward =
+      event.clientX + FLASH_OFFSET + FLASH_W > window.innerWidth - FLASH_GAP
+    suppressTooltip(true)
+    // Placed where it starts, not sprung over from where it last was.
+    placeForms(event.clientX, event.clientY, true)
+    formsKey.value = Date.now()
+    window.addEventListener('pointermove', followForms, { passive: true })
+    // After this click has finished passing through.
+    setTimeout(() => window.addEventListener('click', clickAway, true))
+  }
+  // Clicks elsewhere still do what they do; Mallow's own goes to showForms.
+  function clickAway(event: MouseEvent) {
+    const avatar = (event.target as HTMLElement | null)?.closest(
+      '.ask-bar__avatar',
+    )
+    if (!formsKey.value) window.removeEventListener('click', clickAway, true)
+    else if (!avatar) hideForms()
+  }
+  function hideForms() {
+    formsKey.value = null
+    window.removeEventListener('pointermove', followForms)
+    window.removeEventListener('click', clickAway, true)
+    suppressTooltip(false)
+    // Whatever the pointer stopped over says its tooltip now (no new
+    // mouseover will come to tell it).
+    const over = document
+      .elementFromPoint(pointerX, pointerY)
+      ?.closest<HTMLElement>('.has-tooltip')
+    if (over) showTooltip(over)
+  }
+  onBeforeUnmount(() => {
+    window.removeEventListener('pointermove', followForms)
+    window.removeEventListener('click', clickAway, true)
+    if (formsKey.value) suppressTooltip(false)
+  })
+
   // Centred under the bar, where the bar is when the item arrives.
   const dropHintAt = ref({ top: '0px', left: '0px' })
   watch(dropOver, (isOver) => {
