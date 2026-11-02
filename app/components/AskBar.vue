@@ -114,6 +114,37 @@
                     </template>
                   </span>
                 </template>
+                <!-- Asked about itself: Mallow's other forms, looping
+                     (the 404 page's reel). A click pauses or plays it. -->
+                <motion.button
+                  v-if="message.forms"
+                  type="button"
+                  class="ask-bar__forms"
+                  aria-label="Mallow in its other forms: play or pause"
+                  :initial="{ opacity: 0, filter: 'blur(10px)' }"
+                  :animate="{ opacity: 1, filter: 'blur(0px)' }"
+                  :transition="{ duration: 0.4, ease: 'easeOut' }"
+                  @click="toggleForms"
+                >
+                  <video
+                    class="ask-bar__forms-video"
+                    poster="/mallow/forms.webp"
+                    muted
+                    loop
+                    playsinline
+                    :autoplay="!reduceMotion"
+                    aria-hidden="true"
+                  >
+                    <source
+                      src="/mallow/forms.webm"
+                      type="video/webm"
+                    />
+                    <source
+                      src="/mallow/forms.mp4"
+                      type="video/mp4"
+                    />
+                  </video>
+                </motion.button>
               </p>
             </template>
           </li>
@@ -471,6 +502,33 @@
     color: #fff;
     line-height: 1.38;
     white-space: pre-wrap;
+  }
+
+  // Under the reply's words, like a picture sent in a chat.
+  .ask-bar__forms {
+    display: block;
+    margin: 1rem 0 0;
+    padding: 0;
+    width: 12rem;
+    aspect-ratio: 3 / 4;
+    border: none;
+    border-radius: 1.2rem;
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: inset 0 0 0 0.5px rgba(255, 255, 255, 0.18);
+    overflow: hidden;
+    cursor: var(--cursor);
+
+    &:focus-visible {
+      outline: 1px solid rgba(255, 255, 255, 0.6);
+      outline-offset: 0.2rem;
+    }
+  }
+
+  .ask-bar__forms-video {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 
   // A reply's paragraphs: as it types, a break between them; once it's
@@ -1103,6 +1161,9 @@
     // asked (the bubble has a line like "Tell me about …", see dropLine).
     chip?: { label: string; image?: string | null }
     prompt?: string
+    // Asked about itself, Mallow ends the reply with {{forms}}: its reel
+    // of other forms, shown under the reply once it's typed.
+    forms?: boolean
   }
 
   // A different one each time (never the same twice in a row).
@@ -1405,6 +1466,14 @@
   // study as [words](slug) (see about.md), which opens its panel. Only slugs
   // of real case studies become links; anything else stays as its words.
   const PARA = '\u2029'
+  // Where Mallow's reel of forms goes (see about.md and Message's `forms`).
+  const FORMS_MARKER = '{{forms}}'
+  function toggleForms(event: MouseEvent) {
+    const video = (event.currentTarget as HTMLElement).querySelector('video')
+    if (!video) return
+    if (video.paused) video.play().catch(() => {})
+    else video.pause()
+  }
   type ReplyLink = { text: string; slug: string }
   type ReplyPart = string | ReplyLink
   type ReplyBit = { text: string; slug?: string }
@@ -1512,6 +1581,23 @@
     scrollToEnd()
 
     const typer = typeInto(reply)
+    // The {{forms}} marker is taken out as it streams past (text that could
+    // be the start of it is held back until the next piece shows whether
+    // it is), and the reel shown once the reply is done.
+    let held = ''
+    let showsForms = false
+    function pass(chunk: string, end = false) {
+      held += chunk
+      if (held.includes(FORMS_MARKER)) {
+        held = held.replace(FORMS_MARKER, '')
+        showsForms = true
+      }
+      let keep = end ? 0 : Math.min(held.length, FORMS_MARKER.length - 1)
+      while (keep && !FORMS_MARKER.startsWith(held.slice(-keep))) keep--
+      const ready = held.slice(0, held.length - keep)
+      held = held.slice(held.length - keep)
+      if (ready) typer.push(ready)
+    }
     controller = new AbortController()
     try {
       const res = await fetch('/api/ask', {
@@ -1539,9 +1625,10 @@
         if (done) break
         const chunk = decoder.decode(value, { stream: true })
         received += chunk
-        typer.push(chunk)
+        pass(chunk)
       }
-      if (!received.trim()) typer.push(SORRY)
+      pass('', true)
+      if (!received.replace(FORMS_MARKER, '').trim()) typer.push(SORRY)
       // He keeps talking until the last character is on screen.
       await typer.done()
     } catch (error) {
@@ -1554,6 +1641,7 @@
     } finally {
       // Likewise a trailing line break, as space below it.
       reply.content = reply.content.trimEnd()
+      if (showsForms && reply.content) reply.forms = true
       followUp.value = followUpFor(reply.content)
       streaming.value = false
       controller = undefined

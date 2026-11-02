@@ -97,6 +97,7 @@ function textStream(upstream: ReadableStream<Uint8Array>) {
 const TEST_REPLIES: Record<string, string> = {
   '': 'Testing, testing! This is a pretend answer, so nothing was sent to OpenAI or saved. 🧪',
   index: `Everything Matt's put on the desk, newest first:\n${INDEX_MARKER}`,
+  forms: "I'm Mallow! Here I am in a few of my other outfits.\n{{forms}}",
   long: "This is a longer pretend answer for checking how replies wrap and scroll. Matt is a software designer and builder in Atlanta, working across brand, product, and code. He's a Principal Product Designer at Square, and before that he designed at Slack, GitHub and Mailchimp. Outside of work he runs Proportional Design, a small furniture studio. None of this came from OpenAI.",
 }
 
