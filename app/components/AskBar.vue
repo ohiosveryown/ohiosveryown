@@ -158,6 +158,46 @@
             :initial="{ x: perch.x, y: perch.y, opacity: 0 }"
             :animate="hop"
           >
+            <!-- While he's thinking (no words yet), question marks drift
+                 up over his head. -->
+            <AnimatePresence>
+              <motion.span
+                v-if="thinking"
+                class="ask-bar__puzzled"
+                :initial="{ opacity: 0, filter: 'blur(10px)' }"
+                :animate="{ opacity: 1, filter: 'blur(0px)' }"
+                :exit="{ opacity: 0, filter: 'blur(10px)' }"
+                :transition="{ duration: 0.3 }"
+              >
+                <motion.span
+                  v-for="(mark, index) in PUZZLED_MARKS"
+                  :key="index"
+                  class="ask-bar__puzzled-mark"
+                  :style="{
+                    left: mark.x,
+                    top: mark.y,
+                    fontSize: mark.size,
+                    rotate: mark.tilt,
+                  }"
+                  :animate="
+                    reduceMotion
+                      ? { opacity: 1 }
+                      : {
+                          y: [3, -3, 3],
+                          opacity: [0.35, 1, 0.35],
+                          rotate: [mark.tilt, -mark.tilt, mark.tilt],
+                        }
+                  "
+                  :transition="{
+                    duration: 1.8,
+                    delay: mark.delay,
+                    repeat: Infinity,
+                    ease: 'easeInOut',
+                  }"
+                  >?</motion.span
+                >
+              </motion.span>
+            </AnimatePresence>
             <span class="ask-bar__hopper-guy">
               <LittleGuy
                 :size="3.2"
@@ -697,6 +737,28 @@
     width: 2.4rem;
     height: 2.4rem;
     transform-origin: 50% 90%;
+  }
+
+  // Over his head, the marks placed round it (PUZZLED_MARKS), glowing
+  // warm like little lamps.
+  .ask-bar__puzzled {
+    position: absolute;
+    top: -2rem;
+    left: 0;
+    width: 2.4rem;
+    height: 2rem;
+    pointer-events: none;
+  }
+
+  .ask-bar__puzzled-mark {
+    position: absolute;
+    color: #fbe9c8;
+    font-family: var(--system-font);
+    font-weight: 700;
+    line-height: 1;
+    text-shadow:
+      0 0 0.3rem rgba(255, 196, 120, 0.9),
+      0 0 0.8rem rgba(255, 170, 80, 0.5);
   }
 
   .ask-bar__hopper-guy {
@@ -1268,6 +1330,23 @@
   const messages = ref<Message[]>([])
   const open = ref(false)
   const streaming = ref(false)
+  // Asked and waiting: the latest reply has no words yet.
+  const thinking = computed(() => {
+    const last = messages.value.at(-1)
+    return (
+      streaming.value &&
+      last?.role === 'assistant' &&
+      !last.content &&
+      !last.parts?.length
+    )
+  })
+  // The question marks over him then: where (in his 24px slot's frame),
+  // how big, how tilted, and when each starts its bob.
+  const PUZZLED_MARKS = [
+    { x: '-0.8rem', y: '0.6rem', size: '1.2rem', tilt: -12, delay: 0 },
+    { x: '0.6rem', y: '-0.4rem', size: '1.7rem', tilt: 8, delay: 0.3 },
+    { x: '2.1rem', y: '0.4rem', size: '1.1rem', tilt: 14, delay: 0.6 },
+  ]
   const input = useTemplateRef<HTMLInputElement>('input')
 
   // A question longer than the field scrolls inside it. Fade whichever end
@@ -1723,7 +1802,14 @@
     } finally {
       // Likewise a trailing line break, as space below it.
       reply.content = reply.content.trimEnd()
-      if (showsForms && reply.content) reply.forms = true
+      // The reel once a conversation: after that, it's been seen.
+      if (
+        showsForms &&
+        reply.content &&
+        !messages.value.some((message) => message.forms)
+      ) {
+        reply.forms = true
+      }
       followUp.value = followUpFor(reply.content)
       streaming.value = false
       controller = undefined
