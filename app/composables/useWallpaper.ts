@@ -53,6 +53,13 @@ export const WALLPAPERS: Wallpaper[] = [
     widths: [1280, 1920, 2000],
     accent: '#ffe2b8',
   },
+  {
+    id: 'cypress',
+    name: 'Cypress',
+    // Its source is only 2000px wide.
+    widths: [1280, 1920, 2000],
+    accent: '#d6eebf',
+  },
 ]
 
 // How long a new photo gets to load before it's shown regardless.
