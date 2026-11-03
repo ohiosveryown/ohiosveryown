@@ -35,6 +35,28 @@
           class="ask-bar__messages"
           aria-live="polite"
         >
+          <!-- Mallow's hello, opening every conversation (Figma 2256:2177),
+               and until the first question, a few to ask him. -->
+          <li class="ask-bar__message ask-bar__message--assistant">
+            <span class="ask-bar__face" />
+            <p class="ask-bar__reply">{{ GREETING }}</p>
+          </li>
+          <li
+            v-if="!messages.length && suggestions.length"
+            class="ask-bar__message ask-bar__message--user"
+          >
+            <div class="ask-bar__asked">
+              <button
+                v-for="suggestion in suggestions"
+                :key="suggestion"
+                class="ask-bar__bubble ask-bar__suggestion"
+                type="button"
+                @click="ask({ role: 'user', content: suggestion })"
+              >
+                {{ suggestion }}
+              </button>
+            </div>
+          </li>
           <li
             v-for="(message, index) in messages"
             :key="index"
@@ -241,7 +263,15 @@
           @click="fadeInputEdges"
           type="text"
           name="question"
-          :placeholder="open ? followUp : showHints ? '' : HINTS[0]"
+          :placeholder="
+            open
+              ? messages.length
+                ? followUp
+                : 'Ask anything…'
+              : showHints
+                ? ''
+                : HINTS[0]
+          "
           aria-label="Ask Mallow anything"
           autocomplete="off"
           enterkeyhint="send"
@@ -615,6 +645,31 @@
     color: #fff;
     line-height: 1.38;
     white-space: pre-wrap;
+  }
+
+  // Questions to tap, as the visitor's own bubbles would be, a touch
+  // quieter until pointed at.
+  .ask-bar__suggestion {
+    color: rgba(255, 255, 255, 0.8);
+    text-align: right;
+    transition:
+      color var(--ease),
+      background var(--ease);
+    cursor: var(--cursor);
+
+    &:hover,
+    &:focus-visible {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.16);
+    }
+
+    &:focus-visible {
+      outline: none;
+    }
+
+    &:active {
+      scale: 0.98;
+    }
   }
 
   // Under the reply's words, like a picture sent in a chat.
@@ -1475,8 +1530,33 @@
     }
   })
 
+  // Focusing the field opens the panel: the conversation, or before one,
+  // Mallow's hello and a few questions to start with.
   function reopen() {
-    if (messages.value.length) open.value = true
+    if (!open.value && !messages.value.length) pickSuggestions()
+    open.value = true
+  }
+
+  const GREETING = 'Hello, I’m a marshmallow cloud.'
+  // Things he knows the answers to (server/assets/mallow/about.md), three
+  // at random each time the empty panel opens.
+  const SUGGESTIONS = [
+    'What’s Matt up to these days?',
+    'Where’s Matt located?',
+    'What does Matt do at Square?',
+    'Where has Matt worked before?',
+    'What furniture does Matt make?',
+    'What’s Blush?',
+    'What has Matt written?',
+    'Who are you, anyway?',
+  ]
+  const suggestions = ref<string[]>([])
+  function pickSuggestions() {
+    const pool = [...SUGGESTIONS]
+    suggestions.value = Array.from(
+      { length: 3 },
+      () => pool.splice(Math.floor(Math.random() * pool.length), 1)[0]!,
+    )
   }
 
   // The folded bar's hint, in place of a placeholder: a few lines in turn,
