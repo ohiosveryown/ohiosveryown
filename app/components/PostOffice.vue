@@ -316,14 +316,16 @@
                under the pointer, and the one in hand lifted further. Scrolls
                sideways when they don't fit, fading at an edge with more past
                it. -->
-          <div class="post-office__tray">
+          <div
+            class="post-office__tray"
+            :style="{
+              '--fade-start': moreBefore ? '3.2rem' : '0px',
+              '--fade-end': moreAfter ? '3.2rem' : '0px',
+            }"
+          >
             <div
               ref="trayList"
               class="post-office__tray-list"
-              :style="{
-                '--fade-start': moreBefore ? '3.2rem' : '0px',
-                '--fade-end': moreAfter ? '3.2rem' : '0px',
-              }"
               role="radiogroup"
               aria-label="Postmarks"
               @scroll.passive="onTrayScroll"
@@ -399,6 +401,25 @@
               >
                 <span class="post-office__size-fill" />
                 <span class="post-office__size-thumb" />
+                <AnimatePresence>
+                  <motion.span
+                    v-if="peeking === 'size'"
+                    class="post-office__peek"
+                    :initial="PEEK_HIDDEN"
+                    :animate="PEEK_SHOWN"
+                    :exit="PEEK_HIDDEN"
+                    :transition="peekTransition"
+                  >
+                    <svg
+                      class="post-office__peek-stamp"
+                      :style="{ scale: 0.5 + sizeShare * 0.5 }"
+                      viewBox="0 0 16 16"
+                      aria-hidden="true"
+                    >
+                      <path d="M13 12.96a.42.42 0 0 1-.42.42H3.42a.42.42 0 0 1 0-.84h9.16c.23 0 .42.19.42.42Zm-.83-5H9.23l.82-3.82a1.67 1.67 0 0 0-1.63-2.01h-.84a1.67 1.67 0 0 0-1.63 2.01l.82 3.82H3.83a.83.83 0 0 0-.83.83v2.08c0 .46.37.84.83.84h8.34c.46 0 .83-.38.83-.84V8.79a.83.83 0 0 0-.83-.83Z" />
+                    </svg>
+                  </motion.span>
+                </AnimatePresence>
               </div>
               <button
                 class="post-office__size-step"
@@ -432,6 +453,21 @@
                 @keydown="onInkKey"
               >
                 <span class="post-office__ink-thumb" />
+                <AnimatePresence>
+                  <motion.span
+                    v-if="peeking === 'ink'"
+                    class="post-office__peek"
+                    :initial="PEEK_HIDDEN"
+                    :animate="PEEK_SHOWN"
+                    :exit="PEEK_HIDDEN"
+                    :transition="peekTransition"
+                  >
+                    <span
+                      class="post-office__peek-dot"
+                      :style="{ background: inkAt(ink) }"
+                    />
+                  </motion.span>
+                </AnimatePresence>
               </div>
             </div>
 
@@ -665,8 +701,8 @@
     position: relative;
     width: 100%;
     min-height: 0;
-    // Small screens: ending 1.4rem short of where the dock's stickers start.
-    margin-bottom: 1.4rem;
+    // Small screens: ending 4rem short of where the dock's stickers start.
+    margin-bottom: 4rem;
     border-radius: 3.6rem;
     background: var(--postmark-paper);
     container-type: inline-size;
@@ -796,7 +832,7 @@
     position: relative;
     // Over the sheet, stamps and all, where the stickers stand up into it.
     z-index: var(--z2);
-    margin-top: -3.2rem;
+    margin-top: -3.68rem;
 
     @include breakpoint(md) {
       gap: 1rem;
@@ -823,17 +859,18 @@
   // stickers, their lift and the row's ends at --z.
   .post-office__tray {
     // The stickers' scale: Figma's phone size (80px across against 56),
-    // and from md its later desk size, a size up again from lg. From md
+    // and from md its later desk size, a size up again from lg. Small
+    // screens are 15% over Figma's, the sheet giving up the room. From md
     // the whole dock is 20% over Figma's (the bar, its room and spacing
     // too), to be easier to read and hit on a big screen.
-    --z: 1.434;
+    --z: 1.649;
     // The bar's height.
-    --bar: 4.533rem;
+    --bar: 5.213rem;
     // How far the stickers stand up above it: 2.6rem on screen as in
     // Figma, and 1.4rem more for the one in hand, so it isn't cut off.
-    --over: 2.79rem;
+    --over: 3.209rem;
     // Its corners: 2.3rem on screen (Figma 2470:20785), 1.3rem from md.
-    --bar-round: 1.604rem;
+    --bar-round: 1.845rem;
     // The stickers' spacing: from md, 15% (lg 25%) wider apart, now that they
     // stand higher and more of each shows.
     --spread: 1;
@@ -844,18 +881,35 @@
     pointer-events: auto;
 
     // The bar itself, behind the stickers: dark on small screens, with a
-    // faint light edge all round.
-    &::before {
+    // faint light edge all round (::after).
+    &::before,
+    &::after {
       content: '';
       position: absolute;
       right: 0;
       bottom: 0;
       left: 0;
       height: var(--bar);
-      border: 1px solid rgba(255, 255, 255, 0.24);
       border-radius: var(--bar-round);
-      background: #212121;
       pointer-events: auto;
+    }
+
+    &::before {
+      background: #212121;
+    }
+
+    // Faded at an edge with more past it, as the stickers are, so its ends
+    // don't show through them there.
+    &::after {
+      border: 1px solid rgba(255, 255, 255, 0.24);
+      mask-image: linear-gradient(
+        to right,
+        transparent,
+        #000 var(--fade-start),
+        #000 calc(100% - var(--fade-end)),
+        transparent
+      );
+      pointer-events: none;
     }
 
     @include breakpoint(md) {
@@ -872,10 +926,13 @@
       // Just its shadow here: its fill is drawn with the stickers (see
       // .post-office__tray-list::before).
       &::before {
-        border: none;
         background: none;
         box-shadow: 0 calc(0.2rem * var(--z)) calc(0.4rem * var(--z))
           rgba(0, 0, 0, 0.22);
+      }
+
+      &::after {
+        display: none;
       }
     }
 
@@ -894,6 +951,8 @@
     display: flex;
     align-items: flex-end;
     position: relative;
+    // Over the bar's edge (the tray's ::after).
+    z-index: var(--z1);
     // More at the end: the square stickers there reach their corners out
     // past their slots, where the rings at the start don't.
     padding: 0 calc(3rem * var(--z)) 0 calc(2.2rem * var(--z));
@@ -1002,9 +1061,9 @@
   // all a size up (--m); from md, under the dock.
   .post-office__menu {
     --m: 1.3077;
-    // The pills' height: a little taller than the design's 3.4rem on small
-    // screens, to be easier under a thumb.
-    --pill: 4rem;
+    // The pills' height: taller than the design's 3.4rem on small screens,
+    // to be easier under a thumb.
+    --pill: 4.6rem;
 
     display: flex;
     justify-content: center;
@@ -1012,7 +1071,8 @@
     position: absolute;
     z-index: var(--z1);
     right: 1.6rem;
-    bottom: calc(100% - 0.2rem);
+    // 1.6rem above the sheet's foot: moves with its margin-bottom.
+    bottom: calc(100% + 1.92rem);
     left: 1.6rem;
     pointer-events: auto;
 
@@ -1057,8 +1117,10 @@
       }
     }
 
+    // As much room at the ends as above and below the gradient (its
+    // height, 1.6rem at --m, see .post-office__ink-track).
     &.post-office__pill--inks {
-      padding: 0 calc(0.5rem * var(--m));
+      padding: 0 calc((var(--pill) - 1.6rem * var(--m)) / 2);
     }
   }
 
@@ -1217,6 +1279,40 @@
     translate: -50% -50%;
   }
 
+  // The bubble over a slider's thumb while a finger drags it (see
+  // peeking), riding along with it.
+  .post-office__peek {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    bottom: calc(50% + 3.6rem);
+    left: calc(var(--size, var(--ink-place)) * 100%);
+    margin-left: -2.6rem;
+    width: 5.2rem;
+    height: 5.2rem;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow:
+      0 0.2rem 0.4rem rgba(0, 0, 0, 0.16),
+      0 0.8rem 2.4rem rgba(0, 0, 0, 0.2);
+    transform-origin: 50% 100%;
+    pointer-events: none;
+  }
+
+  .post-office__peek-dot {
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+  }
+
+  .post-office__peek-stamp {
+    width: 4rem;
+    height: 4rem;
+    fill: rgba(0, 0, 0, 0.5);
+    transition: scale 120ms ease;
+  }
+
   .post-office__tool {
     display: flex;
     padding: 0.4rem;
@@ -1357,12 +1453,30 @@
     if (!rect) return 0
     return Math.min(Math.max((clientX - rect.left) / rect.width, 0), 1)
   }
-  function drag(event: PointerEvent, set: (clientX: number) => void) {
+  // Under a finger the thumb's hidden, so while one drags, a bubble over
+  // it shows what's picked (like a key on a phone's keyboard): the ink,
+  // and on the size slider, the stamp icon grown to the size.
+  const peeking = ref<'size' | 'ink' | null>(null)
+  const PEEK_HIDDEN = { opacity: 0, scale: 0.6, y: 8, filter: 'blur(10px)' }
+  const PEEK_SHOWN = { opacity: 1, scale: 1, y: 0, filter: 'blur(0px)' }
+  const peekTransition = computed(() =>
+    reduceMotion.value
+      ? { duration: 0.01 }
+      : { type: 'spring', stiffness: 520, damping: 32 },
+  )
+
+  function drag(
+    event: PointerEvent,
+    which: 'size' | 'ink',
+    set: (clientX: number) => void,
+  ) {
     const track = event.currentTarget as HTMLElement
     track.setPointerCapture(event.pointerId)
     set(event.clientX)
+    if (event.pointerType !== 'mouse') peeking.value = which
     const move = (moved: PointerEvent) => set(moved.clientX)
     const up = () => {
+      peeking.value = null
       track.removeEventListener('pointermove', move)
       track.removeEventListener('pointerup', up)
       track.removeEventListener('pointercancel', up)
@@ -1373,7 +1487,7 @@
   }
 
   function onInkDown(event: PointerEvent) {
-    drag(event, (clientX) => {
+    drag(event, 'ink', (clientX) => {
       ink.value = Math.round(placeOn(inkTrack.value, clientX) * 1000) / 1000
     })
   }
@@ -1415,7 +1529,7 @@
   }
 
   function onSizeDown(event: PointerEvent) {
-    drag(event, sizeAt)
+    drag(event, 'size', sizeAt)
   }
 
   // Arrow keys step it by a twentieth; Home and End go to either end.
