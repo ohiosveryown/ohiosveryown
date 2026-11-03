@@ -684,6 +684,9 @@
       aspect-ratio: 812 / 568;
       border-radius: 0;
       background: none;
+      // Marks near its top or bottom run on onto the paper round it, cut
+      // off only by the window's edge, as they are at its sides.
+      overflow: visible;
     }
 
     &:focus-visible {
@@ -796,7 +799,7 @@
     margin-top: -3.2rem;
 
     @include breakpoint(md) {
-      gap: 0.8rem;
+      gap: 1rem;
       position: absolute;
       z-index: var(--z2);
       right: 0.8rem;
@@ -820,7 +823,9 @@
   // stickers, their lift and the row's ends at --z.
   .post-office__tray {
     // The stickers' scale: Figma's phone size (80px across against 56),
-    // and from md its later desk size, a size up again from lg.
+    // and from md its later desk size, a size up again from lg. From md
+    // the whole dock is 20% over Figma's (the bar, its room and spacing
+    // too), to be easier to read and hit on a big screen.
     --z: 1.434;
     // The bar's height.
     --bar: 4.533rem;
@@ -854,19 +859,21 @@
     }
 
     @include breakpoint(md) {
-      --z: 1.161;
-      --bar: 5.086rem;
-      --over: 4.1rem;
-      --spread: 1.15;
-      --bar-round: 1.3rem;
+      --z: 1.393;
+      --bar: 6.103rem;
+      --over: 4.92rem;
+      --spread: 1.38;
+      --bar-round: 1.56rem;
 
       flex: 0 1 auto;
       max-width: 100%;
       pointer-events: none;
 
+      // Just its shadow here: its fill is drawn with the stickers (see
+      // .post-office__tray-list::before).
       &::before {
         border: none;
-        background: #fdfcf8;
+        background: none;
         box-shadow: 0 calc(0.2rem * var(--z)) calc(0.4rem * var(--z))
           rgba(0, 0, 0, 0.22);
       }
@@ -875,8 +882,8 @@
     // A size up in the bigger window from lg (a post's panel's size), and
     // wider apart again where there's room for it.
     @include breakpoint(lg) {
-      --z: 1.451;
-      --spread: 1.25;
+      --z: 1.741;
+      --spread: 1.5;
     }
   }
 
@@ -907,6 +914,23 @@
       overflow: visible;
       mask-image: none;
       clip-path: inset(-10rem 0 0 0 round 0 0 var(--bar-round) var(--bar-round));
+    }
+
+    // From md, the bar's fill, behind the stickers and running on past the
+    // bottom, so the one clip cuts both: two edges cut on the same line
+    // let a hairline of the paler bar show under the stickers.
+    &::before {
+      @include breakpoint(md) {
+        content: '';
+        position: absolute;
+        right: 0;
+        bottom: -1rem;
+        left: 0;
+        height: calc(var(--bar) + 1rem);
+        border-radius: var(--bar-round) var(--bar-round) 0 0;
+        background: #fdfcf8;
+        pointer-events: none;
+      }
     }
   }
 
@@ -952,7 +976,7 @@
     // Hung from the row's foot rather than the bar's top, so the bar's
     // height doesn't move them.
     @include breakpoint(md) {
-      top: calc(100% - 5.92rem);
+      top: calc(100% - 7.104rem);
       pointer-events: auto;
     }
   }
@@ -992,16 +1016,17 @@
     left: 1.6rem;
     pointer-events: auto;
 
-    // From md, the desk's size; from lg, 25% up with the dock.
+    // From md, 20% over the desk's size, with the dock; from lg, 25% up
+    // again.
     @include breakpoint(md) {
-      --m: 1;
+      --m: 1.2;
       --pill: calc(2.6rem * var(--m));
 
       position: static;
     }
 
     @include breakpoint(lg) {
-      --m: 1.25;
+      --m: 1.5;
     }
   }
 
@@ -1025,6 +1050,11 @@
     &.post-office__pill--size {
       gap: calc(0.5rem * var(--m));
       padding: 0 calc(0.4rem * var(--m));
+
+      // From md, 4px more between the icons and the track.
+      @include breakpoint(md) {
+        gap: calc(0.5rem * var(--m) + 0.4rem);
+      }
     }
 
     &.post-office__pill--inks {
@@ -1041,6 +1071,7 @@
       flex: none;
       justify-content: center;
       width: var(--pill);
+      transition: scale var(--ease);
       cursor: inherit;
     }
 
@@ -1056,6 +1087,11 @@
 
     &:hover svg {
       fill: rgba(0, 0, 0, 0.8);
+    }
+
+    // Pressed in while it's held.
+    &:active {
+      scale: 0.96;
     }
 
     &:focus-visible {
