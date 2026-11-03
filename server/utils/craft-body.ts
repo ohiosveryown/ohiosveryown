@@ -48,6 +48,18 @@ const ASK_LINK =
   /^\[([^\]]+)\]\((?:https?:\/\/(?:www\.)?ohiosveryown\.co)?\/?\?ask=([^)\s]+)\)$/
 const MAX_QUESTION = 500
 
+// A paragraph that's only a link to another site with ↗ at the end of its
+// words, [Visit the studio ↗](https://proportional.design), is a button out
+// to it.
+const VISIT_LINK = /^\[([^\]]+?)\s*↗\]\((https?:\/\/[^)\s]+)\)$/
+
+function visitOf(markdown: string) {
+  const match = markdown.trim().match(VISIT_LINK)
+  if (!match) return undefined
+  const label = renderInline(match[1]!).replace(/<[^>]*>/g, '')
+  return label ? { label, href: match[2]! } : undefined
+}
+
 // A paragraph that's only "[[type tester]]" is Blush to type with (Craft
 // may escape the brackets).
 const TESTER = /^\\?\[\\?\[\s*type tester\s*\\?\]\\?\]$/i
@@ -199,6 +211,11 @@ export function toBody(
     const asks = kind === 'p' && !quote ? askOf(markdown) : undefined
     if (asks) {
       body.push({ kind: 'ask', ...asks })
+      continue
+    }
+    const visit = kind === 'p' && !quote ? visitOf(markdown) : undefined
+    if (visit) {
+      body.push({ kind: 'visit', ...visit })
       continue
     }
     const note = kind === 'p' && !quote ? markdown.match(NOTE_START) : null

@@ -232,6 +232,22 @@
                   />
                   {{ node.label }}
                 </button>
+                <!-- Out to another site (Craft: a link whose words end
+                     in ↗), dressed like the Mallow button. -->
+                <a
+                  v-else-if="node.kind === 'visit'"
+                  class="desk-dialog__ask desk-dialog__visit"
+                  :href="node.href"
+                  target="_blank"
+                  rel="noopener"
+                >
+                  {{ node.label }}
+                  <span
+                    class="desk-dialog__visit-arrow"
+                    aria-hidden="true"
+                    >↗</span
+                  >
+                </a>
                 <BlushTester v-else-if="node.kind === 'tester'" />
                 <blockquote
                   v-else-if="node.kind === 'quote'"
@@ -878,6 +894,22 @@
     &:focus-visible {
       background: #404040;
     }
+  }
+
+  // No picture to sit beside, so even all round, as tall as the Mallow
+  // button.
+  .desk-dialog__visit {
+    gap: 0.6rem;
+    padding: 1.1rem 1.8rem;
+    text-decoration: none;
+  }
+
+  .desk-dialog__visit-arrow {
+    transition: translate var(--ease);
+  }
+
+  .desk-dialog__visit:hover .desk-dialog__visit-arrow {
+    translate: 0.15rem -0.15rem;
   }
 
   .desk-dialog__ask-guy {

@@ -9,6 +9,8 @@ export type BodyNode =
   | { kind: 'break' }
   // A button that closes the post and asks Mallow `question`.
   | { kind: 'ask'; label: string; question: string }
+  // A button out to another site.
+  | { kind: 'visit'; label: string; href: string }
   // Blush to type with (BlushTester).
   | { kind: 'tester' }
 
