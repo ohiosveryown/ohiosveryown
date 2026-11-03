@@ -403,6 +403,52 @@ async function stamp(request: Request, env: Env) {
   return { status: 200 as const, mark: { ...mark, turned } }
 }
 
+// The last song the site saw playing on Matt's Spotify (one row), kept for
+// when nothing is: Spotify's own recently-played list sometimes stops
+// updating for days. Only the site's server reads and writes it, with the
+// same secret as /ask-limit.
+type LastPlayed = {
+  title: string
+  artist: string
+  cover: string | null
+  url: string | null
+  at: number
+}
+const LAST_PLAYED_TEXT_MAX = 500
+
+async function lastPlayed(request: Request, env: Env) {
+  const auth = request.headers.get('Authorization') ?? ''
+  if (!env.ASK_LIMIT_SECRET || auth !== `Bearer ${env.ASK_LIMIT_SECRET}`) {
+    return json({ error: 'forbidden' }, 403, {})
+  }
+  if (request.method === 'GET') {
+    const row = await env.DB.prepare(
+      'SELECT title, artist, cover, url, at FROM last_played WHERE id = 1',
+    ).first<LastPlayed>()
+    return json(row ?? null, 200, {})
+  }
+  const body = (await request.json().catch(() => ({}))) as Partial<LastPlayed>
+  const text = (value: unknown) =>
+    typeof value === 'string' && value.length <= LAST_PLAYED_TEXT_MAX
+  if (
+    !text(body.title) ||
+    !text(body.artist) ||
+    !(body.cover === null || text(body.cover)) ||
+    !(body.url === null || text(body.url))
+  ) {
+    return json({ error: 'bad song' }, 400, {})
+  }
+  await env.DB.prepare(
+    `INSERT INTO last_played (id, title, artist, cover, url, at)
+     VALUES (1, ?1, ?2, ?3, ?4, ?5)
+     ON CONFLICT (id) DO UPDATE SET title = ?1, artist = ?2, cover = ?3,
+       url = ?4, at = ?5`,
+  )
+    .bind(body.title, body.artist, body.cover, body.url, Date.now())
+    .run()
+  return json({ ok: true }, 200, {})
+}
+
 export default {
   async fetch(request, env, ctx): Promise<Response> {
     const cors = corsHeaders(request, env)
@@ -425,6 +471,13 @@ export default {
 
     if (request.method === 'POST' && pathname === '/ask-limit') {
       return askLimit(request, env, ctx)
+    }
+
+    if (
+      (request.method === 'GET' || request.method === 'PUT') &&
+      pathname === '/last-played'
+    ) {
+      return lastPlayed(request, env)
     }
 
     if (pathname === '/marks') {

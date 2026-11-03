@@ -58,3 +58,15 @@ CREATE TABLE IF NOT EXISTS marks (
 );
 CREATE INDEX IF NOT EXISTS marks_visitor_at ON marks (visitor, at);
 CREATE INDEX IF NOT EXISTS marks_page ON marks (page);
+
+-- The last song the site saw playing on Matt's Spotify: one row (id 1),
+-- `at` when it was seen (Date.now). Shown when nothing's playing, if it's
+-- newer than Spotify's own recently-played list.
+CREATE TABLE IF NOT EXISTS last_played (
+  id     INTEGER PRIMARY KEY CHECK (id = 1),
+  title  TEXT NOT NULL,
+  artist TEXT NOT NULL,
+  cover  TEXT,
+  url    TEXT,
+  at     INTEGER NOT NULL
+);

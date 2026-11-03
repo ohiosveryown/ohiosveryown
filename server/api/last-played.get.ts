@@ -1,3 +1,5 @@
+import type { H3Event } from 'h3'
+
 type SpotifyArtist = { name: string }
 type SpotifyImage = { url: string; width: number | null }
 type SpotifyTrack = {
@@ -66,7 +68,44 @@ async function getAccessToken(
   )
 }
 
-// Prefer currently-playing (updates live), fall back to recently-played.
+// The last song seen playing, kept by the counter Worker (/last-played),
+// since Spotify's recently-played list sometimes stops updating for days.
+// Skipped without the Worker's secret (as in dev, so dev never writes it).
+type Remembered = Omit<LastPlayed, 'source' | 'playedAt'> & { at: number }
+
+function counter(event: H3Event) {
+  const { askLimitSecret, public: pub } = useRuntimeConfig(event)
+  if (!askLimitSecret || !pub.counterUrl) return null
+  return {
+    url: `${pub.counterUrl}/last-played`,
+    headers: {
+      Authorization: `Bearer ${askLimitSecret}`,
+      'Content-Type': 'application/json',
+    },
+  }
+}
+
+async function remember(event: H3Event, song: LastPlayed) {
+  const to = counter(event)
+  if (!to) return
+  const { title, artist, cover, url } = song
+  await fetch(to.url, {
+    method: 'PUT',
+    headers: to.headers,
+    body: JSON.stringify({ title, artist, cover, url }),
+  }).catch((err) => console.error('[last-played] remember failed', err))
+}
+
+async function remembered(event: H3Event) {
+  const to = counter(event)
+  if (!to) return null
+  const res = await fetch(to.url, { headers: to.headers }).catch(() => null)
+  if (!res?.ok) return null
+  return ((await res.json()) as Remembered | null) ?? null
+}
+
+// Prefer currently-playing (updates live, and is remembered), falling back
+// to whichever is newer: recently-played or the last one seen playing.
 export default defineCachedEventHandler(
   async (event): Promise<LastPlayed | null> => {
     const { spotifyClientId, spotifyClientSecret, spotifyRefreshToken } =
@@ -94,16 +133,30 @@ export default defineCachedEventHandler(
       if (currentRes.status === 200) {
         const current = (await currentRes.json()) as CurrentlyPlaying
         if (current?.item) {
-          return toLastPlayed(current.item, 'now-playing')
+          const playing = toLastPlayed(current.item, 'now-playing')
+          await remember(event, playing)
+          return playing
         }
       }
 
-      const data = await $fetch<RecentlyPlayed>(
-        'https://api.spotify.com/v1/me/player/recently-played?limit=1',
-        { headers },
-      )
+      const [data, seen] = await Promise.all([
+        $fetch<RecentlyPlayed>(
+          'https://api.spotify.com/v1/me/player/recently-played?limit=1',
+          { headers },
+        ),
+        remembered(event),
+      ])
 
       const item = data.items?.[0]
+      const playedAt = item?.played_at ? Date.parse(item.played_at) : 0
+      if (seen && seen.at > playedAt) {
+        const { at, ...song } = seen
+        return {
+          ...song,
+          source: 'recently-played',
+          playedAt: new Date(at).toISOString(),
+        }
+      }
       if (!item?.track) return null
 
       return toLastPlayed(
