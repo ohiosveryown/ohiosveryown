@@ -169,5 +169,7 @@ export default defineCachedEventHandler(
       return null
     }
   },
-  { maxAge: 30 },
+  // Not stale-while-revalidate: a warm server would otherwise hand the
+  // first visitor after a quiet spell whatever it last saw, however old.
+  { maxAge: 30, swr: false },
 )
