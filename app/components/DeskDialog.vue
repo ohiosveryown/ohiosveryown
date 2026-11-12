@@ -621,7 +621,6 @@
   }
 
   .desk-dialog__image--hero {
-    background: #fff;
     aspect-ratio: 408 / 280;
     object-fit: cover;
 
