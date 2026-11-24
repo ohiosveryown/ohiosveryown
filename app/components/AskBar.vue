@@ -343,7 +343,7 @@
       </AnimatePresence>
     </Teleport>
     <!-- Clicked, Mallow shows its other forms once through, down and to
-         the left of the click (the pill sits up in the corner), then
+         the left of the click where there's no room), then
          fades. On <body>, so the bar's scale and clipping don't touch it. -->
     <Teleport to="body">
       <AnimatePresence>
@@ -1105,12 +1105,12 @@
     sprungWidth.value = !!widths
     if (widths) width.set(open.value ? widths.open : widths.closed)
   }
-  // Which way it widens depends on where it's been dragged to: the layout
-  // pins its right edge, so on its own it always grows leftward (and from
-  // the left side of the screen, off the edge). In the left third it moves
-  // right by the whole change in width, so its left edge holds still; in the
-  // middle by half, so it grows from its centre; in the right third not at
-  // all. On the same spring as the width, so the held edge stays put.
+  // Which way it widens depends on where it's been dragged to: in the left
+  // third its left edge holds still, in the middle it grows from its
+  // centre, in the right third its right edge holds still. The layout
+  // already puts --ask-bar-layout-grows-right of the change on the right
+  // (0 when the page pins its right edge, 0.5 when it's centred), so x makes
+  // up the rest. On the same spring as the width, so the held edge stays put.
   const SHIFT_SETTLE_MS = 1200
   let shiftingUntil = 0
   function widthShare() {
@@ -1123,7 +1123,15 @@
     const widths = cssWidths()
     if (!widths) return
     const target = open.value ? widths.open : widths.closed
-    const shift = (target - width.get()) * widthShare()
+    const form = formEl()
+    const layoutShare = form
+      ? Number.parseFloat(
+          getComputedStyle(form).getPropertyValue(
+            '--ask-bar-layout-grows-right',
+          ),
+        ) || 0
+      : 0
+    const shift = (target - width.get()) * (widthShare() - layoutShare)
     if (reduceMotion.value) {
       width.set(target)
       x.set(x.get() + shift)

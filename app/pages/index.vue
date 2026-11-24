@@ -557,7 +557,7 @@
   // Above the desk items (whose z-index climbs as they're raised), under
   // the case-study dialog.
   // Full width on small screens (the desk starts below it, see --desk-top);
-  // a pill in the top-right corner from md up.
+  // a pill at the top centre from md up.
   .home__ask {
     position: absolute;
     top: var(--ask-top);
@@ -571,8 +571,11 @@
       // open width while it grows.
       --ask-bar-width: 28rem;
       --ask-bar-open-width: 34.2rem;
+      // Centred by its auto margins, so the layout widens it evenly both
+      // ways (AskBar's springWidth allows for that).
+      --ask-bar-layout-grows-right: 0.5;
 
-      left: auto;
+      margin: 0 auto;
       width: var(--ask-bar-width);
       max-width: calc(100% - 2.4rem);
 
