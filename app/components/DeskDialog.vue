@@ -30,6 +30,7 @@
       class="desk-dialog"
       :class="{ 'is-resized': height != null }"
       role="dialog"
+      tabindex="-1"
       aria-modal="true"
       :aria-labelledby="`${study.slug}-title`"
       :style="shellStyle"
@@ -49,7 +50,11 @@
           class="desk-dialog__close"
           type="button"
           aria-label="Close"
-          :class="{ 'is-focused': autoFocused, 'is-scrolled': scrolled }"
+          :class="{
+            'is-focused': autoFocused,
+            'is-hidden': study.hero && !pastCover,
+            'is-scrolled': scrolled && (!study.hero || pastCover),
+          }"
           @blur="autoFocused = false"
           @click="emit('close')"
         >
@@ -65,6 +70,7 @@
             class="desk-dialog__figure"
           >
             <img
+              ref="hero"
               class="desk-dialog__image desk-dialog__image--hero"
               :src="study.hero.src"
               :alt="study.hero.alt"
@@ -355,11 +361,10 @@
     // Insets all round plus auto margins centre it without a transform
     // (motion owns the transform for the open/close FLIP). That needs a set
     // height: most of the screen (88svh), and never less than enough for
-    // the cover (16 / 10) to sit as far from the bottom as from the sides.
-    // 6.85rem is where the cover starts (padding, close button and gap) and
-    // the cover is 87% of the width (the body's side padding, below), so
-    // 6.1rem each side. 65% of the screen wide, between 80rem and 112rem,
-    // so it grows on very large screens.
+    // the cover (16 / 10) to sit as far from the bottom as from the sides:
+    // it's 1.6rem in from the top and sides (see .desk-dialog__figure).
+    // 65% of the screen wide, between 80rem and 112rem, so it grows on very
+    // large screens.
     @include breakpoint(lg) {
       --dialog-width: min(clamp(80rem, 65.3vw, 112rem), 100vw - 3.2rem);
 
@@ -368,10 +373,15 @@
       width: var(--dialog-width);
       height: max(
         88svh,
-        calc(6.85rem + var(--dialog-width) * 0.87 * 10 / 16 + 6.1rem)
+        calc(1.6rem + (var(--dialog-width) - 3.2rem) * 10 / 16 + 1.6rem)
       );
       max-height: calc(100% - 1.6rem);
       aspect-ratio: auto;
+    }
+
+    // Focused on open (focusPanel); the panel itself needs no ring.
+    &:focus {
+      outline: none;
     }
 
     &.is-resized {
@@ -403,12 +413,15 @@
     cursor: ns-resize;
   }
 
+  // A container, so the cover can measure its pull past the body's padding
+  // (a percentage of this width) in cqw.
   .desk-dialog__content {
     display: flex;
     flex-direction: column;
     flex: 1 1 auto;
     position: relative;
     min-height: 0;
+    container-type: inline-size;
   }
 
   .desk-dialog__body {
@@ -569,10 +582,18 @@
     }
   }
 
+  // The cover sits 1.6rem in from the dialog's top and sides, past the
+  // body's padding (6.8rem at the top, 2.4rem then 6.5% at the sides), with
+  // the close button over it.
   .desk-dialog__figure {
     display: flex;
     flex-direction: column;
-    margin: 0;
+    margin: calc(1.6rem - 6.8rem) calc(1.6rem - 2.4rem) 0;
+
+    @include breakpoint(md) {
+      margin-right: calc(1.6rem - 6.5cqw);
+      margin-left: calc(1.6rem - 6.5cqw);
+    }
   }
 
   // Under the cover, and under images in the body (an italic line right
@@ -620,7 +641,9 @@
     }
   }
 
+  // Corners concentric with the dialog's (3.5rem, 1.6rem in).
   .desk-dialog__image--hero {
+    border-radius: 1.9rem;
     aspect-ratio: 408 / 280;
     object-fit: cover;
 
@@ -927,11 +950,19 @@
     z-index: var(--z2);
     color: #fff;
     transform: translateX(-50%);
+    transition: opacity 0.3s var(--ease);
     cursor: var(--cursor);
+
+    // Out of the cover's way until it has scrolled past (Esc and the scrim
+    // still close the post). It shows when it has keyboard focus.
+    &.is-hidden:not(:focus-visible) {
+      opacity: 0;
+      pointer-events: none;
+    }
 
     // The band: wider than any dialog (the dialog clips it to its corners),
     // from the dialog's top edge down past the pill. Only once the copy has
-    // scrolled; at the top it would just shade the cover.
+    // scrolled past the cover; before that it would just shade the cover.
     &::before {
       content: '';
       position: absolute;
@@ -1242,10 +1273,21 @@
     idleTimer = setTimeout(() => (scrolling.value = false), IDLE_MS)
   }
 
+  // Past the cover: its bottom has scrolled up behind the close button.
+  // Until then the button and its band stay out of the cover's way.
+  const hero = useTemplateRef<HTMLElement>('hero')
+  const pastCover = ref(false)
+
   function onScroll() {
     measure()
     reveal()
     scrolled.value = (body.value?.scrollTop ?? 0) > 0
+    const button = closeButton.value
+    pastCover.value =
+      !!hero.value &&
+      !!button &&
+      hero.value.getBoundingClientRect().bottom <=
+        button.getBoundingClientRect().bottom
   }
 
   function scrollPerPixel() {
@@ -1399,6 +1441,7 @@
     if (!instance) {
       phase.value = 'hidden'
       scrolled.value = false
+      pastCover.value = false
       height.value = null
       minHeight.value = 0
       maxHeight.value = 0
@@ -1492,7 +1535,8 @@
     if (!first || !last) return
 
     const active = document.activeElement as HTMLElement | null
-    const outside = !active || !dialog.contains(active)
+    // Focus on the panel itself (as on open) counts as before the first.
+    const outside = !active || !dialog.contains(active) || active === dialog
     if (event.shiftKey && (outside || active === first)) {
       event.preventDefault()
       last.focus()
@@ -1508,8 +1552,16 @@
     else if (event.key === 'Tab') trapTab(event)
   }
 
+  // Focus moves into the panel on open: to the close button, or with a
+  // cover, to the panel itself, since focusing the button would show it
+  // over the cover (it waits for the cover to scroll past). Tab then
+  // reaches the button first.
   async function focusPanel() {
     await nextTick()
+    if (props.study?.hero && dialog) {
+      dialog.focus({ preventScroll: true })
+      return
+    }
     closeButton.value?.focus({ preventScroll: true })
     autoFocused.value = document.activeElement === closeButton.value
   }
