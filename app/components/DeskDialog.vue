@@ -681,10 +681,16 @@
     }
   }
 
+  // From md, a paragraph's line apart (1.8rem at 1.5), so the gaps keep the
+  // lines' rhythm.
   .desk-dialog__copy {
     display: flex;
     flex-direction: column;
     gap: var(--flow);
+
+    @include breakpoint(md) {
+      --flow: 2.7rem;
+    }
   }
 
   .desk-dialog__h3,
@@ -830,7 +836,7 @@
     @include breakpoint(md) {
       font-weight: 440;
       font-size: 1.8rem;
-      line-height: 1.35;
+      line-height: 1.5;
     }
 
     // Bold all the way through in Craft: set tighter, like a heading.
@@ -873,7 +879,9 @@
   }
 
   // From md, images and video run the body's full width and the text sits
-  // in a centred column inside them: 651 of 818 in Figma.
+  // in a centred column inside them: 651 of 818 in Figma, but never wider
+  // than 62rem (about 70 characters a line at 1.8rem), however wide the
+  // dialog grows.
   .desk-dialog__overline,
   .desk-dialog__intro,
   .desk-dialog__details,
@@ -885,7 +893,7 @@
   .desk-dialog__break.is-rule,
   .desk-dialog__caption--body {
     @include breakpoint(md) {
-      --text-width: 79.6%;
+      --text-width: min(79.6%, 62rem);
 
       margin-right: max(0rem, calc((100% - var(--text-width)) / 2));
       margin-left: max(0rem, calc((100% - var(--text-width)) / 2));
