@@ -20,6 +20,13 @@ function describe(study: CaseStudy) {
     lines.push(`Topics: ${study.disciplines.join(', ')}`)
   }
   if (study.link) lines.push(`Link: ${study.link.replace(/^https?:\/\//, '')}`)
+  if (study.tooltip) lines.push(`Caption: ${study.tooltip.text}`)
+  // A video entry has no write-up: it opens as a player.
+  if (study.video) {
+    lines.push(
+      'Format: a short video reel, no write-up. It opens as a video player, not a written post.',
+    )
+  }
   if (study.intro) lines.push(study.intro)
   if (study.summary) lines.push(`Summary: ${study.summary}`)
   for (const node of study.body) {
