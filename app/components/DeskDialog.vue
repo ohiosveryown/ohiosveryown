@@ -87,18 +87,18 @@
             <!-- The open post is the page's main content, so its title is
                  the h1 (pages/index.vue drops its own while one is open).
                  The intro is a standfirst, not a heading. -->
-            <p
-              v-if="study.intro"
-              class="desk-dialog__intro"
-            >
-              {{ study.intro }}
-            </p>
             <h1
               :id="`${study.slug}-title`"
               class="desk-dialog__overline"
             >
               {{ study.title }}
             </h1>
+            <p
+              v-if="study.intro"
+              class="desk-dialog__intro"
+            >
+              {{ study.intro }}
+            </p>
             <dl class="desk-dialog__details">
               <div
                 v-for="detail in details"
@@ -486,33 +486,49 @@
     }
   }
 
+  // 3.6rem under the intro to the first rule (the flow's gap and the top
+  // padding pulled in).
   .desk-dialog__details {
     display: flex;
     flex-direction: column;
     gap: 1.2rem;
-    margin: 0;
+    margin: calc(3.6rem - var(--flow) - 0.4rem) 0 0;
     padding: 0.4rem 0 0.8rem;
   }
 
+  // The dotted rules at half white, a step under the labels (0.8), so they
+  // part the rows without competing with them.
   .desk-dialog__row {
+    --rule: rgba(255, 255, 255, 0.5);
+
     display: flex;
     align-items: flex-start;
     gap: 1.2rem;
     padding-top: 1.2rem;
     background: repeating-linear-gradient(
         to right,
-        #fff 0 1px,
+        var(--rule) 0 1px,
         transparent 1px 3px
       )
       top / 100% 0.5px no-repeat;
     font-size: 1.3rem;
 
+    // Measured from the last line's baseline, so a step more than the 1.2rem
+    // over each row: its descenders take some of it.
     &:last-child {
-      padding-bottom: 1.2rem;
+      padding-bottom: 1.6rem;
       background:
-        repeating-linear-gradient(to right, #fff 0 1px, transparent 1px 3px)
+        repeating-linear-gradient(
+            to right,
+            var(--rule) 0 1px,
+            transparent 1px 3px
+          )
           top / 100% 0.5px no-repeat,
-        repeating-linear-gradient(to right, #fff 0 1px, transparent 1px 3px)
+        repeating-linear-gradient(
+            to right,
+            var(--rule) 0 1px,
+            transparent 1px 3px
+          )
           bottom / 100% 0.5px no-repeat;
     }
   }
@@ -527,8 +543,9 @@
     text-transform: uppercase;
     text-box-edge: cap alphabetic;
     text-box-trim: trim-both;
+    // Just wide enough for the longest label, so values start close by.
     @include breakpoint(md) {
-      width: 17.4rem;
+      width: 12rem;
     }
   }
 
@@ -545,10 +562,15 @@
     text-box-trim: trim-both;
   }
 
-  // Sentence case and looser lines than the other values: it's prose.
+  // Sentence case and looser lines than the other values: it's prose. From
+  // md, a step bigger than the table, since it's read in full there.
   .desk-dialog__summary {
     line-height: 1.38;
     text-transform: none;
+    @include breakpoint(md) {
+      font-size: 1.5rem;
+      line-height: 1.45;
+    }
   }
 
   // The light grey of the labels and captions (white at 0.8, as a color
@@ -653,11 +675,12 @@
     }
   }
 
-  // Heads the detail rows, as in the Figma dialog: 3.6rem under the intro
-  // and 1.2rem over the first rule (the flow's gap, and the rows' top
-  // padding, pulled in).
+  // The post's title, small, heading the intro (as in Figma ovo v3.7
+  // 2529:1708): 2.4rem over it (the flow's gap, pushed out). Dimmer than
+  // the labels (0.8), so the intro leads.
   .desk-dialog__overline {
-    margin: calc(3.6rem - var(--flow)) 0 calc(1.2rem - var(--flow) - 0.4rem);
+    margin: 0 0 calc(2.4rem - var(--flow));
+    opacity: 0.6;
     font-family: var(--text-font);
     font-size: 1.4rem;
     font-weight: 500;
@@ -845,14 +868,15 @@
     }
   }
 
-  // A section's opening words (withLeadIn): Blush, in capitals, a touch
-  // smaller and spaced out, in full white against the body's 0.9.
+  // A section's opening words (withLeadIn): Blush capitals, in full white
+  // against the body's 0.9, a touch smaller than the body (their capitals
+  // stand 63% of the type size to its 70%), a little lighter and spaced out.
   .desk-dialog__para :deep(.desk-dialog__lead-in) {
     color: #fff;
     font-family: 'blush', var(--system-font);
-    font-weight: 600;
+    font-weight: 560;
     font-size: 0.9em;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
   }
 
@@ -998,7 +1022,8 @@
         transparent
       );
       transform: translateX(-50%);
-      transition: opacity var(--ease);
+      // Slower than --ease's 200ms, so the band eases in and out.
+      transition: opacity 500ms ease;
       pointer-events: none;
     }
 
@@ -1076,10 +1101,11 @@
     return rows
   })
 
-  // About three lines of the summary at full width, cut at a word, until
-  // "More" shows the rest. Closed again for each post. Small screens'
-  // narrow column would take twice that, so there it's measured: as many
-  // words as fit in three lines, "… More" included (see fitSummary).
+  // From md the summary shows in full. Small screens' narrow column would
+  // run it long, so there it's measured: as many words as fit in three
+  // lines, "… More" included (see fitSummary), until "More" shows the rest.
+  // Closed again for each post. Until measured (as when rendered on the
+  // server), about three lines' worth, cut at a word.
   const SUMMARY_CHARS = 200
   const SUMMARY_LINES = 3
   const summaryOpen = ref(false)
@@ -1106,11 +1132,16 @@
 
   // Tried out in a hidden copy of the summary at its width: the whole text,
   // or else the most words that, with "… More", stay within three lines.
+  // From md, the whole text.
   function fitSummary() {
     const el = summaryEl
     const text = props.study?.summary ?? ''
-    if (window.matchMedia('(min-width: 700px)').matches || !el || !text) {
+    if (!el || !text) {
       summaryWords.value = null
+      return
+    }
+    if (window.matchMedia('(min-width: 700px)').matches) {
+      summaryWords.value = text.split(/\s+/).length
       return
     }
     if (summaryOpen.value) return
