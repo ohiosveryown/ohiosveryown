@@ -28,7 +28,7 @@
       :key="study.id"
       ref="shell"
       class="desk-dialog"
-      :class="{ 'is-resized': height != null }"
+      :class="{ 'is-resized': height != null, 'is-video': study.video }"
       role="dialog"
       tabindex="-1"
       aria-modal="true"
@@ -52,7 +52,7 @@
           aria-label="Close"
           :class="{
             'is-focused': autoFocused,
-            'is-hidden': study.hero && !pastCover,
+            'is-hidden': study.video || (study.hero && !pastCover),
             'is-scrolled': scrolled && (!study.hero || pastCover),
           }"
           @blur="autoFocused = false"
@@ -60,7 +60,36 @@
         >
           <span class="desk-dialog__close-label">Close</span>
         </button>
+        <!-- A video entry: just the player in a glass frame, its cover as
+             the poster (Close shows only for the keyboard). Plays with
+             sound once open (see playVideo). -->
         <div
+          v-if="study.video"
+          class="desk-dialog__player"
+        >
+          <h1
+            :id="`${study.slug}-title`"
+            class="desk-dialog__player-title"
+          >
+            {{ study.title }}
+          </h1>
+          <video
+            ref="player"
+            class="desk-dialog__video"
+            :src="study.video.src"
+            :poster="study.hero?.src"
+            :style="
+              study.video.aspectRatio
+                ? { aspectRatio: study.video.aspectRatio }
+                : undefined
+            "
+            controls
+            playsinline
+            preload="auto"
+          />
+        </div>
+        <div
+          v-else
           ref="body"
           class="desk-dialog__body"
           @scroll.passive="onScroll"
@@ -384,6 +413,30 @@
       outline: none;
     }
 
+    // A video entry: a frosted-glass frame round the player (Figma ovo v3.7
+    // 2542:2968), centred and sized to it at every width: as wide as fits
+    // (129.6rem, 1296 of 1440 in Figma) without a 16:9 player running
+    // taller than the screen (its 1.6rem of frame and 1.6rem of margin each
+    // way). fit-content and auto margins centre it on both axes.
+    &.is-video {
+      inset: 0;
+      margin: auto;
+      width: min(
+        calc(100% - 3.2rem),
+        129.6rem,
+        calc((100svh - 3.2rem - 1.6rem) * 16 / 9 + 1.6rem)
+      );
+      height: fit-content;
+      max-height: calc(100% - 3.2rem);
+      border-color: rgba(255, 255, 255, 0.3);
+      border-radius: 1.5rem;
+      background: rgba(255, 255, 255, 0.12);
+      box-shadow:
+        0 0.9rem 2.9rem 0 rgba(0, 0, 0, 0.09),
+        0 0.113rem 0.363rem 0 rgba(0, 0, 0, 0.05);
+      aspect-ratio: auto;
+    }
+
     &.is-resized {
       aspect-ratio: auto;
     }
@@ -400,6 +453,31 @@
     @include breakpoint(md) {
       background: rgba(0, 0, 0, 0.5);
     }
+  }
+
+  // The glass frame's width round the video.
+  .desk-dialog__player {
+    padding: 0.8rem;
+  }
+
+  // The page's h1 while it's open, for screen readers; the video says the
+  // rest.
+  .desk-dialog__player-title {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    clip-path: inset(50%);
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  // Corners concentric with the frame's (1.5rem, 0.8rem in).
+  .desk-dialog__video {
+    display: block;
+    width: 100%;
+    border-radius: 0.7rem;
+    background: #000;
+    aspect-ratio: 16 / 9;
   }
 
   .desk-dialog__resize {
@@ -1409,6 +1487,13 @@
 
   function measureHeightBounds() {
     if (!dialog) return
+    // A video entry is sized to its player: nothing to resize.
+    if (props.study?.video) {
+      height.value = null
+      minHeight.value = 0
+      maxHeight.value = 0
+      return
+    }
     // Max height leaves the same gap below as the dialog has above (0.8rem
     // each way when centred, matching its CSS max-height).
     const top = isCentered()
@@ -1489,8 +1574,19 @@
     dialog = instance.$el as HTMLElement
     from = invert()
     phase.value = 'visible'
-    nextTick(measureHeightBounds)
+    nextTick(() => {
+      measureHeightBounds()
+      playVideo()
+    })
   })
+
+  // A video entry plays with sound as it opens. Opened by a click, browsers
+  // allow that; from a link straight to it they may not, and then it waits
+  // on its poster for the play button.
+  const player = useTemplateRef<HTMLVideoElement>('player')
+  function playVideo() {
+    player.value?.play().catch(() => {})
+  }
 
   const variants = {
     hidden: { opacity: 0 },
@@ -1592,12 +1688,12 @@
   }
 
   // Focus moves into the panel on open: to the close button, or with a
-  // cover, to the panel itself, since focusing the button would show it
-  // over the cover (it waits for the cover to scroll past). Tab then
-  // reaches the button first.
+  // cover or a video, to the panel itself, since focusing the button would
+  // show it (it waits for the cover to scroll past, and a video has none
+  // but for the keyboard). Tab then reaches the button first.
   async function focusPanel() {
     await nextTick()
-    if (props.study?.hero && dialog) {
+    if ((props.study?.hero || props.study?.video) && dialog) {
       dialog.focus({ preventScroll: true })
       return
     }

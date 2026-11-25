@@ -84,6 +84,13 @@ export function toCaseStudy(
     : undefined
   const heroCaption = captionOf(afterHero)
   const tooltip = text(p.tooltip)
+  // "Video" checked in Craft: the entry opens as a player for the body's
+  // first video.
+  const videoBlock = p.video === true ? videoBlocksOf(item)[0] : undefined
+  const videoOf = (block: ImageBlock) => ({
+    src: videos.get(block.id)?.src ?? block.url,
+    aspectRatio: videos.get(block.id)?.aspectRatio,
+  })
   const position = {
     x: number(p.x),
     y: number(p.y),
@@ -109,6 +116,7 @@ export function toCaseStudy(
       caption: heroCaption,
     },
     tooltip: tooltip ? { text: tooltip } : undefined,
+    video: videoBlock && videoOf(videoBlock),
     position: Object.values(position).some((value) => value != null)
       ? position
       : undefined,
@@ -118,10 +126,7 @@ export function toCaseStudy(
       item.content ?? [],
       [heroBlock?.id, heroCaption ? afterHero?.id : undefined],
       (block) => imageFor(block, images),
-      (block) => ({
-        src: videos.get(block.id)?.src ?? block.url,
-        aspectRatio: videos.get(block.id)?.aspectRatio,
-      }),
+      videoOf,
     ),
   }
 }

@@ -44,6 +44,9 @@ export type CaseStudy = {
   // `og`: the cover cropped as a 1200 × 630 JPEG for link previews.
   hero?: CaseStudyImage & { thumb: string; og?: string; caption?: string }
   tooltip?: { text: string }
+  // Craft's "Video" checked: the entry opens as a player for this, the
+  // body's first video, instead of as a post (the hero is its poster).
+  video?: { src: string; aspectRatio?: number }
   // Icon's top-left corner. Desktop: % of the desk. Mobile: x in %, y in svh.
   position?: { x?: number; y?: number; mobileX?: number; mobileY?: number }
   body: BodyNode[]
