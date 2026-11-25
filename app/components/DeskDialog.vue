@@ -5,6 +5,7 @@
     <motion.div
       v-if="study"
       class="desk-dialog__scrim"
+      :class="{ 'is-video': study.video }"
       aria-hidden="true"
       @click="emit('close')"
       :initial="{ opacity: 0 }"
@@ -453,6 +454,12 @@
     @include breakpoint(md) {
       background: rgba(0, 0, 0, 0.5);
     }
+
+    // A video's glass frame is see-through, so the desk is dimmed behind it
+    // on phones too.
+    &.is-video {
+      background: rgba(0, 0, 0, 0.5);
+    }
   }
 
   // The glass frame's width round the video.
@@ -516,6 +523,10 @@
     // The top clears the close button (2rem down, 2.8rem tall) by the gap.
     padding: 6.8rem 2.4rem 8rem;
     scrollbar-width: none;
+    // Only ever up and down: in Safari the cover's pull past the padding
+    // (calc with cqw) could come out wider than the body and let it scroll
+    // sideways.
+    overflow-x: hidden;
     overflow-y: auto;
     overscroll-behavior: contain;
 
