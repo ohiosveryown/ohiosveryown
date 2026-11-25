@@ -1,11 +1,12 @@
 <template>
-  <!-- Transparent and inert until he's ready (see LittleGuy's "ready"), so
-       the bar never appears with an empty or loading avatar. Not
-       visibility: hidden, which would stop his video from decoding. -->
+  <!-- Transparent and inert until Mallow's ready (see LittleGuy's "ready"),
+       so the bar never appears with an empty or loading avatar, and while
+       `away`. Not visibility: hidden, which would stop the video from
+       decoding. -->
   <motion.form
     class="ask-bar"
     aria-label="Ask Mallow"
-    :inert="!ready"
+    :inert="!ready || away"
     :initial="{ opacity: 0, filter: 'blur(10px)' }"
     :animate="reveal"
     :class="{ 'is-open': open, 'is-drop-target': dropOver }"
@@ -1145,13 +1146,16 @@
     shiftingUntil = performance.now() + SHIFT_SETTLE_MS
     setTimeout(keepInside, SHIFT_SETTLE_MS)
   }
+  // `away`: the page has something over the desk (a case study open), so
+  // the bar fades out, and back in once it closes.
+  const props = defineProps<{ away?: boolean }>()
   const ready = ref(false)
   const reduceMotion = ref(false)
 
-  // The bar's fade in. A computed, not an object in the template, so it's
-  // the same object across re-renders.
+  // The bar's fade in (and out while away). A computed, not an object in
+  // the template, so it's the same object across re-renders.
   const reveal = computed(() =>
-    ready.value
+    ready.value && !props.away
       ? {
           opacity: 1,
           filter: 'blur(0px)',
@@ -1160,7 +1164,11 @@
           transitionEnd: { filter: 'none' },
           transition: { duration: reduceMotion.value ? 0.01 : 0.6, ease },
         }
-      : { opacity: 0, filter: 'blur(10px)' },
+      : {
+          opacity: 0,
+          filter: reduceMotion.value ? 'blur(0px)' : 'blur(10px)',
+          transition: { duration: reduceMotion.value ? 0.01 : 0.4, ease },
+        },
   )
 
   // With a mouse or trackpad the bar drags around the desk like the icons

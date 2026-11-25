@@ -113,6 +113,7 @@
     </div>
     <AskBar
       class="home__ask"
+      :away="!!openStudy"
       data-desk-keep-out
     />
     <DeskMenu :disabled="!!openStudy || postOfficeOpen" />
