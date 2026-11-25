@@ -29,12 +29,16 @@
       :key="study.id"
       ref="shell"
       class="desk-dialog"
-      :class="{ 'is-resized': height != null, 'is-video': study.video }"
+      :class="{
+        'is-resized': height != null,
+        'is-video': study.video,
+        'is-pulling': pulling,
+      }"
       role="dialog"
       tabindex="-1"
       aria-modal="true"
       :aria-labelledby="`${study.slug}-title`"
-      :style="shellStyle"
+      :style="[shellStyle, pullStyle]"
       :variants="variants"
       initial="hidden"
       :animate="phase"
@@ -61,6 +65,19 @@
         >
           <span class="desk-dialog__close-label">Close</span>
         </button>
+        <!-- Phones: a grabber to pull the post down and away, like a sheet.
+             Esc, the scrim and Close still close it. -->
+        <div
+          v-if="!study.video"
+          class="desk-dialog__pull"
+          aria-hidden="true"
+          @pointerdown="onPullDown"
+          @pointermove="onPullMove"
+          @pointerup="onPullUp"
+          @pointercancel="onPullUp"
+        >
+          <span class="desk-dialog__pull-bar" />
+        </div>
         <!-- A video entry: just the player in a glass frame, its cover as
              the poster (Close shows only for the keyboard). Plays with
              sound once open (see playVideo). -->
@@ -441,6 +458,41 @@
     &.is-resized {
       aspect-ratio: auto;
     }
+
+    // Let go of the grabber short of closing: springs back up.
+    &:not(.is-pulling) {
+      transition: translate 0.5s var(--spring);
+    }
+  }
+
+  // The grabber's reach: a strip at the top of the panel, short of the
+  // close button (2rem down). Phones only.
+  .desk-dialog__pull {
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    z-index: calc(var(--z2) + 1);
+    // The bar centred in the 1.6rem above the cover.
+    padding: 0.6rem 0 0;
+    width: 16rem;
+    height: 2rem;
+    transform: translateX(-50%);
+    touch-action: none;
+    cursor: grab;
+
+    @include breakpoint(md) {
+      display: none;
+    }
+  }
+
+  .desk-dialog__pull-bar {
+    width: 4.4rem;
+    height: 0.4rem;
+    border-radius: 0.2rem;
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 0 0.4rem rgba(0, 0, 0, 0.25);
   }
 
   // Clear on phones, where the panel nearly fills the screen and the bright
@@ -1120,6 +1172,32 @@
       opacity: 1;
     }
 
+    // Phones: the pull bar closes the post, so the pill only shows for the
+    // keyboard. Its band stays, shorter, behind the bar once scrolled.
+    &:not(:focus-visible) {
+      pointer-events: none;
+
+      @include breakpoint(md) {
+        pointer-events: auto;
+      }
+    }
+
+    &:not(:focus-visible) > .desk-dialog__close-label {
+      visibility: hidden;
+
+      @include breakpoint(md) {
+        visibility: visible;
+      }
+    }
+
+    &:not(:focus-visible)::before {
+      height: 8rem;
+
+      @include breakpoint(md) {
+        height: 14rem;
+      }
+    }
+
     &:focus-visible,
     &.is-focused {
       outline: 1px solid rgba(255, 255, 255, 0.32);
@@ -1583,6 +1661,8 @@
       return
     }
     dialog = instance.$el as HTMLElement
+    pull.value = 0
+    pulledAway = false
     from = invert()
     phase.value = 'visible'
     nextTick(() => {
@@ -1597,6 +1677,52 @@
   const player = useTemplateRef<HTMLVideoElement>('player')
   function playVideo() {
     player.value?.play().catch(() => {})
+  }
+
+  // The grabber (phones): the panel follows the finger down (CSS
+  // translate, as motion owns the transform), and let go far enough or
+  // fast enough, it closes; otherwise it springs back.
+  const pull = ref(0)
+  const pulling = ref(false)
+  let pulledAway = false
+  let pullStartY = 0
+  let pullSample = { y: 0, t: 0 }
+  let pullVelocity = 0
+  const pullStyle = computed(() =>
+    pull.value ? { translate: `0 ${pull.value}px` } : undefined,
+  )
+
+  function onPullDown(event: PointerEvent) {
+    ;(event.currentTarget as HTMLElement).setPointerCapture(event.pointerId)
+    pulling.value = true
+    pullStartY = event.clientY
+    pullSample = { y: event.clientY, t: event.timeStamp }
+    pullVelocity = 0
+  }
+
+  function onPullMove(event: PointerEvent) {
+    if (!pulling.value) return
+    // Down only: pulling up leaves the panel where it is.
+    pull.value = Math.max(0, event.clientY - pullStartY)
+    const dt = event.timeStamp - pullSample.t
+    if (dt > 0) pullVelocity = (event.clientY - pullSample.y) / dt
+    pullSample = { y: event.clientY, t: event.timeStamp }
+  }
+
+  function onPullUp() {
+    if (!pulling.value) return
+    pulling.value = false
+    const panelHeight = dialog?.offsetHeight ?? window.innerHeight
+    // A quarter of the way down, or a flick (px per ms).
+    if (
+      pull.value > panelHeight * 0.25 ||
+      (pull.value > 24 && pullVelocity > 0.5)
+    ) {
+      pulledAway = true
+      emit('close')
+    } else {
+      pull.value = 0
+    }
   }
 
   const variants = {
@@ -1616,18 +1742,28 @@
         },
       },
     }),
-    exit: () => ({
-      ...invert(),
-      opacity: 0,
-      transition: {
-        duration: reduceMotion.value ? 0.01 : 0.5,
-        ease,
-        opacity: {
-          duration: reduceMotion.value ? 0.01 : 0.25,
-          delay: reduceMotion.value ? 0 : 0.2,
-        },
-      },
-    }),
+    // Pulled down by the grabber: carries on down off the screen.
+    exit: () =>
+      pulledAway
+        ? {
+            y: window.innerHeight,
+            transition: {
+              duration: reduceMotion.value ? 0.01 : 0.35,
+              ease: [0.32, 0.72, 0, 1],
+            },
+          }
+        : {
+            ...invert(),
+            opacity: 0,
+            transition: {
+              duration: reduceMotion.value ? 0.01 : 0.5,
+              ease,
+              opacity: {
+                duration: reduceMotion.value ? 0.01 : 0.25,
+                delay: reduceMotion.value ? 0 : 0.2,
+              },
+            },
+          },
   }
 
   const content = {
@@ -1644,11 +1780,15 @@
         ease,
       },
     }),
-    exit: () => ({
-      opacity: 0,
-      filter: reduceMotion.value ? 'blur(0px)' : 'blur(10px)',
-      transition: { duration: reduceMotion.value ? 0.01 : 0.15, ease },
-    }),
+    // Pulled away, the post leaves whole rather than fading first.
+    exit: () =>
+      pulledAway
+        ? { opacity: 1, filter: 'blur(0px)' }
+        : {
+            opacity: 0,
+            filter: reduceMotion.value ? 'blur(0px)' : 'blur(10px)',
+            transition: { duration: reduceMotion.value ? 0.01 : 0.15, ease },
+          },
   }
 
   let returnFocus: HTMLElement | null = null
