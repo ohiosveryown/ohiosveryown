@@ -24,7 +24,7 @@
       <motion.div
         v-if="open"
         class="ask-bar__grow"
-        :style="{ height: shownHeight }"
+        :style="{ height: shownHeight, justifyContent: growAlign }"
         :initial="{ opacity: 0 }"
         :animate="{ opacity: 1, transition: fadeIn }"
         :exit="{ opacity: 0, transition: fadeOut }"
@@ -520,7 +520,8 @@
   .ask-bar__grow {
     display: flex;
     // Not stretched to this wrapper's animated height: the list keeps its
-    // own, which is what the wrapper grows to.
+    // own, which is what the wrapper grows to. Pinned (growAlign) to the
+    // edge that holds still as it widens, or centred.
     align-items: flex-start;
     justify-content: flex-end;
     margin: 0 -0.8rem;
@@ -528,7 +529,7 @@
   }
 
   // Laid out at the open panel's width from the first frame, pinned to the
-  // right (the bar grows leftward): its height is measured to grow open
+  // edge that holds still (or centred, see growAlign): its height is measured to grow open
   // while the width is still animating, and measuring at the narrower
   // width made it open too tall, then settle. --ask-bar-open-width comes
   // from the page; the 1.7rem is the bar's side padding minus the bleed.
@@ -1090,6 +1091,10 @@
   // sets both widths as CSS variables; motion springs between them.
   const width = useMotionValue(0)
   const sprungWidth = ref(false)
+  // Where the conversation sits in the panel while it widens: against the
+  // edge that holds still, or centred when it grows both ways (as at the
+  // top centre on large screens), so it opens from there.
+  const growAlign = ref<'flex-start' | 'center' | 'flex-end'>('flex-end')
   function cssWidths() {
     const form = formEl()
     if (!form) return null
@@ -1120,6 +1125,10 @@
     const middle = (bar.left + bar.width / 2) / window.innerWidth
     return middle < 1 / 3 ? 1 : middle < 2 / 3 ? 0.5 : 0
   }
+  function alignGrowth(share = widthShare()) {
+    growAlign.value =
+      share === 1 ? 'flex-start' : share === 0.5 ? 'center' : 'flex-end'
+  }
   function springWidth(spring: ReturnType<typeof growFor>) {
     const widths = cssWidths()
     if (!widths) return
@@ -1132,7 +1141,9 @@
           ),
         ) || 0
       : 0
-    const shift = (target - width.get()) * (widthShare() - layoutShare)
+    const share = widthShare()
+    if (open.value) alignGrowth(share)
+    const shift = (target - width.get()) * (share - layoutShare)
     if (reduceMotion.value) {
       width.set(target)
       x.set(x.get() + shift)
@@ -1531,7 +1542,10 @@
   // Opening starts from nothing: the list's first size then springs the
   // height and width open (see trackList). Folding springs both shut.
   watch(open, (isOpen) => {
-    if (isOpen) return growHeight.set(0)
+    if (isOpen) {
+      alignGrowth()
+      return growHeight.set(0)
+    }
     const fold = growFor(growHeight.get(), FOLD_MAX_S)
     springWidth(fold)
     animate(growHeight, 0, reduceMotion.value ? instant : fold)
